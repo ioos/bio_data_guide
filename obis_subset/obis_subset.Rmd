@@ -23,14 +23,14 @@ roi <- "MULTIPOLYGON (((-83.15 25.65, -80.066667 25.65, -80.066667 24.3, -83.15 
 ```
 
 ```{r fetch occurrence data}
-species_name <- "Ocyurus chrysurus"
-species_name_safe <- sanitize_query_id(species_name)
+SPECIES_NAME <- "Ocyurus chrysurus"
+species_name_safe <- sanitize_query_id(SPECIES_NAME)
 roi_query_id  <- glue( "query_id_placeholder_{species_name_safe}")
 if (has_cache(roi_query_id)){
     occurrences <- load_cache(roi_query_id)
 } else {
     occurrences <- robis::occurrence(
-        species_name,
+        SPECIES_NAME,
         geometry = roi
     )
     save_cache(roi_query_id, occurrences)
@@ -56,16 +56,17 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from pandas import DataFrame , read_csv
 
-SELECTED_CATAGORICAL_COLUMNS = ['country', 'habitat', 'datasetName', 'identifiedBy']
-TOP_N = 3
+SELECTED_CATAGORICAL_COLUMNS = ['country', 'habitat'] #, 'datasetName', 'identifiedBy']
+TOP_N = 3  # show just the top N
 fig, axes = plt.subplots(nrows=len(SELECTED_CATAGORICAL_COLUMNS), ncols=1, figsize=(10,8))
 for plot_i, column in enumerate(SELECTED_CATAGORICAL_COLUMNS):
     print("plotting top {} values for column '{}'".format(TOP_N, column))
     axis = axes[plot_i]
     counts  = r.occurrences[column].value_counts()
-    counts = counts[:TOP_N]  # subset just top 10
-    sns.barplot(counts.index, counts.values, alpha=0.8, ax=axis)
-    #axis.title('Top {} for {}'.format(column, r.species_name))
+    #print(list(counts.index)[:TOP_N])
+    #print(counts.values[:TOP_N])
+    sns.barplot(list(counts.index)[:TOP_N], counts.values[:TOP_N], alpha=0.8, ax=axis)
+    #axis.title('Top {} for {}'.format(column, r.SPECIES_NAME))
     #axis.ylabel('Number of Occurrences', fontsize=12)
     #axis.xlabel(column, fontsize=12)
 ```
