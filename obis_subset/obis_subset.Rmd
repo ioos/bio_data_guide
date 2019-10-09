@@ -16,7 +16,7 @@ source("./../R/obis_cache.R")
 ```{r define region of interest}
 # NOTE: This is not actually a MULTIPOLYGON; it's just a big rectangle. 
 #       Any WKT string can be used.
-roi <- "MULTIPOLYGON (((-85 10, -15 10, -15 75, -85 75, -85 10)))"
+roi <- "MULTIPOLYGON (((-175 -80, 165 -80, 165 75, -175 75, -175 -80)))"
 # special use areas manually transcribed from images at
 # https://floridakeys.noaa.gov/zones/special/welcome.html
 # converted from min/degrees to decimal degrees using
@@ -43,6 +43,10 @@ if (has_cache(roi_query_id)){
 ggplot2::ggplot(occurrences) + ggplot2::geom_bar(ggplot2::aes(date_year), width = 1)
 ```
 
+
+```{r map occurrences}
+robis::map_leaflet(occurrences)
+```
 
 ```{python basic data access}
 from pprint import pprint
