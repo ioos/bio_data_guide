@@ -27,7 +27,7 @@ species_name <- "Ocyurus chrysurus"
 species_name_safe <- sanitize_query_id(species_name)
 roi_query_id  <- glue( "query_id_placeholder_{species_name_safe}")
 if (has_cache(roi_query_id)){
-    inside_occurrence <- load_cache(roi_query_id)
+    occurrences <- load_cache(roi_query_id)
 } else {
     occurrences <- robis::occurrence(
         species_name,
@@ -42,7 +42,39 @@ ggplot2::ggplot(occurrences) + ggplot2::geom_bar(ggplot2::aes(date_year), width 
 ```
 
 
-```{python}
+```{python basic data access}
+from pprint import pprint
 # print head of records from R
-print(r.occurrences[:3])
+type(r.occurrences)
+#r.occurrences.head()
+
+pprint(r.occurrences.columns)
+```
+
+```{python some pretty plots}
+import matplotlib.pyplot as plt
+import seaborn as sns
+from pandas import DataFrame , read_csv
+
+SELECTED_CATAGORICAL_COLUMNS = ['country', 'habitat', 'datasetName', 'identifiedBy']
+TOP_N = 3
+fig, axes = plt.subplots(nrows=len(SELECTED_CATAGORICAL_COLUMNS), ncols=1, figsize=(10,8))
+for plot_i, column in enumerate(SELECTED_CATAGORICAL_COLUMNS):
+    print("plotting top {} values for column '{}'".format(TOP_N, column))
+    axis = axes[plot_i]
+    counts  = r.occurrences[column].value_counts()
+    counts = counts[:TOP_N]  # subset just top 10
+    sns.barplot(counts.index, counts.values, alpha=0.8, ax=axis)
+    #axis.title('Top {} for {}'.format(column, r.species_name))
+    #axis.ylabel('Number of Occurrences', fontsize=12)
+    #axis.xlabel(column, fontsize=12)
+```
+
+```{python show unused columns}
+
+# print out columns we aren't looking at
+unused_cols = r.occurrences.columns
+for used_list in [SELECTED_CATAGORICAL_COLUMNS]:
+    unused_cols = [x for x in unused_cols if x not in used_list]
+print("unhandled columns: ", unused_cols)
 ```
