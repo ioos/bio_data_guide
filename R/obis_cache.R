@@ -2,7 +2,7 @@
 #
 # WARN: your data *WILL* be out of date if you use this.
 # To update your data you must clear the cache:
-#    `rm /tmp/robis_query_cache*`
+#    `rm ~/.cache/robis_query_cache`
 #
 # For a better caching method see:
 #    https://github.com/iobis/robis/issues/53
