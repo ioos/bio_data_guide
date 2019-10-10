@@ -4,6 +4,7 @@ Bio data scripts &amp; code samples related to the IOOS code sprint Biological D
 ## examples
 
 - [seagrass](https://marinebon.github.io/ioos_bio_data_scripts/R/seagrass.html) ([Rmd](https://github.com/marinebon/ioos_bio_data_scripts/blob/master/R/seagrass.Rmd))
+- [obis_subset](https://marinebon.github.io/ioos_bio_data_scripts/obis_subset/obis_subset.html) ([Rmd](https://github.com/marinebon/ioos_bio_data_scripts/blob/master/obis_subset/obis_subset.Rmd))
 - [...](https://github.com/marinebon/ioos_bio_data_scripts)
 
 

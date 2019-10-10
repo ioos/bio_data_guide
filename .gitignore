@@ -86,3 +86,4 @@ venv.bak/
 .mypy_cache/
 .Rproj.user
 README.html
+.DS_Store
