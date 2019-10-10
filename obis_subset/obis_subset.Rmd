@@ -6,15 +6,20 @@ categories: []
 tags: []
 ---
 
+
+# fetch OBIS data using iobis/robis
+
 ```{r mpa compare imports, include=FALSE}
 library(glue)
 # also uses robis
 source("./../R/obis_cache.R")
+library(reticulate)
+reticulate::use_python("python3")
 ```
 
 
 ```{r define region of interest}
-# NOTE: This is not actually a MULTIPOLYGON; it's just a big rectangle. 
+# NOTE: This is not actually a MULTIPOLYGON; it's just a big rectangle.
 #       Any WKT string can be used.
 roi <- "MULTIPOLYGON (((-175 -80, 165 -80, 165 75, -175 75, -175 -80)))"
 # special use areas manually transcribed from images at
@@ -39,14 +44,63 @@ if (has_cache(roi_query_id)){
 }
 ```
 
+## explore occurrences in R
+
 ```{r occurrences timeseries, echo=FALSE}
 ggplot2::ggplot(occurrences) + ggplot2::geom_bar(ggplot2::aes(date_year), width = 1)
 ```
 
+```{r dataset contrib over time}
+library(ggplot2)
+ggplot() +
+ geom_histogram(
+     data=occurrences,
+     aes(x=year, fill=datasetID),
+     binwidth=5) +
+ scale_fill_brewer(palette='Paired')
+```
 
 ```{r map occurrences}
 robis::map_leaflet(occurrences)
 ```
+
+```{r custom map colored by dataset}
+library(tidyverse)
+library(leaflet)
+color = "#ff3399"
+provider_tiles = "OpenStreetMap.BlackAndWhite"
+popup = function(x) { x["id"] }
+p <- apply(occurrences, 1, popup)
+
+# Create a continuous palette function
+pal <- colorNumeric(
+  palette = "Blues",
+  domain = occurrences$latitude
+)
+
+# catagorical color palette
+factpal <- colorFactor(topo.colors(5), occurrences$datasetID)
+
+leaflet(occurrences) %>%
+  addProviderTiles(provider_tiles) %>%
+  addCircleMarkers(
+      ~decimalLongitude, 
+      ~decimalLatitude, 
+      popup = p, 
+      radius = 3, 
+      weight = 1, 
+      color = ~factpal(occurrences$datasetID),
+      #fillColor = ~pal(occurrences$latitude), 
+      #color = ~pal(occurrences$latitude), 
+      opacity = 1, 
+      fillOpacity = 0.1
+  )
+```
+
+---------------------------------------------------------------------
+
+# explore occurrences in python
+
 
 ```{python basic data access}
 from pprint import pprint
@@ -85,3 +139,4 @@ for used_list in [SELECTED_CATAGORICAL_COLUMNS]:
     unused_cols = [x for x in unused_cols if x not in used_list]
 print("unhandled columns: ", unused_cols)
 ```
+
