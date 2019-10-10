@@ -1,6 +1,14 @@
 # ioos_bio_data_scripts
 Bio data scripts &amp; code samples related to the IOOS code sprint Biological Data Session.
 
+## examples
+
+- [seagrass](https://marinebon.github.io/ioos_bio_data_scripts/R/seagrass.html) ([Rmd](https://github.com/marinebon/ioos_bio_data_scripts/blob/master/R/seagrass.Rmd))
+- [...](https://github.com/marinebon/ioos_bio_data_scripts)
+
+
+## contribute
+
 Each subdirectory is focuses on a particular problem/question.
 The subdirectories may contain R `DESCRIPTION` and/or python `requirements.txt` files to help with installing dependencies.
 Subdirectories can also contain their own README files.
