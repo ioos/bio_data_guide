@@ -72,12 +72,6 @@ provider_tiles = "OpenStreetMap.BlackAndWhite"
 popup = function(x) { x["id"] }
 p <- apply(occurrences, 1, popup)
 
-# Create a continuous palette function
-pal <- colorNumeric(
-  palette = "Blues",
-  domain = occurrences$latitude
-)
-
 # catagorical color palette
 factpal <- colorFactor(topo.colors(5), occurrences$datasetID)
 
@@ -90,10 +84,9 @@ leaflet(occurrences) %>%
       radius = 3, 
       weight = 1, 
       color = ~factpal(occurrences$datasetID),
-      #fillColor = ~pal(occurrences$latitude), 
-      #color = ~pal(occurrences$latitude), 
       opacity = 1, 
       fillOpacity = 0.1
+      # TODO: how to add legend?
   )
 ```
 
