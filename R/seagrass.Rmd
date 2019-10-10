@@ -1,0 +1,165 @@
+---
+title: "seagrass"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    #number_sections: true
+    code_folding: hide
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)
+```
+
+## OBIS
+
+- iobis/[robis](https://github.com/iobis/robis)
+
+
+### Fetch data
+
+```{r}
+library(robis)
+library(rgbif)
+library(here)
+library(glue)
+library(readr)
+library(dplyr)
+library(DT)
+library(ggplot2)
+library(raster)
+library(leaflet)
+
+here   = here::here
+select = dplyr::select
+
+sp <- "Zostera marina"
+
+obis_occ_csv <- here(glue("data/{sp} - obis_occ.csv"))
+
+if (!file.exists(obis_occ_csv)){
+  obis_occ <- occurrence(sp)
+  # Retrieved 9933 records of approximately 9933 (100%)
+  obis_occ %>% 
+    write_csv(obis_occ_csv)
+} else {
+  obis_occ <- read_csv(obis_occ_csv)
+}
+nrow(obis_occ)
+
+obis_occ %>% 
+  slice(1:100) %>% 
+  datatable()
+```
+
+### Map, static - `ggplot2`
+
+```{r}
+map_ggplot(obis_occ) # doesn't return anything
+
+map_ggplot <- function(data, color = "#ff3399"){
+  world <- borders("world", colour = "gray80", fill = "gray80")
+  m <- ggplot() + world + 
+    geom_point(data = data, aes_string(
+      x = "decimalLongitude", 
+      y = "decimalLatitude"), 
+      size = 1.5, stroke = 0.8, alpha = 0.3, colour = color) + 
+    xlab("longitude") + ylab("latitude") + 
+    coord_quickmap()
+  m # missing in original function: https://github.com/iobis/robis/pull/56
+}
+
+map_ggplot(obis_occ)
+```
+
+### Map, dynamic - `leaflet`
+
+```{r}
+map_leaflet(obis_occ)
+```
+
+## GBIF
+
+- ropensci/[rgbif](https://github.com/ropensci/rgbif)
+
+### Fetch data
+
+```{r}
+
+sp_names <- name_lookup(query=sp, rank="species", return="data")
+#View(sp_names)
+datatable(sp_names)
+
+sp_key <- 2863967
+
+occ_csv <- here(glue("data/{sp} - gbif_{sp_key}_occ.csv"))
+  
+occ_count(taxonKey=sp_key)                     # 31,753
+occ_count(taxonKey=sp_key, georeferenced=TRUE) # 29,136
+
+r <- map_fetch(taxonKey = sp_key)
+r
+plot(r, axes = FALSE, box = FALSE)
+
+if (!file.exists(occ_csv)){
+  occ <- occ_data(taxonKey = sp_key, limit = 200000)
+  stopifnot(occ$meta$endOfRecords)
+  occ$data %>% 
+    select(-networkKeys) %>% 
+    write_csv(occ_csv)
+} else {
+  occ <- read_csv(occ_csv)
+}
+nrow(occ)
+
+occ %>% 
+  slice(1:100) %>% 
+  datatable()
+```
+
+### Map, static - `ggplot2`
+
+- [Tutorial - Cleaning GBIF data for the use in biogeography • CoordinateCleaner](https://ropensci.github.io/CoordinateCleaner/articles/Cleaning_GBIF_data_with_CoordinateCleaner.html)
+
+```{r}
+# remove records without coordinates
+occ_m <- occ %>%
+  filter(
+    !is.na(decimalLongitude),
+    !is.na(decimalLatitude))
+
+#plot data to get an overview
+wrld <- borders("world", colour="gray50", fill="gray50")
+ggplot() + coord_fixed() + wrld +
+  geom_point(
+    data = occ_m, 
+    aes(x = decimalLongitude, y = decimalLatitude),
+    colour = "darkred", size = 0.5) +
+  theme_bw()
+```
+
+### Map, dynamic - `leaflet` with GBIF's hex tile WMS
+
+- [GBIF maps API](https://www.gbif.org/developer/maps)
+
+```{r}
+library(leaflet)
+
+# setup url for gbif map tiles of species
+pfx        <- "https://api.gbif.org/v2/map/occurrence/density/{z}/{x}/{y}@1x.png"
+#style      <- "style=purpleYellow.point"
+style      <- "style=classic-noborder.poly"
+bin        <- "bin=hex&hexPerTile=30"
+taxon      <- glue("taxonKey={sp_key}")
+gbif_tiles <- glue("{pfx}?{style}&{bin}&{taxon}")
+
+leaflet() %>%
+  setView(lng = 20, lat = 20, zoom = 01) %>%
+  addProviderTiles(providers$Esri.OceanBasemap) %>%  
+  addTiles(urlTemplate=gbif_tiles)
+```
+
