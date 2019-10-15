@@ -1,59 +1,45 @@
 ---
 title: "Darwin Core Salmon Data Remap"
 author: "Brett Johnson"
-date: '`r date()`'
+date: "`r date()`"
 output:
- html_document:
-   theme: cosmo
-   code_folding: show
-   toc: true
-   toc_float: true
-   number_sections: true
+  html_document:
+    code_folding: show
+    number_sections: yes
+    theme: cosmo
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
 ---
 
 
-```{r setup, include = TRUE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, error = FALSE)
 library(tidyverse)
 library(here)
 library(lubridate)
-library(robis)
-library(uuid)
 
-# Read in Hakai Salmon Program Data
-survey_data <- read_csv( "https://raw.githubusercontent.com/HakaiInstitute/jsp-data/master/data/survey_data.csv") %>% 
-  select(survey_id, survey_date)
+seine_data <- read_csv(here::here("data_to_dwc", "hakai_salmon_data", "raw_data", "seine_data.csv"))
 
-seine_data <- read_csv("https://raw.githubusercontent.com/HakaiInstitute/jsp-data/master/data/seine_data.csv") %>% 
-  select(seine_id, survey_id, lat, long, set_time, so_total, pi_total, cu_total, 
-         co_total, he_total, ck_total)
-
-fish_lab_data <- read_csv(
-  "https://raw.githubusercontent.com/HakaiInstitute/jsp-data/master/data/fish_lab_data.csv") %>% 
-  select(ufn, weight, fork_length, quality_flag)
-
-fish_field_data <- read_csv(
-  "https://raw.githubusercontent.com/HakaiInstitute/jsp-data/master/data/fish_field_data.csv") %>% 
-  select(ufn, semsp_id, seine_id, species, fork_length_field, weight_field)
-
-sealice_time_series <- read_csv("https://raw.githubusercontent.com/HakaiInstitute/jsp-time-series/master/data/sealice_time_series.csv") %>% 
-  select(ufn, louse_species, n_lice) %>% 
-  spread(louse_species, n_lice) %>% 
-  select(ufn, motile_caligus, motile_lep)
-
-
-# Comnbine fish lab and fish field data
-fish_data <- left_join(fish_field_data, fish_lab_data) %>% 
-  left_join(sealice_time_series) %>% 
-  mutate(occurrenceID = paste("hakai", "jsp", ufn, sep = "-"))
-
-
-rm(fish_field_data, fish_lab_data, sealice_time_series)
+fish_data <- read_csv(here::here("data_to_dwc", "hakai_salmon_data", "raw_data", "fish_data.csv"))
 ```
 
 # Intro
 
-The Darwin Core Event Core consists of three tables: Events, Occurrences, and Measurements or Facts.
+One of the goals of the Hakai Institute and the Canadian Integrated Ocean Observing System (CIOOS) is to facilitate Open Science and FAIR (findable, accessible, interoperable, reusable) ecological and oceanographic data. In a concerted effort to adopt or establish how best to do that, several Hakai and CIOOS staff attended an International Ocean Observing System (IOOS) Code Sprint in Ann Arbour, Michigan between October 7--11, 2019, to discuss how to implement FAIR data principles for biological data collected in the marine environment. 
+
+The [Darwin Core](https://dwc.tdwg.org) is a highly structured data format that standardizes data table relations, vocabularies, and defines field names. The Darwin Core defines three table types: `event`, `occurrence`, and `measurementOrFact`. This intuitively captures the way most ecologists conduct their research. Typically, a survey (event) is conducted during which time some measurements, counts, or observations (collectively measurementOrFact[s]) are made regarding a specific habitat or species (occurrence). 
+
+In the following script I demonstrate how I go about converting a subset of the data collected from the Hakai Institute Juvenile Salmon Program and discuss challenges, solutions, pros and cons, and when it might be worthwhile to convert to Darwin Core.
+
+The conversion of a dataset to Darwin Core is much easier if your data is already tidy (normalized) in which you represent your data in separate tables that reflect the hierarchical and related nature of observations. If you're data is not already in a consistent and structured format, the conversion would likely be very arduos and not intuitive.
+
+# event 
+
+The first step is to consider what you will define as an event in your data set. I defined the capture of fish using a purse seine net as the `event`. Therefore, each row in the `event` table is one deployment of a seine net and is assigned a unique `eventID`. 
+
+My process for conversion was to make a new table called `event` and map the standard Darwin Core column names to pre-existing columns that serve the same purpose in my original `seine_data` table and populate the other required fields.
 
 
 ```{r event}
@@ -65,21 +51,35 @@ event <- tibble(eventID = seine_data$seine_id,
                 basisOfRecord = "HumanObservation",
                 geodeticDatum = "EPSG:4326 WGS84",
                 minimumDepthInMeters = 0,
-                maximumDepthInMeters = 9,
-                samplingProtocol = " http://dx.doi.org/10.21966/1.566666" # This is the DOI for the Hakai Salmon Data Package that contains the sanpling protocol
+                maximumDepthInMeters = 9, # seine depth is 9 m
+                samplingEffort = "NA", # No standardized effort can be applied to each event. Do not assume equal effort for each event 
+                samplingProtocol = "http://dx.doi.org/10.21966/1.566666" # This is the DOI for the Hakai Salmon Data Package that contains the smnpling protocol, as well as the complete data package
                )
 
 write_csv(event, here::here("data_to_dwc", "hakai_salmon_data", "event.csv"))
 ```
 
+
+# occurrence
+
+Next you'll want to determine what constitutes an occurrence for your data set. Because each event caputers fish, I consider each fish to be an occurrence. Therefore, the unit of observation (each row) in the occurrence table is a fish. To link each occurence to an event you need to include the `eventID` column for every occurrence so that you know what seine (event) each fish (occurrence) came from. You must also provide a globally unique identifier for each occurrence. I already have a locally unique identifier for each fish in the original `fish_data` table called `ufn`. To make it globally unique I pre-pend the organization and research program metadata to the `ufn` column. 
+
 ```{r occurrence}
 
+# Create a globally unique occurence ID which in this case is simply a concatentation of metadata and the original, but not globally unique, `ufn` column
+fish_data <- fish_data %>%
+  mutate(occurrenceID = paste("hakai", "jsp", ufn, sep = "-"))
+
 occurrence <- tibble(occurenceID = fish_data$occurrenceID,
-                    organismID = fish_data$ufn,
                     scientificName = fish_data$species,
                     eventID = fish_data$seine_id,
                     occurenceStatus = "present")
+```
 
+For each occuerence of the six different fish species that I caught I need to match the species name that I provide with the official `scientificName` that is part of the World Register of Marine Species database http://www.marinespecies.org/
+
+```{r taxize}
+library(taxize)
 
 # create taxonomic classification using WoRMS
 species <- factor(fish_data$species)
@@ -88,7 +88,6 @@ species <- factor(fish_data$species)
 latin <- fct_recode(occurrence$scientificName, "Oncorhynchus nerka" = "SO", "Oncorhynchus gorbuscha" = "PI", "Oncorhynchus keta" = "CU", "Oncorhynchus kisutch" = "CO", "Clupea pallasii" = "HE", "Oncorhynchus tshawytscha" = "CK")
 
 occurrence$scientificName <- latin
-
 
 # I went directly to the WoRMS webite (http://www.marinespecies.org/) to download the full taxonomic levels for the salmon species I have and put the WoRMS output (species_matched.xls) table in this project
 
@@ -102,7 +101,10 @@ rm(species_matched)
 ```
 
 
-To convert all your measurements or facts from your normal format to Darwin Core you essentially need to put all your measurements into one column called measurementType and a corresponding column called MeasurementValue. Here I convert length, and weight measurements that relate to an event and an occurrence. Species of salmon that are caught with each seine relate only to the event.
+# measurementOrFact
+To convert all your measurements or facts from your normal format to Darwin Core you essentially need to put all your measurements into one column called measurementType and a corresponding column called MeasurementValue. This standardizes the column names are in the `measurementOrFact` table. There are a number of predefined `measurementType`s listed on the [NERC](https://www.bodc.ac.uk/resources/vocabularies/) database that should be used where possible. I found it difficult to navigate this page to find the correct `measurementType`. So in some cases I made up my own. This is wehere things get messy and break down a bit. For example, I found a generic `abundance` NERC vocab term but it was not species specific. Because the species counts I use only relate to an event, and not an occurrence there would be no way to tell what species the count relates to. I see other `measurementTypes` in the NERC vocab that are species specific, however, the species abundances I wanted to list are not a term yet. I understand it is possible that have specific `measurementTypes` added to the NERC vocab, but without a clear consensus among salmon resarchers to decide on `measurementType` names it doesn't make sensse for the individual to propose new vocabulary. 
+
+fHere I convert length, and weight measurements that relate to an event and an occurrence and call those `measurementTypes` as `length` and `weight`. Species of salmon that are caught with each seine relate only to the event. I defined the `measurementType` as `sppCount`.
 
 ```{r measurementOrFact}
 
@@ -141,9 +143,11 @@ fish_weight <- fish_data %>%
 
 measurementOrFact <- bind_rows(fish_abund, fish_length, fish_weight)
 
-rm(fish_abund, fish_length, fish_weight, seine_data, survey_data)
+rm(fish_abund, fish_length, fish_weight, seine_data)
 
 write_csv(measurementOrFact, here::here("data_to_dwc", "hakai_salmon_data", "measurementOrFact.csv"))
 ```
 
-#TODO: use concatenated metadata for occurrenceID
+# Conclusion
+
+It is possible to re map a normalized data set into Darwin Core. My sense is it would be next to impossible, or at least very time consuming, to do this for data that are not currently in a normalized structure. You could, however, start to collect data in this format, but that would leave you unable to analyze the data using common tools in R. I'm not sure what the value is in converting data to this standard. If the argument is for making the data discoverable, I think there are more efficient ways to do that (data catalogues). If the argument is for standardizing data from different projects into one format for meta-analysis, I would argue that leads people down the wrong path because a scientist must inspect and understand very closely the protocols and methods used to produce the data. Heatmaps of speceies counts based on Darwin Data are not a scientific representation of species distributions, but rather a tool for looking a who has converted their data to Darwin Core and uploaded it to OBIS. By aggregating multiple data sets into a tool to view presence of species that were observed under different protocols still requires the analyst to understand deeply the research method, and whether species absence is truly absence. The canonical unit of data is still a data package with a DOI that provides methods, changelogs, data dictionaries, suppoerting documents, raw data, scripts to process raw data, and processed data. Darwin Core may have value if international working groups standardize `measurementTypes` and agree on the same protocols.
