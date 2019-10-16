@@ -20,7 +20,11 @@ library(tidyverse)
 library(here)
 library(lubridate)
 
-seine_data <- read_csv(here::here("data_to_dwc", "hakai_salmon_data", "raw_data", "seine_data.csv"))
+survey_data <- read_csv(here::here("data_to_dwc", "hakai_salmon_data", "raw_data", "survey_data.csv"))
+
+seine_data <- read_csv(here::here("data_to_dwc", "hakai_salmon_data", "raw_data", "seine_data.csv")) %>% 
+  left_join(survey_data)
+
 
 fish_data <- read_csv(here::here("data_to_dwc", "hakai_salmon_data", "raw_data", "fish_data.csv"))
 ```
@@ -45,7 +49,7 @@ My process for conversion was to make a new table called `event` and map the sta
 ```{r event}
 
 event <- tibble(eventID = seine_data$seine_id,
-                eventDate = date(seine_data$set_time),
+                eventDate = date(seine_data$survey_date),
                 decimalLatitude = seine_data$lat,
                 decimalLongitude = seine_data$long,
                 basisOfRecord = "HumanObservation",
@@ -54,8 +58,7 @@ event <- tibble(eventID = seine_data$seine_id,
                 maximumDepthInMeters = 9, # seine depth is 9 m
                 samplingEffort = "NA", # No standardized effort can be applied to each event. Do not assume equal effort for each event 
                 samplingProtocol = "http://dx.doi.org/10.21966/1.566666" # This is the DOI for the Hakai Salmon Data Package that contains the smnpling protocol, as well as the complete data package
-               ) %>% 
-  drop_na(eventDate)
+               ) 
 
 write_csv(event, here::here("data_to_dwc", "hakai_salmon_data", "event.csv"))
 ```
@@ -148,4 +151,6 @@ rm(fish_abund, fish_length, fish_weight, seine_data)
 write_csv(measurementOrFact, here::here("data_to_dwc", "hakai_salmon_data", "measurementOrFact.csv"))
 ```
 
-
+```{r}
+test <- anti_join(event, occurrence)
+```

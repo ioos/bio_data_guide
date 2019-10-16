@@ -3,6 +3,12 @@ library(lubridate)
 library(here)
 
 # Read in Hakai Salmon Program Data
+
+survey_data <- read_csv("https://raw.githubusercontent.com/HakaiInstitute/jsp-data/master/data/survey_data.csv") %>% 
+  select(survey_id, survey_date)
+
+write_csv(survey_data, here::here("data_to_dwc", "hakai_salmon_data", "raw_data", "survey_data.csv"))
+
 seine_data <- read_csv("https://raw.githubusercontent.com/HakaiInstitute/jsp-data/master/data/seine_data.csv") %>% 
   select(seine_id, survey_id, lat, long, set_time, so_total, pi_total, cu_total, 
          co_total, he_total, ck_total)
