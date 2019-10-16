@@ -1,0 +1,43 @@
+---
+title: "IEA NE chl"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+    code_folding: hide
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)
+```
+
+## explore nc
+
+```{r}
+library(raster)
+
+nc <- "/Volumes/GoogleDrive/My Drive/projects/iea-auto/regions/ne/inport examples/NEFSC CHL & PPD/M_201901-MODISA-NESGRID-CHLOR_A.nc"
+
+r <- raster(nc, varname = "chlor_a") # chlor_a_nobs
+
+r
+
+plot(r)
+```
+
+# interactive map
+
+```{r}
+library(leaflet)
+#RColorBrewer::display.brewer.all()
+
+pal <- colorNumeric("YlGn", values(log(r+0.0001)), na.color = "transparent")
+
+leaflet() %>% 
+  addProviderTiles(providers$Esri.OceanBasemap, options = providerTileOptions(opacity=0.3)) %>% 
+  addRasterImage(log(r+0.0001), opacity=0.8)
+```
+
