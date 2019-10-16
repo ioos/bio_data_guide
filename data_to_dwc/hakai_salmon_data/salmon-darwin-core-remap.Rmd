@@ -54,7 +54,8 @@ event <- tibble(eventID = seine_data$seine_id,
                 maximumDepthInMeters = 9, # seine depth is 9 m
                 samplingEffort = "NA", # No standardized effort can be applied to each event. Do not assume equal effort for each event 
                 samplingProtocol = "http://dx.doi.org/10.21966/1.566666" # This is the DOI for the Hakai Salmon Data Package that contains the smnpling protocol, as well as the complete data package
-               )
+               ) %>% 
+  drop_na(eventDate)
 
 write_csv(event, here::here("data_to_dwc", "hakai_salmon_data", "event.csv"))
 ```
@@ -78,33 +79,32 @@ occurrence <- tibble(occurenceID = fish_data$occurrenceID,
 
 For each occuerence of the six different fish species that I caught I need to match the species name that I provide with the official `scientificName` that is part of the World Register of Marine Species database http://www.marinespecies.org/
 
-```{r taxize}
-library(taxize)
+```{r}
 
 # create taxonomic classification using WoRMS
 species <- factor(fish_data$species)
 
 # Change species names to full Scientific names 
-latin <- fct_recode(occurrence$scientificName, "Oncorhynchus nerka" = "SO", "Oncorhynchus gorbuscha" = "PI", "Oncorhynchus keta" = "CU", "Oncorhynchus kisutch" = "CO", "Clupea pallasii" = "HE", "Oncorhynchus tshawytscha" = "CK")
+latin <- fct_recode(occurrence$scientificName, "Oncorhynchus nerka" = "SO", "Oncorhynchus gorbuscha" = "PI", "Oncorhynchus keta" = "CU", "Oncorhynchus kisutch" = "CO", "Clupea pallasii" = "HE", "Oncorhynchus tshawytscha" = "CK") %>% 
+  as.character()
 
 occurrence$scientificName <- latin
 
-# I went directly to the WoRMS webite (http://www.marinespecies.org/) to download the full taxonomic levels for the salmon species I have and put the WoRMS output (species_matched.xls) table in this project
+# I went directly to the WoRMS webite (http://www.marinespecies.org/) to download the full taxonomic levels for the salmon species I have and put the WoRMS output (species_matched.xls) table in this project directory which is read in below and joined with the occurrence table
 
-species_matched <- readxl::read_excel(here::here("data", "species_matched.xls"))
+species_matched <- readxl::read_excel(here::here("data_to_dwc", "hakai_salmon_data", "raw_data", "species_matched.xls"))
 
-occurrence <- left_join(occurrence, species_matched, by = c("scientificName" = "ScientificName...1"))
+occurrence <- left_join(occurrence, species_matched, by = c("scientificName" = "ScientificName"))
 
 write_csv(occurrence, here::here("data_to_dwc", "hakai_salmon_data", "occurrence.csv"))
 
-rm(species_matched)
 ```
 
 
 # measurementOrFact
 To convert all your measurements or facts from your normal format to Darwin Core you essentially need to put all your measurements into one column called measurementType and a corresponding column called MeasurementValue. This standardizes the column names are in the `measurementOrFact` table. There are a number of predefined `measurementType`s listed on the [NERC](https://www.bodc.ac.uk/resources/vocabularies/) database that should be used where possible. I found it difficult to navigate this page to find the correct `measurementType`. So in some cases I made up my own. This is wehere things get messy and break down a bit. For example, I found a generic `abundance` NERC vocab term but it was not species specific. Because the species counts I use only relate to an event, and not an occurrence there would be no way to tell what species the count relates to. I see other `measurementTypes` in the NERC vocab that are species specific, however, the species abundances I wanted to list are not a term yet. I understand it is possible that have specific `measurementTypes` added to the NERC vocab, but without a clear consensus among salmon resarchers to decide on `measurementType` names it doesn't make sensse for the individual to propose new vocabulary. 
 
-fHere I convert length, and weight measurements that relate to an event and an occurrence and call those `measurementTypes` as `length` and `weight`. Species of salmon that are caught with each seine relate only to the event. I defined the `measurementType` as `sppCount`.
+Here I convert length, and weight measurements that relate to an event and an occurrence and call those `measurementTypes` as `length` and `weight`. Species of salmon that are caught with each seine relate only to the event. I defined the `measurementType` as `sppCount`.
 
 ```{r measurementOrFact}
 
@@ -148,6 +148,4 @@ rm(fish_abund, fish_length, fish_weight, seine_data)
 write_csv(measurementOrFact, here::here("data_to_dwc", "hakai_salmon_data", "measurementOrFact.csv"))
 ```
 
-# Conclusion
 
-It is possible to re map a normalized data set into Darwin Core. My sense is it would be next to impossible, or at least very time consuming, to do this for data that are not currently in a normalized structure. You could, however, start to collect data in this format, but that would leave you unable to analyze the data using common tools in R. I'm not sure what the value is in converting data to this standard. If the argument is for making the data discoverable, I think there are more efficient ways to do that (data catalogues). If the argument is for standardizing data from different projects into one format for meta-analysis, I would argue that leads people down the wrong path because a scientist must inspect and understand very closely the protocols and methods used to produce the data. Heatmaps of speceies counts based on Darwin Data are not a scientific representation of species distributions, but rather a tool for looking a who has converted their data to Darwin Core and uploaded it to OBIS. By aggregating multiple data sets into a tool to view presence of species that were observed under different protocols still requires the analyst to understand deeply the research method, and whether species absence is truly absence. The canonical unit of data is still a data package with a DOI that provides methods, changelogs, data dictionaries, suppoerting documents, raw data, scripts to process raw data, and processed data. Darwin Core may have value if international working groups standardize `measurementTypes` and agree on the same protocols.
