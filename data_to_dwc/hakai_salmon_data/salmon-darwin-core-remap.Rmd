@@ -26,7 +26,7 @@ seine_data <- read_csv(here::here("data_to_dwc", "hakai_salmon_data", "raw_data"
 
 survey_seines <- right_join(survey_data, seine_data, by = "survey_id")
 
-fish_data <- read_csv(here::here("data_to_dwc", "hakai_salmon_data", "raw_data", "fish_data.csv"), guess_max = 20000)
+fish_data <- read_csv(here::here("data_to_dwc", "hakai_salmon_data", "raw_data", "fish_data.csv"), guess_max = 20000) %>% semi_join(survey_seines)
 
 ```
 
@@ -70,7 +70,13 @@ Next you'll want to determine what constitutes an occurrence for your data set. 
 ```{r occurrence}
 
 # Create a globally unique occurence ID which in this case is simply a concatentation of metadata and the original, but not globally unique, `ufn` column
+
+fish_data$weight <- coalesce(fish_data$weight, fish_data$weight_field)
+fish_data$fork_length <- coalesce(fish_data$fork_length, fish_data$fork_length_field)
+
 fish_data <- fish_data %>%
+  select(-fork_length_field, -weight_field) %>% 
+  drop_na(weight) %>% 
   mutate(occurrenceID = paste("hakai", "jsp", ufn, sep = "-"))
 
 occurrence <- tibble(occurrenceID = fish_data$occurrenceID,
@@ -97,7 +103,8 @@ occurrence$scientificName <- latin
 
 species_matched <- readxl::read_excel(here::here("data_to_dwc", "hakai_salmon_data", "raw_data", "species_matched.xls"))
 
-occurrence <- left_join(occurrence, species_matched, by = c("scientificName" = "ScientificName"))
+occurrence <- left_join(occurrence, species_matched, by = c("scientificName" = "ScientificName")) %>% 
+  select(occurrenceID, basisOfRecord, scientificName, eventID, occurrenceStatus = occurenceStatus, Kingdom, Phylum, Class, Order, Family, Genus, Species)
 
 write_csv(occurrence, here::here("data_to_dwc", "hakai_salmon_data", "occurrence.csv"))
 
@@ -107,41 +114,47 @@ write_csv(occurrence, here::here("data_to_dwc", "hakai_salmon_data", "occurrence
 # measurementOrFact
 To convert all your measurements or facts from your normal format to Darwin Core you essentially need to put all your measurements into one column called measurementType and a corresponding column called MeasurementValue. This standardizes the column names are in the `measurementOrFact` table. There are a number of predefined `measurementType`s listed on the [NERC](https://www.bodc.ac.uk/resources/vocabularies/) database that should be used where possible. I found it difficult to navigate this page to find the correct `measurementType`. So in some cases I made up my own. This is wehere things get messy and break down a bit. For example, I found a generic `abundance` NERC vocab term but it was not species specific. Because the species counts I use only relate to an event, and not an occurrence there would be no way to tell what species the count relates to. I see other `measurementTypes` in the NERC vocab that are species specific, however, the species abundances I wanted to list are not a term yet. I understand it is possible that have specific `measurementTypes` added to the NERC vocab, but without a clear consensus among salmon resarchers to decide on `measurementType` names it doesn't make sensse for the individual to propose new vocabulary. 
 
-Here I convert length, and weight measurements that relate to an event and an occurrence and call those `measurementTypes` as `length` and `weight`. Species of salmon that are caught with each seine relate only to the event. I defined the `measurementType` as `sppCount`.
+Here I convert length, and weigh measurements that relate to an event and an occurrence and call those `measurementTypes` as `length` and `weight`. Species of salmon that are caught with each seine relate only to the event. I defined the `measurementType` as `sppCount`.
 
 ```{r measurementOrFact}
 
 # First I tidy the fish abundance data into a long format so that it is a measurement that relates to an event
-fish_abund <- seine_data %>% 
-  gather(`so_total`, `pi_total`, `cu_total`, `co_total`, `he_total`, `ck_total`, key = measurementType, value = measurementValue) %>% 
-  drop_na(measurementValue) %>% 
-  select(eventID = seine_id, measurementType, measurementValue) %>% 
-  mutate(occurrenceID = "NA") %>% 
-  select(eventID, occurrenceID, measurementType, measurementValue) %>% 
-  mutate(measurementUnit = "NA",
-         measurementUnitID = "NA")
+fish_abund <- survey_seines %>% 
+  gather(`so_total`, `pi_total`, `cu_total`, `co_total`, `he_total`, `ck_total`, key = scientificName, value = individualCount) %>% 
+  drop_na(individualCount) %>% 
+  select(eventID = seine_id, scientificName, individualCount) %>% 
+  mutate(occurrenceID = NA,
+         measurementType = NA,
+         measurementValue = NA,
+         measurementTypeID = NA,
+         measurementAccuracy = NA,
+         measurementUnit = NA,
+         measurementUnitID = NA,
+         measurementRemarks = "visual estimate"
+         ) %>% 
+  select(eventID, occurrenceID, scientificName, individualCount, measurementType, measurementValue, measurementValue, measurementTypeID, measurementAccuracy, measurementUnit, measurementUnitID, measurementRemarks)
 
-fish_abund$measurementType <- factor(fish_abund$measurementType) %>% 
-  recode(so_total = "sockeyeCount",
-         pi_total = "pinkCount",
-         cu_total = "chumCount",
-         co_total = "cohoCount",
-         he_total = "herringCount",
-         ck_total = "chinookCount"
+fish_abund$scientificName <- factor(fish_abund$scientificName) %>% 
+  recode(so_total = "Oncorhynchus nerka",
+         pi_total = "Oncorhynchus gorbuscha",
+         cu_total = "Oncorhynchus keta",
+         co_total = "Oncorhynchus kisutch",
+         he_total = "Clupea pallasii",
+         ck_total = "Oncorhynchus tshawytscha"
   )
 
 fish_length <- fish_data %>% 
   select(eventID = seine_id, occurrenceID, fork_length) %>% 
-  mutate(measurementType = "length", measurementValue = fork_length) %>% 
+  mutate(measurementType = "fork length", measurementValue = fork_length) %>% 
   select(eventID, occurrenceID, measurementType, measurementValue) %>% 
-  mutate(measurementUnit = "millimeters",
+  mutate(measurementUnit = "mm",
          measurementUnitID = "NA")
 
 fish_weight <- fish_data %>% 
   select(eventID = seine_id, occurrenceID, weight) %>% 
   mutate(measurementType = "weight", measurementValue = weight) %>% 
   select(eventID, occurrenceID, measurementType, measurementValue) %>% 
-  mutate(measurementUnit = "grams",
+  mutate(measurementUnit = "g",
          measurementUnitID = "NA")
 
 measurementOrFact <- bind_rows(fish_abund, fish_length, fish_weight)
