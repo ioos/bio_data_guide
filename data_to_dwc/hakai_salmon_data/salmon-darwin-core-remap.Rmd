@@ -73,7 +73,7 @@ Next you'll want to determine what constitutes an occurrence for your data set. 
 fish_data <- fish_data %>%
   mutate(occurrenceID = paste("hakai", "jsp", ufn, sep = "-"))
 
-occurrence <- tibble(occurenceID = fish_data$occurrenceID,
+occurrence <- tibble(occurrenceID = fish_data$occurrenceID,
                     basisOfRecord = "HumanObservation",
                     scientificName = fish_data$species,
                     eventID = fish_data$seine_id,
