@@ -20,24 +20,25 @@ library(tidyverse)
 library(here)
 library(lubridate)
 
-survey_data <- read_csv(here::here("data_to_dwc", "hakai_salmon_data", "raw_data", "survey_data.csv"))
+survey_data <- read_csv(here::here("data_to_dwc", "hakai_salmon_data", "raw_data", "survey_data.csv")) 
 
-seine_data <- read_csv(here::here("data_to_dwc", "hakai_salmon_data", "raw_data", "seine_data.csv")) %>% 
-  left_join(survey_data)
+seine_data <- read_csv(here::here("data_to_dwc", "hakai_salmon_data", "raw_data", "seine_data.csv")) 
 
+survey_seines <- right_join(survey_data, seine_data, by = "survey_id")
 
-fish_data <- read_csv(here::here("data_to_dwc", "hakai_salmon_data", "raw_data", "fish_data.csv"))
+fish_data <- read_csv(here::here("data_to_dwc", "hakai_salmon_data", "raw_data", "fish_data.csv"), guess_max = 20000)
+
 ```
 
 # Intro
 
 One of the goals of the Hakai Institute and the Canadian Integrated Ocean Observing System (CIOOS) is to facilitate Open Science and FAIR (findable, accessible, interoperable, reusable) ecological and oceanographic data. In a concerted effort to adopt or establish how best to do that, several Hakai and CIOOS staff attended an International Ocean Observing System (IOOS) Code Sprint in Ann Arbour, Michigan between October 7--11, 2019, to discuss how to implement FAIR data principles for biological data collected in the marine environment. 
 
-The [Darwin Core](https://dwc.tdwg.org) is a highly structured data format that standardizes data table relations, vocabularies, and defines field names. The Darwin Core defines three table types: `event`, `occurrence`, and `measurementOrFact`. This intuitively captures the way most ecologists conduct their research. Typically, a survey (event) is conducted during which time some measurements, counts, or observations (collectively measurementOrFact[s]) are made regarding a specific habitat or species (occurrence). 
+The [Darwin Core](https://dwc.tdwg.org) is a highly structured data format that standardizes data table relations, vocabularies, and defines field names. The Darwin Core defines three table types: `event`, `occurrence`, and `measurementOrFact`. This intuitively captures the way most ecologists conduct their research. Typically, a survey (event) is conducted and measurements, counts, or observations (collectively measurementOrFacts) are made regarding a specific habitat or species (occurrence). 
 
-In the following script I demonstrate how I go about converting a subset of the data collected from the Hakai Institute Juvenile Salmon Program and discuss challenges, solutions, pros and cons, and when it might be worthwhile to convert to Darwin Core.
+In the following script I demonstrate how I go about converting a subset of the data collected from the Hakai Institute Juvenile Salmon Program and discuss challenges, solutions, pros and cons, and when and what's worthwhile to convert to Darwin Core.
 
-The conversion of a dataset to Darwin Core is much easier if your data is already tidy (normalized) in which you represent your data in separate tables that reflect the hierarchical and related nature of observations. If you're data is not already in a consistent and structured format, the conversion would likely be very arduos and not intuitive.
+The conversion of a dataset to Darwin Core is much easier if your data are already tidy (normalized) in which you represent your data in separate tables that reflect the hierarchical and related nature of your observations. If your data are not already in a consistent and structured format, the conversion would likely be very arduos and not intuitive.
 
 # event 
 
@@ -48,15 +49,14 @@ My process for conversion was to make a new table called `event` and map the sta
 
 ```{r event}
 
-event <- tibble(eventID = seine_data$seine_id,
-                eventDate = date(seine_data$survey_date),
-                decimalLatitude = seine_data$lat,
-                decimalLongitude = seine_data$long,
+event <- tibble(eventID = survey_seines$seine_id,
+                eventDate = date(survey_seines$survey_date),
+                decimalLatitude = survey_seines$lat,
+                decimalLongitude = survey_seines$long,
                 basisOfRecord = "HumanObservation",
                 geodeticDatum = "EPSG:4326 WGS84",
                 minimumDepthInMeters = 0,
                 maximumDepthInMeters = 9, # seine depth is 9 m
-                samplingEffort = "NA", # No standardized effort can be applied to each event. Do not assume equal effort for each event 
                 samplingProtocol = "http://dx.doi.org/10.21966/1.566666" # This is the DOI for the Hakai Salmon Data Package that contains the smnpling protocol, as well as the complete data package
                ) 
 
