@@ -53,7 +53,6 @@ event <- tibble(eventID = survey_seines$seine_id,
                 eventDate = date(survey_seines$survey_date),
                 decimalLatitude = survey_seines$lat,
                 decimalLongitude = survey_seines$long,
-                basisOfRecord = "HumanObservation",
                 geodeticDatum = "EPSG:4326 WGS84",
                 minimumDepthInMeters = 0,
                 maximumDepthInMeters = 9, # seine depth is 9 m
@@ -75,6 +74,7 @@ fish_data <- fish_data %>%
   mutate(occurrenceID = paste("hakai", "jsp", ufn, sep = "-"))
 
 occurrence <- tibble(occurenceID = fish_data$occurrenceID,
+                    basisOfRecord = "HumanObservation",
                     scientificName = fish_data$species,
                     eventID = fish_data$seine_id,
                     occurenceStatus = "present")
