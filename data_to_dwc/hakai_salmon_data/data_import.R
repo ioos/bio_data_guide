@@ -14,8 +14,8 @@ write_csv(survey_data, here::here("data_to_dwc", "hakai_salmon_data", "raw_data"
 seine_data <- read_csv(here("data_to_dwc", "hakai_salmon_data", "v1.0.2", "data", "seine_data.csv")) %>% 
   filter(collection_protocol == "SEMSP",
          fish_retained == "yes") %>% # Not concerned with effort, so remove zero catch seines
-  select(seine_id, survey_id, lat, long, set_time, so_total, pi_total, cu_total, 
-         co_total, he_total, ck_total) %>% 
+  select(seine_id, survey_id, lat, long, set_time, so_total, so_taken, pi_total, pi_taken, cu_total, cu_taken, 
+         co_total, co_taken, he_total, he_taken, ck_total, ck_taken) %>% 
   drop_na(lat) %>% #as of v1.0.2 there's a JS seine with no lat long
   filter(lat < 90) # as of v1.0.2 there's a lat that is way off
 
@@ -33,3 +33,5 @@ fish_data <- left_join(fish_field_data, fish_lab_data, by = 'ufn')
 
 write_csv(fish_data, here::here("data_to_dwc", "hakai_salmon_data", "raw_data", "fish_data.csv"))
 
+bycatch <- read_csv(here::here("data_to_dwc", "hakai_salmon_data", "v1.0.2", "data", "bycatch_mort.csv"))
+  
