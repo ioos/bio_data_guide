@@ -1,47 +1,29 @@
-# ioos_bio_data_scripts
-Bio data scripts &amp; code samples related to the IOOS code sprint Biological Data Session.
+# Bio Data Guide
+:notebook: This repository contains living documentation to help those just getting started with biological data or those looking to learn and contribute to IOOS's best practices for biological data.
 
-## examples
+## :question: Have Questions? :question:
+* See the "issues" tab above to ask questions or discuss with the IOOS biodata community.
+* Also try searching for related issues which are open or have been closed (ie answered)
 
-- [seagrass](https://marinebon.github.io/ioos_bio_data_scripts/R/seagrass.html) ([Rmd](https://github.com/marinebon/ioos_bio_data_scripts/blob/master/R/seagrass.Rmd))
-- [obis_subset](https://marinebon.github.io/ioos_bio_data_scripts/obis_subset/obis_subset.html) ([Rmd](https://github.com/marinebon/ioos_bio_data_scripts/blob/master/obis_subset/obis_subset.Rmd))
-- [...](https://github.com/marinebon/ioos_bio_data_scripts)
+## Got Data?
+* :speech_balloon: open an issue in the issues tab above
+* :floppy_disk: small datasets can be uploaded into `./datasets/` and we can help you align with best practices
+* :link: dataset repositories or other hosted data can be included in the links in the `Datasets` section below
 
+# Datasets
+The `./datasets/` directory in this repository contains small datasets which meet one of the following criteria:
+* :construction_worker: the community is currently aligning this data
+* :notebook: the dataset is retained as an instructive example
+* :speak_no_evil: the lazy maintainers of this repo haven't cleaned it out yet 
 
-## contribute
+## Linked datasets
+Datasets not included in this directory but still meeting one of the criteria above are linked here:
 
-Each subdirectory is focuses on a particular problem/question.
-The subdirectories may contain R `DESCRIPTION` and/or python `requirements.txt` files to help with installing dependencies.
-Subdirectories can also contain their own README files.
+* TODO: have some of these
 
-There are no hard rules here; it's just a quick and easy place to drop your scripts/examples.
+--------------------------------------------------------------------------
 
-## Installation: Python
-If you're munging through data in Python, you might want to consider using a virtual environment to install your dependencies in.
+# Historical
 
-### Virtual Environment Using `pip`
-On a Mac or Linux machine, you can quickly create a virtual environment with the commands below.
-
-```
-$ python3 -m venv env
-$ source env/bin/activate # activate the environment
-$ pip install -U pip # upgrade pip version
-$ pip install -r requirements.txt
-```
-
-If you're installing and using `jupyter` notebooks this way, you'll also want to ensure that
-the user is specified so your installed packages are found properly:
-
-```
-python -m ipykernel install --user
-```
-
-Now, you should be ready to fire up Python and start exploring!
-
-The `install.sh` (and `install_*.sh`) files in the root dir are helpers which comb through the subdirs and try to install all dependencies.
-They aren't pretty.
-
-Highlights:
-
-* data_to_dwc : Abby's example data transformations
-* obis_subset : Pull data out of OBIS using robis then make some plots in R & in python. 
+This repo has grown out of the 2019 IOOS code sprint.
+Original documents from the sprint are retained on a fork of this repo in [marinebon/bio_data_scripts_ioos_workshop_2019](https://github.com/marinebon/bio_data_scripts_ioos_workshop_2019).
