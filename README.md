@@ -25,7 +25,7 @@ The `./datasets/` directory in this repository contains small datasets which mee
 ## Linked datasets
 Datasets not included in this directory but still meeting one of the criteria above are linked here:
 
-* TODO: have some of these
+* [FL MBON Zooplankton](https://github.com/USF-IMARS/zoo-taxonomy-to-darwin-core)
 
 --------------------------------------------------------------------------
 
