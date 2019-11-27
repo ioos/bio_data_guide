@@ -10,6 +10,12 @@
 * :floppy_disk: small datasets can be uploaded into `./datasets/` and we can help you align with best practices
 * :link: dataset repositories or other hosted data can be included in the links in the `Datasets` section below
 
+# Resources & Links
+* Training & workshop documents
+    * [2018 IOOS BioData Training in Seattle](https://ioos.github.io/BioData-Training-Workshop)
+    * [2019 IOOS Code Sprint in Ann Arbor](https://github.com/marinebon/bio_data_scripts_ioos_workshop_2019)
+* [marinebon.org](https://marinebon.org/)
+
 # Datasets
 The `./datasets/` directory in this repository contains small datasets which meet one of the following criteria:
 * :construction_worker: the community is currently aligning this data
