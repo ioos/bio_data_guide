@@ -20,13 +20,13 @@ library(tidyverse)
 library(here)
 library(lubridate)
 
-survey_data <- read_csv(here::here("data_to_dwc", "hakai_salmon_data", "raw_data", "survey_data.csv")) 
+survey_data <- read_csv(here::here("datasets", "hakai_salmon_data", "raw_data", "survey_data.csv")) 
 
-seine_data <- read_csv(here::here("data_to_dwc", "hakai_salmon_data", "raw_data", "seine_data.csv")) 
+seine_data <- read_csv(here::here("datasets", "hakai_salmon_data", "raw_data", "seine_data.csv")) 
 
 survey_seines <- right_join(survey_data, seine_data, by = "survey_id")
 
-fish_data <- read_csv(here::here("data_to_dwc", "hakai_salmon_data", "raw_data", "fish_data.csv"), guess_max = 20000) %>% semi_join(survey_seines)
+fish_data <- read_csv(here::here("datasets", "hakai_salmon_data", "raw_data", "fish_data.csv"), guess_max = 20000) %>% semi_join(survey_seines)
 
 ```
 
@@ -59,7 +59,7 @@ event <- tibble(eventID = survey_seines$seine_id,
                 samplingProtocol = "http://dx.doi.org/10.21966/1.566666" # This is the DOI for the Hakai Salmon Data Package that contains the smnpling protocol, as well as the complete data package
                ) 
 
-write_csv(event, here::here("data_to_dwc", "hakai_salmon_data", "event.csv"))
+write_csv(event, here::here("datasets", "hakai_salmon_data", "event.csv"))
 ```
 
 
@@ -70,8 +70,6 @@ Next you'll want to determine what constitutes an occurrence for your data set. 
 
 ```{r occurrence}
 #TODO: Include bycatch data as well
-
-# expand all seine data so that every fish caught is a row
 
 ## make table long first
 seines_total_long <- survey_seines %>% 
@@ -128,12 +126,12 @@ For each occuerence of the six different fish species that I caught I need to ma
 ```{r}
 # I went directly to the WoRMS webite (http://www.marinespecies.org/) to download the full taxonomic levels for the salmon species I have and put the WoRMS output (species_matched.xls) table in this project directory which is read in below and joined with the occurrence table
 
-species_matched <- readxl::read_excel(here::here("data_to_dwc", "hakai_salmon_data", "raw_data", "species_matched.xls"))
+species_matched <- readxl::read_excel(here::here("datasets", "hakai_salmon_data", "raw_data", "species_matched.xls"))
 
 occurrence <- left_join(occurrence, species_matched, by = c("scientificName" = "ScientificName")) %>% 
   select(occurrenceID, basisOfRecord, scientificName, eventID, occurrenceStatus = occurenceStatus, Kingdom, Phylum, Class, Order, Family, Genus, Species)
 
-write_csv(occurrence, here::here("data_to_dwc", "hakai_salmon_data", "occurrence.csv"))
+write_csv(occurrence, here::here("datasets", "hakai_salmon_data", "occurrence.csv"))
 
 ```
 
@@ -141,7 +139,7 @@ write_csv(occurrence, here::here("data_to_dwc", "hakai_salmon_data", "occurrence
 # measurementOrFact
 To convert all your measurements or facts from your normal format to Darwin Core you essentially need to put all your measurements into one column called measurementType and a corresponding column called MeasurementValue. This standardizes the column names are in the `measurementOrFact` table. There are a number of predefined `measurementType`s listed on the [NERC](https://www.bodc.ac.uk/resources/vocabularies/) database that should be used where possible. I found it difficult to navigate this page to find the correct `measurementType`. 
 
-Here I convert length, and weigh measurements that relate to an event and an occurrence and call those `measurementTypes` as `length` and `weight`. Species of salmon that are caught with each seine relate only to the event. I defined the `measurementType` as `sppCount`.
+Here I convert length, and weight measurements that relate to an event and an occurrence and call those `measurementTypes` as `length` and `weight`.
 
 ```{r measurementOrFact}
 
@@ -153,20 +151,21 @@ fish_length <- fish_data %>%
   select(occurrenceID, eventID = seine_id, fork_length, weight) %>% 
   mutate(measurementType = "fork length", measurementValue = fork_length) %>% 
   select(eventID, occurrenceID, measurementType, measurementValue) %>% 
-  mutate(measurementUnit = "mm",
-         measurementUnitID = "NA")
+  mutate(measurementUnit = "millimeters",
+         measurementUnitID = "http://vocab.nerc.ac.uk/collection/P06/current/UXMM/")
 
 fish_weight <- fish_data %>% 
   mutate(occurrenceID = paste0("hakai-jsp-", ufn)) %>% 
   select(occurrenceID, eventID = seine_id, fork_length, weight) %>% 
-  mutate(measurementType = "weight", measurementValue = weight) %>% 
+  mutate(measurementType = "mass", measurementValue = weight) %>% 
   select(eventID, occurrenceID, measurementType, measurementValue) %>% 
-  mutate(measurementUnit = "g",
-         measurementUnitID = "NA")
+  mutate(measurementUnit = "grams",
+         measurementUnitID = "http://vocab.nerc.ac.uk/collection/P06/current/UGRM/")
 
-measurementOrFact <- bind_rows(fish_length, fish_weight)
+measurementOrFact <- bind_rows(fish_length, fish_weight) %>% 
+  drop_na(measurementValue)
 
-rm(fish_length, fish_weight, seine_data)
+rm(fish_length, fish_weight)
 
-write_csv(measurementOrFact, here::here("data_to_dwc", "hakai_salmon_data", "measurementOrFact.csv"))
+write_csv(measurementOrFact, here::here("datasets", "hakai_salmon_data", "measurementOrFact.csv"))
 ```
