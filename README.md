@@ -22,6 +22,11 @@ The `./datasets/` directory in this repository contains small datasets which mee
 * :notebook: the dataset is retained as an instructive example
 * :speak_no_evil: the lazy maintainers of this repo haven't cleaned it out yet 
 
+Ideally each dataset should contain a README.md file with details about the data and the ingestion process for this dataset.
+A few datasets are highlighted below as especially instructive examples:
+
+* [example_script_with_fake_data](https://github.com/ioos/bio_data_guide/tree/master/datasets/example_script_with_fake_data) - fake data crafted by Abby Benson to illustrate a very basic conversion to DwC
+
 ## Linked datasets
 Datasets not included in this directory but still meeting one of the criteria above are linked here:
 
