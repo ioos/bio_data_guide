@@ -16,6 +16,46 @@
     * [2019 IOOS Code Sprint in Ann Arbor](https://github.com/marinebon/bio_data_scripts_ioos_workshop_2019)
 * [marinebon.org](https://marinebon.org/)
 
+## Monthly Meetings
+We have open monthly meetings to discuss marine bio data issues.
+
+* Link to notes:  https://docs.google.com/document/d/1TJ4JLTtU0qQZ-Rzwbz20MUU7sKhpfDCtXQnC5rPJK8k/edit?usp=sharing
+* Link to GitHub:  https://github.com/ioos/bio_data_guide
+
+Vicky Rowley and Abby Benson scheduled Zoom meeting details:
+
+Join Zoom Meeting: https://ucsd.zoom.us/j/304000280
+
+Meeting ID: 304 000 280
+
+One tap mobile
+* +16699006833,,304000280# US (San Jose)
+* +16465588656,,304000280# US (New York)
+
+Dial by your location
+* +1 669 900 6833 US (San Jose)
+* +1 646 558 8656 US (New York)
+Meeting ID: 304 000 280
+
+Find your local number: https://ucsd.zoom.us/u/aMEePeN1g
+
+Join by SIP: 304000280@zoomcrc.com
+
+Join by H.323: 
+* 162.255.37.11 (US West)
+* 162.255.36.11 (US East)
+* 221.122.88.195 (China)
+* 115.114.131.7 (India)
+* 213.19.144.110 (EMEA)
+* 103.122.166.55 (Australia)
+* 209.9.211.110 (Hong Kong)
+* 64.211.144.160 (Brazil)
+* 69.174.57.160 (Canada)
+* 207.226.132.110 (Japan)
+Meeting ID: 304 000 280
+
+Join by Skype for Business: https://ucsd.zoom.us/skype/304000280
+
 # Datasets
 The `./datasets/` directory in this repository contains small datasets which meet one of the following criteria:
 * :construction_worker: the community is currently aligning this data
