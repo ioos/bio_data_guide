@@ -16,11 +16,23 @@
     * [2019 IOOS Code Sprint in Ann Arbor](https://github.com/marinebon/bio_data_scripts_ioos_workshop_2019)
 * [marinebon.org](https://marinebon.org/)
 
+## Monthly Meetings
+We have open monthly meetings to discuss marine bio data issues. Please join us next time!
+
+* [Link to meeting minutes](https://docs.google.com/document/d/1TJ4JLTtU0qQZ-Rzwbz20MUU7sKhpfDCtXQnC5rPJK8k/edit?usp=sharing)
+* [Link to call participation details](https://docs.google.com/document/d/1TJ4JLTtU0qQZ-Rzwbz20MUU7sKhpfDCtXQnC5rPJK8k/edit#bookmark=id.izp500kyylhv)
+
+
 # Datasets
 The `./datasets/` directory in this repository contains small datasets which meet one of the following criteria:
 * :construction_worker: the community is currently aligning this data
 * :notebook: the dataset is retained as an instructive example
 * :speak_no_evil: the lazy maintainers of this repo haven't cleaned it out yet 
+
+Ideally each dataset should contain a README.md file with details about the data and the ingestion process for this dataset.
+A few datasets are highlighted below as especially instructive examples:
+
+* [example_script_with_fake_data](https://github.com/ioos/bio_data_guide/tree/master/datasets/example_script_with_fake_data) - fake data crafted by Abby Benson to illustrate a very basic conversion to DwC
 
 ## Linked datasets
 Datasets not included in this directory but still meeting one of the criteria above are linked here:
