@@ -9,7 +9,7 @@ survey_data <- read_csv(here("data_to_dwc", "hakai_salmon_data", "v1.0.2", "data
   select(survey_id, survey_date)
 
 
-write_csv(survey_data, here::here("data_to_dwc", "hakai_salmon_data", "raw_data", "survey_data.csv"))
+write_csv(survey_data, here::here("datasets", "hakai_salmon_data", "raw_data", "survey_data.csv"))
 
 seine_data <- read_csv(here("data_to_dwc", "hakai_salmon_data", "v1.0.2", "data", "seine_data.csv")) %>% 
   filter(collection_protocol == "SEMSP",
