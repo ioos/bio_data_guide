@@ -211,7 +211,7 @@ seagrassEvent <-
          geodeticDatum = "WGS84") %T>% glimpse
 
 # save event table to csv
-write.csv(seagrassEvent, "hakaiSeagrassDwcEvent.csv")
+write.csv(seagrassEvent, "datasets/hakai_seagrass_data/clean_data/hakaiSeagrassDwcEvent.csv")
 
 #' ### Occurrence Table
 #+ createOccurrenceTable
@@ -227,7 +227,7 @@ seagrassOccurrence <-
 # taxonomic data that can be acquired through the WoRMS register.
 ## Load taxonomic info, downloaded via WoRMS tool
 zmWorms <- 
-  read.delim("zmworms_matched.txt",
+  read.delim("datasets/hakai_seagrass_data/raw_data/zmworms_matched.txt",
              header = TRUE,
              nrows  = 1)
 
@@ -238,7 +238,7 @@ seagrassOccurrence <-
   glimpse
 
 # save occurrence table to csv
-write.csv(seagrassOccurrence, "hakaiSeagrassDwcOccurrence.csv")
+write.csv(seagrassOccurrence, "datasets/hakai_seagrass_data/clean_data/hakaiSeagrassDwcOccurrence.csv")
 
 #' ### Extended MeasurementOrFact table
 #+ create eMoF table
@@ -298,7 +298,7 @@ seagrassMof <-
   glimpse()
 
 # save eMoF table to csv
-write.csv(seagrassMof, "hakaiSeagrassDwcEmof.csv")
+write.csv(seagrassMof, "datasets/hakai_seagrass_data/clean_data/hakaiSeagrassDwcEmof.csv")
 
 #' # Session Info
 #' Print session information below in case necessary for future reference 
