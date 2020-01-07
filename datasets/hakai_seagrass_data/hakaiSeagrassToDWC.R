@@ -42,7 +42,7 @@ lapply(c("tidyverse", "lubridate", "magrittr"),
 #+ loadDensity
 # Load density data
 seagrassDensity <- 
-  read.csv("seagrass_density_survey.csv",
+  read.csv("datasets/hakai_seagrass_data/raw_data/seagrass_density_survey.csv",
            colClass = "character") %>%
   mutate(date             = ymd(date),
          depth            = as.numeric(depth),
@@ -60,7 +60,7 @@ seagrassDensity <-
 #+ loadHabitat
 # load habitat data, set variable classes, have a quick look
 seagrassHabitat <-
-  read.csv("seagrass_habitat_survey.csv",
+  read.csv("datasets/hakai_seagrass_data/raw_data/seagrass_habitat_survey.csv",
            colClasses = "character") %>%  
   mutate(date            = ymd(date),
          depth           = as.numeric(depth),
@@ -73,7 +73,7 @@ seagrassHabitat <-
 #' Finally, load coordinate data for surveys, and subset necessary variables
 #+ loadCoordinates
 coordinates <- 
-  read.csv("seagrassCoordinates.csv",
+  read.csv("datasets/hakai_seagrass_data/raw_data/seagrassCoordinates.csv",
            colClass = c("Point.Name" = "character")) %>%
   select(Point.Name, Decimal.Lat, Decimal.Long) %T>%
   glimpse()
