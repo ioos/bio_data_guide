@@ -1,5 +1,5 @@
 This is an example dataset demonstrating the absolute minimum needed to put data into OBIS.
-There is only an occurence file with rows of taxa occurrences and only the bare minimum columns.
+There is only an occurrence file with rows of taxa occurrences and only the bare minimum columns.
 
 This data is fabricated for demonstration purposes only; these are not real occurrences.
 
