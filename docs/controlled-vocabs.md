@@ -7,6 +7,9 @@ http://seadatanet.maris2.nl/v_bodc_vocab_v2/vocab_relations.asp?lib=P08
 To describe a measurement or fact of a biological specimen that conforms to Darwin Core standards, it's neccessary to use the 'Biological entity described elsewhere' method rather than taxon specific.
 
 # Collections
+
+[Biological and Chemcial Oceanography Data Management Office](http://www.bco-dmo.org/)
+
 [SeaDatanet Common Vocab Search Interface:](http://seadatanet.maris2.nl/v_bodc_vocab_v2/welcome.asp)
 
 [SeaDataNet Common Vocabularies:](https://www.seadatanet.org/Standards/Common-Vocabularies/)
@@ -32,3 +35,4 @@ To describe a measurement or fact of a biological specimen that conforms to Darw
 
 #TODO:
 * add marine metadata interoperability vocab resources https://mmisw.org/ont/#/
+
