@@ -1,10 +1,3 @@
----
-title: "README"
-author: "Brett Johnson"
-date: "10/02/2020"
-output: html_document
----
-
 # Hakai Institute Juvenile Salmon Program
 
 The Hakai Institute Juvenile Salmon Program has been monitoring juvenile salmon migrations in the Discovery Islands and Johnstone Strait in British Columbia Canada, since 2015 to understand how ocean conditions experienced by juvenile salmon during their early marine migration impacts their growth, health and ultimately survival.
@@ -15,7 +8,4 @@ The [Darwin Core](https://dwc.tdwg.org) is a highly structured data format that 
 
 See the salmon-darwin-core-remap.Rmd file for a complete account of the data transformation.
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
