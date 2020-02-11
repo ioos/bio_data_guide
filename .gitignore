@@ -87,3 +87,5 @@ venv.bak/
 .Rproj.user
 README.html
 .DS_Store
+
+bio_data_guide.Rproj
