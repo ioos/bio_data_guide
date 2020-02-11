@@ -2,7 +2,7 @@
 
 # Controlled Vocabularies and Ontologies
 
-Climate and Format (CF) Standard Names are applied to sensors for application with our OPeNDAP web service. http://cfconventions.org/standard-names.html
+Climate and Format (CF) Standard Names are applied to sensors for application with OPeNDAP web service. http://cfconventions.org/standard-names.html
 Device categories using the SeaDataNet device categories in NERC 2.0: http://vocab.nerc.ac.uk/collection/L05/current/
 Device make/model using the SeaVoX Device Catalogue in NERC 2.0, http://vocab.nerc.ac.uk/collection/L22/current/
 Platform categories using SeaVoX Platform Categories in NERC 2.0: http://vocab.nerc.ac.uk/collection/L06/current/
@@ -18,7 +18,6 @@ marineregions.org
 TODO: 
 * Discuss diff between controlled vocabs and ontologies
 * Break out controlled vocabs by research domain or some logical grouping
-* 
 
 There are a number of controlled vocabularies that are used to describe parameters commonly used in a research domain. This allows for greater interoperability of data sets. There are numberous ways to investigate which controlled vocabulary to use and this can be fairly overwhelming. For a simplified overview see:
 
