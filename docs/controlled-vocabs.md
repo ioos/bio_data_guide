@@ -2,6 +2,19 @@
 
 # Controlled Vocabularies and Ontologies
 
+Climate and Format (CF) Standard Names are applied to sensors for application with our OPeNDAP web service. http://cfconventions.org/standard-names.html
+Device categories using the SeaDataNet device categories in NERC 2.0: http://vocab.nerc.ac.uk/collection/L05/current/
+Device make/model using the SeaVoX Device Catalogue in NERC 2.0, http://vocab.nerc.ac.uk/collection/L22/current/
+Platform categories using SeaVoX Platform Categories in NERC 2.0: http://vocab.nerc.ac.uk/collection/L06/current/
+Platform instances using the ICES Platform Codes in NERC 2.0:  http://vocab.nerc.ac.uk/collection/C17/current/
+Unit of measure - http://vocab.nerc.ac.uk/collection/P06/current/ 
+GCMD Keywords - http://vocab.nerc.ac.uk/collection/P04/current/ 
+
+Geographic Domain/Features of Interest
+http://vocab.nerc.ac.uk/collection/C19/current/
+marineregions.org
+
+
 TODO: 
 * Discuss diff between controlled vocabs and ontologies
 * Break out controlled vocabs by research domain or some logical grouping
