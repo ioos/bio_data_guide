@@ -24,7 +24,7 @@ survey_data <- read_csv(here::here("datasets", "hakai_salmon_data", "raw_data", 
 
 seine_data <- read_csv(here::here("datasets", "hakai_salmon_data", "raw_data", "seine_data.csv")) 
 
-survey_seines <- right_join(survey_data, seine_data, by = "survey_id")
+survey_seines <- right_join(survey_data, seine_data, by = "survey_id") # removes survey events where a seine wasn't set
 
 fish_data <- read_csv(here::here("datasets", "hakai_salmon_data", "raw_data", "fish_data.csv"), guess_max = 20000) %>% semi_join(survey_seines)
 
