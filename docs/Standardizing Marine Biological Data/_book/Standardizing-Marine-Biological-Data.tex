@@ -1,0 +1,230 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[]{book}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\usepackage{hyperref}
+\hypersetup{
+            pdftitle={Standardizing-Marine-Biological-Data},
+            pdfauthor={Brett Johnson},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{longtable,booktabs}
+% Fix footnotes in tables (requires footnote package)
+\IfFileExists{footnote.sty}{\usepackage{footnote}\makesavenoteenv{longtable}}{}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{booktabs}
+\usepackage[]{natbib}
+\bibliographystyle{apalike}
+
+\title{Standardizing-Marine-Biological-Data}
+\author{Brett Johnson}
+\date{2020-04-08}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+Biological data structures, definitions, measurements, and linkages are neccessarily as diverse as the systems they represent. This presents a real challenge when integrating data across biological research domains such as ecology, oceanography, fisheries, and climate sciences.
+
+\hypertarget{intro}{%
+\chapter{Introduction}\label{intro}}
+
+This is about stacking the right standards for your desired ineroperability with other data types. For example, interopating fish biology measurements with climate level variables. There are a few links neccessary to make this possible. This will permit ecosystem based models.
+
+\hypertarget{data-structures}{%
+\section{Data Structures}\label{data-structures}}
+
+The OBIS-ENV Darwin Core Archive Data Structure.
+
+\href{\%22https://obis.org/manual/\%22}{OBIS manual}
+
+\hypertarget{ontologies}{%
+\section{Ontologies}\label{ontologies}}
+
+An ontology is a classification system for establishing a hierarchically related set of concepts. Concepts are often terms from controlled vocabularies.
+
+From Marine Metadata:
+
+"Ontologies can include all of the following, but are not required to include them, depending on which perspective from above you adhere to:
+
+Classes (general things, types of things)
+Instances (individual things)
+Relationships among things
+Properties of things
+Functions, processes, constraints, and rules relating to things"
+
+Unified Modeling Language?
+
+\hypertarget{controlled-vocabularies}{%
+\section{Controlled Vocabularies}\label{controlled-vocabularies}}
+
+There are a number of controlled vocabularies that are used to describe parameters commonly used in a research domain. This allows for greater interoperability of data sets.
+
+\begin{itemize}
+\item
+  \href{\%22http://cfconventions.org/standard-names.html\%22}{Climate and Format (CF) Standard Names} are applied to sensors for application with OPeNDAP web service.
+\item
+  \href{\%22http://vocab.nerc.ac.uk/collection/L05/current/\%22}{Device categories} using the SeaDataNet device categories in NERC 2.0
+\item
+  \href{\%22http://vocab.nerc.ac.uk/collection/L22/current/\%22}{Device make/model using the SeaVoX Device Catalogue} in NERC 2.0,
+\item
+  \href{\%22http://vocab.nerc.ac.uk/collection/L06/current/\%22}{Platform categories using SeaVoX Platform Categories} in NERC 2.0
+\item
+  \href{\%22http://vocab.nerc.ac.uk/collection/C17/current/\%22}{Platform instances using the ICES Platform Codes} in NERC 2.0
+\item
+  \href{\%22http://vocab.nerc.ac.uk/collection/P06/current/\%22}{Unit of measure}
+\item
+  \href{\%22http://vocab.nerc.ac.uk/collection/P04/current/\%22}{GCMD Keywords}
+\item
+  \href{\%22http://vocab.nerc.ac.uk/collection/C19/current/\%22}{Geographic Domain/Features of Interest}
+\end{itemize}
+
+There are numberous ways to investigate which controlled vocabulary to use and this can be fairly overwhelming. For a simplified overview see \href{\%22http://seadatanet.maris2.nl/v_bodc_vocab_v2/vocab_relations.asp?lib=P08\%22}{here}.
+
+Note: To describe a measurement or fact of a biological specimen that conforms to Darwin Core standards, it's neccessary to use the `Biological entity described elsewhere' method rather than taxon specific.
+
+\hypertarget{collections}{%
+\subsection{Collections}\label{collections}}
+
+\hypertarget{oceanography}{%
+\subsection{Oceanography}\label{oceanography}}
+
+\href{http://www.bco-dmo.org/}{Biological and Chemcial Oceanography Data Management Office}
+
+\href{https://mmisw.org/ont/\#/}{Marine metadata interoperability vocab resources}
+
+\hypertarget{biology}{%
+\subsection{Biology}\label{biology}}
+
+\href{http://bioportal.bioontology.org/ontologies/ECSO}{BioPortal Ecosystem Ontology}
+
+\hypertarget{nerc-search-interfaces}{%
+\subsection{NERC Search Interfaces}\label{nerc-search-interfaces}}
+
+\begin{itemize}
+\item
+  \href{http://seadatanet.maris2.nl/v_bodc_vocab_v2/welcome.asp}{SeaDatanet Common Vocab Search Interface:}
+\item
+  \href{https://www.seadatanet.org/Standards/Common-Vocabularies/}{SeaDataNet Common Vocabularies:}
+\item
+  \href{http://seadatanet.maris2.nl/v_bodc_vocab_v2/vocab_relations.asp?lib=P08}{SeaDataNet Vocab Library}
+\end{itemize}
+
+\hypertarget{geosciences}{%
+\subsection{Geosciences}\label{geosciences}}
+
+`UDUNITS' are more common in geosciences
+
+\href{https://www.unidata.ucar.edu/software/udunits/}{UDUNITS}
+
+\hypertarget{ecoenvo}{%
+\subsection{Eco/EnvO}\label{ecoenvo}}
+
+\href{\%22http://www.obofoundry.org/ontology/envo.html\%22}{Environment Ontology} including genomics.
+
+\hypertarget{wild-cards}{%
+\subsection{Wild Cards}\label{wild-cards}}
+
+\href{\%22https://www.bodc.ac.uk/resources/vocabularies/vocabulary_builder/biomodel/\%22}{P01 Biological Entity Parameter Code Builder}
+
+\hypertarget{technologies}{%
+\section{Technologies}\label{technologies}}
+
+\hypertarget{erddap}{%
+\subsection{ERDDAP}\label{erddap}}
+
+\href{\%22https://coastwatch.pfeg.noaa.gov/erddap/index.html\%22}{ERDDAP} provides `easier access to scientific data' by providing a consistent interface that aggregates many disparate data sources. It does this by providing translation services between many common file types for gridded arrarys (`net CDF' files) and tabular data (spreadsheets). Data access is also made easier because it unifies different types of data servers and access protocols. \href{\%22https://github.com/HakaiInstitute/erddap-basic\%22}{Here} is a basic erddap installation that walks you through how to load a data set.
+
+\hypertarget{semantic-web-and-darwin-core}{%
+\subsection{Semantic Web and Darwin Core}\label{semantic-web-and-darwin-core}}
+
+\href{\%22http://www.semantic-web-journal.net/system/files/swj1093.pdf\%22}{Lessons learned from adapting the Darwin Core vocabulary standard for use in RDF}
+
+\hypertarget{resource-description-framework}{%
+\subsection{Resource Description Framework}\label{resource-description-framework}}
+
+\href{\%22https://dwc.tdwg.org/rdf/\%22}{Darwin Core Resource Description Framework Guide}
+
+\hypertarget{literature}{%
+\chapter{Literature}\label{literature}}
+
+\hypertarget{methods}{%
+\chapter{Methods}\label{methods}}
+
+We describe our methods in this chapter.
+
+\hypertarget{applications}{%
+\chapter{Applications}\label{applications}}
+
+Some \emph{significant} applications are demonstrated in this chapter.
+
+\hypertarget{example-one}{%
+\section{Example one}\label{example-one}}
+
+\hypertarget{example-two}{%
+\section{Example two}\label{example-two}}
+
+\hypertarget{final-words}{%
+\chapter{Final Words}\label{final-words}}
+
+We have finished a nice book.
+
+\bibliography{book.bib,packages.bib}
+
+\end{document}
