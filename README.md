@@ -7,7 +7,7 @@
 
 ## Got Data?
 * :speech_balloon: open an issue in the issues tab above
-* :floppy_disk: small datasets can be uploaded into `./datasets/` and we can help you align with best practices
+* :floppy_disk: small datasets can be uploaded into `./Standardizing Marine Biological Data/datasets/` and we can help you align with best practices
 * :link: dataset repositories or other hosted data can be included in the links in the `Datasets` section below
 
 ## Standardizing Marine Biological Data Guide
