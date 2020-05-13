@@ -15,4 +15,4 @@ LaTeX: pdfLaTeX
 AutoAppendNewline: Yes
 
 BuildType: Website
-WebsitePath: ~/R Projects/bio_data_guide/docs/Standardizing Marine Biological Data
+WebsitePath: ~/R Projects/bio_data_guide/Standardizing Marine Biological Data

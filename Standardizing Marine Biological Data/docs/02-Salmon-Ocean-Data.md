@@ -108,7 +108,7 @@ occurrence <- left_join(occurrence, species_matched, by = c("scientificName" = "
 
 
 ## measurementOrFact
-To convert all your measurements or facts from your normal format to Darwin Core you essentially need to put all your measurements into one column called measurementType and a corresponding column called MeasurementValue. This standardizes the column names are in the `measurementOrFact` table. There are a number of predefined `measurementType`s listed on the [NERC](https://www.bodc.ac.uk/resources/vocabularies/) database that should be used where possible. I found it difficult to navigate this page to find the correct `measurementType`. 
+To convert all your measurements or facts from your normal format to Darwin Core you essentially need to put all your measurements into one column called measurementType and a corresponding column called measurementValue. This standardizes the column names are in the `measurementOrFact` table. There are a number of predefined `measurementType`s listed on the [NERC](https://www.bodc.ac.uk/resources/vocabularies/) database that should be used where possible. I found it difficult to navigate this page to find the correct `measurementType`. 
 
 Here I convert length, and weight measurements that relate to an event and an occurrence and call those `measurementTypes` as `length` and `weight`.
 
