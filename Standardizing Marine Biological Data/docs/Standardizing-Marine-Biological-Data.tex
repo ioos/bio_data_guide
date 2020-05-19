@@ -111,7 +111,7 @@
 
 \title{Standardizing-Marine-Biological-Data}
 \author{Brett Johnson}
-\date{2020-05-13}
+\date{2020-05-19}
 
 \begin{document}
 \maketitle
@@ -230,6 +230,26 @@ Note: To describe a measurement or fact of a biological specimen that conforms t
 \subsection{ERDDAP}\label{erddap}}
 
 \href{\%22https://coastwatch.pfeg.noaa.gov/erddap/index.html\%22}{ERDDAP} provides `easier access to scientific data' by providing a consistent interface that aggregates many disparate data sources. It does this by providing translation services between many common file types for gridded arrarys (`net CDF' files) and tabular data (spreadsheets). Data access is also made easier because it unifies different types of data servers and access protocols. \href{\%22https://github.com/HakaiInstitute/erddap-basic\%22}{Here} is a basic erddap installation that walks you through how to load a data set.
+
+\hypertarget{notes-on-integrating-obis-darwin-core-as-it-relates-to-ooss}{%
+\section{Notes on Integrating OBIS, Darwin Core as it relates to OOS's}\label{notes-on-integrating-obis-darwin-core-as-it-relates-to-ooss}}
+
+\hypertarget{metadata}{%
+\section{Metadata}\label{metadata}}
+
+OBIS uses the \href{http://rs.gbif.org/schema/eml-gbif-profile/1.1/eml-gbif-profile.xsd}{GBIF EML profile} (version 1.1). In case data providers use ISO19115/ISO19139, there is a mapping available here: \url{http://rs.gbif.org/schema/eml-gbif-profile/1.1/eml2iso19139.xsl} This will be important for integrating OBIS datasets to OOS metadata profiles.
+
+\hypertarget{data-qc}{%
+\section{Data QC}\label{data-qc}}
+
+There are a number of tools available to check the quality of data or check your data format against the expected standard.
+
+\hypertarget{compliance-checking}{%
+\subsection{Compliance Checking}\label{compliance-checking}}
+
+LifeWatch Belgium provides a number of tools to check your data against.
+Specifically you can test OBIS data format and see a map of your sample locations to check if they are on land.
+See \url{http://www.lifewatch.be/data-services/}
 
 \hypertarget{semantic-web-and-darwin-core}{%
 \subsection{Semantic Web and Darwin Core}\label{semantic-web-and-darwin-core}}

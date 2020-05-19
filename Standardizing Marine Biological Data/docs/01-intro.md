@@ -90,6 +90,22 @@ Note: To describe a measurement or fact of a biological specimen that conforms t
 [ERDDAP]("https://coastwatch.pfeg.noaa.gov/erddap/index.html") provides 'easier access to scientific data' by providing a consistent interface that aggregates many disparate data sources. It does this by providing translation services between many common file types for gridded arrarys ('net CDF' files) and tabular data (spreadsheets). Data access is also made easier because it unifies different types of data servers and access protocols. [Here]("https://github.com/HakaiInstitute/erddap-basic") is a basic erddap installation that walks you through how to load a data set.
 
 
+## Notes on Integrating OBIS, Darwin Core as it relates to OOS's
+
+## Metadata
+
+OBIS uses the [GBIF EML profile](http://rs.gbif.org/schema/eml-gbif-profile/1.1/eml-gbif-profile.xsd) (version 1.1). In case data providers use ISO19115/ISO19139, there is a mapping available here: http://rs.gbif.org/schema/eml-gbif-profile/1.1/eml2iso19139.xsl This will be important for integrating OBIS datasets to OOS metadata profiles.
+
+## Data QC
+
+There are a number of tools available to check the quality of data or check your data format against the expected standard.
+
+### Compliance Checking 
+
+LifeWatch Belgium provides a number of tools to check your data against.
+Specifically you can test OBIS data format and see a map of your sample locations to check if they are on land.
+See http://www.lifewatch.be/data-services/
+
 
 
 

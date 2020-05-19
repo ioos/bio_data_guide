@@ -24,7 +24,7 @@
 <meta name="author" content="Brett Johnson" />
 
 
-<meta name="date" content="2020-05-13" />
+<meta name="date" content="2020-05-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -145,8 +145,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#technologies"><i class="fa fa-check"></i><b>1.4</b> Technologies</a><ul>
 <li class="chapter" data-level="1.4.1" data-path="intro.html"><a href="intro.html#erddap"><i class="fa fa-check"></i><b>1.4.1</b> ERDDAP</a></li>
-<li class="chapter" data-level="1.4.2" data-path="intro.html"><a href="intro.html#semantic-web-and-darwin-core"><i class="fa fa-check"></i><b>1.4.2</b> Semantic Web and Darwin Core</a></li>
-<li class="chapter" data-level="1.4.3" data-path="intro.html"><a href="intro.html#resource-description-framework"><i class="fa fa-check"></i><b>1.4.3</b> Resource Description Framework</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#notes-on-integrating-obis-darwin-core-as-it-relates-to-ooss"><i class="fa fa-check"></i><b>1.5</b> Notes on Integrating OBIS, Darwin Core as it relates to OOS’s</a></li>
+<li class="chapter" data-level="1.6" data-path="intro.html"><a href="intro.html#metadata"><i class="fa fa-check"></i><b>1.6</b> Metadata</a></li>
+<li class="chapter" data-level="1.7" data-path="intro.html"><a href="intro.html#data-qc"><i class="fa fa-check"></i><b>1.7</b> Data QC</a><ul>
+<li class="chapter" data-level="1.7.1" data-path="intro.html"><a href="intro.html#compliance-checking"><i class="fa fa-check"></i><b>1.7.1</b> Compliance Checking</a></li>
+<li class="chapter" data-level="1.7.2" data-path="intro.html"><a href="intro.html#semantic-web-and-darwin-core"><i class="fa fa-check"></i><b>1.7.2</b> Semantic Web and Darwin Core</a></li>
+<li class="chapter" data-level="1.7.3" data-path="intro.html"><a href="intro.html#resource-description-framework"><i class="fa fa-check"></i><b>1.7.3</b> Resource Description Framework</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="salmon-ocean-data.html"><a href="salmon-ocean-data.html"><i class="fa fa-check"></i><b>2</b> Salmon Ocean Data</a><ul>
@@ -182,7 +187,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Standardizing-Marine-Biological-Data</h1>
 <p class="author"><em>Brett Johnson</em></p>
-<p class="date"><em>2020-05-13</em></p>
+<p class="date"><em>2020-05-19</em></p>
 </div>
 <div id="intro" class="section level1">
 <h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
@@ -259,12 +264,29 @@ Functions, processes, constraints, and rules relating to things&quot;</p>
 <h3><span class="header-section-number">1.4.1</span> ERDDAP</h3>
 <p><a href="%22https://coastwatch.pfeg.noaa.gov/erddap/index.html%22">ERDDAP</a> provides ‘easier access to scientific data’ by providing a consistent interface that aggregates many disparate data sources. It does this by providing translation services between many common file types for gridded arrarys (‘net CDF’ files) and tabular data (spreadsheets). Data access is also made easier because it unifies different types of data servers and access protocols. <a href="%22https://github.com/HakaiInstitute/erddap-basic%22">Here</a> is a basic erddap installation that walks you through how to load a data set.</p>
 </div>
+</div>
+<div id="notes-on-integrating-obis-darwin-core-as-it-relates-to-ooss" class="section level2">
+<h2><span class="header-section-number">1.5</span> Notes on Integrating OBIS, Darwin Core as it relates to OOS’s</h2>
+</div>
+<div id="metadata" class="section level2">
+<h2><span class="header-section-number">1.6</span> Metadata</h2>
+<p>OBIS uses the <a href="http://rs.gbif.org/schema/eml-gbif-profile/1.1/eml-gbif-profile.xsd">GBIF EML profile</a> (version 1.1). In case data providers use ISO19115/ISO19139, there is a mapping available here: <a href="http://rs.gbif.org/schema/eml-gbif-profile/1.1/eml2iso19139.xsl" class="uri">http://rs.gbif.org/schema/eml-gbif-profile/1.1/eml2iso19139.xsl</a> This will be important for integrating OBIS datasets to OOS metadata profiles.</p>
+</div>
+<div id="data-qc" class="section level2">
+<h2><span class="header-section-number">1.7</span> Data QC</h2>
+<p>There are a number of tools available to check the quality of data or check your data format against the expected standard.</p>
+<div id="compliance-checking" class="section level3">
+<h3><span class="header-section-number">1.7.1</span> Compliance Checking</h3>
+<p>LifeWatch Belgium provides a number of tools to check your data against.
+Specifically you can test OBIS data format and see a map of your sample locations to check if they are on land.
+See <a href="http://www.lifewatch.be/data-services/" class="uri">http://www.lifewatch.be/data-services/</a></p>
+</div>
 <div id="semantic-web-and-darwin-core" class="section level3">
-<h3><span class="header-section-number">1.4.2</span> Semantic Web and Darwin Core</h3>
+<h3><span class="header-section-number">1.7.2</span> Semantic Web and Darwin Core</h3>
 <p><a href="%22http://www.semantic-web-journal.net/system/files/swj1093.pdf%22">Lessons learned from adapting the Darwin Core vocabulary standard for use in RDF</a></p>
 </div>
 <div id="resource-description-framework" class="section level3">
-<h3><span class="header-section-number">1.4.3</span> Resource Description Framework</h3>
+<h3><span class="header-section-number">1.7.3</span> Resource Description Framework</h3>
 <p><a href="%22https://dwc.tdwg.org/rdf/%22">Darwin Core Resource Description Framework Guide</a></p>
 
 </div>
