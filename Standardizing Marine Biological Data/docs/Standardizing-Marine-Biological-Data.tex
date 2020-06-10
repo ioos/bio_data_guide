@@ -167,11 +167,12 @@ There are a number of controlled vocabularies that are used to describe paramete
 \item
   \href{\%22http://vocab.nerc.ac.uk/collection/P06/current/\%22}{Unit of measure}
 \item
-  \href{\%22http://vocab.nerc.ac.uk/collection/P04/current/\%22}{GCMD Keywords}
+  \href{\%22http://vocab.nerc.ac.uk/collection/P04/current/\%22}{GCMD Keywords (NASA)}
 \item
   \href{\%22http://vocab.nerc.ac.uk/collection/C19/current/\%22}{Geographic Domain/Features of Interest}
 \end{itemize}
 
+TODO: Improve this paragraph
 There are numberous ways to investigate which controlled vocabulary to use and this can be fairly overwhelming. For a simplified overview see \href{\%22http://seadatanet.maris2.nl/v_bodc_vocab_v2/vocab_relations.asp?lib=P08\%22}{here}.
 
 Note: To describe a measurement or fact of a biological specimen that conforms to Darwin Core standards, it's neccessary to use the `Biological entity described elsewhere' method rather than taxon specific.
@@ -206,9 +207,7 @@ Note: To describe a measurement or fact of a biological specimen that conforms t
 \hypertarget{geosciences}{%
 \subsection{Geosciences}\label{geosciences}}
 
-`UDUNITS' are more common in geosciences
-
-\href{https://www.unidata.ucar.edu/software/udunits/}{UDUNITS}
+\href{https://www.unidata.ucar.edu/software/udunits/}{UDUNITS}are more common unit measurements in geosciences
 
 \hypertarget{ecoenvo}{%
 \subsection{Eco/EnvO}\label{ecoenvo}}
@@ -218,6 +217,8 @@ Note: To describe a measurement or fact of a biological specimen that conforms t
 \hypertarget{wild-cards}{%
 \subsection{Wild Cards}\label{wild-cards}}
 
+Question: Not sure use case for this.
+
 \href{\%22https://www.bodc.ac.uk/resources/vocabularies/vocabulary_builder/biomodel/\%22}{P01 Biological Entity Parameter Code Builder}
 
 \hypertarget{technologies}{%
@@ -226,7 +227,7 @@ Note: To describe a measurement or fact of a biological specimen that conforms t
 \hypertarget{erddap}{%
 \subsection{ERDDAP}\label{erddap}}
 
-\href{\%22https://coastwatch.pfeg.noaa.gov/erddap/index.html\%22}{ERDDAP} provides `easier access to scientific data' by providing a consistent interface that aggregates many disparate data sources. It does this by providing translation services between many common file types for gridded arrarys (`net CDF' files) and tabular data (spreadsheets). Data access is also made easier because it unifies different types of data servers and access protocols. \href{\%22https://github.com/HakaiInstitute/erddap-basic\%22}{Here} is a basic erddap installation that walks you through how to load a data set.
+\href{\%22https://coastwatch.pfeg.noaa.gov/erddap/index.html\%22}{ERDDAP} can be thought of as a data server. It provides `easier access to scientific data' by providing a consistent interface that aggregates many disparate data sources. It does this by providing translation services between many common file types for gridded arrarys (`net CDF' files) and tabular data (spreadsheets). Data access is also made easier because it unifies different types of data servers and access protocols. \href{\%22https://github.com/HakaiInstitute/erddap-basic\%22}{Here} is a basic erddap installation that walks you through how to load a data set.
 
 \hypertarget{notes-on-integrating-obis-darwin-core-as-it-relates-to-ooss}{%
 \section{Notes on Integrating OBIS, Darwin Core as it relates to OOS's}\label{notes-on-integrating-obis-darwin-core-as-it-relates-to-ooss}}
@@ -240,6 +241,8 @@ OBIS uses the \href{http://rs.gbif.org/schema/eml-gbif-profile/1.1/eml-gbif-prof
 \section{Data QC}\label{data-qc}}
 
 There are a number of tools available to check the quality of data or check your data format against the expected standard.
+
+\href{https://obis.org/manual/processing/}{OBIS Datatools} shows some great R packages for this.
 
 \hypertarget{compliance-checking}{%
 \subsection{Compliance Checking}\label{compliance-checking}}
@@ -258,11 +261,14 @@ See \url{http://www.lifewatch.be/data-services/}
 
 \href{\%22https://dwc.tdwg.org/rdf/\%22}{Darwin Core Resource Description Framework Guide}
 
+\hypertarget{transformation-examples}{%
+\chapter{Transformation Examples}\label{transformation-examples}}
+
 \hypertarget{salmon-ocean-data}{%
-\chapter{Salmon Ocean Data}\label{salmon-ocean-data}}
+\section{Salmon Ocean Data}\label{salmon-ocean-data}}
 
 \hypertarget{intro-1}{%
-\section{Intro}\label{intro-1}}
+\subsection{Intro}\label{intro-1}}
 
 One of the goals of the Hakai Institute and the Canadian Integrated Ocean Observing System (CIOOS) is to facilitate Open Science and FAIR (findable, accessible, interoperable, reusable) ecological and oceanographic data. In a concerted effort to adopt or establish how best to do that, several Hakai and CIOOS staff attended an International Ocean Observing System (IOOS) Code Sprint in Ann Arbour, Michigan between October 7--11, 2019, to discuss how to implement FAIR data principles for biological data collected in the marine environment.
 
@@ -273,7 +279,7 @@ In the following script I demonstrate how I go about converting a subset of the 
 The conversion of a dataset to Darwin Core is much easier if your data are already tidy (normalized) in which you represent your data in separate tables that reflect the hierarchical and related nature of your observations. If your data are not already in a consistent and structured format, the conversion would likely be very arduos and not intuitive.
 
 \hypertarget{event}{%
-\section{event}\label{event}}
+\subsection{event}\label{event}}
 
 The first step is to consider what you will define as an event in your data set. I defined the capture of fish using a purse seine net as the \texttt{event}. Therefore, each row in the \texttt{event} table is one deployment of a seine net and is assigned a unique \texttt{eventID}.
 
@@ -296,7 +302,7 @@ My process for conversion was to make a new table called \texttt{event} and map 
 \end{Shaded}
 
 \hypertarget{occurrence}{%
-\section{occurrence}\label{occurrence}}
+\subsection{occurrence}\label{occurrence}}
 
 Next you'll want to determine what constitutes an occurrence for your data set. Because each event caputers fish, I consider each fish to be an occurrence. Therefore, the unit of observation (each row) in the occurrence table is a fish. To link each occurence to an event you need to include the \texttt{eventID} column for every occurrence so that you know what seine (event) each fish (occurrence) came from. You must also provide a globally unique identifier for each occurrence. I already have a locally unique identifier for each fish in the original \texttt{fish\_data} table called \texttt{ufn}. To make it globally unique I pre-pend the organization and research program metadata to the \texttt{ufn} column.
 
@@ -369,7 +375,7 @@ For each occuerence of the six different fish species that I caught I need to ma
 \end{Shaded}
 
 \hypertarget{measurementorfact}{%
-\section{measurementOrFact}\label{measurementorfact}}
+\subsection{measurementOrFact}\label{measurementorfact}}
 
 To convert all your measurements or facts from your normal format to Darwin Core you essentially need to put all your measurements into one column called measurementType and a corresponding column called measurementValue. This standardizes the column names are in the \texttt{measurementOrFact} table. There are a number of predefined \texttt{measurementType}s listed on the \href{https://www.bodc.ac.uk/resources/vocabularies/}{NERC} database that should be used where possible. I found it difficult to navigate this page to find the correct \texttt{measurementType}.
 

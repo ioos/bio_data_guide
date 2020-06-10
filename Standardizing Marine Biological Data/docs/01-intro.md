@@ -38,11 +38,11 @@ There are a number of controlled vocabularies that are used to describe paramete
 
 * [Unit of measure]("http://vocab.nerc.ac.uk/collection/P06/current/") 
 
-* [GCMD Keywords]("http://vocab.nerc.ac.uk/collection/P04/current/")
+* [GCMD Keywords (NASA)]("http://vocab.nerc.ac.uk/collection/P04/current/")
 
 * [Geographic Domain/Features of Interest]("http://vocab.nerc.ac.uk/collection/C19/current/")
 
-
+TODO: Improve this paragraph
 There are numberous ways to investigate which controlled vocabulary to use and this can be fairly overwhelming. For a simplified overview see [here]("http://seadatanet.maris2.nl/v_bodc_vocab_v2/vocab_relations.asp?lib=P08").
 
 Note: To describe a measurement or fact of a biological specimen that conforms to Darwin Core standards, it's neccessary to use the 'Biological entity described elsewhere' method rather than taxon specific.
@@ -70,9 +70,7 @@ Note: To describe a measurement or fact of a biological specimen that conforms t
 
 ### Geosciences
 
-'UDUNITS' are more common in geosciences
-
-[UDUNITS](https://www.unidata.ucar.edu/software/udunits/)
+[UDUNITS](https://www.unidata.ucar.edu/software/udunits/)are more common unit measurements in geosciences
 
 ### Eco/EnvO
 
@@ -80,12 +78,15 @@ Note: To describe a measurement or fact of a biological specimen that conforms t
 
 ### Wild Cards
 
+Question: Not sure use case for this. 
+
 [P01 Biological Entity Parameter Code Builder]("https://www.bodc.ac.uk/resources/vocabularies/vocabulary_builder/biomodel/")
 
 ## Technologies
 
 ### ERDDAP
-[ERDDAP]("https://coastwatch.pfeg.noaa.gov/erddap/index.html") provides 'easier access to scientific data' by providing a consistent interface that aggregates many disparate data sources. It does this by providing translation services between many common file types for gridded arrarys ('net CDF' files) and tabular data (spreadsheets). Data access is also made easier because it unifies different types of data servers and access protocols. [Here]("https://github.com/HakaiInstitute/erddap-basic") is a basic erddap installation that walks you through how to load a data set.
+
+[ERDDAP]("https://coastwatch.pfeg.noaa.gov/erddap/index.html") can be thought of as a data server. It provides 'easier access to scientific data' by providing a consistent interface that aggregates many disparate data sources. It does this by providing translation services between many common file types for gridded arrarys ('net CDF' files) and tabular data (spreadsheets). Data access is also made easier because it unifies different types of data servers and access protocols. [Here]("https://github.com/HakaiInstitute/erddap-basic") is a basic erddap installation that walks you through how to load a data set.
 
 
 ## Notes on Integrating OBIS, Darwin Core as it relates to OOS's
@@ -98,15 +99,13 @@ OBIS uses the [GBIF EML profile](http://rs.gbif.org/schema/eml-gbif-profile/1.1/
 
 There are a number of tools available to check the quality of data or check your data format against the expected standard.
 
+[OBIS Datatools](https://obis.org/manual/processing/) shows some great R packages for this.
+
 ### Compliance Checking 
 
 LifeWatch Belgium provides a number of tools to check your data against.
 Specifically you can test OBIS data format and see a map of your sample locations to check if they are on land.
 See http://www.lifewatch.be/data-services/
-
-
-
-
 
 ### Semantic Web and Darwin Core
 

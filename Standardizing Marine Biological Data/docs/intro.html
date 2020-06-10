@@ -32,7 +32,7 @@
   
   
 
-<link rel="next" href="salmon-ocean-data.html"/>
+<link rel="next" href="transformation-examples.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -153,11 +153,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.6.3" data-path="intro.html"><a href="intro.html#resource-description-framework"><i class="fa fa-check"></i><b>1.6.3</b> Resource Description Framework</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="salmon-ocean-data.html"><a href="salmon-ocean-data.html"><i class="fa fa-check"></i><b>2</b> Salmon Ocean Data</a><ul>
-<li class="chapter" data-level="2.1" data-path="salmon-ocean-data.html"><a href="salmon-ocean-data.html#intro-1"><i class="fa fa-check"></i><b>2.1</b> Intro</a></li>
-<li class="chapter" data-level="2.2" data-path="salmon-ocean-data.html"><a href="salmon-ocean-data.html#event"><i class="fa fa-check"></i><b>2.2</b> event</a></li>
-<li class="chapter" data-level="2.3" data-path="salmon-ocean-data.html"><a href="salmon-ocean-data.html#occurrence"><i class="fa fa-check"></i><b>2.3</b> occurrence</a></li>
-<li class="chapter" data-level="2.4" data-path="salmon-ocean-data.html"><a href="salmon-ocean-data.html#measurementorfact"><i class="fa fa-check"></i><b>2.4</b> measurementOrFact</a></li>
+<li class="chapter" data-level="2" data-path="transformation-examples.html"><a href="transformation-examples.html"><i class="fa fa-check"></i><b>2</b> Transformation Examples</a><ul>
+<li class="chapter" data-level="2.1" data-path="transformation-examples.html"><a href="transformation-examples.html#salmon-ocean-data"><i class="fa fa-check"></i><b>2.1</b> Salmon Ocean Data</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="transformation-examples.html"><a href="transformation-examples.html#intro-1"><i class="fa fa-check"></i><b>2.1.1</b> Intro</a></li>
+<li class="chapter" data-level="2.1.2" data-path="transformation-examples.html"><a href="transformation-examples.html#event"><i class="fa fa-check"></i><b>2.1.2</b> event</a></li>
+<li class="chapter" data-level="2.1.3" data-path="transformation-examples.html"><a href="transformation-examples.html#occurrence"><i class="fa fa-check"></i><b>2.1.3</b> occurrence</a></li>
+<li class="chapter" data-level="2.1.4" data-path="transformation-examples.html"><a href="transformation-examples.html#measurementorfact"><i class="fa fa-check"></i><b>2.1.4</b> measurementOrFact</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>3</b> Methods</a></li>
 <li class="chapter" data-level="4" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>4</b> Applications</a><ul>
@@ -215,10 +217,11 @@ Functions, processes, constraints, and rules relating to things&quot;</p>
 <li><p><a href="%22http://vocab.nerc.ac.uk/collection/L06/current/%22">Platform categories using SeaVoX Platform Categories</a> in NERC 2.0</p></li>
 <li><p><a href="%22http://vocab.nerc.ac.uk/collection/C17/current/%22">Platform instances using the ICES Platform Codes</a> in NERC 2.0</p></li>
 <li><p><a href="%22http://vocab.nerc.ac.uk/collection/P06/current/%22">Unit of measure</a></p></li>
-<li><p><a href="%22http://vocab.nerc.ac.uk/collection/P04/current/%22">GCMD Keywords</a></p></li>
+<li><p><a href="%22http://vocab.nerc.ac.uk/collection/P04/current/%22">GCMD Keywords (NASA)</a></p></li>
 <li><p><a href="%22http://vocab.nerc.ac.uk/collection/C19/current/%22">Geographic Domain/Features of Interest</a></p></li>
 </ul>
-<p>There are numberous ways to investigate which controlled vocabulary to use and this can be fairly overwhelming. For a simplified overview see <a href="%22http://seadatanet.maris2.nl/v_bodc_vocab_v2/vocab_relations.asp?lib=P08%22">here</a>.</p>
+<p>TODO: Improve this paragraph
+There are numberous ways to investigate which controlled vocabulary to use and this can be fairly overwhelming. For a simplified overview see <a href="%22http://seadatanet.maris2.nl/v_bodc_vocab_v2/vocab_relations.asp?lib=P08%22">here</a>.</p>
 <p>Note: To describe a measurement or fact of a biological specimen that conforms to Darwin Core standards, it’s neccessary to use the ‘Biological entity described elsewhere’ method rather than taxon specific.</p>
 <div id="collections" class="section level3">
 <h3><span class="header-section-number">1.2.1</span> Collections</h3>
@@ -242,8 +245,7 @@ Functions, processes, constraints, and rules relating to things&quot;</p>
 </div>
 <div id="geosciences" class="section level3">
 <h3><span class="header-section-number">1.2.5</span> Geosciences</h3>
-<p>‘UDUNITS’ are more common in geosciences</p>
-<p><a href="https://www.unidata.ucar.edu/software/udunits/">UDUNITS</a></p>
+<p><a href="https://www.unidata.ucar.edu/software/udunits/">UDUNITS</a>are more common unit measurements in geosciences</p>
 </div>
 <div id="ecoenvo" class="section level3">
 <h3><span class="header-section-number">1.2.6</span> Eco/EnvO</h3>
@@ -251,6 +253,7 @@ Functions, processes, constraints, and rules relating to things&quot;</p>
 </div>
 <div id="wild-cards" class="section level3">
 <h3><span class="header-section-number">1.2.7</span> Wild Cards</h3>
+<p>Question: Not sure use case for this.</p>
 <p><a href="%22https://www.bodc.ac.uk/resources/vocabularies/vocabulary_builder/biomodel/%22">P01 Biological Entity Parameter Code Builder</a></p>
 </div>
 </div>
@@ -258,7 +261,7 @@ Functions, processes, constraints, and rules relating to things&quot;</p>
 <h2><span class="header-section-number">1.3</span> Technologies</h2>
 <div id="erddap" class="section level3">
 <h3><span class="header-section-number">1.3.1</span> ERDDAP</h3>
-<p><a href="%22https://coastwatch.pfeg.noaa.gov/erddap/index.html%22">ERDDAP</a> provides ‘easier access to scientific data’ by providing a consistent interface that aggregates many disparate data sources. It does this by providing translation services between many common file types for gridded arrarys (‘net CDF’ files) and tabular data (spreadsheets). Data access is also made easier because it unifies different types of data servers and access protocols. <a href="%22https://github.com/HakaiInstitute/erddap-basic%22">Here</a> is a basic erddap installation that walks you through how to load a data set.</p>
+<p><a href="%22https://coastwatch.pfeg.noaa.gov/erddap/index.html%22">ERDDAP</a> can be thought of as a data server. It provides ‘easier access to scientific data’ by providing a consistent interface that aggregates many disparate data sources. It does this by providing translation services between many common file types for gridded arrarys (‘net CDF’ files) and tabular data (spreadsheets). Data access is also made easier because it unifies different types of data servers and access protocols. <a href="%22https://github.com/HakaiInstitute/erddap-basic%22">Here</a> is a basic erddap installation that walks you through how to load a data set.</p>
 </div>
 </div>
 <div id="notes-on-integrating-obis-darwin-core-as-it-relates-to-ooss" class="section level2">
@@ -271,6 +274,7 @@ Functions, processes, constraints, and rules relating to things&quot;</p>
 <div id="data-qc" class="section level2">
 <h2><span class="header-section-number">1.6</span> Data QC</h2>
 <p>There are a number of tools available to check the quality of data or check your data format against the expected standard.</p>
+<p><a href="https://obis.org/manual/processing/">OBIS Datatools</a> shows some great R packages for this.</p>
 <div id="compliance-checking" class="section level3">
 <h3><span class="header-section-number">1.6.1</span> Compliance Checking</h3>
 <p>LifeWatch Belgium provides a number of tools to check your data against.
@@ -294,7 +298,7 @@ See <a href="http://www.lifewatch.be/data-services/" class="uri">http://www.life
         </div>
       </div>
 
-<a href="salmon-ocean-data.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="transformation-examples.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
