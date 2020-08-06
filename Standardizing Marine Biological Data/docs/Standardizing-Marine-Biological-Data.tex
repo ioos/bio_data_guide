@@ -125,7 +125,11 @@ Biological data structures, definitions, measurements, and linkages are neccessa
 \hypertarget{intro}{%
 \chapter{Introduction}\label{intro}}
 
-The world of standardizing marine biological data is complex and fraught with uncertainty for the naive oceanographer, biologist, scientist, or programmer. This is about stacking the right standards for your desired interoperability with other data types. For example, interopating fish biology measurements with climate level variables. There are a few links neccessary to make this possible and will permit broader access to better ecosystem based models. This phenomena is not unique to specic scientific domains, but is rather pervasive as many scientific domains are currently being resahped in light of recent advances in computing power, technology, and data science.
+The world of standardizing marine biological data is complex and fraught with uncertainty for naive oceanographer, biologist, scientist, or programmer.
+This is about stacking the right standards for your desired interoperability with other data types.
+For example, interoperating fish biology measurements with climate level variables.
+There are a few links neccessary to make this possible and will permit broader access to better ecosystem based models.
+This phenomena is not unique to specic scientific domains, but is rather pervasive as many scientific domains are currently being reshaped in light of recent advances in computing power, technology, and data science.
 
 \hypertarget{data-structures}{%
 \section{Data Structures}\label{data-structures}}
@@ -376,7 +380,7 @@ For each occurrence of the six different fish species that I caught I need to ma
 \NormalTok{occurrence <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(occurrence, species_matched, }\DataTypeTok{by =} \KeywordTok{c}\NormalTok{(}\StringTok{"scientificName"}\NormalTok{ =}\StringTok{ "ScientificName"}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }
 \StringTok{  }\KeywordTok{select}\NormalTok{(occurrenceID, basisOfRecord, scientificName, eventID, }\DataTypeTok{occurrenceStatus =}\NormalTok{ occurenceStatus, Kingdom, Phylum, Class, Order, Family, Genus, Species)}
 
-\CommentTok{#write_csv(occurrence, here::here("datasets", "hakai_salmon_data", "occurrence.csv"))}
+\KeywordTok{write_csv}\NormalTok{(occurrence, here}\OperatorTok{::}\KeywordTok{here}\NormalTok{(}\StringTok{"datasets"}\NormalTok{, }\StringTok{"hakai_salmon_data"}\NormalTok{, }\StringTok{"occurrence.csv"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -413,7 +417,7 @@ Here I convert length, and weight measurements that relate to an event and an oc
 
 \KeywordTok{rm}\NormalTok{(fish_length, fish_weight)}
 
-\CommentTok{#write_csv(measurementOrFact, here::here("datasets", "hakai_salmon_data", "measurementOrFact.csv"))}
+\KeywordTok{write_csv}\NormalTok{(measurementOrFact, here}\OperatorTok{::}\KeywordTok{here}\NormalTok{(}\StringTok{"datasets"}\NormalTok{, }\StringTok{"hakai_salmon_data"}\NormalTok{, }\StringTok{"measurementOrFact.csv"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 

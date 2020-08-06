@@ -1,6 +1,9 @@
 # Introduction {#intro}
-
-The world of standardizing marine biological data is complex and fraught with uncertainty for the naive oceanographer, biologist, scientist, or programmer. This is about stacking the right standards for your desired interoperability with other data types. For example, interopating fish biology measurements with climate level variables. There are a few links neccessary to make this possible and will permit broader access to better ecosystem based models. This phenomena is not unique to specic scientific domains, but is rather pervasive as many scientific domains are currently being resahped in light of recent advances in computing power, technology, and data science.
+The world of standardizing marine biological data is complex and fraught with uncertainty for naive oceanographer, biologist, scientist, or programmer. 
+This is about stacking the right standards for your desired interoperability with other data types. 
+For example, interoperating fish biology measurements with climate level variables. 
+There are a few links neccessary to make this possible and will permit broader access to better ecosystem based models. 
+This phenomena is not unique to specic scientific domains, but is rather pervasive as many scientific domains are currently being reshaped in light of recent advances in computing power, technology, and data science.
 
 ## Data Structures
 

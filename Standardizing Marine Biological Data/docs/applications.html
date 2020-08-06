@@ -265,7 +265,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb3-5" data-line-number="5">occurrence &lt;-<span class="st"> </span><span class="kw">left_join</span>(occurrence, species_matched, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;scientificName&quot;</span> =<span class="st"> &quot;ScientificName&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(occurrenceID, basisOfRecord, scientificName, eventID, <span class="dt">occurrenceStatus =</span> occurenceStatus, Kingdom, Phylum, Class, Order, Family, Genus, Species)</a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#write_csv(occurrence, here::here(&quot;datasets&quot;, &quot;hakai_salmon_data&quot;, &quot;occurrence.csv&quot;))</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="kw">write_csv</span>(occurrence, here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;datasets&quot;</span>, <span class="st">&quot;hakai_salmon_data&quot;</span>, <span class="st">&quot;occurrence.csv&quot;</span>))</a></code></pre></div>
 </div>
 <div id="measurementorfact" class="section level3">
 <h3><span class="header-section-number">3.1.3</span> measurementOrFact</h3>
@@ -295,7 +295,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb4-22" data-line-number="22"></a>
 <a class="sourceLine" id="cb4-23" data-line-number="23"><span class="kw">rm</span>(fish_length, fish_weight)</a>
 <a class="sourceLine" id="cb4-24" data-line-number="24"></a>
-<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="co">#write_csv(measurementOrFact, here::here(&quot;datasets&quot;, &quot;hakai_salmon_data&quot;, &quot;measurementOrFact.csv&quot;))</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="kw">write_csv</span>(measurementOrFact, here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;datasets&quot;</span>, <span class="st">&quot;hakai_salmon_data&quot;</span>, <span class="st">&quot;measurementOrFact.csv&quot;</span>))</a></code></pre></div>
 </div>
 </div>
 <div id="example-two" class="section level2">

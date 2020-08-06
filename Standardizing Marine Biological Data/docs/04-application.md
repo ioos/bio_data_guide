@@ -105,7 +105,7 @@ species_matched <- readxl::read_excel(here::here("datasets", "hakai_salmon_data"
 occurrence <- left_join(occurrence, species_matched, by = c("scientificName" = "ScientificName")) %>% 
   select(occurrenceID, basisOfRecord, scientificName, eventID, occurrenceStatus = occurenceStatus, Kingdom, Phylum, Class, Order, Family, Genus, Species)
 
-#write_csv(occurrence, here::here("datasets", "hakai_salmon_data", "occurrence.csv"))
+write_csv(occurrence, here::here("datasets", "hakai_salmon_data", "occurrence.csv"))
 ```
 
 
@@ -140,7 +140,7 @@ measurementOrFact <- bind_rows(fish_length, fish_weight) %>%
 
 rm(fish_length, fish_weight)
 
-#write_csv(measurementOrFact, here::here("datasets", "hakai_salmon_data", "measurementOrFact.csv"))
+write_csv(measurementOrFact, here::here("datasets", "hakai_salmon_data", "measurementOrFact.csv"))
 ```
 
 ## Example two
