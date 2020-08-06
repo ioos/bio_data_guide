@@ -42,6 +42,8 @@ There are a number of controlled vocabularies that are used to describe paramete
 
 * [Geographic Domain/Features of Interest]("http://vocab.nerc.ac.uk/collection/C19/current/")
 
+* [GeoLink base ontology](http://schema.geolink.org/1.0/base/main.html) was part of the [EarthCube GeoLink Project](http://www.geolink.org/)
+
 TODO: Improve this paragraph
 There are numberous ways to investigate which controlled vocabulary to use and this can be fairly overwhelming. For a simplified overview see [here]("http://seadatanet.maris2.nl/v_bodc_vocab_v2/vocab_relations.asp?lib=P08").
 

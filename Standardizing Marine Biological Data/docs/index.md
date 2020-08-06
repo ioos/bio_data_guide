@@ -1,7 +1,7 @@
 --- 
 title: "Standardizing-Marine-Biological-Data"
 author: "Brett Johnson"
-date: "2020-06-10"
+date: "2020-08-06"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]

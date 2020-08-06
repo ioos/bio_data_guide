@@ -111,7 +111,7 @@
 
 \title{Standardizing-Marine-Biological-Data}
 \author{Brett Johnson}
-\date{2020-06-10}
+\date{2020-08-06}
 
 \begin{document}
 \maketitle
@@ -125,7 +125,7 @@ Biological data structures, definitions, measurements, and linkages are neccessa
 \hypertarget{intro}{%
 \chapter{Introduction}\label{intro}}
 
-The world of standardizing marine biological data is complex and fraught with uncertainty for the new comer biologist, scientist, or programmer. This is about stacking the right standards for your desired ineroperability with other data types. For example, interopating fish biology measurements with climate level variables. There are a few links neccessary to make this possible and will permit broader access to better ecosystem based models. This phenomena is not unique to specic scientific domains, but is rather pervasive as many scientific domains are currently being rethought in light of game changing computing power, technology, and data science.
+The world of standardizing marine biological data is complex and fraught with uncertainty for the naive oceanographer, biologist, scientist, or programmer. This is about stacking the right standards for your desired interoperability with other data types. For example, interopating fish biology measurements with climate level variables. There are a few links neccessary to make this possible and will permit broader access to better ecosystem based models. This phenomena is not unique to specic scientific domains, but is rather pervasive as many scientific domains are currently being resahped in light of recent advances in computing power, technology, and data science.
 
 \hypertarget{data-structures}{%
 \section{Data Structures}\label{data-structures}}
@@ -170,6 +170,8 @@ There are a number of controlled vocabularies that are used to describe paramete
   \href{\%22http://vocab.nerc.ac.uk/collection/P04/current/\%22}{GCMD Keywords (NASA)}
 \item
   \href{\%22http://vocab.nerc.ac.uk/collection/C19/current/\%22}{Geographic Domain/Features of Interest}
+\item
+  \href{http://schema.geolink.org/1.0/base/main.html}{GeoLink base ontology} was part of the \href{http://www.geolink.org/}{EarthCube GeoLink Project}
 \end{itemize}
 
 TODO: Improve this paragraph
@@ -261,14 +263,18 @@ See \url{http://www.lifewatch.be/data-services/}
 
 \href{\%22https://dwc.tdwg.org/rdf/\%22}{Darwin Core Resource Description Framework Guide}
 
-\hypertarget{transformation-examples}{%
-\chapter{Transformation Examples}\label{transformation-examples}}
+\hypertarget{methods}{%
+\chapter{Methods}\label{methods}}
 
-\hypertarget{salmon-ocean-data}{%
-\section{Salmon Ocean Data}\label{salmon-ocean-data}}
+We describe our methods in this chapter.
 
-\hypertarget{intro-1}{%
-\subsection{Intro}\label{intro-1}}
+\hypertarget{applications}{%
+\chapter{Applications}\label{applications}}
+
+Some \emph{significant} applications are demonstrated in this chapter.
+
+\hypertarget{salmon-ocean-ecology-data}{%
+\section{Salmon Ocean Ecology Data}\label{salmon-ocean-ecology-data}}
 
 One of the goals of the Hakai Institute and the Canadian Integrated Ocean Observing System (CIOOS) is to facilitate Open Science and FAIR (findable, accessible, interoperable, reusable) ecological and oceanographic data. In a concerted effort to adopt or establish how best to do that, several Hakai and CIOOS staff attended an International Ocean Observing System (IOOS) Code Sprint in Ann Arbour, Michigan between October 7--11, 2019, to discuss how to implement FAIR data principles for biological data collected in the marine environment.
 
@@ -276,7 +282,7 @@ The \href{https://dwc.tdwg.org}{Darwin Core} is a highly structured data format 
 
 In the following script I demonstrate how I go about converting a subset of the data collected from the Hakai Institute Juvenile Salmon Program and discuss challenges, solutions, pros and cons, and when and what's worthwhile to convert to Darwin Core.
 
-The conversion of a dataset to Darwin Core is much easier if your data are already tidy (normalized) in which you represent your data in separate tables that reflect the hierarchical and related nature of your observations. If your data are not already in a consistent and structured format, the conversion would likely be very arduos and not intuitive.
+The conversion of a dataset to Darwin Core is much easier if your data are already tidy (normalized) in which you represent your data in separate tables that reflect the hierarchical and related nature of your observations. If your data are not already in a consistent and structured format, the conversion would likely be very arduous and not intuitive.
 
 \hypertarget{event}{%
 \subsection{event}\label{event}}
@@ -304,7 +310,7 @@ My process for conversion was to make a new table called \texttt{event} and map 
 \hypertarget{occurrence}{%
 \subsection{occurrence}\label{occurrence}}
 
-Next you'll want to determine what constitutes an occurrence for your data set. Because each event caputers fish, I consider each fish to be an occurrence. Therefore, the unit of observation (each row) in the occurrence table is a fish. To link each occurence to an event you need to include the \texttt{eventID} column for every occurrence so that you know what seine (event) each fish (occurrence) came from. You must also provide a globally unique identifier for each occurrence. I already have a locally unique identifier for each fish in the original \texttt{fish\_data} table called \texttt{ufn}. To make it globally unique I pre-pend the organization and research program metadata to the \texttt{ufn} column.
+Next you'll want to determine what constitutes an occurrence for your data set. Because each event captures fish, I consider each fish to be an occurrence. Therefore, the unit of observation (each row) in the occurrence table is a fish. To link each occurrence to an event you need to include the \texttt{eventID} column for every occurrence so that you know what seine (event) each fish (occurrence) came from. You must also provide a globally unique identifier for each occurrence. I already have a locally unique identifier for each fish in the original \texttt{fish\_data} table called \texttt{ufn}. To make it globally unique I pre-pend the organization and research program metadata to the \texttt{ufn} column.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -359,7 +365,7 @@ Next you'll want to determine what constitutes an occurrence for your data set. 
 \end{Highlighting}
 \end{Shaded}
 
-For each occuerence of the six different fish species that I caught I need to match the species name that I provide with the official \texttt{scientificName} that is part of the World Register of Marine Species database \url{http://www.marinespecies.org/}
+For each occurrence of the six different fish species that I caught I need to match the species name that I provide with the official \texttt{scientificName} that is part of the World Register of Marine Species database \url{http://www.marinespecies.org/}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -391,7 +397,7 @@ Here I convert length, and weight measurements that relate to an event and an oc
 \StringTok{  }\KeywordTok{select}\NormalTok{(occurrenceID, }\DataTypeTok{eventID =}\NormalTok{ seine_id, fork_length, weight) }\OperatorTok{%>%}\StringTok{ }
 \StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{measurementType =} \StringTok{"fork length"}\NormalTok{, }\DataTypeTok{measurementValue =}\NormalTok{ fork_length) }\OperatorTok{%>%}\StringTok{ }
 \StringTok{  }\KeywordTok{select}\NormalTok{(eventID, occurrenceID, measurementType, measurementValue) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{measurementUnit =} \StringTok{"millimeters"}\NormalTok{,}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{measurementUnit =} \StringTok{"millimetres"}\NormalTok{,}
          \DataTypeTok{measurementUnitID =} \StringTok{"http://vocab.nerc.ac.uk/collection/P06/current/UXMM/"}\NormalTok{)}
 
 \NormalTok{fish_weight <-}\StringTok{ }\NormalTok{fish_data }\OperatorTok{%>%}\StringTok{ }
@@ -410,19 +416,6 @@ Here I convert length, and weight measurements that relate to an event and an oc
 \CommentTok{#write_csv(measurementOrFact, here::here("datasets", "hakai_salmon_data", "measurementOrFact.csv"))}
 \end{Highlighting}
 \end{Shaded}
-
-\hypertarget{methods}{%
-\chapter{Methods}\label{methods}}
-
-We describe our methods in this chapter.
-
-\hypertarget{applications}{%
-\chapter{Applications}\label{applications}}
-
-Some \emph{significant} applications are demonstrated in this chapter.
-
-\hypertarget{example-one}{%
-\section{Example one}\label{example-one}}
 
 \hypertarget{example-two}{%
 \section{Example two}\label{example-two}}
