@@ -418,11 +418,125 @@ Here I convert length, and weight measurements that relate to an event and an oc
 \KeywordTok{rm}\NormalTok{(fish_length, fish_weight)}
 
 \KeywordTok{write_csv}\NormalTok{(measurementOrFact, here}\OperatorTok{::}\KeywordTok{here}\NormalTok{(}\StringTok{"datasets"}\NormalTok{, }\StringTok{"hakai_salmon_data"}\NormalTok{, }\StringTok{"measurementOrFact.csv"}\NormalTok{))}
+
+\KeywordTok{rm}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{combine-into-dwc-a}{%
+\subsection{Combine into DwC-A}\label{combine-into-dwc-a}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{DwCA <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(occurrence, event) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{scientificNameID =} \DecValTok{126140}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{drop_na}\NormalTok{(eventDate) }\CommentTok{# loses 1388 rows. }\AlertTok{TODO}\CommentTok{: Ensure dropped data is as expected}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{data-qc-1}{%
+\subsection{Data QC}\label{data-qc-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(obistools)}
+\CommentTok{# Unit tests}
+\KeywordTok{check_fields}\NormalTok{(DwCA)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 0 x 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot_map}\NormalTok{(DwCA, }\DataTypeTok{zoom =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{04-application_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggsave}\NormalTok{(}\KeywordTok{here}\NormalTok{(}\StringTok{"figs"}\NormalTok{, }\StringTok{"basic_map.png"}\NormalTok{))}
+
+\KeywordTok{check_onland}\NormalTok{(DwCA)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 8,050 x 20
+##    occurrenceID basisOfRecord scientificName eventID occurrenceStatus Kingdom
+##    <chr>        <chr>         <chr>          <chr>   <chr>            <chr>  
+##  1 hakai-jsp-8~ HumanObserva~ Oncorhynchus ~ DE104N1 present          Animal~
+##  2 hakai-jsp-8~ HumanObserva~ Oncorhynchus ~ DE104N1 present          Animal~
+##  3 hakai-jsp-8~ HumanObserva~ Oncorhynchus ~ DE104N1 present          Animal~
+##  4 hakai-jsp-8~ HumanObserva~ Oncorhynchus ~ DE104N1 present          Animal~
+##  5 hakai-jsp-8~ HumanObserva~ Oncorhynchus ~ DE104N1 present          Animal~
+##  6 hakai-jsp-8~ HumanObserva~ Oncorhynchus ~ DE104N1 present          Animal~
+##  7 hakai-jsp-8~ HumanObserva~ Oncorhynchus ~ DE104N1 present          Animal~
+##  8 hakai-jsp-8~ HumanObserva~ Oncorhynchus ~ DE104N1 present          Animal~
+##  9 hakai-jsp-8~ HumanObserva~ Oncorhynchus ~ DE104N1 present          Animal~
+## 10 hakai-jsp-8~ HumanObserva~ Oncorhynchus ~ DE104N1 present          Animal~
+## # ... with 8,040 more rows, and 14 more variables: Phylum <chr>, Class <chr>,
+## #   Order <chr>, Family <chr>, Genus <chr>, Species <chr>, eventDate <date>,
+## #   decimalLatitude <dbl>, decimalLongitude <dbl>, geodeticDatum <chr>,
+## #   minimumDepthInMeters <dbl>, maximumDepthInMeters <dbl>,
+## #   samplingProtocol <chr>, scientificNameID <dbl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{check_depth}\NormalTok{(DwCA)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 262,455 x 20
+##    occurrenceID basisOfRecord scientificName eventID occurrenceStatus Kingdom
+##    <chr>        <chr>         <chr>          <chr>   <chr>            <chr>  
+##  1 hakai-jsp-1  HumanObserva~ Oncorhynchus ~ DE101N1 present          Animal~
+##  2 hakai-jsp-2  HumanObserva~ Oncorhynchus ~ DE101N1 present          Animal~
+##  3 hakai-jsp-3  HumanObserva~ Oncorhynchus ~ DE101N1 present          Animal~
+##  4 hakai-jsp-4  HumanObserva~ Oncorhynchus ~ DE101N1 present          Animal~
+##  5 hakai-jsp-5  HumanObserva~ Oncorhynchus ~ DE101N1 present          Animal~
+##  6 hakai-jsp-6  HumanObserva~ Oncorhynchus ~ DE101N1 present          Animal~
+##  7 hakai-jsp-7  HumanObserva~ Oncorhynchus ~ DE101N1 present          Animal~
+##  8 hakai-jsp-8  HumanObserva~ Oncorhynchus ~ DE101N1 present          Animal~
+##  9 hakai-jsp-9  HumanObserva~ Oncorhynchus ~ DE101N1 present          Animal~
+## 10 hakai-jsp-10 HumanObserva~ Oncorhynchus ~ DE101N1 present          Animal~
+## # ... with 262,445 more rows, and 14 more variables: Phylum <chr>, Class <chr>,
+## #   Order <chr>, Family <chr>, Genus <chr>, Species <chr>, eventDate <date>,
+## #   decimalLatitude <dbl>, decimalLongitude <dbl>, geodeticDatum <chr>,
+## #   minimumDepthInMeters <dbl>, maximumDepthInMeters <dbl>,
+## #   samplingProtocol <chr>, scientificNameID <dbl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#(report <- check_outliers_species(DwCA)) # Need to lsid from marinespecies.rg}
+\KeywordTok{check_eventdate}\NormalTok{(DwCA)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 0 x 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tree <-}\StringTok{ }\KeywordTok{treeStructure}\NormalTok{(event, occurrence)}
+\KeywordTok{exportTree}\NormalTok{(tree, }\StringTok{"tree.html"}\NormalTok{)}
+
+\CommentTok{#report(DwCA) # Currently I get warnings on depths. it looks like depths are supposed to be negative? Not according to oceanographers I know. Other points are close to land, need to check closer, but that's expected sampling in the littoral zone.}
 \end{Highlighting}
 \end{Shaded}
 
 \hypertarget{example-two}{%
 \section{Example two}\label{example-two}}
+
+126140
 
 \hypertarget{final-words}{%
 \chapter{Final Words}\label{final-words}}

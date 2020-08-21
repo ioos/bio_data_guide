@@ -141,6 +141,107 @@ measurementOrFact <- bind_rows(fish_length, fish_weight) %>%
 rm(fish_length, fish_weight)
 
 write_csv(measurementOrFact, here::here("datasets", "hakai_salmon_data", "measurementOrFact.csv"))
+
+rm()
 ```
 
+### Combine into DwC-A
+
+
+```r
+DwCA <- left_join(occurrence, event) %>% 
+  mutate(scientificNameID = 126140) %>% 
+  drop_na(eventDate) # loses 1388 rows. TODO: Ensure dropped data is as expected
+```
+
+
+### Data QC
+
+
+```r
+library(obistools)
+# Unit tests
+check_fields(DwCA)
+```
+
+```
+## # A tibble: 0 x 0
+```
+
+```r
+plot_map(DwCA, zoom = TRUE)
+```
+
+![](04-application_files/figure-epub3/unnamed-chunk-3-1.png)<!-- -->
+
+```r
+ggsave(here("figs", "basic_map.png"))
+
+check_onland(DwCA)
+```
+
+```
+## # A tibble: 8,050 x 20
+##    occurrenceID basisOfRecord scientificName eventID occurrenceStatus Kingdom
+##    <chr>        <chr>         <chr>          <chr>   <chr>            <chr>  
+##  1 hakai-jsp-8… HumanObserva… Oncorhynchus … DE104N1 present          Animal…
+##  2 hakai-jsp-8… HumanObserva… Oncorhynchus … DE104N1 present          Animal…
+##  3 hakai-jsp-8… HumanObserva… Oncorhynchus … DE104N1 present          Animal…
+##  4 hakai-jsp-8… HumanObserva… Oncorhynchus … DE104N1 present          Animal…
+##  5 hakai-jsp-8… HumanObserva… Oncorhynchus … DE104N1 present          Animal…
+##  6 hakai-jsp-8… HumanObserva… Oncorhynchus … DE104N1 present          Animal…
+##  7 hakai-jsp-8… HumanObserva… Oncorhynchus … DE104N1 present          Animal…
+##  8 hakai-jsp-8… HumanObserva… Oncorhynchus … DE104N1 present          Animal…
+##  9 hakai-jsp-8… HumanObserva… Oncorhynchus … DE104N1 present          Animal…
+## 10 hakai-jsp-8… HumanObserva… Oncorhynchus … DE104N1 present          Animal…
+## # … with 8,040 more rows, and 14 more variables: Phylum <chr>, Class <chr>,
+## #   Order <chr>, Family <chr>, Genus <chr>, Species <chr>, eventDate <date>,
+## #   decimalLatitude <dbl>, decimalLongitude <dbl>, geodeticDatum <chr>,
+## #   minimumDepthInMeters <dbl>, maximumDepthInMeters <dbl>,
+## #   samplingProtocol <chr>, scientificNameID <dbl>
+```
+
+```r
+check_depth(DwCA)
+```
+
+```
+## # A tibble: 262,455 x 20
+##    occurrenceID basisOfRecord scientificName eventID occurrenceStatus Kingdom
+##    <chr>        <chr>         <chr>          <chr>   <chr>            <chr>  
+##  1 hakai-jsp-1  HumanObserva… Oncorhynchus … DE101N1 present          Animal…
+##  2 hakai-jsp-2  HumanObserva… Oncorhynchus … DE101N1 present          Animal…
+##  3 hakai-jsp-3  HumanObserva… Oncorhynchus … DE101N1 present          Animal…
+##  4 hakai-jsp-4  HumanObserva… Oncorhynchus … DE101N1 present          Animal…
+##  5 hakai-jsp-5  HumanObserva… Oncorhynchus … DE101N1 present          Animal…
+##  6 hakai-jsp-6  HumanObserva… Oncorhynchus … DE101N1 present          Animal…
+##  7 hakai-jsp-7  HumanObserva… Oncorhynchus … DE101N1 present          Animal…
+##  8 hakai-jsp-8  HumanObserva… Oncorhynchus … DE101N1 present          Animal…
+##  9 hakai-jsp-9  HumanObserva… Oncorhynchus … DE101N1 present          Animal…
+## 10 hakai-jsp-10 HumanObserva… Oncorhynchus … DE101N1 present          Animal…
+## # … with 262,445 more rows, and 14 more variables: Phylum <chr>, Class <chr>,
+## #   Order <chr>, Family <chr>, Genus <chr>, Species <chr>, eventDate <date>,
+## #   decimalLatitude <dbl>, decimalLongitude <dbl>, geodeticDatum <chr>,
+## #   minimumDepthInMeters <dbl>, maximumDepthInMeters <dbl>,
+## #   samplingProtocol <chr>, scientificNameID <dbl>
+```
+
+```r
+#(report <- check_outliers_species(DwCA)) # Need to lsid from marinespecies.rg
+check_eventdate(DwCA)
+```
+
+```
+## # A tibble: 0 x 0
+```
+
+```r
+tree <- treeStructure(event, occurrence)
+exportTree(tree, "tree.html")
+
+#report(DwCA) # Currently I get warnings on depths. it looks like depths are supposed to be negative? Not according to oceanographers I know. Other points are close to land, need to check closer, but that's expected sampling in the littoral zone.
+```
+
+
 ## Example two
+126140

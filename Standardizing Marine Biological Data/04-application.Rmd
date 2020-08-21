@@ -157,6 +157,39 @@ measurementOrFact <- bind_rows(fish_length, fish_weight) %>%
 rm(fish_length, fish_weight)
 
 write_csv(measurementOrFact, here::here("datasets", "hakai_salmon_data", "measurementOrFact.csv"))
+
+rm()
 ```
 
+### Combine into DwC-A
+
+```{r}
+DwCA <- left_join(occurrence, event) %>% 
+  mutate(scientificNameID = 126140) %>% 
+  drop_na(eventDate) # loses 1388 rows. TODO: Ensure dropped data is as expected
+```
+
+
+### Data QC
+
+```{r}
+library(obistools)
+# Unit tests
+check_fields(DwCA)
+
+plot_map(DwCA, zoom = TRUE)
+ggsave(here("figs", "basic_map.png"))
+
+check_onland(DwCA)
+check_depth(DwCA)
+#(report <- check_outliers_species(DwCA)) # Need to lsid from marinespecies.rg
+check_eventdate(DwCA)
+tree <- treeStructure(event, occurrence)
+exportTree(tree, "tree.html")
+
+#report(DwCA) # Currently I get warnings on depths. it looks like depths are supposed to be negative? Not according to oceanographers I know. Other points are close to land, need to check closer, but that's expected sampling in the littoral zone.
+```
+
+
 ## Example two
+126140
