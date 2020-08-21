@@ -167,6 +167,8 @@ rm()
 DwCA <- left_join(occurrence, event) %>% 
   mutate(scientificNameID = 126140) %>% 
   drop_na(eventDate) # loses 1388 rows. TODO: Ensure dropped data is as expected
+
+write_csv(DwCA, here("datasets", "Hakai-JSP-DwC-A.csv"))
 ```
 
 
