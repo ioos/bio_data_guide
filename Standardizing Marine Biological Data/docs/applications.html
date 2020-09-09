@@ -24,7 +24,7 @@
 <meta name="author" content="Brett Johnson" />
 
 
-<meta name="date" content="2020-08-20" />
+<meta name="date" content="2020-09-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -161,6 +161,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1.3" data-path="applications.html"><a href="applications.html#measurementorfact"><i class="fa fa-check"></i><b>3.1.3</b> measurementOrFact</a></li>
 <li class="chapter" data-level="3.1.4" data-path="applications.html"><a href="applications.html#combine-into-dwc-a"><i class="fa fa-check"></i><b>3.1.4</b> Combine into DwC-A</a></li>
 <li class="chapter" data-level="3.1.5" data-path="applications.html"><a href="applications.html#data-qc-1"><i class="fa fa-check"></i><b>3.1.5</b> Data QC</a></li>
+<li class="chapter" data-level="3.1.6" data-path="applications.html"><a href="applications.html#check-obis-like-did-it-work-errr-what"><i class="fa fa-check"></i><b>3.1.6</b> Check OBIS, like did it work errr what?</a></li>
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>3.2</b> Example two</a></li>
 </ul></li>
@@ -305,7 +306,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">3.1.4</span> Combine into DwC-A</h3>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">DwCA &lt;-<span class="st"> </span><span class="kw">left_join</span>(occurrence, event) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">scientificNameID =</span> <span class="dv">126140</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="kw">drop_na</span>(eventDate) <span class="co"># loses 1388 rows. </span><span class="al">TODO</span><span class="co">: Ensure dropped data is as expected</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="kw">drop_na</span>(eventDate) <span class="co"># loses 1388 rows. </span><span class="al">TODO</span><span class="co">: Ensure dropped data is as expected</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="kw">write_csv</span>(DwCA, <span class="kw">here</span>(<span class="st">&quot;datasets&quot;</span>, <span class="st">&quot;Hakai-JSP-DwC-A.csv&quot;</span>))</a></code></pre></div>
 </div>
 <div id="data-qc-1" class="section level3">
 <h3><span class="header-section-number">3.1.5</span> Data QC</h3>
@@ -314,7 +317,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw">check_fields</span>(DwCA)</a></code></pre></div>
 <pre><code>## # A tibble: 0 x 0</code></pre>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">plot_map</span>(DwCA, <span class="dt">zoom =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><img src="04-application_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="03-application_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">ggsave</span>(<span class="kw">here</span>(<span class="st">&quot;figs&quot;</span>, <span class="st">&quot;basic_map.png&quot;</span>))</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb9-3" data-line-number="3"><span class="kw">check_onland</span>(DwCA)</a></code></pre></div>
@@ -362,6 +365,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb15-2" data-line-number="2"><span class="kw">exportTree</span>(tree, <span class="st">&quot;tree.html&quot;</span>)</a>
 <a class="sourceLine" id="cb15-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">#report(DwCA) # Currently I get warnings on depths. it looks like depths are supposed to be negative? Not according to oceanographers I know. Other points are close to land, need to check closer, but that&#39;s expected sampling in the littoral zone.</span></a></code></pre></div>
+</div>
+<div id="check-obis-like-did-it-work-errr-what" class="section level3">
+<h3><span class="header-section-number">3.1.6</span> Check OBIS, like did it work errr what?</h3>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co">#library(robis)</span></a></code></pre></div>
 </div>
 </div>
 <div id="example-two" class="section level2">

@@ -111,7 +111,7 @@
 
 \title{Standardizing-Marine-Biological-Data}
 \author{Brett Johnson}
-\date{2020-08-20}
+\date{2020-09-09}
 
 \begin{document}
 \maketitle
@@ -431,6 +431,8 @@ Here I convert length, and weight measurements that relate to an event and an oc
 \NormalTok{DwCA <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(occurrence, event) }\OperatorTok{%>%}\StringTok{ }
 \StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{scientificNameID =} \DecValTok{126140}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
 \StringTok{  }\KeywordTok{drop_na}\NormalTok{(eventDate) }\CommentTok{# loses 1388 rows. }\AlertTok{TODO}\CommentTok{: Ensure dropped data is as expected}
+
+\KeywordTok{write_csv}\NormalTok{(DwCA, }\KeywordTok{here}\NormalTok{(}\StringTok{"datasets"}\NormalTok{, }\StringTok{"Hakai-JSP-DwC-A.csv"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -455,7 +457,7 @@ Here I convert length, and weight measurements that relate to an event and an oc
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{04-application_files/figure-latex/unnamed-chunk-3-1.pdf}
+\includegraphics{03-application_files/figure-latex/unnamed-chunk-3-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -530,6 +532,15 @@ Here I convert length, and weight measurements that relate to an event and an oc
 \KeywordTok{exportTree}\NormalTok{(tree, }\StringTok{"tree.html"}\NormalTok{)}
 
 \CommentTok{#report(DwCA) # Currently I get warnings on depths. it looks like depths are supposed to be negative? Not according to oceanographers I know. Other points are close to land, need to check closer, but that's expected sampling in the littoral zone.}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{check-obis-like-did-it-work-errr-what}{%
+\subsection{Check OBIS, like did it work errr what?}\label{check-obis-like-did-it-work-errr-what}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#library(robis)}
 \end{Highlighting}
 \end{Shaded}
 

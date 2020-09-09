@@ -4,7 +4,22 @@ Some _significant_ applications are demonstrated in this chapter.
 
 ## Salmon Ocean Ecology Data
 
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, error = FALSE)
+library(tidyverse)
+library(here)
+library(lubridate)
+library(hakaiR)
 
+survey_data <- read_csv(here::here("datasets", "hakai_salmon_data", "raw_data", "survey_data.csv")) 
+
+seine_data <- read_csv(here::here("datasets", "hakai_salmon_data", "raw_data", "seine_data.csv")) 
+
+survey_seines <- right_join(survey_data, seine_data, by = "survey_id") # removes survey events where a seine wasn't set
+
+fish_data <- read_csv(here::here("datasets", "hakai_salmon_data", "raw_data", "fish_data.csv"), guess_max = 20000) %>% semi_join(survey_seines)
+
+```
 
 One of the goals of the Hakai Institute and the Canadian Integrated Ocean Observing System (CIOOS) is to facilitate Open Science and FAIR (findable, accessible, interoperable, reusable) ecological and oceanographic data. In a concerted effort to adopt or establish how best to do that, several Hakai and CIOOS staff attended an International Ocean Observing System (IOOS) Code Sprint in Ann Arbour, Michigan between October 7--11, 2019, to discuss how to implement FAIR data principles for biological data collected in the marine environment. 
 
@@ -21,8 +36,8 @@ The first step is to consider what you will define as an event in your data set.
 My process for conversion was to make a new table called `event` and map the standard Darwin Core column names to pre-existing columns that serve the same purpose in my original `seine_data` table and populate the other required fields.
 
 
+```{r event}
 
-```r
 event <- tibble(eventID = survey_seines$seine_id,
                 eventDate = date(survey_seines$survey_date),
                 decimalLatitude = survey_seines$lat,
@@ -42,8 +57,7 @@ write_csv(event, here::here("datasets", "hakai_salmon_data", "event.csv"))
 Next you'll want to determine what constitutes an occurrence for your data set. Because each event captures fish, I consider each fish to be an occurrence. Therefore, the unit of observation (each row) in the occurrence table is a fish. To link each occurrence to an event you need to include the `eventID` column for every occurrence so that you know what seine (event) each fish (occurrence) came from. You must also provide a globally unique identifier for each occurrence. I already have a locally unique identifier for each fish in the original `fish_data` table called `ufn`. To make it globally unique I pre-pend the organization and research program metadata to the `ufn` column. 
 
 
-
-```r
+```{r occurrence}
 #TODO: Include bycatch data as well
 
 ## make table long first
@@ -92,12 +106,13 @@ occurrence <- bind_rows(all_fish_caught, fish_retained_data) %>%
   mutate(basisOfRecord = "HumanObservation",
         occurenceStatus = "present") %>% 
   rename(eventID = seine_id)
+  
+
 ```
 
 For each occurrence of the six different fish species that I caught I need to match the species name that I provide with the official `scientificName` that is part of the World Register of Marine Species database http://www.marinespecies.org/
 
-
-```r
+```{r}
 # I went directly to the WoRMS webite (http://www.marinespecies.org/) to download the full taxonomic levels for the salmon species I have and put the WoRMS output (species_matched.xls) table in this project directory which is read in below and joined with the occurrence table
 
 species_matched <- readxl::read_excel(here::here("datasets", "hakai_salmon_data", "raw_data", "species_matched.xls"))
@@ -106,6 +121,7 @@ occurrence <- left_join(occurrence, species_matched, by = c("scientificName" = "
   select(occurrenceID, basisOfRecord, scientificName, eventID, occurrenceStatus = occurenceStatus, Kingdom, Phylum, Class, Order, Family, Genus, Species)
 
 write_csv(occurrence, here::here("datasets", "hakai_salmon_data", "occurrence.csv"))
+
 ```
 
 
@@ -114,8 +130,8 @@ To convert all your measurements or facts from your normal format to Darwin Core
 
 Here I convert length, and weight measurements that relate to an event and an occurrence and call those `measurementTypes` as `length` and `weight`.
 
+```{r measurementOrFact}
 
-```r
 fish_data$weight <- coalesce(fish_data$weight, fish_data$weight_field)
 fish_data$fork_length <- coalesce(fish_data$fork_length, fish_data$fork_length_field)
 
@@ -147,8 +163,7 @@ rm()
 
 ### Combine into DwC-A
 
-
-```r
+```{r}
 DwCA <- left_join(occurrence, event) %>% 
   mutate(scientificNameID = 126140) %>% 
   drop_na(eventDate) # loses 1388 rows. TODO: Ensure dropped data is as expected
@@ -159,85 +174,18 @@ write_csv(DwCA, here("datasets", "Hakai-JSP-DwC-A.csv"))
 
 ### Data QC
 
-
-```r
+```{r}
 library(obistools)
 # Unit tests
 check_fields(DwCA)
-```
 
-```
-## # A tibble: 0 x 0
-```
-
-```r
 plot_map(DwCA, zoom = TRUE)
-```
-
-![](04-application_files/figure-epub3/unnamed-chunk-3-1.png)<!-- -->
-
-```r
 ggsave(here("figs", "basic_map.png"))
 
 check_onland(DwCA)
-```
-
-```
-## # A tibble: 8,050 x 20
-##    occurrenceID basisOfRecord scientificName eventID occurrenceStatus Kingdom
-##    <chr>        <chr>         <chr>          <chr>   <chr>            <chr>  
-##  1 hakai-jsp-8… HumanObserva… Oncorhynchus … DE104N1 present          Animal…
-##  2 hakai-jsp-8… HumanObserva… Oncorhynchus … DE104N1 present          Animal…
-##  3 hakai-jsp-8… HumanObserva… Oncorhynchus … DE104N1 present          Animal…
-##  4 hakai-jsp-8… HumanObserva… Oncorhynchus … DE104N1 present          Animal…
-##  5 hakai-jsp-8… HumanObserva… Oncorhynchus … DE104N1 present          Animal…
-##  6 hakai-jsp-8… HumanObserva… Oncorhynchus … DE104N1 present          Animal…
-##  7 hakai-jsp-8… HumanObserva… Oncorhynchus … DE104N1 present          Animal…
-##  8 hakai-jsp-8… HumanObserva… Oncorhynchus … DE104N1 present          Animal…
-##  9 hakai-jsp-8… HumanObserva… Oncorhynchus … DE104N1 present          Animal…
-## 10 hakai-jsp-8… HumanObserva… Oncorhynchus … DE104N1 present          Animal…
-## # … with 8,040 more rows, and 14 more variables: Phylum <chr>, Class <chr>,
-## #   Order <chr>, Family <chr>, Genus <chr>, Species <chr>, eventDate <date>,
-## #   decimalLatitude <dbl>, decimalLongitude <dbl>, geodeticDatum <chr>,
-## #   minimumDepthInMeters <dbl>, maximumDepthInMeters <dbl>,
-## #   samplingProtocol <chr>, scientificNameID <dbl>
-```
-
-```r
 check_depth(DwCA)
-```
-
-```
-## # A tibble: 262,455 x 20
-##    occurrenceID basisOfRecord scientificName eventID occurrenceStatus Kingdom
-##    <chr>        <chr>         <chr>          <chr>   <chr>            <chr>  
-##  1 hakai-jsp-1  HumanObserva… Oncorhynchus … DE101N1 present          Animal…
-##  2 hakai-jsp-2  HumanObserva… Oncorhynchus … DE101N1 present          Animal…
-##  3 hakai-jsp-3  HumanObserva… Oncorhynchus … DE101N1 present          Animal…
-##  4 hakai-jsp-4  HumanObserva… Oncorhynchus … DE101N1 present          Animal…
-##  5 hakai-jsp-5  HumanObserva… Oncorhynchus … DE101N1 present          Animal…
-##  6 hakai-jsp-6  HumanObserva… Oncorhynchus … DE101N1 present          Animal…
-##  7 hakai-jsp-7  HumanObserva… Oncorhynchus … DE101N1 present          Animal…
-##  8 hakai-jsp-8  HumanObserva… Oncorhynchus … DE101N1 present          Animal…
-##  9 hakai-jsp-9  HumanObserva… Oncorhynchus … DE101N1 present          Animal…
-## 10 hakai-jsp-10 HumanObserva… Oncorhynchus … DE101N1 present          Animal…
-## # … with 262,445 more rows, and 14 more variables: Phylum <chr>, Class <chr>,
-## #   Order <chr>, Family <chr>, Genus <chr>, Species <chr>, eventDate <date>,
-## #   decimalLatitude <dbl>, decimalLongitude <dbl>, geodeticDatum <chr>,
-## #   minimumDepthInMeters <dbl>, maximumDepthInMeters <dbl>,
-## #   samplingProtocol <chr>, scientificNameID <dbl>
-```
-
-```r
 #(report <- check_outliers_species(DwCA)) # Need to lsid from marinespecies.rg
 check_eventdate(DwCA)
-```
-
-```
-## # A tibble: 0 x 0
-```
-
-```r
 tree <- treeStructure(event, occurrence)
 exportTree(tree, "tree.html")
 
@@ -246,8 +194,7 @@ exportTree(tree, "tree.html")
 
 ### Check OBIS, like did it work errr what?
 
-
-```r
+```{r}
 #library(robis)
 ```
 
