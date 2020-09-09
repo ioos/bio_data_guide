@@ -42,10 +42,11 @@ event <- tibble(eventID = survey_seines$seine_id,
                 eventDate = date(survey_seines$survey_date),
                 decimalLatitude = survey_seines$lat,
                 decimalLongitude = survey_seines$long,
-                geodeticDatum = "EPSG:4326 WGS84",
+                geodeticDatum = "WGS84",
                 minimumDepthInMeters = 0,
                 maximumDepthInMeters = 9, # seine depth is 9 m
-                samplingProtocol = "http://dx.doi.org/10.21966/1.566666" # This is the DOI for the Hakai Salmon Data Package that contains the smnpling protocol, as well as the complete data package
+                samplingProtocol = "http://dx.doi.org/10.21966/1.566666", # This is the DOI for the Hakai Salmon Data Package that contains the smnpling protocol, as well as the complete data package
+                eventUncertaintyInMeters = 10
                ) 
 
 write_csv(event, here::here("datasets", "hakai_salmon_data", "event.csv"))
@@ -65,13 +66,14 @@ seines_total_long <- survey_seines %>%
   select(seine_id, so_total, pi_total, cu_total, co_total, he_total, ck_total) %>% 
   pivot_longer(-seine_id, names_to = "scientificName", values_to = "n")
 
-seines_total_long$scientificName <- recode(seines_total_long$scientificName, so_total = "Oncorhynchus nerka", pi_total = "Oncorhynchus gorbushca", cu_total = "Oncorhynchus keta", co_total = "Oncorhynchus kisutch", ck_total = "Oncorhynchus tshawytscha", he_total = "Clupea pallasii") 
+seines_total_long$scientificName <- recode(seines_total_long$scientificName, so_total = "Oncorhynchus nerka", pi_total = "Oncorhynchus gorbuscha", cu_total = "Oncorhynchus keta", co_total = "Oncorhynchus kisutch", ck_total = "Oncorhynchus tshawytscha", he_total = "Clupea pallasii") 
 
 seines_taken_long <- survey_seines %>%
   select(seine_id, so_taken, pi_taken, cu_taken, co_taken, he_taken, ck_taken) %>% 
   pivot_longer(-seine_id, names_to = "scientificName", values_to = "n_taken") 
 
 seines_taken_long$scientificName <- recode(seines_taken_long$scientificName, so_taken = "Oncorhynchus nerka", pi_taken = "Oncorhynchus gorbushca", cu_taken = "Oncorhynchus keta", co_taken = "Oncorhynchus kisutch", ck_taken = "Oncorhynchus tshawytscha", he_taken = "Clupea pallasii") 
+
 
 ## remove records that have already been assigned an ID  
 seines_long <-  full_join(seines_total_long, seines_taken_long, by = c("seine_id", "scientificName")) %>% 
@@ -118,7 +120,8 @@ For each occurrence of the six different fish species that I caught I need to ma
 species_matched <- readxl::read_excel(here::here("datasets", "hakai_salmon_data", "raw_data", "species_matched.xls"))
 
 occurrence <- left_join(occurrence, species_matched, by = c("scientificName" = "ScientificName")) %>% 
-  select(occurrenceID, basisOfRecord, scientificName, eventID, occurrenceStatus = occurenceStatus, Kingdom, Phylum, Class, Order, Family, Genus, Species)
+  select(occurrenceID, basisOfRecord, scientificName, scientificNameID = AphiaID_accepted,  eventID, occurrenceStatus = occurenceStatus, Kingdom, Phylum, Class, Order, Family, Genus, Species) %>% 
+  mutate(scientificNameID = paste0("	urn:lsid:marinespecies.org:taxname:", scientificNameID))
 
 write_csv(occurrence, here::here("datasets", "hakai_salmon_data", "occurrence.csv"))
 
@@ -165,7 +168,6 @@ rm()
 
 ```{r}
 DwCA <- left_join(occurrence, event) %>% 
-  mutate(scientificNameID = 126140) %>% 
   drop_na(eventDate) # loses 1388 rows. TODO: Ensure dropped data is as expected
 
 write_csv(DwCA, here("datasets", "Hakai-JSP-DwC-A.csv"))
@@ -190,12 +192,6 @@ tree <- treeStructure(event, occurrence)
 exportTree(tree, "tree.html")
 
 #report(DwCA) # Currently I get warnings on depths. it looks like depths are supposed to be negative? Not according to oceanographers I know. Other points are close to land, need to check closer, but that's expected sampling in the littoral zone.
-```
-
-### Check OBIS, like did it work errr what?
-
-```{r}
-#library(robis)
 ```
 
 ## Example two
