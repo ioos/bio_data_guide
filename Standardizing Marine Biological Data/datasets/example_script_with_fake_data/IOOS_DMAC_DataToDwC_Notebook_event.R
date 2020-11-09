@@ -15,7 +15,7 @@ library(readr)
 library(uuid)
 library(dplyr)
 
-MadeUpDataForBiologicalDataTraining <- read_csv("~/OBIS/Reference Documentation/Presentations/IOOS DMAC Code Sprint/MadeUpDataForBiologicalDataTraining.csv")
+MadeUpDataForBiologicalDataTraining <- read_csv("data/MadeUpDataForBiologicalDataTraining.csv")
 
 #' First we need to to decide if we will provide an occurrence only version of the data or 
 #' a sampling event with measurement or facts version of the data. Occurrence only is easier 

@@ -1,0 +1,25 @@
+date,lat,lon,region,station,transect,scientific name,percent cover,depth,bottom type,rugosity,temperature
+7/16/2004,18.29788,-64.79451,St. John,250,1,Acropora cervicornis,0,25,shallow reef flat,0.295833,25.2
+7/16/2004,18.29788,-64.79451,St. John,250,1,Madracis auretenra,5,25,shallow reef flat,0.295833,25.2
+7/16/2004,18.29788,-64.79451,St. John,250,1,Mussa angulosa,15,25,shallow reef flat,0.295833,25.2
+7/16/2004,18.29788,-64.79451,St. John,250,1,Siderastrea radians,0,25,shallow reef flat,0.295833,25.2
+7/16/2004,18.29788,-64.79451,St. John,250,2,Acropora cervicornis,0,35,complex back reef,0.364583,24.8
+7/16/2004,18.29788,-64.79451,St. John,250,2,Madracis auretenra,3,35,complex back reef,0.364583,24.8
+7/16/2004,18.29788,-64.79451,St. John,250,2,Mussa angulosa,0,35,complex back reef,0.364583,24.8
+7/16/2004,18.29788,-64.79451,St. John,250,2,Siderastrea radians,0,35,complex back reef,0.364583,24.8
+7/16/2004,18.29788,-64.79451,St. John,250,3,Acropora cervicornis,22,85,deep reef,0.413461,23.1
+7/16/2004,18.29788,-64.79451,St. John,250,3,Madracis auretenra,0,85,deep reef,0.413461,23.1
+7/16/2004,18.29788,-64.79451,St. John,250,3,Mussa angulosa,16,85,deep reef,0.413461,23.1
+7/16/2004,18.29788,-64.79451,St. John,250,3,Siderastrea radians,0,85,deep reef,0.413461,23.1
+7/17/2004,18.27609,-64.7574,St. John,356,1,Acropora cervicornis,10,28,complex back reef,0.312587,23.6
+7/17/2004,18.27609,-64.7574,St. John,356,1,Madracis auretenra,2,28,complex back reef,0.312587,23.6
+7/17/2004,18.27609,-64.7574,St. John,356,1,Mussa angulosa,14,28,complex back reef,0.312587,23.6
+7/17/2004,18.27609,-64.7574,St. John,356,1,Siderastrea radians,4,28,complex back reef,0.312587,23.6
+7/17/2004,18.27609,-64.7574,St. John,356,2,Acropora cervicornis,25,16,shallow reef flat,0.158489,24.9
+7/17/2004,18.27609,-64.7574,St. John,356,2,Madracis auretenra,10,16,shallow reef flat,0.158489,24.9
+7/17/2004,18.27609,-64.7574,St. John,356,2,Mussa angulosa,0,16,shallow reef flat,0.158489,24.9
+7/17/2004,18.27609,-64.7574,St. John,356,2,Siderastrea radians,16,16,shallow reef flat,0.158489,24.9
+7/17/2004,18.27609,-64.7574,St. John,356,3,Acropora cervicornis,28,90,deep reef,0.489574,22.6
+7/17/2004,18.27609,-64.7574,St. John,356,3,Madracis auretenra,0,90,deep reef,0.489574,22.6
+7/17/2004,18.27609,-64.7574,St. John,356,3,Mussa angulosa,0,90,deep reef,0.489574,22.6
+7/17/2004,18.27609,-64.7574,St. John,356,3,Siderastrea radians,13,90,deep reef,0.489574,22.6
