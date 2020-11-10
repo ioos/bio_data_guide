@@ -95,9 +95,9 @@ occurrence$occurrenceStatus <-  ifelse (occurrence$`percent cover` == 0, "absent
 #' information.
 
 #' Create a lookup table of unique scientific names
-lut_worms <- as.data.frame(unique(occurrence_only$scientificName))
-lut_worms$scientificName <- as.character(lut_worms$`unique(occurrence_only$scientificName)`)
-lut_worms$`unique(occurrence_only$scientificName)` <- NULL
+lut_worms <- as.data.frame(unique(occurrence$scientificName))
+lut_worms$scientificName <- as.character(lut_worms$`unique(occurrence$scientificName)`)
+lut_worms$`unique(occurrence$scientificName)` <- NULL
 lut_worms$scientificName <- as.character(lut_worms$scientificName)
 
 #' Add the columns that we can grab information from WoRMS including the required scientificNameID.
