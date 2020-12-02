@@ -1,0 +1,7 @@
+eventID,decimalLatitude,decimalLongitude,minimumDepthInMeters,maximumDepthInMeters,habitat,island,eventDate,basisOfRecord,geodeticDatum
+St. John_250_1,18.29788,-64.79451,25,25,shallow reef flat,St. John,2004-07-16,HumanObservation,EPSG:4326 WGS84
+St. John_250_2,18.29788,-64.79451,35,35,complex back reef,St. John,2004-07-16,HumanObservation,EPSG:4326 WGS84
+St. John_250_3,18.29788,-64.79451,85,85,deep reef,St. John,2004-07-16,HumanObservation,EPSG:4326 WGS84
+St. John_356_1,18.27609,-64.7574,28,28,complex back reef,St. John,2004-07-17,HumanObservation,EPSG:4326 WGS84
+St. John_356_2,18.27609,-64.7574,16,16,shallow reef flat,St. John,2004-07-17,HumanObservation,EPSG:4326 WGS84
+St. John_356_3,18.27609,-64.7574,90,90,deep reef,St. John,2004-07-17,HumanObservation,EPSG:4326 WGS84
