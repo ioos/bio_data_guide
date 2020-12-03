@@ -26,8 +26,8 @@ We are documenting, in the form of a :notebook: Guide, relevant resources and st
 ## Monthly Meetings
 We have open monthly meetings to discuss marine bio data issues. Please join us next time!
 
-* [Link to meeting minutes](https://docs.google.com/document/d/1TJ4JLTtU0qQZ-Rzwbz20MUU7sKhpfDCtXQnC5rPJK8k/edit?usp=sharing)
-* [Link to call participation details](https://docs.google.com/document/d/1TJ4JLTtU0qQZ-Rzwbz20MUU7sKhpfDCtXQnC5rPJK8k/edit#bookmark=id.izp500kyylhv)
+* [Link to meeting minutes](https://drive.google.com/file/d/1RX7QjvzGWr-GEEz6AuMT65lpunLuSnI2/view?usp=sharing)
+* [Link to call participation details](https://docs.google.com/document/d/1RX7QjvzGWr-GEEz6AuMT65lpunLuSnI2/edit#bookmark=id.1ksv4uv)
 
 
 # Datasets
