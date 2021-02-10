@@ -23,6 +23,7 @@ opts_chunk$set(message = FALSE,
                error   = FALSE)
 
 ```
+
 ```{r setup, results = "hide", echo = FALSE}
 # The following command will remove all objects** for a fresh start. Make 
 #   sure any objects you want to keep are saved before running!
@@ -46,7 +47,7 @@ First load the seagrass density survey data, set variable classes, and have a qu
 ```{r loadDensity}
 # Load density data
 seagrassDensity <- 
-  read.csv("seagrass_density_survey.csv",
+  read.csv("raw_data/seagrass_density_survey.csv",
            colClass = "character") %>%
   mutate(date             = ymd(date),
          depth            = as.numeric(depth),
@@ -66,7 +67,7 @@ and have a quick look.
 ```{r loadHabitat}
 # load habitat data, set variable classes, have a quick look
 seagrassHabitat <-
-  read.csv("seagrass_habitat_survey.csv",
+  read.csv("raw_data/seagrass_habitat_survey.csv",
            colClasses = "character") %>%  
   mutate(date            = ymd(date),
          depth           = as.numeric(depth),
@@ -81,7 +82,7 @@ Finally, load coordinate data for surveys, and subset necessary variables
 
 ```{r loadCoordinates}
 coordinates <- 
-  read.csv("seagrassCoordinates.csv",
+  read.csv("raw_data/seagrassCoordinates.csv",
            colClass = c("Point.Name" = "character")) %>%
   select(Point.Name, Decimal.Lat, Decimal.Long) %T>%
   glimpse()
