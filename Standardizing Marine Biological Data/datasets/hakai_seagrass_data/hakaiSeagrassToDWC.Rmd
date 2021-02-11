@@ -37,7 +37,7 @@ getwd()
 # install.packages(c("tidyverse", "uuid"))
 
 # Load packages
-lapply(c("tidyverse", "lubridate", "magrittr"),
+lapply(c("tidyverse", "lubridate", "magrittr", "worrms"),
        library, character.only = TRUE)
 ```
 
@@ -168,7 +168,11 @@ seagrass <-
               collected_start.x, collected_start.y,
               collected_end.x, collected_end.y,
               depth.x, depth.y,
-              sampling_bout.x, sampling_bout.y)) %T>%
+              sampling_bout.x, sampling_bout.y)) %>%
+  mutate(density_msq = as.character(density_msq),
+         canopy_height_cm = as.character(canopy_height_cm),
+         flowering_shoots = as.character(flowering_shoots),
+         depth_m = as.character(depth_m)) %T>%
   glimpse()
 ```
 
@@ -227,7 +231,7 @@ seagrassEvent <-
          geodeticDatum = "WGS84") %T>% glimpse
 
 # save event table to csv
-write.csv(seagrassEvent, "hakaiSeagrassDwcEvent.csv")
+write.csv(seagrassEvent, "processed_data/hakaiSeagrassDwcEvent.csv")
 ```
 
 ### Occurrence Table
@@ -244,19 +248,21 @@ seagrassOccurrence <-
 # in addition to the above metadata, DarwinCore format requires further
 # taxonomic data that can be acquired through the WoRMS register.
 ## Load taxonomic info, downloaded via WoRMS tool
-zmWorms <- 
-  read.delim("zmworms_matched.txt",
-             header = TRUE,
-             nrows  = 1)
+# zmWorms <- 
+#   read.delim("raw_data/zmworms_matched.txt",
+#              header = TRUE,
+#              nrows  = 1)
+
+zmWorms <- wm_records_name(name = 'Zostera marina')
 
 # join WoRMS name with seagrassOccurrence create above
 seagrassOccurrence <- 
   full_join(seagrassOccurrence, zmWorms, 
-            by = c("scientificName" = "ScientificName")) %T>%
+            by = c("scientificName" = "scientificname")) %T>%
   glimpse
 
 # save occurrence table to csv
-write.csv(seagrassOccurrence, "hakaiSeagrassDwcOccurrence.csv")
+write.csv(seagrassOccurrence, "processed_data/hakaiSeagrassDwcOccurrence.csv")
 ```
 
 ### Extended MeasurementOrFact table
@@ -283,13 +289,13 @@ seagrassMof <-
          SecondaryAlgaeSp            = vegetation_2,
          BedAbund                    = density_msq,
          CanopyHeight                = canopy_height_cm,
-         FloweringBedAbund           = flowering_shoots) %>%
+         FloweringBedAbund           = flowering_shoots) %>%  
   # reformat variables into DwC MeasurementOrFact format
   # (single values variable, with measurement type, unit, etc. variables)
   pivot_longer( - c(measurementDeterminedDate, eventID, survey, site_id, transect_dist),
                 names_to = "measurementType",
                 values_to = "measurementValue",
-                values_ptypes = list(measurementValue = "character")) %>%
+                values_ptypes = list(measurementValue = "character")) %>% 
   # use measurement type to fill in remainder of variables relating to 
   # NERC vocabulary and metadata fields
   mutate(
@@ -318,7 +324,7 @@ seagrassMof <-
   glimpse()
 
 # save eMoF table to csv
-write.csv(seagrassMof, "hakaiSeagrassDwcEmof.csv")
+write.csv(seagrassMof, "processed_data/hakaiSeagrassDwcEmof.csv")
 ```
 
 # Session Info
