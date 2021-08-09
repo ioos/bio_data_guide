@@ -1,8 +1,9 @@
-Hello and welcome to the Standardizing Marine Biological Data Guide! Here, we document relevant resources and standards which apply to various marine biological data sets. This is a growing guide that is put together by sciecntists and data managers responsible for transforming their data to meet international standards.
+Hello and welcome to the Standardizing Marine Biological Data Guide! Here, we document relevant resources and standards which apply to various marine biological data types. This is a growing guide that is put together by scientists and data managers responsible for transforming their data to meet international standards.
 
-To contribute to this guide;
+This guide is meant for  data managers, scientists, or technicians new to transforming/publishing/mobilizing data. There is a general introduction to the world of international data integration, followed by some specific examples of data transformations.
 
-i) Fork this repository, make contributions, submit a pull request.
+To contribute to this guide see (CONTRIBUTING.md)[https://github.com/ioos/bio_data_guide/blob/master/Standardizing%20Marine%20Biological%20Data/CONTRIBUTING.md]
 
-Edit existing chapters and content or create a new .txt, .md, or .Rmd file to share with world your beautiful data transformation. Data-type specific transformations are encouraged as well as solutions to general problems.
+
+
 

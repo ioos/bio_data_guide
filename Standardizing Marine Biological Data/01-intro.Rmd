@@ -1,9 +1,8 @@
 # Introduction {#intro}
-The world of standardizing marine biological data is complex and fraught with uncertainty for naive oceanographer, biologist, scientist, or programmer. 
-This is about stacking the right standards for your desired interoperability with other data types. 
+The world of standardizing marine biological data can seem complex for the naive oceanographer, biologist, scientist, or programmer. 
+Transforming and integrating data is about combining the right standards for your desired interoperability with other data types. 
 For example, interoperating fish biology measurements with climate level variables. 
-There are a few links neccessary to make this possible and will permit broader access to better ecosystem based models. 
-This phenomena is not unique to specic scientific domains, but is rather pervasive as many scientific domains are currently being reshaped in light of recent advances in computing power, technology, and data science.
+There are a few concepts necessary to make this possible such as standard data structures, controlled vocabularies and knowledge representations, along with metadata standards to facilitate data discovery. This will permit the inclusion of more data and broader access to better ecosystem based models. Many scientific domains data handling practices are currently being reshaped in light of recent advances in computing power, technology, and data science.
 
 ## Data Structures
 
@@ -25,7 +24,7 @@ Relationships among things
 Properties of things
 Functions, processes, constraints, and rules relating to things"
 
-TODO: Research Unified Modeling Language?
+TODO: Research Unified Modelling Language?
 
 There are a number of controlled vocabularies that are used to describe parameters commonly used in specific research domains. This allows for greater interoperability of data sets within the domain, and ideally between domains. Here, we strive to document a number of relevant examples. 
 
@@ -47,10 +46,8 @@ There are a number of controlled vocabularies that are used to describe paramete
 
 * [GeoLink base ontology](http://schema.geolink.org/1.0/base/main.html) was part of the [EarthCube GeoLink Project](http://www.geolink.org/)
 
-TODO: Improve this paragraph
-There are numberous ways to investigate which controlled vocabulary to use and this can be fairly overwhelming. For a simplified overview see [here]("http://seadatanet.maris2.nl/v_bodc_vocab_v2/vocab_relations.asp?lib=P08").
 
-Note: To describe a measurement or fact of a biological specimen that conforms to Darwin Core standards, it's neccessary to use the 'Biological entity described elsewhere' method rather than taxon specific.
+Note: To describe a measurement or fact of a biological specimen that conforms to Darwin Core standards, it's necessary to use the 'Biological entity described elsewhere' method rather than taxon specific.
 
 ### Collections
 
@@ -72,6 +69,8 @@ Note: To describe a measurement or fact of a biological specimen that conforms t
 
 * [SeaDataNet Vocab Library](http://seadatanet.maris2.nl/v_bodc_vocab_v2/vocab_relations.asp?lib=P08)
 
+* [Measurement Types in OBIS](https://mof.obis.org/)
+
 
 ### Geosciences
 
@@ -91,14 +90,14 @@ Question: Not sure use case for this.
 
 ### ERDDAP
 
-[ERDDAP]("https://coastwatch.pfeg.noaa.gov/erddap/index.html") can be thought of as a data server. It provides 'easier access to scientific data' by providing a consistent interface that aggregates many disparate data sources. It does this by providing translation services between many common file types for gridded arrarys ('net CDF' files) and tabular data (spreadsheets). Data access is also made easier because it unifies different types of data servers and access protocols. [Here]("https://github.com/HakaiInstitute/erddap-basic") is a basic erddap installation that walks you through how to load a data set.
+[ERDDAP](https://coastwatch.pfeg.noaa.gov/erddap/index.html) can be thought of as a data server. It provides 'easier access to scientific data' by providing a consistent interface that aggregates many disparate data sources. It does this by providing translation services between many common file types for gridded arrarys ('net CDF' files) and tabular data (spreadsheets). Data access is also made easier because it unifies different types of data servers and access protocols. [Here](https://github.com/HakaiInstitute/erddap-basic) is a basic erddap installation that walks you through how to load a data set.
 
 
 ## Notes on Integrating OBIS, Darwin Core as it relates to OOS's
 
 ## Metadata
 
-OBIS uses the [GBIF EML profile](http://rs.gbif.org/schema/eml-gbif-profile/1.1/eml-gbif-profile.xsd) (version 1.1). In case data providers use ISO19115/ISO19139, there is a mapping available here: http://rs.gbif.org/schema/eml-gbif-profile/1.1/eml2iso19139.xsl This will be important for integrating OBIS datasets to OOS metadata profiles.
+OBIS uses the [GBIF EML profile](http://rs.gbif.org/schema/eml-gbif-profile/1.1/eml-gbif-profile.xsd) (version 1.1). In case data providers use ISO19115/ISO19139, there is a mapping available here: http://rs.gbif.org/schema/eml-gbif-profile/1.1/eml2iso19139.xsl This will be important for integrating OBIS datasets to other CIOOS and IOOS metadata profiles.
 
 ## Data QC
 
@@ -118,4 +117,4 @@ See http://www.lifewatch.be/data-services/
 
 ### Resource Description Framework
 
-[Darwin Core Resource Description Framework Guide]("https://dwc.tdwg.org/rdf/")
+[Darwin Core Resource Description Framework Guide](https://dwc.tdwg.org/rdf/)

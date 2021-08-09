@@ -1,39 +1,46 @@
-\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 %
-\documentclass[]{book}
+\documentclass[
+]{book}
+\usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provides euro and other symbols
-\else % if luatex or xelatex
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
   \usepackage{unicode-math}
-  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
-% use upquote if available, for straight quotes in verbatim environments
+% Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
-\IfFileExists{microtype.sty}{%
-\usepackage[]{microtype}
-\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-\IfFileExists{parskip.sty}{%
-\usepackage{parskip}
-}{% else
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-}
-\usepackage{hyperref}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-            pdftitle={Standardizing-Marine-Biological-Data},
-            pdfauthor={Brett Johnson},
-            pdfborder={0 0 0},
-            breaklinks=true}
-\urlstyle{same}  % don't use monospace font for urls
+  pdftitle={Standardizing-Marine-Biological-Data},
+  pdfauthor={Brett Johnson},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -74,10 +81,17 @@
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\usepackage{longtable,booktabs}
-% Fix footnotes in tables (requires footnote package)
-\IfFileExists{footnote.sty}{\usepackage{footnote}\makesavenoteenv{longtable}}{}
-\usepackage{graphicx,grffile}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
@@ -86,32 +100,24 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{5}
-% Redefines (sub)paragraphs to behave more like sections
-\ifx\paragraph\undefined\else
-\let\oldparagraph\paragraph
-\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
-\fi
-\ifx\subparagraph\undefined\else
-\let\oldsubparagraph\subparagraph
-\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
-\fi
-
-% set default figure placement to htbp
+% Set default figure placement to htbp
 \makeatletter
 \def\fps@figure{htbp}
 \makeatother
-
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
 \usepackage{booktabs}
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
 
 \title{Standardizing-Marine-Biological-Data}
 \author{Brett Johnson}
-\date{2020-09-09}
+\date{2021-08-09}
 
 \begin{document}
 \maketitle
@@ -120,16 +126,18 @@
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
+\hypertarget{preface}{%
+\chapter{Preface}\label{preface}}
+
 Biological data structures, definitions, measurements, and linkages are neccessarily as diverse as the systems they represent. This presents a real challenge when integrating data across biological research domains such as ecology, oceanography, fisheries, and climate sciences.
 
 \hypertarget{intro}{%
 \chapter{Introduction}\label{intro}}
 
-The world of standardizing marine biological data is complex and fraught with uncertainty for naive oceanographer, biologist, scientist, or programmer.
-This is about stacking the right standards for your desired interoperability with other data types.
+The world of standardizing marine biological data can seem complex for the naive oceanographer, biologist, scientist, or programmer.
+Transforming and integrating data is about combining the right standards for your desired interoperability with other data types.
 For example, interoperating fish biology measurements with climate level variables.
-There are a few links neccessary to make this possible and will permit broader access to better ecosystem based models.
-This phenomena is not unique to specic scientific domains, but is rather pervasive as many scientific domains are currently being reshaped in light of recent advances in computing power, technology, and data science.
+There are a few concepts necessary to make this possible such as standard data structures, controlled vocabularies and knowledge representations, along with metadata standards to facilitate data discovery. This will permit the inclusion of more data and broader access to better ecosystem based models. Many scientific domains data handling practices are currently being reshaped in light of recent advances in computing power, technology, and data science.
 
 \hypertarget{data-structures}{%
 \section{Data Structures}\label{data-structures}}
@@ -153,7 +161,7 @@ Relationships among things
 Properties of things
 Functions, processes, constraints, and rules relating to things"
 
-TODO: Research Unified Modeling Language?
+TODO: Research Unified Modelling Language?
 
 There are a number of controlled vocabularies that are used to describe parameters commonly used in specific research domains. This allows for greater interoperability of data sets within the domain, and ideally between domains. Here, we strive to document a number of relevant examples.
 
@@ -178,10 +186,7 @@ There are a number of controlled vocabularies that are used to describe paramete
   \href{http://schema.geolink.org/1.0/base/main.html}{GeoLink base ontology} was part of the \href{http://www.geolink.org/}{EarthCube GeoLink Project}
 \end{itemize}
 
-TODO: Improve this paragraph
-There are numberous ways to investigate which controlled vocabulary to use and this can be fairly overwhelming. For a simplified overview see \href{\%22http://seadatanet.maris2.nl/v_bodc_vocab_v2/vocab_relations.asp?lib=P08\%22}{here}.
-
-Note: To describe a measurement or fact of a biological specimen that conforms to Darwin Core standards, it's neccessary to use the `Biological entity described elsewhere' method rather than taxon specific.
+Note: To describe a measurement or fact of a biological specimen that conforms to Darwin Core standards, it's necessary to use the `Biological entity described elsewhere' method rather than taxon specific.
 
 \hypertarget{collections}{%
 \subsection{Collections}\label{collections}}
@@ -208,6 +213,8 @@ Note: To describe a measurement or fact of a biological specimen that conforms t
   \href{https://www.seadatanet.org/Standards/Common-Vocabularies/}{SeaDataNet Common Vocabularies:}
 \item
   \href{http://seadatanet.maris2.nl/v_bodc_vocab_v2/vocab_relations.asp?lib=P08}{SeaDataNet Vocab Library}
+\item
+  \href{https://mof.obis.org/}{Measurement Types in OBIS}
 \end{itemize}
 
 \hypertarget{geosciences}{%
@@ -233,7 +240,7 @@ Question: Not sure use case for this.
 \hypertarget{erddap}{%
 \subsection{ERDDAP}\label{erddap}}
 
-\href{\%22https://coastwatch.pfeg.noaa.gov/erddap/index.html\%22}{ERDDAP} can be thought of as a data server. It provides `easier access to scientific data' by providing a consistent interface that aggregates many disparate data sources. It does this by providing translation services between many common file types for gridded arrarys (`net CDF' files) and tabular data (spreadsheets). Data access is also made easier because it unifies different types of data servers and access protocols. \href{\%22https://github.com/HakaiInstitute/erddap-basic\%22}{Here} is a basic erddap installation that walks you through how to load a data set.
+\href{https://coastwatch.pfeg.noaa.gov/erddap/index.html}{ERDDAP} can be thought of as a data server. It provides `easier access to scientific data' by providing a consistent interface that aggregates many disparate data sources. It does this by providing translation services between many common file types for gridded arrarys (`net CDF' files) and tabular data (spreadsheets). Data access is also made easier because it unifies different types of data servers and access protocols. \href{https://github.com/HakaiInstitute/erddap-basic}{Here} is a basic erddap installation that walks you through how to load a data set.
 
 \hypertarget{notes-on-integrating-obis-darwin-core-as-it-relates-to-ooss}{%
 \section{Notes on Integrating OBIS, Darwin Core as it relates to OOS's}\label{notes-on-integrating-obis-darwin-core-as-it-relates-to-ooss}}
@@ -241,7 +248,7 @@ Question: Not sure use case for this.
 \hypertarget{metadata}{%
 \section{Metadata}\label{metadata}}
 
-OBIS uses the \href{http://rs.gbif.org/schema/eml-gbif-profile/1.1/eml-gbif-profile.xsd}{GBIF EML profile} (version 1.1). In case data providers use ISO19115/ISO19139, there is a mapping available here: \url{http://rs.gbif.org/schema/eml-gbif-profile/1.1/eml2iso19139.xsl} This will be important for integrating OBIS datasets to OOS metadata profiles.
+OBIS uses the \href{http://rs.gbif.org/schema/eml-gbif-profile/1.1/eml-gbif-profile.xsd}{GBIF EML profile} (version 1.1). In case data providers use ISO19115/ISO19139, there is a mapping available here: \url{http://rs.gbif.org/schema/eml-gbif-profile/1.1/eml2iso19139.xsl} This will be important for integrating OBIS datasets to other CIOOS and IOOS metadata profiles.
 
 \hypertarget{data-qc}{%
 \section{Data QC}\label{data-qc}}
@@ -265,12 +272,7 @@ See \url{http://www.lifewatch.be/data-services/}
 \hypertarget{resource-description-framework}{%
 \subsection{Resource Description Framework}\label{resource-description-framework}}
 
-\href{\%22https://dwc.tdwg.org/rdf/\%22}{Darwin Core Resource Description Framework Guide}
-
-\hypertarget{methods}{%
-\chapter{Methods}\label{methods}}
-
-We describe our methods in this chapter.
+\href{https://dwc.tdwg.org/rdf/}{Darwin Core Resource Description Framework Guide}
 
 \hypertarget{applications}{%
 \chapter{Applications}\label{applications}}
@@ -279,6 +281,9 @@ Some \emph{significant} applications are demonstrated in this chapter.
 
 \hypertarget{salmon-ocean-ecology-data}{%
 \section{Salmon Ocean Ecology Data}\label{salmon-ocean-ecology-data}}
+
+\hypertarget{intro-1}{%
+\subsection{Intro}\label{intro-1}}
 
 One of the goals of the Hakai Institute and the Canadian Integrated Ocean Observing System (CIOOS) is to facilitate Open Science and FAIR (findable, accessible, interoperable, reusable) ecological and oceanographic data. In a concerted effort to adopt or establish how best to do that, several Hakai and CIOOS staff attended an International Ocean Observing System (IOOS) Code Sprint in Ann Arbour, Michigan between October 7--11, 2019, to discuss how to implement FAIR data principles for biological data collected in the marine environment.
 
@@ -297,17 +302,33 @@ My process for conversion was to make a new table called \texttt{event} and map 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{event <-}\StringTok{ }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{eventID =}\NormalTok{ survey_seines}\OperatorTok{$}\NormalTok{seine_id,}
-                \DataTypeTok{eventDate =} \KeywordTok{date}\NormalTok{(survey_seines}\OperatorTok{$}\NormalTok{survey_date),}
-                \DataTypeTok{decimalLatitude =}\NormalTok{ survey_seines}\OperatorTok{$}\NormalTok{lat,}
-                \DataTypeTok{decimalLongitude =}\NormalTok{ survey_seines}\OperatorTok{$}\NormalTok{long,}
-                \DataTypeTok{geodeticDatum =} \StringTok{"EPSG:4326 WGS84"}\NormalTok{,}
-                \DataTypeTok{minimumDepthInMeters =} \DecValTok{0}\NormalTok{,}
-                \DataTypeTok{maximumDepthInMeters =} \DecValTok{9}\NormalTok{, }\CommentTok{# seine depth is 9 m}
-                \DataTypeTok{samplingProtocol =} \StringTok{"http://dx.doi.org/10.21966/1.566666"} \CommentTok{# This is the DOI for the Hakai Salmon Data Package that contains the smnpling protocol, as well as the complete data package}
-\NormalTok{               ) }
+\CommentTok{\#TODO: Include abiotic measurements (YSI temp and salinity from 0 and 1 m) to hang off eventID in the eMoF table}
 
-\KeywordTok{write_csv}\NormalTok{(event, here}\OperatorTok{::}\KeywordTok{here}\NormalTok{(}\StringTok{"datasets"}\NormalTok{, }\StringTok{"hakai_salmon_data"}\NormalTok{, }\StringTok{"event.csv"}\NormalTok{))}
+\NormalTok{event }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{datasetName =} \StringTok{"Hakai Institute Juvenile Salmon Program"}\NormalTok{,}
+                \AttributeTok{eventID =}\NormalTok{ survey\_seines}\SpecialCharTok{$}\NormalTok{seine\_id,}
+                \AttributeTok{eventDate =} \FunctionTok{date}\NormalTok{(survey\_seines}\SpecialCharTok{$}\NormalTok{survey\_date),}
+                \AttributeTok{eventTime =} \FunctionTok{paste0}\NormalTok{(survey\_seines}\SpecialCharTok{$}\NormalTok{set\_time, }\StringTok{"{-}0700"}\NormalTok{),}
+                \AttributeTok{eventRemarks =} \FunctionTok{paste3}\NormalTok{(survey\_seines}\SpecialCharTok{$}\NormalTok{survey\_comments, survey\_seines}\SpecialCharTok{$}\NormalTok{seine\_comments),}
+                \AttributeTok{decimalLatitude =}\NormalTok{ survey\_seines}\SpecialCharTok{$}\NormalTok{lat,}
+                \AttributeTok{decimalLongitude =}\NormalTok{ survey\_seines}\SpecialCharTok{$}\NormalTok{long,}
+                \AttributeTok{locationID =}\NormalTok{ survey\_seines}\SpecialCharTok{$}\NormalTok{site\_id,}
+                \AttributeTok{coordinatePrecision =} \FloatTok{0.00001}\NormalTok{,}
+                \AttributeTok{coordinateUncertaintyInMeters =} \DecValTok{10}\NormalTok{,}
+                \AttributeTok{country =} \StringTok{"Canada"}\NormalTok{,}
+                \AttributeTok{countryCode =} \StringTok{"CA"}\NormalTok{,}
+                \AttributeTok{stateProvince =} \StringTok{"British Columbia"}\NormalTok{,}
+                \AttributeTok{habitat =} \StringTok{"Nearshore marine"}\NormalTok{,}
+                \AttributeTok{geodeticDatum =} \StringTok{"EPSG:4326 WGS84"}\NormalTok{,}
+                \AttributeTok{minimumDepthInMeters =} \DecValTok{0}\NormalTok{,}
+                \AttributeTok{maximumDepthInMeters =} \DecValTok{9}\NormalTok{, }\CommentTok{\# seine depth is 9 m}
+                \AttributeTok{samplingProtocol =} \StringTok{"http://dx.doi.org/10.21966/1.566666"}\NormalTok{, }\CommentTok{\# This is the DOI for the Hakai Salmon Data Package that contains the smnpling protocol, as well as the complete data package}
+                \AttributeTok{language =} \StringTok{"en"}\NormalTok{,}
+                \AttributeTok{license =} \StringTok{"http://creativecommons.org/licenses/by/4.0/legalcode"}\NormalTok{,}
+                \AttributeTok{bibliographicCitation =} \StringTok{"Johnson, B.T., J.C.L. Gan, S.C. Godwin, M. Krkosek, B.P.V. Hunt. 2020. Hakai Juvenile Salmon Program Time Series. Hakai Institute, Quadra Island Ecological Observatory, Heriot Bay, British Columbia, Canada. v\#.\#.\#, http://dx.doi.org/10.21966/1.566666"}\NormalTok{,}
+                \AttributeTok{references =} \StringTok{"https://github.com/HakaiInstitute/jsp{-}data"}\NormalTok{,}
+                \AttributeTok{institutionID =} \StringTok{"https://www.gbif.org/publisher/55897143{-}3f69{-}42f1{-}810d{-}ae94b55fde24, https://oceanexpert.org/institution/20121, https://edmo.seadatanet.org/report/5148"}\NormalTok{,}
+                \AttributeTok{institutionCode =} \StringTok{"Hakai"}
+\NormalTok{               ) }
 \end{Highlighting}
 \end{Shaded}
 
@@ -316,244 +337,185 @@ My process for conversion was to make a new table called \texttt{event} and map 
 
 Next you'll want to determine what constitutes an occurrence for your data set. Because each event captures fish, I consider each fish to be an occurrence. Therefore, the unit of observation (each row) in the occurrence table is a fish. To link each occurrence to an event you need to include the \texttt{eventID} column for every occurrence so that you know what seine (event) each fish (occurrence) came from. You must also provide a globally unique identifier for each occurrence. I already have a locally unique identifier for each fish in the original \texttt{fish\_data} table called \texttt{ufn}. To make it globally unique I pre-pend the organization and research program metadata to the \texttt{ufn} column.
 
+Not every fish is actually collected and given a Universal Fish Number (UFN) in our fish data tables, so in our field data sheets we record the total number of fish captured and the total number retained. So to get an occurrence row for every fish captured I create a row for every fish caught (minus the number taken) and create a generic numeric id (ie hakai-jsp-1) in one table and then join that to the fish table that includes a row for every fish retained that already has a UFN.
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#TODO: Include bycatch data as well}
+\DocumentationTok{\#\# make table long first}
+\NormalTok{seines\_total\_long }\OtherTok{\textless{}{-}}\NormalTok{ survey\_seines }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(seine\_id, so\_total, pi\_total, cu\_total, co\_total, he\_total, ck\_total) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{seine\_id, }\AttributeTok{names\_to =} \StringTok{"scientificName"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"n"}\NormalTok{)}
 
-\CommentTok{## make table long first}
-\NormalTok{seines_total_long <-}\StringTok{ }\NormalTok{survey_seines }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{select}\NormalTok{(seine_id, so_total, pi_total, cu_total, co_total, he_total, ck_total) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{pivot_longer}\NormalTok{(}\OperatorTok{-}\NormalTok{seine_id, }\DataTypeTok{names_to =} \StringTok{"scientificName"}\NormalTok{, }\DataTypeTok{values_to =} \StringTok{"n"}\NormalTok{)}
+\NormalTok{seines\_total\_long}\SpecialCharTok{$}\NormalTok{scientificName }\OtherTok{\textless{}{-}} \FunctionTok{recode}\NormalTok{(seines\_total\_long}\SpecialCharTok{$}\NormalTok{scientificName, }\AttributeTok{so\_total =} \StringTok{"Oncorhynchus nerka"}\NormalTok{, }\AttributeTok{pi\_total =} \StringTok{"Oncorhynchus gorbuscha"}\NormalTok{, }\AttributeTok{cu\_total =} \StringTok{"Oncorhynchus keta"}\NormalTok{, }\AttributeTok{co\_total =} \StringTok{"Oncorhynchus kisutch"}\NormalTok{, }\AttributeTok{ck\_total =} \StringTok{"Oncorhynchus tshawytscha"}\NormalTok{, }\AttributeTok{he\_total =} \StringTok{"Clupea pallasii"}\NormalTok{) }
 
-\NormalTok{seines_total_long}\OperatorTok{$}\NormalTok{scientificName <-}\StringTok{ }\KeywordTok{recode}\NormalTok{(seines_total_long}\OperatorTok{$}\NormalTok{scientificName, }\DataTypeTok{so_total =} \StringTok{"Oncorhynchus nerka"}\NormalTok{, }\DataTypeTok{pi_total =} \StringTok{"Oncorhynchus gorbushca"}\NormalTok{, }\DataTypeTok{cu_total =} \StringTok{"Oncorhynchus keta"}\NormalTok{, }\DataTypeTok{co_total =} \StringTok{"Oncorhynchus kisutch"}\NormalTok{, }\DataTypeTok{ck_total =} \StringTok{"Oncorhynchus tshawytscha"}\NormalTok{, }\DataTypeTok{he_total =} \StringTok{"Clupea pallasii"}\NormalTok{) }
+\NormalTok{seines\_taken\_long }\OtherTok{\textless{}{-}}\NormalTok{ survey\_seines }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(seine\_id, so\_taken, pi\_taken, cu\_taken, co\_taken, he\_taken, ck\_taken) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{seine\_id, }\AttributeTok{names\_to =} \StringTok{"scientificName"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"n\_taken"}\NormalTok{) }
 
-\NormalTok{seines_taken_long <-}\StringTok{ }\NormalTok{survey_seines }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{select}\NormalTok{(seine_id, so_taken, pi_taken, cu_taken, co_taken, he_taken, ck_taken) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{pivot_longer}\NormalTok{(}\OperatorTok{-}\NormalTok{seine_id, }\DataTypeTok{names_to =} \StringTok{"scientificName"}\NormalTok{, }\DataTypeTok{values_to =} \StringTok{"n_taken"}\NormalTok{) }
+\NormalTok{seines\_taken\_long}\SpecialCharTok{$}\NormalTok{scientificName }\OtherTok{\textless{}{-}} \FunctionTok{recode}\NormalTok{(seines\_taken\_long}\SpecialCharTok{$}\NormalTok{scientificName, }\AttributeTok{so\_taken =} \StringTok{"Oncorhynchus nerka"}\NormalTok{, }\AttributeTok{pi\_taken =} \StringTok{"Oncorhynchus gorbuscha"}\NormalTok{, }\AttributeTok{cu\_taken =} \StringTok{"Oncorhynchus keta"}\NormalTok{, }\AttributeTok{co\_taken =} \StringTok{"Oncorhynchus kisutch"}\NormalTok{, }\AttributeTok{ck\_taken =} \StringTok{"Oncorhynchus tshawytscha"}\NormalTok{, }\AttributeTok{he\_taken =} \StringTok{"Clupea pallasii"}\NormalTok{) }
 
-\NormalTok{seines_taken_long}\OperatorTok{$}\NormalTok{scientificName <-}\StringTok{ }\KeywordTok{recode}\NormalTok{(seines_taken_long}\OperatorTok{$}\NormalTok{scientificName, }\DataTypeTok{so_taken =} \StringTok{"Oncorhynchus nerka"}\NormalTok{, }\DataTypeTok{pi_taken =} \StringTok{"Oncorhynchus gorbushca"}\NormalTok{, }\DataTypeTok{cu_taken =} \StringTok{"Oncorhynchus keta"}\NormalTok{, }\DataTypeTok{co_taken =} \StringTok{"Oncorhynchus kisutch"}\NormalTok{, }\DataTypeTok{ck_taken =} \StringTok{"Oncorhynchus tshawytscha"}\NormalTok{, }\DataTypeTok{he_taken =} \StringTok{"Clupea pallasii"}\NormalTok{) }
+\DocumentationTok{\#\# remove records that have already been assigned an ID because they were actually retained}
+\NormalTok{seines\_long }\OtherTok{\textless{}{-}}  \FunctionTok{full\_join}\NormalTok{(seines\_total\_long, seines\_taken\_long, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"seine\_id"}\NormalTok{, }\StringTok{"scientificName"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{drop\_na}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{n\_not\_taken =}\NormalTok{ n }\SpecialCharTok{{-}}\NormalTok{ n\_taken) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#so\_total includes the number taken so I subtract n\_taken to get n\_not\_taken}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{n\_taken, }\SpecialCharTok{{-}}\NormalTok{n) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(n\_not\_taken }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{)}
 
-\CommentTok{## remove records that have already been assigned an ID  }
-\NormalTok{seines_long <-}\StringTok{  }\KeywordTok{full_join}\NormalTok{(seines_total_long, seines_taken_long, }\DataTypeTok{by =} \KeywordTok{c}\NormalTok{(}\StringTok{"seine_id"}\NormalTok{, }\StringTok{"scientificName"}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{drop_na}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{n_not_taken =}\NormalTok{ n }\OperatorTok{-}\StringTok{ }\NormalTok{n_taken) }\OperatorTok{%>%}\StringTok{ }\CommentTok{#so_total includes the number taken so I subtract n_taken to get n_not_taken}
-\StringTok{  }\KeywordTok{select}\NormalTok{(}\OperatorTok{-}\NormalTok{n_taken, }\OperatorTok{-}\NormalTok{n) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{filter}\NormalTok{(n_not_taken }\OperatorTok{>}\StringTok{ }\DecValTok{0}\NormalTok{)}
+\NormalTok{all\_fish\_not\_retained }\OtherTok{\textless{}{-}}
+\NormalTok{  seines\_long[}\FunctionTok{rep}\NormalTok{(}\FunctionTok{seq.int}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FunctionTok{nrow}\NormalTok{(seines\_long)), seines\_long}\SpecialCharTok{$}\NormalTok{n\_not\_taken), }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{] }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{n\_not\_taken) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{prefix =} \StringTok{"hakai{-}jsp{-}"}\NormalTok{,}
+         \AttributeTok{suffix =} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(.),}
+         \AttributeTok{occurrenceID =} \FunctionTok{paste0}\NormalTok{(prefix, suffix)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{prefix, }\SpecialCharTok{{-}}\NormalTok{suffix)}
 
-\NormalTok{all_fish_caught <-}
-\StringTok{  }\NormalTok{seines_long[}\KeywordTok{rep}\NormalTok{(}\KeywordTok{seq.int}\NormalTok{(}\DecValTok{1}\NormalTok{, }\KeywordTok{nrow}\NormalTok{(seines_long)), seines_long}\OperatorTok{$}\NormalTok{n_not_taken), }\DecValTok{1}\OperatorTok{:}\DecValTok{3}\NormalTok{] }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{select}\NormalTok{(}\OperatorTok{-}\NormalTok{n_not_taken) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{prefix =} \StringTok{"hakai-jsp-"}\NormalTok{,}
-         \DataTypeTok{suffix =} \DecValTok{1}\OperatorTok{:}\KeywordTok{nrow}\NormalTok{(.),}
-         \DataTypeTok{occurrenceID =} \KeywordTok{paste0}\NormalTok{(prefix, suffix)}
-\NormalTok{  ) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{select}\NormalTok{(}\OperatorTok{-}\NormalTok{prefix, }\OperatorTok{-}\NormalTok{suffix)}
+\CommentTok{\#}
 
-\CommentTok{#}
+\CommentTok{\# Change species names to full Scientific names }
+\NormalTok{latin }\OtherTok{\textless{}{-}} \FunctionTok{fct\_recode}\NormalTok{(fish\_data}\SpecialCharTok{$}\NormalTok{species, }\StringTok{"Oncorhynchus nerka"} \OtherTok{=} \StringTok{"SO"}\NormalTok{, }\StringTok{"Oncorhynchus gorbuscha"} \OtherTok{=} \StringTok{"PI"}\NormalTok{, }\StringTok{"Oncorhynchus keta"} \OtherTok{=} \StringTok{"CU"}\NormalTok{, }\StringTok{"Oncorhynchus kisutch"} \OtherTok{=} \StringTok{"CO"}\NormalTok{, }\StringTok{"Clupea pallasii"} \OtherTok{=} \StringTok{"HE"}\NormalTok{, }\StringTok{"Oncorhynchus tshawytscha"} \OtherTok{=} \StringTok{"CK"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as.character}\NormalTok{()}
 
-\CommentTok{# Change species names to full Scientific names }
-\NormalTok{latin <-}\StringTok{ }\KeywordTok{fct_recode}\NormalTok{(fish_data}\OperatorTok{$}\NormalTok{species, }\StringTok{"Oncorhynchus nerka"}\NormalTok{ =}\StringTok{ "SO"}\NormalTok{, }\StringTok{"Oncorhynchus gorbuscha"}\NormalTok{ =}\StringTok{ "PI"}\NormalTok{, }\StringTok{"Oncorhynchus keta"}\NormalTok{ =}\StringTok{ "CU"}\NormalTok{, }\StringTok{"Oncorhynchus kisutch"}\NormalTok{ =}\StringTok{ "CO"}\NormalTok{, }\StringTok{"Clupea pallasii"}\NormalTok{ =}\StringTok{ "HE"}\NormalTok{, }\StringTok{"Oncorhynchus tshawytscha"}\NormalTok{ =}\StringTok{ "CK"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{as.character}\NormalTok{()}
+\NormalTok{fish\_retained\_data }\OtherTok{\textless{}{-}}\NormalTok{ fish\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{scientificName =}\NormalTok{ latin) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{species) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{prefix =} \StringTok{"hakai{-}jsp{-}"}\NormalTok{,}
+         \AttributeTok{occurrenceID =} \FunctionTok{paste0}\NormalTok{(prefix, ufn)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(seine\_id, scientificName, occurrenceID)}
 
-\NormalTok{fish_retained_data <-}\StringTok{ }\NormalTok{fish_data }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{scientificName =}\NormalTok{ latin) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{select}\NormalTok{(}\OperatorTok{-}\NormalTok{species) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{prefix =} \StringTok{"hakai-jsp-"}\NormalTok{,}
-         \DataTypeTok{occurrenceID =} \KeywordTok{paste0}\NormalTok{(prefix, ufn)) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{select}\NormalTok{(}\OperatorTok{-}\NormalTok{semsp_id, }\OperatorTok{-}\NormalTok{prefix, }\OperatorTok{-}\NormalTok{ufn, }\OperatorTok{-}\NormalTok{fork_length_field, }\OperatorTok{-}\NormalTok{fork_length, }\OperatorTok{-}\NormalTok{weight, }\OperatorTok{-}\NormalTok{weight_field)}
+\NormalTok{occurrence }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(all\_fish\_not\_retained, fish\_retained\_data) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{eventID =}\NormalTok{ seine\_id) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Life stage}\StringTok{\textasciigrave{}} \OtherTok{=} \StringTok{"juvenile"}\NormalTok{)}
 
-\NormalTok{occurrence <-}\StringTok{ }\KeywordTok{bind_rows}\NormalTok{(all_fish_caught, fish_retained_data) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{basisOfRecord =} \StringTok{"HumanObservation"}\NormalTok{,}
-        \DataTypeTok{occurenceStatus =} \StringTok{"present"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{rename}\NormalTok{(}\DataTypeTok{eventID =}\NormalTok{ seine_id)}
+\NormalTok{unique\_taxa }\OtherTok{\textless{}{-}} \FunctionTok{unique}\NormalTok{(occurrence}\SpecialCharTok{$}\NormalTok{scientificName)  }
+\NormalTok{worms\_names }\OtherTok{\textless{}{-}} \FunctionTok{wm\_records\_names}\NormalTok{(unique\_taxa) }
+\NormalTok{df\_worms\_names }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(worms\_names) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\AttributeTok{scientificName =}\NormalTok{ scientificname,}
+         \AttributeTok{scientificNameAuthorship =}\NormalTok{ authority,}
+         \AttributeTok{taxonRank =}\NormalTok{ rank,}
+         \AttributeTok{scientificNameID =}\NormalTok{ lsid}
+\NormalTok{         )}
+
+\CommentTok{\#include bycatch species}
+
+\NormalTok{unique\_bycatch }\OtherTok{\textless{}{-}} \FunctionTok{unique}\NormalTok{(bycatch}\SpecialCharTok{$}\NormalTok{scientificName) }\SpecialCharTok{\%\textgreater{}\%}  \FunctionTok{glimpse}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
-For each occurrence of the six different fish species that I caught I need to match the species name that I provide with the official \texttt{scientificName} that is part of the World Register of Marine Species database \url{http://www.marinespecies.org/}
+\begin{verbatim}
+##  chr [1:29] "Oncorhynchus nerka" "Oncorhynchus tshawytscha" ...
+\end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# I went directly to the WoRMS webite (http://www.marinespecies.org/) to download the full taxonomic levels for the salmon species I have and put the WoRMS output (species_matched.xls) table in this project directory which is read in below and joined with the occurrence table}
+\NormalTok{by\_worms\_names }\OtherTok{\textless{}{-}} \FunctionTok{wm\_records\_names}\NormalTok{(unique\_bycatch) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{bind\_rows}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\AttributeTok{scientificName =}\NormalTok{ scientificname,}
+         \AttributeTok{scientificNameAuthorship =}\NormalTok{ authority,}
+         \AttributeTok{taxonRank =}\NormalTok{ rank,}
+         \AttributeTok{scientificNameID =}\NormalTok{ lsid}
+\NormalTok{         )}
 
-\NormalTok{species_matched <-}\StringTok{ }\NormalTok{readxl}\OperatorTok{::}\KeywordTok{read_excel}\NormalTok{(here}\OperatorTok{::}\KeywordTok{here}\NormalTok{(}\StringTok{"datasets"}\NormalTok{, }\StringTok{"hakai_salmon_data"}\NormalTok{, }\StringTok{"raw_data"}\NormalTok{, }\StringTok{"species_matched.xls"}\NormalTok{))}
+\NormalTok{bycatch\_occurrence }\OtherTok{\textless{}{-}}\NormalTok{ bycatch }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\AttributeTok{eventID =}\NormalTok{ seine\_id, occurrenceID, scientificName, }\StringTok{\textasciigrave{}}\AttributeTok{Life stage}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ bm\_ageclass) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(scientificName }\SpecialCharTok{!=} \StringTok{"unknown"}\NormalTok{)}
 
-\NormalTok{occurrence <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(occurrence, species_matched, }\DataTypeTok{by =} \KeywordTok{c}\NormalTok{(}\StringTok{"scientificName"}\NormalTok{ =}\StringTok{ "ScientificName"}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{select}\NormalTok{(occurrenceID, basisOfRecord, scientificName, eventID, }\DataTypeTok{occurrenceStatus =}\NormalTok{ occurenceStatus, Kingdom, Phylum, Class, Order, Family, Genus, Species)}
+\NormalTok{bycatch\_occurrence}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Life stage}\StringTok{\textasciigrave{}}\NormalTok{[bycatch\_occurrence}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Life stage}\StringTok{\textasciigrave{}} \SpecialCharTok{==} \StringTok{"J"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"juvenile"}
+\NormalTok{bycatch\_occurrence}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Life stage}\StringTok{\textasciigrave{}}\NormalTok{[bycatch\_occurrence}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Life stage}\StringTok{\textasciigrave{}} \SpecialCharTok{==} \StringTok{"A"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"adult"}
+\NormalTok{bycatch\_occurrence}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Life stage}\StringTok{\textasciigrave{}}\NormalTok{[bycatch\_occurrence}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Life stage}\StringTok{\textasciigrave{}} \SpecialCharTok{==} \StringTok{"Y"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Young of year"}
 
-\KeywordTok{write_csv}\NormalTok{(occurrence, here}\OperatorTok{::}\KeywordTok{here}\NormalTok{(}\StringTok{"datasets"}\NormalTok{, }\StringTok{"hakai_salmon_data"}\NormalTok{, }\StringTok{"occurrence.csv"}\NormalTok{))}
+\NormalTok{combined\_worms\_names }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(by\_worms\_names, df\_worms\_names) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{distinct}\NormalTok{(scientificName, }\AttributeTok{.keep\_all =} \ConstantTok{TRUE}\NormalTok{)}
+
+\NormalTok{occurrence }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(bycatch\_occurrence, occurrence)}
+
+\NormalTok{occurrence }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(occurrence, combined\_worms\_names) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{basisOfRecord =} \StringTok{"HumanObservation"}\NormalTok{,}
+        \AttributeTok{occurrenceStatus =} \StringTok{"present"}\NormalTok{)}
+
+\FunctionTok{write\_csv}\NormalTok{(occurrence,here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{(}\StringTok{"Standardizing Marine Biological Data"}\NormalTok{, }\StringTok{"datasets"}\NormalTok{, }\StringTok{"hakai\_salmon\_data"}\NormalTok{, }\StringTok{"raw\_data"}\NormalTok{,   }\StringTok{"occurrence.csv"}\NormalTok{))}
+
+\CommentTok{\# This removes events that didn\textquotesingle{}t result in any occurrences}
+\NormalTok{event }\OtherTok{\textless{}{-}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{semi\_join}\NormalTok{(event, occurrence, }\AttributeTok{by =} \StringTok{\textquotesingle{}eventID\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{coordinateUncertaintyInMeters =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(decimalLatitude), }\DecValTok{1852}\NormalTok{, coordinateUncertaintyInMeters))}
+
+\NormalTok{simple\_sites }\OtherTok{\textless{}{-}}\NormalTok{ sites }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(site\_id, ocgy\_std\_lat, ocgy\_std\_lon)}
+
+\NormalTok{event }\OtherTok{\textless{}{-}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{left\_join}\NormalTok{(event, simple\_sites, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"locationID"} \OtherTok{=} \StringTok{"site\_id"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{decimalLatitude =} \FunctionTok{coalesce}\NormalTok{(decimalLatitude, ocgy\_std\_lat),}
+         \AttributeTok{decimalLongitude =} \FunctionTok{coalesce}\NormalTok{(decimalLongitude, ocgy\_std\_lon)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(ocgy\_std\_lat, ocgy\_std\_lon))}
+
+\FunctionTok{write\_csv}\NormalTok{(event,here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{(}\StringTok{"Standardizing Marine Biological Data"}\NormalTok{, }\StringTok{"datasets"}\NormalTok{, }\StringTok{"hakai\_salmon\_data"}\NormalTok{, }\StringTok{"raw\_data"}\NormalTok{,   }\StringTok{"event.csv"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \hypertarget{measurementorfact}{%
 \subsection{measurementOrFact}\label{measurementorfact}}
 
-To convert all your measurements or facts from your normal format to Darwin Core you essentially need to put all your measurements into one column called measurementType and a corresponding column called measurementValue. This standardizes the column names are in the \texttt{measurementOrFact} table. There are a number of predefined \texttt{measurementType}s listed on the \href{https://www.bodc.ac.uk/resources/vocabularies/}{NERC} database that should be used where possible. I found it difficult to navigate this page to find the correct \texttt{measurementType}.
+To convert all your measurements or facts from your normal format to Darwin Core you essentially need to put all your measurements into one column called measurementType and a corresponding column called MeasurementValue. This standardizes the column names are in the \texttt{measurementOrFact} table. There are a number of predefined \texttt{measurementType}s listed on the \href{https://www.bodc.ac.uk/resources/vocabularies/}{NERC} database that should be used where possible. I found it difficult to navigate this page to find the correct \texttt{measurementType}.
 
 Here I convert length, and weight measurements that relate to an event and an occurrence and call those \texttt{measurementTypes} as \texttt{length} and \texttt{weight}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fish_data}\OperatorTok{$}\NormalTok{weight <-}\StringTok{ }\KeywordTok{coalesce}\NormalTok{(fish_data}\OperatorTok{$}\NormalTok{weight, fish_data}\OperatorTok{$}\NormalTok{weight_field)}
-\NormalTok{fish_data}\OperatorTok{$}\NormalTok{fork_length <-}\StringTok{ }\KeywordTok{coalesce}\NormalTok{(fish_data}\OperatorTok{$}\NormalTok{fork_length, fish_data}\OperatorTok{$}\NormalTok{fork_length_field)}
+\NormalTok{mof\_types }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/HakaiInstitute/jsp{-}data/master/OBIS\_data/mof\_type\_units\_id.csv"}\NormalTok{)}
 
-\NormalTok{fish_length <-}\StringTok{ }\NormalTok{fish_data }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{occurrenceID =} \KeywordTok{paste0}\NormalTok{(}\StringTok{"hakai-jsp-"}\NormalTok{, ufn)) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{select}\NormalTok{(occurrenceID, }\DataTypeTok{eventID =}\NormalTok{ seine_id, fork_length, weight) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{measurementType =} \StringTok{"fork length"}\NormalTok{, }\DataTypeTok{measurementValue =}\NormalTok{ fork_length) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{select}\NormalTok{(eventID, occurrenceID, measurementType, measurementValue) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{measurementUnit =} \StringTok{"millimetres"}\NormalTok{,}
-         \DataTypeTok{measurementUnitID =} \StringTok{"http://vocab.nerc.ac.uk/collection/P06/current/UXMM/"}\NormalTok{)}
+\NormalTok{fish\_data}\SpecialCharTok{$}\NormalTok{weight }\OtherTok{\textless{}{-}} \FunctionTok{coalesce}\NormalTok{(fish\_data}\SpecialCharTok{$}\NormalTok{weight, fish\_data}\SpecialCharTok{$}\NormalTok{weight\_field)}
+\NormalTok{fish\_data}\SpecialCharTok{$}\NormalTok{fork\_length }\OtherTok{\textless{}{-}} \FunctionTok{coalesce}\NormalTok{(fish\_data}\SpecialCharTok{$}\NormalTok{fork\_length, fish\_data}\SpecialCharTok{$}\NormalTok{fork\_length\_field)}
+\NormalTok{fish\_data}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Life stage}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \StringTok{"juvenile"}
 
-\NormalTok{fish_weight <-}\StringTok{ }\NormalTok{fish_data }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{occurrenceID =} \KeywordTok{paste0}\NormalTok{(}\StringTok{"hakai-jsp-"}\NormalTok{, ufn)) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{select}\NormalTok{(occurrenceID, }\DataTypeTok{eventID =}\NormalTok{ seine_id, fork_length, weight) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{measurementType =} \StringTok{"mass"}\NormalTok{, }\DataTypeTok{measurementValue =}\NormalTok{ weight) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{select}\NormalTok{(eventID, occurrenceID, measurementType, measurementValue) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{measurementUnit =} \StringTok{"grams"}\NormalTok{,}
-         \DataTypeTok{measurementUnitID =} \StringTok{"http://vocab.nerc.ac.uk/collection/P06/current/UGRM/"}\NormalTok{)}
 
-\NormalTok{measurementOrFact <-}\StringTok{ }\KeywordTok{bind_rows}\NormalTok{(fish_length, fish_weight) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{drop_na}\NormalTok{(measurementValue)}
 
-\KeywordTok{rm}\NormalTok{(fish_length, fish_weight)}
+\NormalTok{measurementOrFact }\OtherTok{\textless{}{-}}\NormalTok{ fish\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{occurrenceID =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"hakai{-}jsp{-}"}\NormalTok{, ufn)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(occurrenceID, }\AttributeTok{eventID =}\NormalTok{ seine\_id, }\StringTok{"Length (fork length)"} \OtherTok{=}\NormalTok{ fork\_length,}
+         \StringTok{"Standard length"} \OtherTok{=}\NormalTok{ standard\_length, }\StringTok{"Weight"} \OtherTok{=}\NormalTok{ weight, }\StringTok{\textasciigrave{}}\AttributeTok{Life stage}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Length (fork length)}\StringTok{\textasciigrave{}}\SpecialCharTok{:}\StringTok{\textasciigrave{}}\AttributeTok{Life stage}\StringTok{\textasciigrave{}}\NormalTok{,}
+               \AttributeTok{names\_to =} \StringTok{"measurementType"}\NormalTok{,}
+               \AttributeTok{values\_to =} \StringTok{"measurementValue"}\NormalTok{,}
+               \AttributeTok{values\_transform =} \FunctionTok{list}\NormalTok{(}\AttributeTok{measurementValue =}\NormalTok{ as.character)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(measurementValue }\SpecialCharTok{!=} \StringTok{"NA"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{left\_join}\NormalTok{(mof\_types,}\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"measurementType"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{measurementValueID =} \FunctionTok{case\_when}\NormalTok{(measurementValue }\SpecialCharTok{==} \StringTok{"juvenile"} \SpecialCharTok{\textasciitilde{}} \StringTok{"http://vocab.nerc.ac.uk/collection/S11/current/S1127/"}\NormalTok{),}
+         \AttributeTok{measurementID =} \FunctionTok{paste}\NormalTok{(eventID, measurementType, occurrenceID, }\AttributeTok{sep =} \StringTok{"{-}"}\NormalTok{))}
 
-\KeywordTok{write_csv}\NormalTok{(measurementOrFact, here}\OperatorTok{::}\KeywordTok{here}\NormalTok{(}\StringTok{"datasets"}\NormalTok{, }\StringTok{"hakai_salmon_data"}\NormalTok{, }\StringTok{"measurementOrFact.csv"}\NormalTok{))}
 
-\KeywordTok{rm}\NormalTok{()}
+\FunctionTok{write\_csv}\NormalTok{(measurementOrFact,here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{(}\StringTok{"Standardizing Marine Biological Data"}\NormalTok{, }\StringTok{"datasets"}\NormalTok{, }\StringTok{"hakai\_salmon\_data"}\NormalTok{, }\StringTok{"raw\_data"}\NormalTok{,   }\StringTok{"extendedMeasurementOrFact.csv"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{combine-into-dwc-a}{%
-\subsection{Combine into DwC-A}\label{combine-into-dwc-a}}
-
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{DwCA <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(occurrence, event) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{scientificNameID =} \DecValTok{126140}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{drop_na}\NormalTok{(eventDate) }\CommentTok{# loses 1388 rows. }\AlertTok{TODO}\CommentTok{: Ensure dropped data is as expected}
+\FunctionTok{library}\NormalTok{(dm)}
+\CommentTok{\#Check that every eventID in Occurrence occurs in event table}
+\NormalTok{no\_keys }\OtherTok{\textless{}{-}} \FunctionTok{dm}\NormalTok{(event, occurrence, measurementOrFact)}
+\NormalTok{only\_pk }\OtherTok{\textless{}{-}}\NormalTok{ no\_keys }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{dm\_add\_pk}\NormalTok{(event, eventID) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{dm\_add\_pk}\NormalTok{(occurrence, occurrenceID) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{dm\_add\_pk}\NormalTok{(measurementOrFact, measurementID)}
+\FunctionTok{dm\_examine\_constraints}\NormalTok{(only\_pk)}
 
-\KeywordTok{write_csv}\NormalTok{(DwCA, }\KeywordTok{here}\NormalTok{(}\StringTok{"datasets"}\NormalTok{, }\StringTok{"Hakai-JSP-DwC-A.csv"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
+\NormalTok{model }\OtherTok{\textless{}{-}}\NormalTok{ only\_pk }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{dm\_add\_fk}\NormalTok{(occurrence, eventID, event) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{dm\_add\_fk}\NormalTok{(measurementOrFact, occurrenceID, occurrence)}
+\FunctionTok{dm\_examine\_constraints}\NormalTok{(model)}
 
-\hypertarget{data-qc-1}{%
-\subsection{Data QC}\label{data-qc-1}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(obistools)}
-\CommentTok{# Unit tests}
-\KeywordTok{check_fields}\NormalTok{(DwCA)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 0 x 0
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{plot_map}\NormalTok{(DwCA, }\DataTypeTok{zoom =} \OtherTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{03-application_files/figure-latex/unnamed-chunk-3-1.pdf}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{ggsave}\NormalTok{(}\KeywordTok{here}\NormalTok{(}\StringTok{"figs"}\NormalTok{, }\StringTok{"basic_map.png"}\NormalTok{))}
-
-\KeywordTok{check_onland}\NormalTok{(DwCA)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 8,050 x 20
-##    occurrenceID basisOfRecord scientificName eventID occurrenceStatus Kingdom
-##    <chr>        <chr>         <chr>          <chr>   <chr>            <chr>  
-##  1 hakai-jsp-8~ HumanObserva~ Oncorhynchus ~ DE104N1 present          Animal~
-##  2 hakai-jsp-8~ HumanObserva~ Oncorhynchus ~ DE104N1 present          Animal~
-##  3 hakai-jsp-8~ HumanObserva~ Oncorhynchus ~ DE104N1 present          Animal~
-##  4 hakai-jsp-8~ HumanObserva~ Oncorhynchus ~ DE104N1 present          Animal~
-##  5 hakai-jsp-8~ HumanObserva~ Oncorhynchus ~ DE104N1 present          Animal~
-##  6 hakai-jsp-8~ HumanObserva~ Oncorhynchus ~ DE104N1 present          Animal~
-##  7 hakai-jsp-8~ HumanObserva~ Oncorhynchus ~ DE104N1 present          Animal~
-##  8 hakai-jsp-8~ HumanObserva~ Oncorhynchus ~ DE104N1 present          Animal~
-##  9 hakai-jsp-8~ HumanObserva~ Oncorhynchus ~ DE104N1 present          Animal~
-## 10 hakai-jsp-8~ HumanObserva~ Oncorhynchus ~ DE104N1 present          Animal~
-## # ... with 8,040 more rows, and 14 more variables: Phylum <chr>, Class <chr>,
-## #   Order <chr>, Family <chr>, Genus <chr>, Species <chr>, eventDate <date>,
-## #   decimalLatitude <dbl>, decimalLongitude <dbl>, geodeticDatum <chr>,
-## #   minimumDepthInMeters <dbl>, maximumDepthInMeters <dbl>,
-## #   samplingProtocol <chr>, scientificNameID <dbl>
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{check_depth}\NormalTok{(DwCA)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 262,455 x 20
-##    occurrenceID basisOfRecord scientificName eventID occurrenceStatus Kingdom
-##    <chr>        <chr>         <chr>          <chr>   <chr>            <chr>  
-##  1 hakai-jsp-1  HumanObserva~ Oncorhynchus ~ DE101N1 present          Animal~
-##  2 hakai-jsp-2  HumanObserva~ Oncorhynchus ~ DE101N1 present          Animal~
-##  3 hakai-jsp-3  HumanObserva~ Oncorhynchus ~ DE101N1 present          Animal~
-##  4 hakai-jsp-4  HumanObserva~ Oncorhynchus ~ DE101N1 present          Animal~
-##  5 hakai-jsp-5  HumanObserva~ Oncorhynchus ~ DE101N1 present          Animal~
-##  6 hakai-jsp-6  HumanObserva~ Oncorhynchus ~ DE101N1 present          Animal~
-##  7 hakai-jsp-7  HumanObserva~ Oncorhynchus ~ DE101N1 present          Animal~
-##  8 hakai-jsp-8  HumanObserva~ Oncorhynchus ~ DE101N1 present          Animal~
-##  9 hakai-jsp-9  HumanObserva~ Oncorhynchus ~ DE101N1 present          Animal~
-## 10 hakai-jsp-10 HumanObserva~ Oncorhynchus ~ DE101N1 present          Animal~
-## # ... with 262,445 more rows, and 14 more variables: Phylum <chr>, Class <chr>,
-## #   Order <chr>, Family <chr>, Genus <chr>, Species <chr>, eventDate <date>,
-## #   decimalLatitude <dbl>, decimalLongitude <dbl>, geodeticDatum <chr>,
-## #   minimumDepthInMeters <dbl>, maximumDepthInMeters <dbl>,
-## #   samplingProtocol <chr>, scientificNameID <dbl>
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{#(report <- check_outliers_species(DwCA)) # Need to lsid from marinespecies.rg}
-\KeywordTok{check_eventdate}\NormalTok{(DwCA)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 0 x 0
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{tree <-}\StringTok{ }\KeywordTok{treeStructure}\NormalTok{(event, occurrence)}
-\KeywordTok{exportTree}\NormalTok{(tree, }\StringTok{"tree.html"}\NormalTok{)}
-
-\CommentTok{#report(DwCA) # Currently I get warnings on depths. it looks like depths are supposed to be negative? Not according to oceanographers I know. Other points are close to land, need to check closer, but that's expected sampling in the littoral zone.}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{check-obis-like-did-it-work-errr-what}{%
-\subsection{Check OBIS, like did it work errr what?}\label{check-obis-like-did-it-work-errr-what}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{#library(robis)}
+\CommentTok{\# dm\_draw(model, view\_type = "all") }
 \end{Highlighting}
 \end{Shaded}
 
 \hypertarget{example-two}{%
-\section{Example two}\label{example-two}}
+\section{Example Two}\label{example-two}}
 
-126140
+Add another example here, perhaps zooplankton?
 
 \hypertarget{final-words}{%
 \chapter{Final Words}\label{final-words}}
 
 We have finished a nice book.
 
-\bibliography{book.bib,packages.bib}
+  \bibliography{book.bib,packages.bib}
 
 \end{document}
