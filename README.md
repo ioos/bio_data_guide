@@ -14,7 +14,7 @@
 
 See the guide [here](https://ioos.github.io/bio_data_guide/intro.html)
 
-We are documenting, in the form of a :notebook: Guide, relevant resources and standards which apply to various marine biological data sets. This is a work in progress, a growing guide that is being put together by scientists and data managers responsible for transforming their data to meet international standards. The Guide is exported into [multiple formats](https://github.com/ioos/bio_data_guide/tree/master/Standardizing%20Marine%20Biological%20Data/docs), including a [pdf document](https://github.com/ioos/bio_data_guide/blob/master/Standardizing%20Marine%20Biological%20Data/docs/Standardizing-Marine-Biological-Data.pdf). Chapters are written in R Markdown files; [contributions are welcome!](https://github.com/ioos/bio_data_guide/tree/master/Standardizing%20Marine%20Biological%20Data)
+We are documenting, in the form of a :notebook: Guide, relevant resources and standards which apply to various marine biological data sets. This is a work in progress, a growing guide that is being put together by scientists and data managers responsible for transforming their data to meet international standards. The Guide is exported into [multiple formats](https://github.com/ioos/bio_data_guide/tree/master/Standardizing%20Marine%20Biological%20Data/docs), including a [pdf document](https://github.com/ioos/bio_data_guide/blob/master/Standardizing%20Marine%20Biological%20Data/docs/Standardizing-Marine-Biological-Data.pdf). Chapters are written in R Markdown files; [contributions are welcome!](https://github.com/ioos/bio_data_guide/blob/master/Standardizing%20Marine%20Biological%20Data/CONTRIBUTING.md)
 
 # Resources & Links
 * Training & workshop documents
@@ -26,8 +26,8 @@ We are documenting, in the form of a :notebook: Guide, relevant resources and st
 ## Monthly Meetings
 We have open monthly meetings to discuss marine bio data issues. Please join us next time!
 
-* [Link to meeting minutes](https://docs.google.com/document/d/1TJ4JLTtU0qQZ-Rzwbz20MUU7sKhpfDCtXQnC5rPJK8k/edit?usp=sharing)
-* [Link to call participation details](https://docs.google.com/document/d/1TJ4JLTtU0qQZ-Rzwbz20MUU7sKhpfDCtXQnC5rPJK8k/edit#bookmark=id.izp500kyylhv)
+* [Link to meeting minutes](https://docs.google.com/document/d/1JfXHFXhP0rB8juAK3-KvOtqtwDofPwewoAB_ZyFwSwY/edit?usp=sharing)
+* [Link to call participation details](https://docs.google.com/document/d/1JfXHFXhP0rB8juAK3-KvOtqtwDofPwewoAB_ZyFwSwY/edit#bookmark=id.1ksv4uv)
 
 
 # Datasets
@@ -39,7 +39,7 @@ The `./datasets/` directory in this repository contains small datasets which mee
 Ideally each dataset should contain a README.md file with details about the data and the ingestion process for this dataset.
 A few datasets are highlighted below as especially instructive examples:
 
-* [example_script_with_fake_data](https://github.com/ioos/bio_data_guide/tree/master/datasets/example_script_with_fake_data) - fake data crafted by Abby Benson to illustrate a very basic conversion to DwC
+* [example_script_with_fake_data](https://github.com/ioos/bio_data_guide/tree/master/Standardizing%20Marine%20Biological%20Data/datasets/example_script_with_fake_data) - fake data crafted by Abby Benson to illustrate a very basic conversion to DwC
 
 ## Linked datasets
 Datasets not included in this directory but still meeting one of the criteria above are linked here:
