@@ -7,6 +7,6 @@
 
 ## Scripts
 1. Create DATA
-2. Create OBIS occurrence
+2. [Create OBIS occurrence](https://github.com/ioos/bio_data_guide/blob/master/Standardizing%20Marine%20Biological%20Data/datasets/CREMP_dry_tortugas/write_cremp_coral_csv_occurrence.m)
 3. Create OBIS event
 4. Create OBIS measurements or facts
