@@ -18,7 +18,7 @@ jobs:
       - name: Install rmarkdown
         run: Rscript -e 'install.packages(c("rmarkdown","bookdown"))'
       - name: Render Book
-        run: Rscript -e 'bookdown::render_book("Standardizing Marine Biological Data/index.Rmd")'
+        run: Rscript -e 'rmarkdown::render_site(encoding = 'UTF-8' ) #book("Standardizing Marine Biological Data/index.Rmd")'
       - uses: actions/upload-artifact@v1
         with:
           name: _book
