@@ -8,8 +8,6 @@ jobs:
   bookdown:
     name: Render-Book
     runs-on: macOS-latest
-        env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
 
@@ -22,6 +20,9 @@ jobs:
 
       - name: Install OBIS tools
         run: Rscript -e 'install.packages("devtools")' -e 'devtools::install_github("iobis/obistools")'
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
 
       - name: Render Book
         run: Rscript -e 'setwd("Standardizing Marine Biological Data/")' -e 'bookdown::render_book("index.Rmd")'
