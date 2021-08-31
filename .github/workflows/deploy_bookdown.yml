@@ -15,8 +15,8 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v1
 
-      - name: Install rmarkdown
-        run: Rscript -e 'install.packages(c("rmarkdown","bookdown"))'
+      - name: Install packages
+        run: Rscript -e 'install.packages(c("rmarkdown","bookdown", "tidyverse", "worms", "obistools", "here", "lubridate"))'
 
       - name: Render Book
         run: Rscript -e 'setwd("Standardizing Marine Biological Data/")' -e 'bookdown::render_book("index.Rmd")'
