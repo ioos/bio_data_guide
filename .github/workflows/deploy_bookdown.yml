@@ -18,8 +18,7 @@ jobs:
       - name: Install rmarkdown
         run: Rscript -e 'install.packages(c("rmarkdown","bookdown"))'
 
-      - name: Set CWD
-        run: Rscript -e 'setwd("/Standardizing Marine Biological Data/")'
+        run: Rscript -e 'setwd("Standardizing Marine Biological Data/")'
 
       - name: Render Book
         run: Rscript -e 'bookdown::render_book("index.Rmd")'
