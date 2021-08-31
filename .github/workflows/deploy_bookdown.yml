@@ -14,12 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Change directory
-        shell: bash -l {0}
-        run: |
-          cd Standardizing\ Marine\ Biological\ Data/
-          pwd
-
       - uses: r-lib/actions/setup-r@v1
 
       - uses: r-lib/actions/setup-pandoc@v1
@@ -28,7 +22,7 @@ jobs:
         run: Rscript -e 'install.packages(c("rmarkdown","bookdown"))'
 
       - name: Render Book
-        run: Rscript -e 'bookdown::render_book("index.Rmd")'
+        run: Rscript -e 'bookdown::render_book("Standardizing\ Marine\ Biological\ Data/index.Rmd")'
 
       - uses: actions/upload-artifact@v2
         with:
