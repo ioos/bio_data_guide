@@ -16,7 +16,10 @@ jobs:
       - uses: r-lib/actions/setup-pandoc@v1
 
       - name: Install packages
-        run: Rscript -e 'install.packages(c("rmarkdown","bookdown", "tidyverse", "worms", "obistools", "here", "lubridate"))'
+        run: Rscript -e 'install.packages(c("rmarkdown","bookdown", "tidyverse", "worms", "here", "lubridate"))'
+
+      - name: Install OBIS tools
+        run: Rscript -e 'install.packages("devtools")' -e 'devtools::install_github("iobis/obistools")'
 
       - name: Render Book
         run: Rscript -e 'setwd("Standardizing Marine Biological Data/")' -e 'bookdown::render_book("index.Rmd")'
