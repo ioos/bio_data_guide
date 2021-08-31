@@ -18,8 +18,11 @@ jobs:
       - name: Install rmarkdown
         run: Rscript -e 'install.packages(c("rmarkdown","bookdown"))'
 
+      - name: Set CWD
+        run: Rscript -e 'setwd("/Standardizing Marine Biological Data/")'
+
       - name: Render Book
-        run: Rscript -e 'bookdown::render_book("Standardizing\ Marine\ Biological\ Data/index.Rmd")'
+        run: Rscript -e 'bookdown::render_book("index.Rmd")'
 
       - uses: actions/upload-artifact@v2
         with:
