@@ -1,11 +1,8 @@
+name: renderbook
+
 on:
   push:
-     branches:
-       - master
-
-  
-
-name: renderbook
+     branches: [master]
 
 jobs:
   bookdown:
@@ -33,12 +30,14 @@ jobs:
 # see https://pkgdown.r-lib.org/reference/deploy_site_github.html
 # and also add secrets for a GH_PAT and EMAIL to the repository
 # gh-action from Cecilapp/GitHub-Pages-deploy
+
   checkout-and-deploy:
    runs-on: ubuntu-latest
    needs: bookdown
    steps:
      - name: Checkout
        uses: actions/checkout@master
+
      - name: Download artifact
        uses: actions/download-artifact@v1.0.0
        with:
@@ -46,6 +45,7 @@ jobs:
          name: _book # optional
          # Destination path
          path: _book # optional
+
      - name: Deploy to GitHub Pages
        uses: Cecilapp/GitHub-Pages-deploy@master
        env:
