@@ -62,7 +62,7 @@ The first step is to consider what you will define as an event in your data set.
 My process for conversion was to make a new table called `event` and map the standard Darwin Core column names to pre-existing columns that serve the same purpose in my original `seine_data` table and populate the other required fields.
 
 
-```{r event, include = FALSE}
+```{r event}
 
 #TODO: Include abiotic measurements (YSI temp and salinity from 0 and 1 m) to hang off eventID in the eMoF table
 
@@ -102,7 +102,7 @@ Next you'll want to determine what constitutes an occurrence for your data set. 
 
 Not every fish is actually collected and given a Universal Fish Number (UFN) in our fish data tables, so in our field data sheets we record the total number of fish captured and the total number retained. So to get an occurrence row for every fish captured I create a row for every fish caught (minus the number taken) and create a generic numeric id (ie hakai-jsp-1) in one table and then join that to the fish table that includes a row for every fish retained that already has a UFN. 
 
-```{r occurrence, include = FALSE}
+```{r occurrence}
 
 ## make table long first
 seines_total_long <- survey_seines %>% 
@@ -211,7 +211,7 @@ To convert all your measurements or facts from your normal format to Darwin Core
 
 Here I convert length, and weight measurements that relate to an event and an occurrence and call those `measurementTypes` as `length` and `weight`.
 
-```{r measurementOrFact, include = FALSE}
+```{r measurementOrFact}
 
 mof_types <- read_csv("https://raw.githubusercontent.com/HakaiInstitute/jsp-data/master/OBIS_data/mof_type_units_id.csv")
 
