@@ -227,8 +227,7 @@ seagrassEvent <-
          coordinateUncertaintyInMeters = transect_dist,
          minimumDepthInMeters          = depth_m,
          maximumDepthInMeters          = depth_m) %>%
-  mutate(basisOfRecord = "HumanObservation",
-         geodeticDatum = "WGS84") %T>% glimpse
+  mutate(geodeticDatum = "WGS84") %T>% glimpse
 
 # save event table to csv
 write.csv(seagrassEvent, "processed_data/hakaiSeagrassDwcEvent.csv")
@@ -242,7 +241,8 @@ seagrassOccurrence <-
   seagrass %>%
   distinct %>%  # some duplicates in data stemming from database conflicts
   select(eventID, occurrenceID) %>%
-  mutate(scientificName   = "Zostera subg. Zostera marina",
+  mutate(basisOfRecord = "HumanObservation",
+         scientificName   = "Zostera subg. Zostera marina",
          occurrenceStatus = "present")
 
 # Taxonomic name matching
@@ -260,7 +260,7 @@ zmWorms <- wm_record(id = 145795)
 seagrassOccurrence <- 
   full_join(seagrassOccurrence, zmWorms, 
             by = c("scientificName" = "scientificname")) %>%
-  select(eventID, occurrenceID, scientificName, occurrenceStatus, AphiaID,
+  select(eventID, occurrenceID, basisOfRecord, scientificName, occurrenceStatus, AphiaID,
          url, authority, status, unacceptreason, taxonRankID, rank,
          valid_AphiaID, valid_name, valid_authority, parentNameUsageID,
          kingdom, phylum, class, order, family, genus, citation, lsid,
