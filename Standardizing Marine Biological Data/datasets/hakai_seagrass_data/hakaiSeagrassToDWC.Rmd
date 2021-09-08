@@ -217,6 +217,7 @@ compliant datasets
 # subset seagrass to create event table
 seagrassEvent <-
   seagrass %>%
+  distinct %>%  # some duplicates in data stemming from database conflicts
   select(date,
          Decimal.Lat, Decimal.Long, transect_dist,
          depth_m, eventID) %>%
@@ -239,6 +240,7 @@ write.csv(seagrassEvent, "processed_data/hakaiSeagrassDwcEvent.csv")
 # subset seagrass to create occurrence table
 seagrassOccurrence <-
   seagrass %>%
+  distinct %>%  # some duplicates in data stemming from database conflicts
   select(eventID, occurrenceID) %>%
   mutate(scientificName   = "Zostera subg. Zostera marina",
          occurrenceStatus = "present")
