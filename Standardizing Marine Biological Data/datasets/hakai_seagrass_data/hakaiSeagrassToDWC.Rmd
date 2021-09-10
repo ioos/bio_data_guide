@@ -227,7 +227,8 @@ seagrassEvent <-
          coordinateUncertaintyInMeters = transect_dist,
          minimumDepthInMeters          = depth_m,
          maximumDepthInMeters          = depth_m) %>%
-  mutate(geodeticDatum = "WGS84") %T>% glimpse
+  mutate(geodeticDatum  = "WGS84",
+         samplingEffort = "30 metre transect") %T>% glimpse
 
 # save event table to csv
 write.csv(seagrassEvent, "processed_data/hakaiSeagrassDwcEvent.csv")
