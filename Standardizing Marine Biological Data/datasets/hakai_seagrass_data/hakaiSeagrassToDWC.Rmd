@@ -282,7 +282,7 @@ seagrassMof <-
          eventID, survey, site_id, transect_dist,
          substrate, patchiness, adj_habitat_1, adj_habitat_2,
          vegetation_1, vegetation_2,
-         density_msq, canopy_height_cm, flowering_shoots, depth_m) %>%
+         density_msq, canopy_height_cm, flowering_shoots) %>%
   # split substrate into two variables (currently holds two substrate type in same variable)
   separate(substrate, sep = ",", into = c("substrate_1", "substrate_2")) %>%
   # change variables names to match NERC database (or to be more descriptive where none exist)
@@ -328,7 +328,10 @@ seagrassMof <-
       measurementType == "CanopyHeight" ~ "in situ with ruler",
       measurementType == "BarePatchhLengthWithinSeagrass" ~ "estimated along transect line",
       measurementType == "FloweringBedAbund" ~ "25cmx25cm quadrat count")) %>%
-  select(!c(survey, site_id)) %T>%
+  select(eventID, measurementDeterminedDate, measurementType, measurementValue,
+         measurementTypeID, measurementUnit, measurementUnitID, measurementAccuracy,
+         measurementMethod) %T>%
+#  select(!c(survey, site_id, transect_dist)) %T>%
   glimpse()
 
 # save eMoF table to csv
