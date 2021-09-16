@@ -20,7 +20,7 @@ jobs:
           pandoc-version: '2.14.1'
 
       - name: Install packages
-        run: Rscript -e 'install.packages("librarian"); librarian::shelf(bookdown, dm, here, lubridate, iobis/obistools, rmarkdown, tidyverse, worms)'
+        run: Rscript -e 'options(install.packages.check.source = "no"); install.packages("librarian"); librarian::shelf(bookdown, dm, here, lubridate, iobis/obistools, rmarkdown, tidyverse, worms)'
         env:
           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
           
