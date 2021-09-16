@@ -20,21 +20,20 @@ jobs:
           pandoc-version: '2.14.1'
 
       - name: Install packages
-        run: Rscript -e 'install.packages(c("rmarkdown","bookdown", "tidyverse", "worms", "here", "lubridate"))'
-
-      - name: Install OBIS tools
-        run: Rscript -e 'install.packages("devtools")' -e 'devtools::install_github("iobis/obistools")'
+        run: Rscript -e '
+          install.packages(c("librarian", "rgdal", "rmarkdown", "vroom", "xfun"), type = "binary");
+          librarian::shelf(bookdown, dm, here, lubridate, , rmarkdown, tidyverse, worms);
+          remotes::install_github("iobis/obistools", upgrade="never")'
         env:
           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-
-
+          
       - name: Render Book
-        run: Rscript -e 'setwd("Standardizing Marine Biological Data/")' -e 'bookdown::render_book("index.Rmd")'
+        run: Rscript -e 'setwd("bio-data-guide/")' -e 'bookdown::render_book("index.Rmd")'
 
       - uses: actions/upload-artifact@v2
         with:
           name: _book
-          path: _book/
+          path: 'bio-data-guide/docs' # see _bookdown.yml: output_dir
   
 # Need to first create an empty gh-pages branch
 # see https://pkgdown.r-lib.org/reference/deploy_site_github.html
@@ -54,12 +53,13 @@ jobs:
          # Artifact name
          name: _book # optional
          # Destination path
-         path: _book # optional
+         path: 'bio-data-guide/docs' # see _bookdown.yml: output_dir
 
      - name: Deploy to GitHub Pages
        uses: Cecilapp/GitHub-Pages-deploy@master
+       with:
+         build_dir: 'bio-data-guide/docs' # see _bookdown.yml: output_dir
        env:
-          EMAIL: ${{ secrets.EMAIL }}               # must be a verified email
-          GH_TOKEN: ${{ secrets.GH_PAT }} # https://github.com/settings/tokens
-          BUILD_DIR: _book/                     # "_site/" by default
-    
+         EMAIL: ${{ secrets.EMAIL }}               # must be a verified email
+         GH_TOKEN: ${{ secrets.GH_PAT }} # https://github.com/settings/tokens
+

@@ -1,0 +1,7 @@
+book_filename: "bio-data-guide"
+delete_merged_file: true
+language:
+  ui:
+    chapter_name: "Chapter "
+output_dir: "docs"
+new_session: yes
