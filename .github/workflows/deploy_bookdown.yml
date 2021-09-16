@@ -56,10 +56,9 @@ jobs:
          path: 'bio-data-guide/docs' # see _bookdown.yml: output_dir
 
      - name: Deploy to GitHub Pages
-       uses: Cecilapp/GitHub-Pages-deploy@master
+       uses: Cecilapp/GitHub-Pages-deploy@v3
        with:
          build_dir: 'bio-data-guide/docs' # see _bookdown.yml: output_dir
        env:
-         EMAIL: ${{ secrets.EMAIL }}               # must be a verified email
-         GH_TOKEN: ${{ secrets.GH_PAT }} # https://github.com/settings/tokens
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
