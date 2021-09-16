@@ -50,12 +50,12 @@ jobs:
          # Artifact name
          name: _book # optional
          # Destination path
-         path: _book # optional
+         path: 'Standardizing Marine Biological Data/docs' # see _bookdown.yml: output_dir
 
      - name: Deploy to GitHub Pages
        uses: Cecilapp/GitHub-Pages-deploy@master
        env:
           EMAIL: ${{ secrets.EMAIL }}               # must be a verified email
           GH_TOKEN: ${{ secrets.GH_PAT }} # https://github.com/settings/tokens
-          BUILD_DIR: _book/                     # "_site/" by default
+          BUILD_DIR: 'Standardizing Marine Biological Data/docs' # see _bookdown.yml: output_dir
     
