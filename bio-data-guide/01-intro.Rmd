@@ -8,7 +8,7 @@ There are a few concepts necessary to make this possible such as standard data s
 
 The OBIS-ENV Darwin Core Archive Data Structure.
 
-[OBIS manual]("https://obis.org/manual/")
+[OBIS manual](https://obis.org/manual/)
 
 ## Ontologies & Controlled Vocabularies
 
@@ -28,21 +28,21 @@ TODO: Research Unified Modelling Language?
 
 There are a number of controlled vocabularies that are used to describe parameters commonly used in specific research domains. This allows for greater interoperability of data sets within the domain, and ideally between domains. Here, we strive to document a number of relevant examples. 
 
-* [Climate and Format (CF) Standard Names]("http://cfconventions.org/standard-names.html") are applied to sensors for application with OPeNDAP web service. 
+* [Climate and Format (CF) Standard Names](http://cfconventions.org/standard-names.html) are applied to sensors for application with OPeNDAP web service. 
 
-* [Device categories]("http://vocab.nerc.ac.uk/collection/L05/current/") using the SeaDataNet device categories in NERC 2.0
+* [Device categories](http://vocab.nerc.ac.uk/collection/L05/current/) using the SeaDataNet device categories in NERC 2.0
 
-* [Device make/model using the SeaVoX Device Catalogue]("http://vocab.nerc.ac.uk/collection/L22/current/") in NERC 2.0, 
+* [Device make/model using the SeaVoX Device Catalogue](http://vocab.nerc.ac.uk/collection/L22/current/) in NERC 2.0, 
 
-* [Platform categories using SeaVoX Platform Categories]("http://vocab.nerc.ac.uk/collection/L06/current/") in NERC 2.0
+* [Platform categories using SeaVoX Platform Categories](http://vocab.nerc.ac.uk/collection/L06/current/) in NERC 2.0
 
-* [Platform instances using the ICES Platform Codes]("http://vocab.nerc.ac.uk/collection/C17/current/") in NERC 2.0
+* [Platform instances using the ICES Platform Codes](http://vocab.nerc.ac.uk/collection/C17/current/) in NERC 2.0
 
-* [Unit of measure]("http://vocab.nerc.ac.uk/collection/P06/current/") 
+* [Unit of measure](http://vocab.nerc.ac.uk/collection/P06/current/) 
 
-* [GCMD Keywords (NASA)]("http://vocab.nerc.ac.uk/collection/P04/current/")
+* [GCMD Keywords (NASA)](http://vocab.nerc.ac.uk/collection/P04/current/)
 
-* [Geographic Domain/Features of Interest]("http://vocab.nerc.ac.uk/collection/C19/current/")
+* [Geographic Domain/Features of Interest](http://vocab.nerc.ac.uk/collection/C19/current/)
 
 * [GeoLink base ontology](http://schema.geolink.org/1.0/base/main.html) was part of the [EarthCube GeoLink Project](http://www.geolink.org/)
 
@@ -78,13 +78,13 @@ Note: To describe a measurement or fact of a biological specimen that conforms t
 
 ### Eco/EnvO
 
-[Environment Ontology]("http://www.obofoundry.org/ontology/envo.html") including genomics.
+[Environment Ontology](http://www.obofoundry.org/ontology/envo.html) including genomics.
 
 ### Wild Cards
 
 Question: Not sure use case for this. 
 
-[P01 Biological Entity Parameter Code Builder]("https://www.bodc.ac.uk/resources/vocabularies/vocabulary_builder/biomodel/")
+[P01 Biological Entity Parameter Code Builder](https://www.bodc.ac.uk/resources/vocabularies/vocabulary_builder/biomodel/)
 
 ## Technologies
 
@@ -113,7 +113,7 @@ See http://www.lifewatch.be/data-services/
 
 ### Semantic Web and Darwin Core
 
-[Lessons learned from adapting the Darwin Core vocabulary standard for use in RDF]("http://www.semantic-web-journal.net/system/files/swj1093.pdf")
+[Lessons learned from adapting the Darwin Core vocabulary standard for use in RDF](http://www.semantic-web-journal.net/system/files/swj1093.pdf)
 
 ### Resource Description Framework
 
