@@ -10,7 +10,10 @@ library(tidyverse)
 library(here)
 library(lubridate)
 library(worms)
+library(worrms)
 library(obistools)
+library(dm)
+rename = dplyr::rename
 
 # Reads data from the most recent official version of the Hakai Juvenile Salmon Program time series
 survey_data <- read_csv("https://raw.githubusercontent.com/HakaiInstitute/jsp-data/master/tidy_data/survey_data.csv") 
@@ -147,11 +150,11 @@ fish_retained_data <- fish_data %>%
   select(seine_id, scientificName, occurrenceID)
 
 occurrence <- bind_rows(all_fish_not_retained, fish_retained_data) %>% 
-  rename(eventID = seine_id) %>% 
+  rename(eventID = seine_id) %>%  # rename = dplyr::rename; vs plyr::rename
   mutate(`Life stage` = "juvenile")
 
 unique_taxa <- unique(occurrence$scientificName)  
-worms_names <- wm_records_names(unique_taxa) 
+worms_names <- wm_records_names(unique_taxa) # library(worrms)
 df_worms_names <- bind_rows(worms_names) %>% 
   select(scientificName = scientificname,
          scientificNameAuthorship = authority,
@@ -239,8 +242,6 @@ write_csv(measurementOrFact,here::here("Standardizing Marine Biological Data", "
 ```
 
 ```{r QC}
-
-library(dm)
 #Check that every eventID in Occurrence occurs in event table
 no_keys <- dm(event, occurrence, measurementOrFact)
 only_pk <- no_keys %>% 
