@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 # Applications
 
 Some _significant_ applications are demonstrated in this chapter.
@@ -106,7 +111,8 @@ fish_retained_data <- fish_data %>%
   select(seine_id, scientificName, occurrenceID)
 
 occurrence <- bind_rows(all_fish_not_retained, fish_retained_data) %>% 
-  rename(eventID = seine_id) %>% 
+  #dplyr::rename(eventID = seine_id) %>% 
+  rename(eventID = seine_id) %>%  # using dplyr::rename vs plyr::rename with explicit assignment in first chunk 
   mutate(`Life stage` = "juvenile")
 
 unique_taxa <- unique(occurrence$scientificName)  
@@ -205,7 +211,6 @@ write_csv(measurementOrFact,here::here("Standardizing Marine Biological Data", "
 
 
 ```r
-library(dm)
 #Check that every eventID in Occurrence occurs in event table
 no_keys <- dm(event, occurrence, measurementOrFact)
 only_pk <- no_keys %>% 
@@ -219,6 +224,7 @@ model <- only_pk %>%
   dm_add_fk(measurementOrFact, occurrenceID, occurrence)
 dm_examine_constraints(model)
 
+#TODO: Fix bookdown issues so that dm_draw shows data model html output. Perhaps add  `always_allow_html: true` to yaml front matter
 # dm_draw(model, view_type = "all") 
 ```
 
