@@ -21,7 +21,9 @@ jobs:
 
       - name: Install packages
         run: Rscript -e 'install.packages("librarian"); librarian::shelf(bookdown, dm, here, lubridate, iobis/obistools, rmarkdown, tidyverse, worms)'
-
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+          
       - name: Render Book
         run: Rscript -e 'setwd("Standardizing Marine Biological Data/")' -e 'bookdown::render_book("index.Rmd")'
 
