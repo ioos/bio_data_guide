@@ -20,8 +20,7 @@ jobs:
           pandoc-version: '2.14.1'
 
       - name: Install packages
-        run: Rscript -e |
-          'install.packages(c("librarian", "rgdal", "rmarkdown", "vroom", "xfun"), type = "binary");
+        run: Rscript -e 'install.packages(c("librarian", "rgdal", "rmarkdown", "vroom", "xfun"), type = "binary");
           librarian::shelf(bookdown, dm, here, lubridate, , rmarkdown, tidyverse, worms);
           remotes::install_github("iobis/obistools", upgrade="never")'
         env:
