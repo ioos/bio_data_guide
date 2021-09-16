@@ -1,8 +1,3 @@
----
-output: html_document
-editor_options: 
-  chunk_output_type: console
----
 # Applications
 
 Some _significant_ applications are demonstrated in this chapter.
@@ -111,12 +106,11 @@ fish_retained_data <- fish_data %>%
   select(seine_id, scientificName, occurrenceID)
 
 occurrence <- bind_rows(all_fish_not_retained, fish_retained_data) %>% 
-  #dplyr::rename(eventID = seine_id) %>% 
-  rename(eventID = seine_id) %>%  # using dplyr::rename vs plyr::rename with explicit assignment in first chunk 
+  rename(eventID = seine_id) %>%  # rename = dplyr::rename; vs plyr::rename
   mutate(`Life stage` = "juvenile")
 
 unique_taxa <- unique(occurrence$scientificName)  
-worms_names <- wm_records_names(unique_taxa) 
+worms_names <- wm_records_names(unique_taxa) # library(worrms)
 df_worms_names <- bind_rows(worms_names) %>% 
   select(scientificName = scientificname,
          scientificNameAuthorship = authority,
@@ -159,7 +153,7 @@ occurrence <- left_join(occurrence, combined_worms_names) %>%
     mutate(basisOfRecord = "HumanObservation",
         occurrenceStatus = "present")
 
-write_csv(occurrence,here::here("Standardizing Marine Biological Data", "datasets", "hakai_salmon_data", "raw_data",   "occurrence.csv"))
+write_csv(occurrence,here::here("bio-data-guide", "datasets", "hakai_salmon_data", "raw_data",   "occurrence.csv"))
 
 # This removes events that didn't result in any occurrences
 event <- dplyr::semi_join(event, occurrence, by = 'eventID') %>% 
@@ -173,7 +167,7 @@ event <- dplyr::left_join(event, simple_sites, by = c("locationID" = "site_id"))
          decimalLongitude = coalesce(decimalLongitude, ocgy_std_lon)) %>% 
   select(-c(ocgy_std_lat, ocgy_std_lon))
 
-write_csv(event,here::here("Standardizing Marine Biological Data", "datasets", "hakai_salmon_data", "raw_data",   "event.csv"))
+write_csv(event,here::here("bio-data-guide", "datasets", "hakai_salmon_data", "raw_data",   "event.csv"))
 ```
 
 
@@ -206,7 +200,7 @@ measurementOrFact <- fish_data %>%
          measurementID = paste(eventID, measurementType, occurrenceID, sep = "-"))
 
 
-write_csv(measurementOrFact,here::here("Standardizing Marine Biological Data", "datasets", "hakai_salmon_data", "raw_data",   "extendedMeasurementOrFact.csv"))
+write_csv(measurementOrFact,here::here("bio-data-guide", "datasets", "hakai_salmon_data", "raw_data",   "extendedMeasurementOrFact.csv"))
 ```
 
 
