@@ -20,7 +20,10 @@ jobs:
           pandoc-version: '2.14.1'
 
       - name: Install packages
-        run: Rscript -e 'install.packages(c("librarian", "rgdal", "rmarkdown", "vroom", "xfun"), type = "binary"); librarian::shelf(bookdown, dm, here, lubridate, iobis/obistools, rmarkdown, tidyverse, worms)'
+        run: Rscript -e |
+          'install.packages(c("librarian", "rgdal", "rmarkdown", "vroom", "xfun"), type = "binary");
+          librarian::shelf(bookdown, dm, here, lubridate, , rmarkdown, tidyverse, worms);
+          remotes::install_github("iobis/obistools", upgrade="never")'
         env:
           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
           
@@ -54,8 +57,10 @@ jobs:
 
      - name: Deploy to GitHub Pages
        uses: Cecilapp/GitHub-Pages-deploy@master
+       with:
+         build_dir: 'Standardizing Marine Biological Data/docs' # see _bookdown.yml: output_dir
        env:
-          EMAIL: ${{ secrets.EMAIL }}               # must be a verified email
-          GH_TOKEN: ${{ secrets.GH_PAT }} # https://github.com/settings/tokens
-          BUILD_DIR: 'Standardizing Marine Biological Data/docs/' # see _bookdown.yml: output_dir
+         EMAIL: ${{ secrets.EMAIL }}               # must be a verified email
+         GH_TOKEN: ${{ secrets.GH_PAT }} # https://github.com/settings/tokens
+         BUILD_DIR: 'Standardizing Marine Biological Data/docs/' # see _bookdown.yml: output_dir
     
