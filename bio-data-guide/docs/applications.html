@@ -285,22 +285,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-41"><a href="applications.html#cb2-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(seine_id, scientificName, occurrenceID)</span>
 <span id="cb2-42"><a href="applications.html#cb2-42" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-43"><a href="applications.html#cb2-43" aria-hidden="true" tabindex="-1"></a>occurrence <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(all_fish_not_retained, fish_retained_data) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-44"><a href="applications.html#cb2-44" aria-hidden="true" tabindex="-1"></a>  <span class="co">#dplyr::rename(eventID = seine_id) %&gt;% </span></span>
-<span id="cb2-45"><a href="applications.html#cb2-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">eventID =</span> seine_id) <span class="sc">%&gt;%</span>  <span class="co"># using dplyr::rename vs plyr::rename with explicit assignment in first chunk </span></span>
-<span id="cb2-46"><a href="applications.html#cb2-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Life stage</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;juvenile&quot;</span>)</span>
-<span id="cb2-47"><a href="applications.html#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-48"><a href="applications.html#cb2-48" aria-hidden="true" tabindex="-1"></a>unique_taxa <span class="ot">&lt;-</span> <span class="fu">unique</span>(occurrence<span class="sc">$</span>scientificName)  </span>
-<span id="cb2-49"><a href="applications.html#cb2-49" aria-hidden="true" tabindex="-1"></a>worms_names <span class="ot">&lt;-</span> <span class="fu">wm_records_names</span>(unique_taxa) </span>
-<span id="cb2-50"><a href="applications.html#cb2-50" aria-hidden="true" tabindex="-1"></a>df_worms_names <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(worms_names) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-51"><a href="applications.html#cb2-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">scientificName =</span> scientificname,</span>
-<span id="cb2-52"><a href="applications.html#cb2-52" aria-hidden="true" tabindex="-1"></a>         <span class="at">scientificNameAuthorship =</span> authority,</span>
-<span id="cb2-53"><a href="applications.html#cb2-53" aria-hidden="true" tabindex="-1"></a>         <span class="at">taxonRank =</span> rank,</span>
-<span id="cb2-54"><a href="applications.html#cb2-54" aria-hidden="true" tabindex="-1"></a>         <span class="at">scientificNameID =</span> lsid</span>
-<span id="cb2-55"><a href="applications.html#cb2-55" aria-hidden="true" tabindex="-1"></a>         )</span>
-<span id="cb2-56"><a href="applications.html#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-57"><a href="applications.html#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="co">#include bycatch species</span></span>
-<span id="cb2-58"><a href="applications.html#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-59"><a href="applications.html#cb2-59" aria-hidden="true" tabindex="-1"></a>unique_bycatch <span class="ot">&lt;-</span> <span class="fu">unique</span>(bycatch<span class="sc">$</span>scientificName) <span class="sc">%&gt;%</span>  <span class="fu">glimpse</span>()</span></code></pre></div>
+<span id="cb2-44"><a href="applications.html#cb2-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">eventID =</span> seine_id) <span class="sc">%&gt;%</span>  <span class="co"># rename = dplyr::rename; vs plyr::rename</span></span>
+<span id="cb2-45"><a href="applications.html#cb2-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Life stage</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;juvenile&quot;</span>)</span>
+<span id="cb2-46"><a href="applications.html#cb2-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-47"><a href="applications.html#cb2-47" aria-hidden="true" tabindex="-1"></a>unique_taxa <span class="ot">&lt;-</span> <span class="fu">unique</span>(occurrence<span class="sc">$</span>scientificName)  </span>
+<span id="cb2-48"><a href="applications.html#cb2-48" aria-hidden="true" tabindex="-1"></a>worms_names <span class="ot">&lt;-</span> <span class="fu">wm_records_names</span>(unique_taxa) <span class="co"># library(worrms)</span></span>
+<span id="cb2-49"><a href="applications.html#cb2-49" aria-hidden="true" tabindex="-1"></a>df_worms_names <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(worms_names) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-50"><a href="applications.html#cb2-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">scientificName =</span> scientificname,</span>
+<span id="cb2-51"><a href="applications.html#cb2-51" aria-hidden="true" tabindex="-1"></a>         <span class="at">scientificNameAuthorship =</span> authority,</span>
+<span id="cb2-52"><a href="applications.html#cb2-52" aria-hidden="true" tabindex="-1"></a>         <span class="at">taxonRank =</span> rank,</span>
+<span id="cb2-53"><a href="applications.html#cb2-53" aria-hidden="true" tabindex="-1"></a>         <span class="at">scientificNameID =</span> lsid</span>
+<span id="cb2-54"><a href="applications.html#cb2-54" aria-hidden="true" tabindex="-1"></a>         )</span>
+<span id="cb2-55"><a href="applications.html#cb2-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-56"><a href="applications.html#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="co">#include bycatch species</span></span>
+<span id="cb2-57"><a href="applications.html#cb2-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-58"><a href="applications.html#cb2-58" aria-hidden="true" tabindex="-1"></a>unique_bycatch <span class="ot">&lt;-</span> <span class="fu">unique</span>(bycatch<span class="sc">$</span>scientificName) <span class="sc">%&gt;%</span>  <span class="fu">glimpse</span>()</span></code></pre></div>
 <pre><code>##  chr [1:29] &quot;Oncorhynchus nerka&quot; &quot;Oncorhynchus tshawytscha&quot; ...</code></pre>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="applications.html#cb4-1" aria-hidden="true" tabindex="-1"></a>by_worms_names <span class="ot">&lt;-</span> <span class="fu">wm_records_names</span>(unique_bycatch) <span class="sc">%&gt;%</span> </span>
 <span id="cb4-2"><a href="applications.html#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>() <span class="sc">%&gt;%</span> </span>
@@ -327,7 +326,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-23"><a href="applications.html#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">basisOfRecord =</span> <span class="st">&quot;HumanObservation&quot;</span>,</span>
 <span id="cb4-24"><a href="applications.html#cb4-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">occurrenceStatus =</span> <span class="st">&quot;present&quot;</span>)</span>
 <span id="cb4-25"><a href="applications.html#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-26"><a href="applications.html#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(occurrence,here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;Standardizing Marine Biological Data&quot;</span>, <span class="st">&quot;datasets&quot;</span>, <span class="st">&quot;hakai_salmon_data&quot;</span>, <span class="st">&quot;raw_data&quot;</span>,   <span class="st">&quot;occurrence.csv&quot;</span>))</span>
+<span id="cb4-26"><a href="applications.html#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(occurrence,here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;bio-data-guide&quot;</span>, <span class="st">&quot;datasets&quot;</span>, <span class="st">&quot;hakai_salmon_data&quot;</span>, <span class="st">&quot;raw_data&quot;</span>,   <span class="st">&quot;occurrence.csv&quot;</span>))</span>
 <span id="cb4-27"><a href="applications.html#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-28"><a href="applications.html#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co"># This removes events that didn&#39;t result in any occurrences</span></span>
 <span id="cb4-29"><a href="applications.html#cb4-29" aria-hidden="true" tabindex="-1"></a>event <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">semi_join</span>(event, occurrence, <span class="at">by =</span> <span class="st">&#39;eventID&#39;</span>) <span class="sc">%&gt;%</span> </span>
@@ -341,7 +340,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-37"><a href="applications.html#cb4-37" aria-hidden="true" tabindex="-1"></a>         <span class="at">decimalLongitude =</span> <span class="fu">coalesce</span>(decimalLongitude, ocgy_std_lon)) <span class="sc">%&gt;%</span> </span>
 <span id="cb4-38"><a href="applications.html#cb4-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(ocgy_std_lat, ocgy_std_lon))</span>
 <span id="cb4-39"><a href="applications.html#cb4-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-40"><a href="applications.html#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(event,here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;Standardizing Marine Biological Data&quot;</span>, <span class="st">&quot;datasets&quot;</span>, <span class="st">&quot;hakai_salmon_data&quot;</span>, <span class="st">&quot;raw_data&quot;</span>,   <span class="st">&quot;event.csv&quot;</span>))</span></code></pre></div>
+<span id="cb4-40"><a href="applications.html#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(event,here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;bio-data-guide&quot;</span>, <span class="st">&quot;datasets&quot;</span>, <span class="st">&quot;hakai_salmon_data&quot;</span>, <span class="st">&quot;raw_data&quot;</span>,   <span class="st">&quot;event.csv&quot;</span>))</span></code></pre></div>
 </div>
 <div id="measurementorfact" class="section level3" number="3.1.4">
 <h3><span class="header-section-number">3.1.4</span> measurementOrFact</h3>
@@ -369,7 +368,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-20"><a href="applications.html#cb5-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementID =</span> <span class="fu">paste</span>(eventID, measurementType, occurrenceID, <span class="at">sep =</span> <span class="st">&quot;-&quot;</span>))</span>
 <span id="cb5-21"><a href="applications.html#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-22"><a href="applications.html#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-23"><a href="applications.html#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(measurementOrFact,here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;Standardizing Marine Biological Data&quot;</span>, <span class="st">&quot;datasets&quot;</span>, <span class="st">&quot;hakai_salmon_data&quot;</span>, <span class="st">&quot;raw_data&quot;</span>,   <span class="st">&quot;extendedMeasurementOrFact.csv&quot;</span>))</span></code></pre></div>
+<span id="cb5-23"><a href="applications.html#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(measurementOrFact,here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;bio-data-guide&quot;</span>, <span class="st">&quot;datasets&quot;</span>, <span class="st">&quot;hakai_salmon_data&quot;</span>, <span class="st">&quot;raw_data&quot;</span>,   <span class="st">&quot;extendedMeasurementOrFact.csv&quot;</span>))</span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="applications.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Check that every eventID in Occurrence occurs in event table</span></span>
 <span id="cb6-2"><a href="applications.html#cb6-2" aria-hidden="true" tabindex="-1"></a>no_keys <span class="ot">&lt;-</span> <span class="fu">dm</span>(event, occurrence, measurementOrFact)</span>
 <span id="cb6-3"><a href="applications.html#cb6-3" aria-hidden="true" tabindex="-1"></a>only_pk <span class="ot">&lt;-</span> no_keys <span class="sc">%&gt;%</span> </span>
@@ -442,7 +441,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["Standardizing Marine Biological Data.pdf", "Standardizing Marine Biological Data.epub"],
+"download": ["bio-data-guide.pdf", "bio-data-guide.epub"],
 "search": {
 "engine": "lunr",
 "options": null

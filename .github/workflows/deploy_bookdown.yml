@@ -28,12 +28,12 @@ jobs:
           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Render Book
-        run: Rscript -e 'setwd("Standardizing Marine Biological Data/")' -e 'bookdown::render_book("index.Rmd")'
+        run: Rscript -e 'setwd("bio-data-guide/")' -e 'bookdown::render_book("index.Rmd")'
 
       - uses: actions/upload-artifact@v2
         with:
           name: _book
-          path: 'Standardizing Marine Biological Data/docs' # see _bookdown.yml: output_dir
+          path: 'bio-data-guide/docs' # see _bookdown.yml: output_dir
   
 # Need to first create an empty gh-pages branch
 # see https://pkgdown.r-lib.org/reference/deploy_site_github.html
@@ -53,12 +53,12 @@ jobs:
          # Artifact name
          name: _book # optional
          # Destination path
-         path: 'Standardizing Marine Biological Data/docs' # see _bookdown.yml: output_dir
+         path: 'bio-data-guide/docs' # see _bookdown.yml: output_dir
 
      - name: Deploy to GitHub Pages
        uses: Cecilapp/GitHub-Pages-deploy@master
        with:
-         build_dir: 'Standardizing\ Marine\ Biological\ Data/docs' # see _bookdown.yml: output_dir
+         build_dir: 'bio-data-guide/docs' # see _bookdown.yml: output_dir
        env:
          EMAIL: ${{ secrets.EMAIL }}               # must be a verified email
          GH_TOKEN: ${{ secrets.GH_PAT }} # https://github.com/settings/tokens
