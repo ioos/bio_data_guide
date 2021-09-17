@@ -5,6 +5,7 @@ on:
      branches: 
        - main
      paths:
+       - '.github/workflows/**'
        - 'bio-data-guide/**'
 
 jobs:
