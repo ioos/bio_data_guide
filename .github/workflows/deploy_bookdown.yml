@@ -33,7 +33,11 @@ jobs:
           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Render Book
-        run: Rscript -e 'setwd("bio-data-guide/")' -e 'bookdown::render_book("index.Rmd")' -e 'bookdown::render_book("index.rmd","bookdown::pdf_book")'
+        run: Rscript -e '
+          setwd("bio-data-guide/"); 
+          bookdown::render_book("index.Rmd");
+          bookdown::render_book("index.Rmd", "bookdown::pdf_book");
+          bookdown::render_book("index.Rmd", "bookdown::epub_book")'
 
       - uses: actions/upload-artifact@v2
         with:
