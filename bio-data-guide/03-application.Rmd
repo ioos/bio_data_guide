@@ -191,7 +191,7 @@ occurrence <- left_join(occurrence, combined_worms_names) %>%
     mutate(basisOfRecord = "HumanObservation",
         occurrenceStatus = "present")
 
-write_csv(occurrence,here::here("..", "datasets", "hakai_salmon_data", "raw_data",   "occurrence.csv"))
+write_csv(occurrence,"../datasets/hakai_salmon_data/raw_data/occurrence.csv") # here::here("..", "datasets", "hakai_salmon_data", "raw_data",   "occurrence.csv"))
 
 # This removes events that didn't result in any occurrences
 event <- dplyr::semi_join(event, occurrence, by = 'eventID') %>% 
