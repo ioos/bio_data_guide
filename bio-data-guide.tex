@@ -146,8 +146,8 @@ The OBIS-ENV Darwin Core Archive Data Structure.
 
 \href{https://obis.org/manual/}{OBIS manual}
 
-\hypertarget{ontologies-controlled-vocabularies}{%
-\section{Ontologies \& Controlled Vocabularies}\label{ontologies-controlled-vocabularies}}
+\hypertarget{ontologies}{%
+\section{Ontologies}\label{ontologies}}
 
 An ontology is a classification system for establishing a hierarchically related set of concepts. Concepts are often terms from controlled vocabularies.
 
@@ -163,23 +163,33 @@ Functions, processes, constraints, and rules relating to things''
 
 TODO: Research Unified Modelling Language?
 
+\href{http://www.obofoundry.org/ontology/envo.html}{Environment Ontology (EnvO)} EnvO is a community ontology for the concise, controlled description of environments.
+
+\hypertarget{controlled-vocabularies}{%
+\section{Controlled Vocabularies}\label{controlled-vocabularies}}
+
 There are a number of controlled vocabularies that are used to describe parameters commonly used in specific research domains. This allows for greater interoperability of data sets within the domain, and ideally between domains. Here, we strive to document a number of relevant examples.
 
 \begin{itemize}
 \item
-  \href{http://cfconventions.org/standard-names.html}{Climate and Format (CF) Standard Names} are applied to sensors for application with OPeNDAP web service.
+  \href{http://cfconventions.org/standard-names.html}{Climate and Format (CF) Standard Names} The purpose of the standard\_name attribute is to provide a succinct and distinguishing description of a variable, in a way that encourages interoperability. These terms are typically for physical observations, however, there have been advancements in aligning biological taxa into the CF standard names (see \href{https://cfconventions.org/Data/cf-conventions/cf-conventions-1.8/cf-conventions.html\#taxon-names-and-identifiers}{here}).
 \item
-  \href{http://vocab.nerc.ac.uk/collection/L05/current/}{Device categories} using the SeaDataNet device categories in NERC 2.0
+  \href{http://vocab.nerc.ac.uk/}{NERC Vocabulary Server} The NVS gives access to standardised and hierarchically-organized vocabularies.
+
+  \begin{itemize}
+  \item
+    \href{http://vocab.nerc.ac.uk/collection/L05/current/}{Device categories} using the SeaDataNet device categories
+  \item
+    \href{http://vocab.nerc.ac.uk/collection/L22/current/}{Device make/model using the SeaVoX Device Catalogue}
+  \item
+    \href{http://vocab.nerc.ac.uk/collection/L06/current/}{Platform categories using SeaVoX Platform Categories}
+  \item
+    \href{http://vocab.nerc.ac.uk/collection/C17/current/}{Platform instances using the ICES Platform Codes}
+  \item
+    \href{http://vocab.nerc.ac.uk/collection/P06/current/}{Unit of measure}
+  \end{itemize}
 \item
-  \href{http://vocab.nerc.ac.uk/collection/L22/current/}{Device make/model using the SeaVoX Device Catalogue} in NERC 2.0,
-\item
-  \href{http://vocab.nerc.ac.uk/collection/L06/current/}{Platform categories using SeaVoX Platform Categories} in NERC 2.0
-\item
-  \href{http://vocab.nerc.ac.uk/collection/C17/current/}{Platform instances using the ICES Platform Codes} in NERC 2.0
-\item
-  \href{http://vocab.nerc.ac.uk/collection/P06/current/}{Unit of measure}
-\item
-  \href{http://vocab.nerc.ac.uk/collection/P04/current/}{GCMD Keywords (NASA)}
+  \href{https://wiki.earthdata.nasa.gov/display/CMR/GCMD+Keyword+Access}{GCMD Keywords (NASA)}
 \item
   \href{http://vocab.nerc.ac.uk/collection/C19/current/}{Geographic Domain/Features of Interest}
 \item
@@ -187,6 +197,15 @@ There are a number of controlled vocabularies that are used to describe paramete
 \end{itemize}
 
 Note: To describe a measurement or fact of a biological specimen that conforms to Darwin Core standards, it's necessary to use the `Biological entity described elsewhere' method rather than taxon specific.
+
+\hypertarget{taxonomy}{%
+\subsection{Taxonomy}\label{taxonomy}}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://www.marinespecies.org/}{The World Registry of Marine Species (WoRMS)} The aim of a World Register of Marine Species (WoRMS) is to provide an authoritative and comprehensive list of names of marine organisms, including information on synonymy. While the highest priority goes to valid names, other names in use are included so that this register can serve as a guide to interpret taxonomic literature.
+\end{itemize}
 
 \hypertarget{resources}{%
 \subsection{Resources}\label{resources}}
@@ -263,6 +282,8 @@ There are a number of tools available to check the quality of data or check your
 LifeWatch Belgium provides a number of tools to check your data against.
 Specifically you can test OBIS data format and see a map of your sample locations to check if they are on land.
 See \url{http://www.lifewatch.be/data-services/}
+
+There's also the \href{https://www.gbif.org/tools/data-validator}{GBIF data validator} which allows anyone with a GBIF-relevant dataset to receive a report on the syntactical correctness and the validity of the content contained within the dataset.
 
 \hypertarget{semantic-web-and-darwin-core}{%
 \subsection{Semantic Web and Darwin Core}\label{semantic-web-and-darwin-core}}

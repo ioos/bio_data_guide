@@ -1,7 +1,9 @@
 preface
 intro
 data-structures
-ontologies-controlled-vocabularies
+ontologies
+controlled-vocabularies
+taxonomy
 resources
 oceanography
 biology
