@@ -22,11 +22,17 @@ To build the book:
 
 * Create a fork of this repo under your ownership
 * create an empty `gh-pages` branch in your fork (see [here](https://jiafulow.github.io/blog/2020/07/09/create-gh-pages-branch-in-existing-repo/)).
-* In your github repository, go to Settings -> Pages
-* Select the `gh-pages` branch and the `/(root)` directory.
-* Once the GitHub action finishes, you should be able to view the document at
+* Host [GitHub Pages](https://pages.github.com/)
+  * In your github repository, go to Settings -> Pages
+  * Select the `gh-pages` branch and the `/(root)` directory.
+  * Select **Save**
+* You need to make a change (any change) to the repository to initiate the GitHub Action to
+  build the website in the `gh-pages` branch.
+  * Make a minor edit to one of the markdown files in `bio-data-guide`.
+  * When you commit the change the GitHub action will build the webpage.
+  * Once the GitHub action finishes, you should be able to view the document at
   `[username].github.io/bio_data_guide`
-  * `[username]` is your GitHub user name.
+    * `[username]` is your GitHub user name.
 
 ## Issues
 
