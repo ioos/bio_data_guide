@@ -191,7 +191,7 @@ occurrence <- left_join(occurrence, combined_worms_names) %>%
     mutate(basisOfRecord = "HumanObservation",
         occurrenceStatus = "present")
 
-write_csv(occurrence,here::here("bio-data-guide", "datasets", "hakai_salmon_data", "raw_data",   "occurrence.csv"))
+write_csv(occurrence,here::here("../", "datasets", "hakai_salmon_data", "raw_data",   "occurrence.csv"))
 
 # This removes events that didn't result in any occurrences
 event <- dplyr::semi_join(event, occurrence, by = 'eventID') %>% 
@@ -205,7 +205,7 @@ event <- dplyr::left_join(event, simple_sites, by = c("locationID" = "site_id"))
          decimalLongitude = coalesce(decimalLongitude, ocgy_std_lon)) %>% 
   select(-c(ocgy_std_lat, ocgy_std_lon))
 
-write_csv(event,here::here("bio-data-guide", "datasets", "hakai_salmon_data", "raw_data",   "event.csv"))
+write_csv(event,here::here("../", "datasets", "hakai_salmon_data", "raw_data",   "event.csv"))
 ```
 
 
@@ -238,7 +238,7 @@ measurementOrFact <- fish_data %>%
          measurementID = paste(eventID, measurementType, occurrenceID, sep = "-"))
 
 
-write_csv(measurementOrFact,here::here("bio-data-guide", "datasets", "hakai_salmon_data", "raw_data",   "extendedMeasurementOrFact.csv"))
+write_csv(measurementOrFact,here::here("../", "datasets", "hakai_salmon_data", "raw_data",   "extendedMeasurementOrFact.csv"))
 ```
 
 ```{r QC}
