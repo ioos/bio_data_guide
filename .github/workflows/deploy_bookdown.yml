@@ -5,6 +5,7 @@ on:
      branches: 
        - main
      paths:
+       - '.github/workflows/**'
        - 'bio-data-guide/**'
 
 jobs:
@@ -24,14 +25,19 @@ jobs:
 
       - name: Install packages
         run: Rscript -e '
-          install.packages(c("librarian", "rgdal", "rmarkdown", "vroom", "xfun"), type = "binary");
+          install.packages(c("librarian", "rgdal", "rmarkdown", "vroom", "xfun", "tinytex"), type = "binary");
           librarian::shelf(bookdown, dm, here, lubridate, , rmarkdown, tidyverse, worms);
-          remotes::install_github("iobis/obistools", upgrade="never")'
+          remotes::install_github("iobis/obistools", upgrade="never");
+          tinytex::install_tinytex()'
         env:
           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Render Book
-        run: Rscript -e 'setwd("bio-data-guide/")' -e 'bookdown::render_book("index.Rmd")'
+        run: Rscript -e '
+          setwd("bio-data-guide/"); 
+          bookdown::render_book("index.Rmd");
+          bookdown::render_book("index.Rmd", "bookdown::pdf_book");
+          bookdown::render_book("index.Rmd", "bookdown::epub_book")'
 
       - uses: actions/upload-artifact@v2
         with:
