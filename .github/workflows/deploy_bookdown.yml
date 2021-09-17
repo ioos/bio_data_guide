@@ -2,7 +2,10 @@ name: renderbook
 
 on:
   push:
-     branches: [master]
+     branches: 
+       - main
+     paths:
+       - 'bio-data-guide/**'
 
 jobs:
   bookdown:
