@@ -10,7 +10,7 @@ The OBIS-ENV Darwin Core Archive Data Structure.
 
 [OBIS manual](https://obis.org/manual/)
 
-## Ontologies & Controlled Vocabularies
+## Ontologies
 
 An ontology is a classification system for establishing a hierarchically related set of concepts. Concepts are often terms from controlled vocabularies.
 
@@ -26,21 +26,27 @@ Functions, processes, constraints, and rules relating to things"
 
 TODO: Research Unified Modelling Language?
 
+[Environment Ontology (EnvO)](http://www.obofoundry.org/ontology/envo.html) EnvO is a community ontology for the concise, controlled description of environments.
+
+## Controlled Vocabularies
+
 There are a number of controlled vocabularies that are used to describe parameters commonly used in specific research domains. This allows for greater interoperability of data sets within the domain, and ideally between domains. Here, we strive to document a number of relevant examples. 
 
-* [Climate and Format (CF) Standard Names](http://cfconventions.org/standard-names.html) are applied to sensors for application with OPeNDAP web service. 
+* [Climate and Format (CF) Standard Names](http://cfconventions.org/standard-names.html) The purpose of the standard_name attribute is to provide a succinct and distinguishing description of a variable, in a way that encourages interoperability. These terms are typically for physical observations, however, there have been advancements in aligning biological taxa into the CF standard names (see [here](https://cfconventions.org/Data/cf-conventions/cf-conventions-1.8/cf-conventions.html#taxon-names-and-identifiers)).
 
-* [Device categories](http://vocab.nerc.ac.uk/collection/L05/current/) using the SeaDataNet device categories in NERC 2.0
+* [NERC Vocabulary Server](http://vocab.nerc.ac.uk/) The NVS gives access to standardised and hierarchically-organized vocabularies.
 
-* [Device make/model using the SeaVoX Device Catalogue](http://vocab.nerc.ac.uk/collection/L22/current/) in NERC 2.0, 
+  * [Device categories](http://vocab.nerc.ac.uk/collection/L05/current/) using the SeaDataNet device categories
 
-* [Platform categories using SeaVoX Platform Categories](http://vocab.nerc.ac.uk/collection/L06/current/) in NERC 2.0
+  * [Device make/model using the SeaVoX Device Catalogue](http://vocab.nerc.ac.uk/collection/L22/current/) 
 
-* [Platform instances using the ICES Platform Codes](http://vocab.nerc.ac.uk/collection/C17/current/) in NERC 2.0
+  * [Platform categories using SeaVoX Platform Categories](http://vocab.nerc.ac.uk/collection/L06/current/)
 
-* [Unit of measure](http://vocab.nerc.ac.uk/collection/P06/current/) 
+  * [Platform instances using the ICES Platform Codes](http://vocab.nerc.ac.uk/collection/C17/current/)
 
-* [GCMD Keywords (NASA)](http://vocab.nerc.ac.uk/collection/P04/current/)
+  * [Unit of measure](http://vocab.nerc.ac.uk/collection/P06/current/) 
+
+* [GCMD Keywords (NASA)](https://wiki.earthdata.nasa.gov/display/CMR/GCMD+Keyword+Access)
 
 * [Geographic Domain/Features of Interest](http://vocab.nerc.ac.uk/collection/C19/current/)
 
@@ -48,6 +54,9 @@ There are a number of controlled vocabularies that are used to describe paramete
 
 
 Note: To describe a measurement or fact of a biological specimen that conforms to Darwin Core standards, it's necessary to use the 'Biological entity described elsewhere' method rather than taxon specific.
+
+### Taxonomy
+* [The World Registry of Marine Species (WoRMS)](https://www.marinespecies.org/) The aim of a World Register of Marine Species (WoRMS) is to provide an authoritative and comprehensive list of names of marine organisms, including information on synonymy. While the highest priority goes to valid names, other names in use are included so that this register can serve as a guide to interpret taxonomic literature.
 
 ### Resources
 
@@ -110,6 +119,8 @@ There are a number of tools available to check the quality of data or check your
 LifeWatch Belgium provides a number of tools to check your data against.
 Specifically you can test OBIS data format and see a map of your sample locations to check if they are on land.
 See http://www.lifewatch.be/data-services/
+
+There's also the [GBIF data validator](https://www.gbif.org/tools/data-validator) which allows anyone with a GBIF-relevant dataset to receive a report on the syntactical correctness and the validity of the content contained within the dataset.
 
 ### Semantic Web and Darwin Core
 
