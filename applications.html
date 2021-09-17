@@ -24,7 +24,7 @@
 <meta name="author" content="Brett Johnson" />
 
 
-<meta name="date" content="2021-09-16" />
+<meta name="date" content="2021-09-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -143,7 +143,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#data-structures"><i class="fa fa-check"></i><b>2.1</b> Data Structures</a></li>
 <li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#ontologies-controlled-vocabularies"><i class="fa fa-check"></i><b>2.2</b> Ontologies &amp; Controlled Vocabularies</a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="intro.html"><a href="intro.html#collections"><i class="fa fa-check"></i><b>2.2.1</b> Collections</a></li>
+<li class="chapter" data-level="2.2.1" data-path="intro.html"><a href="intro.html#resources"><i class="fa fa-check"></i><b>2.2.1</b> Resources</a></li>
 <li class="chapter" data-level="2.2.2" data-path="intro.html"><a href="intro.html#oceanography"><i class="fa fa-check"></i><b>2.2.2</b> Oceanography</a></li>
 <li class="chapter" data-level="2.2.3" data-path="intro.html"><a href="intro.html#biology"><i class="fa fa-check"></i><b>2.2.3</b> Biology</a></li>
 <li class="chapter" data-level="2.2.4" data-path="intro.html"><a href="intro.html#nerc-search-interfaces"><i class="fa fa-check"></i><b>2.2.4</b> NERC Search Interfaces</a></li>
@@ -326,7 +326,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-23"><a href="applications.html#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">basisOfRecord =</span> <span class="st">&quot;HumanObservation&quot;</span>,</span>
 <span id="cb4-24"><a href="applications.html#cb4-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">occurrenceStatus =</span> <span class="st">&quot;present&quot;</span>)</span>
 <span id="cb4-25"><a href="applications.html#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-26"><a href="applications.html#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(occurrence,here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;bio-data-guide&quot;</span>, <span class="st">&quot;datasets&quot;</span>, <span class="st">&quot;hakai_salmon_data&quot;</span>, <span class="st">&quot;raw_data&quot;</span>,   <span class="st">&quot;occurrence.csv&quot;</span>))</span>
+<span id="cb4-26"><a href="applications.html#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(occurrence,<span class="st">&quot;../datasets/hakai_salmon_data/raw_data/occurrence.csv&quot;</span>) <span class="co"># here::here(&quot;..&quot;, &quot;datasets&quot;, &quot;hakai_salmon_data&quot;, &quot;raw_data&quot;,   &quot;occurrence.csv&quot;))</span></span>
 <span id="cb4-27"><a href="applications.html#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-28"><a href="applications.html#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co"># This removes events that didn&#39;t result in any occurrences</span></span>
 <span id="cb4-29"><a href="applications.html#cb4-29" aria-hidden="true" tabindex="-1"></a>event <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">semi_join</span>(event, occurrence, <span class="at">by =</span> <span class="st">&#39;eventID&#39;</span>) <span class="sc">%&gt;%</span> </span>
@@ -340,7 +340,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-37"><a href="applications.html#cb4-37" aria-hidden="true" tabindex="-1"></a>         <span class="at">decimalLongitude =</span> <span class="fu">coalesce</span>(decimalLongitude, ocgy_std_lon)) <span class="sc">%&gt;%</span> </span>
 <span id="cb4-38"><a href="applications.html#cb4-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(ocgy_std_lat, ocgy_std_lon))</span>
 <span id="cb4-39"><a href="applications.html#cb4-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-40"><a href="applications.html#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(event,here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;bio-data-guide&quot;</span>, <span class="st">&quot;datasets&quot;</span>, <span class="st">&quot;hakai_salmon_data&quot;</span>, <span class="st">&quot;raw_data&quot;</span>,   <span class="st">&quot;event.csv&quot;</span>))</span></code></pre></div>
+<span id="cb4-40"><a href="applications.html#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(event,<span class="st">&quot;../datasets/hakai_salmon_data/raw_data/event.csv&quot;</span>) <span class="co"># here::here(&quot;..&quot;, &quot;datasets&quot;, &quot;hakai_salmon_data&quot;, &quot;raw_data&quot;,   &quot;event.csv&quot;))</span></span></code></pre></div>
 </div>
 <div id="measurementorfact" class="section level3" number="3.1.4">
 <h3><span class="header-section-number">3.1.4</span> measurementOrFact</h3>
@@ -368,7 +368,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-20"><a href="applications.html#cb5-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementID =</span> <span class="fu">paste</span>(eventID, measurementType, occurrenceID, <span class="at">sep =</span> <span class="st">&quot;-&quot;</span>))</span>
 <span id="cb5-21"><a href="applications.html#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-22"><a href="applications.html#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-23"><a href="applications.html#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(measurementOrFact,here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;bio-data-guide&quot;</span>, <span class="st">&quot;datasets&quot;</span>, <span class="st">&quot;hakai_salmon_data&quot;</span>, <span class="st">&quot;raw_data&quot;</span>,   <span class="st">&quot;extendedMeasurementOrFact.csv&quot;</span>))</span></code></pre></div>
+<span id="cb5-23"><a href="applications.html#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(measurementOrFact,<span class="st">&quot;../datasets/hakai_salmon_data/raw_data/extendedMeasurementOrFact.csv&quot;</span>) <span class="co"># here::here(&quot;..&quot;, &quot;datasets&quot;, &quot;hakai_salmon_data&quot;, &quot;raw_data&quot;,   &quot;extendedMeasurementOrFact.csv&quot;))</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="applications.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Check that every eventID in Occurrence occurs in event table</span></span>
 <span id="cb6-2"><a href="applications.html#cb6-2" aria-hidden="true" tabindex="-1"></a>no_keys <span class="ot">&lt;-</span> <span class="fu">dm</span>(event, occurrence, measurementOrFact)</span>
 <span id="cb6-3"><a href="applications.html#cb6-3" aria-hidden="true" tabindex="-1"></a>only_pk <span class="ot">&lt;-</span> no_keys <span class="sc">%&gt;%</span> </span>

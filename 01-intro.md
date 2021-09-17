@@ -49,7 +49,7 @@ There are a number of controlled vocabularies that are used to describe paramete
 
 Note: To describe a measurement or fact of a biological specimen that conforms to Darwin Core standards, it's necessary to use the 'Biological entity described elsewhere' method rather than taxon specific.
 
-### Collections
+### Resources
 
 ### Oceanography
 
