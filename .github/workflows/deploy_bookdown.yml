@@ -14,6 +14,11 @@ jobs:
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v2
+    
+      - name: Add contributors to book
+        run: |
+          authors=$(git shortlog -sn | sed 's/ \{4,5\}[0-9]\{1,2\}\t//g' | tr '\n' ',' | sed 's/,/, /g')
+          sed -i "s/^author: \(.*\)/author: \"${authors}\"/g" bio-data-guide/index.Rmd
 
       - uses: r-lib/actions/setup-r@v1
         with:
