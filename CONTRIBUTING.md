@@ -7,6 +7,8 @@ Contribute directly to chapters (01-Intro.Rmd). Either through the GitHub websit
 
 If you are a member of the IOOS GitHub org you can edit the files directly on GitHub, or through a fork and then pull-request if you're an external  collaborator. Once the pull-request is approved and merged, the documentation site will update to reflect your changes.
 
+:bangbang: Don't forget to add your name and orcid to the [citation file](https://github.com/ioos/bio_data_guide/blob/main/CITATION.cff)!
+
 ## Building the book on your local machine (_optional_)
 
 To build the book: 
@@ -46,7 +48,7 @@ The easiest way to help out is to answer questions tagged in Issues. You won’t
 
 **Help wanted**
 
-Issues tagged with Help Wanted... is where we show issues we need help with!
+Issues tagged with `Help Wanted...` is where we show issues we need help with!
 
 **Good First Issue**
 
