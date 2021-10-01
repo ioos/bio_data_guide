@@ -5,6 +5,7 @@ bookdown::gitbook:
       before: |
         <li><a href="./">Standardizing Marine Biological Data</a></li>
     download: ["pdf", "epub"]
+  edit: https://github.com/ioos/bio_data_guide/edit/main/bio-data-guide/%s
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex
