@@ -108,16 +108,37 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 \usepackage{booktabs}
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\usepackage[]{natbib}
-\bibliographystyle{apalike}
 
 \title{Standardizing-Marine-Biological-Data}
 \author{Brett Johnson}
-\date{2021-09-17}
+\date{2021-10-01}
 
 \begin{document}
 \maketitle
@@ -537,6 +558,150 @@ Add another example here, perhaps zooplankton?
 
 We have finished a nice book.
 
-  \bibliography{book.bib,packages.bib}
+\hypertarget{references}{%
+\chapter*{References}\label{references}}
+\addcontentsline{toc}{chapter}{References}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-R-rmarkdown}{}}%
+Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, Winston Chang, and Richard Iannone. 2021. \emph{Rmarkdown: Dynamic Documents for r}. \url{https://CRAN.R-project.org/package=rmarkdown}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Barbier2017}{}}%
+Barbier, Edward B. 2017. {``Marine Ecosystem Services.''} \emph{Current Biology}. Cell Press. \url{https://doi.org/10.1016/j.cub.2017.03.020}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Benson2018}{}}%
+Benson, Abigail, Cassandra M. Brooks, Gabrielle Canonico, Emmett Duffy, Frank Muller-Karger, Heidi M. Sosik, Patricia Miloslavich, and Eduardo Klein. 2018. {``Integrated Observations and Informatics Improve Understanding of Changing Marine Ecosystems.''} \emph{Frontiers in Marine Science}. Frontiers Media S.A. \url{https://doi.org/10.3389/fmars.2018.00428}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Borer2009}{}}%
+Borer, Elizabeth T., Eric W. Seabloom, Matthew B. Jones, and Mark Schildhauer. 2009. {``Some Simple Guidelines for Effective Data Management.''} \emph{Bulletin of the Ecological Society of America} 90 (April). \url{https://doi.org/10.1890/0012-9623-90.2.205}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Canonico2019}{}}%
+Canonico, Gabrielle, Pier Luigi Buttigieg, Enrique Montes, Frank E. Muller-Karger, Carol Stepien, Dawn Wright, Abigail Benson, et al. 2019. {``Global Observational Needs and Resources for Marine Biodiversity.''} \emph{Frontiers in Marine Science}. Frontiers Media S.A. \url{https://doi.org/10.3389/fmars.2019.00367}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Crystal-Ornela2021}{}}%
+Crystal-Ornelas, Robert, Charuleka Varadharajan, Ben Bond-Lamberty, Kristin Boye, Madison Burrus, Shreyas Cholia, Michael Crow, et al. 2021. {``A Guide to Using GitHub for Developing and Versioning Data Standards and Reporting Formats.''} \emph{Earth and Space Science}, July, e2021EA001797. \url{https://doi.org/10.1029/2021EA001797}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Davies2021}{}}%
+Davies, Neil, John Deck, Eric C Kansa, Sarah Whitcher Kansa, John Kunze, Christopher Meyer, Thomas Orrell, et al. 2021. {``Internet of Samples (iSamples): Toward an Interdisciplinary Cyberinfrastructure for Material Samples.''} \emph{GigaScience} 10: 1--5. \url{https://doi.org/10.1093/gigascience/giab028}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Djurhuus2020}{}}%
+Djurhuus, Anni, Collin J. Closek, Ryan P. Kelly, Kathleen J. Pitz, Reiko P. Michisaki, Hilary A. Starks, Kristine R. Walz, et al. 2020. {``Environmental DNA Reveals Seasonal Shifts and Potential Interactions in a Marine Community.''} \emph{Nature Communications} 11 (December): 1--9. \url{https://doi.org/10.1038/s41467-019-14105-1}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Duffy2013}{}}%
+Duffy, J. Emmett, Linda A. Amaral-Zettler, Daphne G. Fautin, Gustav Paulay, Tatiana A. Rynearson, Heidi M. Sosik, and John J. Stachowicz. 2013. {``Envisioning a Marine Biodiversity Observation Network.''} \emph{BioScience} 63 (May): 350--61. \url{https://doi.org/10.1525/bio.2013.63.5.8}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Fornwall2012}{}}%
+Fornwall, M, R Gisiner, S E Simmons, H Moustahfid, G Canonico, P Halpin, P Goldstein, et al. 2012. {``Expanding Biological Data Standards Development Processes for US IOOS: Visual Line Transect Observing Community for Mammal, Bird, and Turtle Data.''} IOOS. \url{https://www.researchgate.net/publication/255681522}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Hardisty2019}{}}%
+Hardisty, Alex R., William K. Michener, Donat Agosti, Enrique Alonso García, Lucy Bastin, Lee Belbin, Anne Bowser, et al. 2019. {``The Bari Manifesto: An Interoperability Framework for Essential Biodiversity Variables.''} \emph{Ecological Informatics} 49 (January): 22--31. \url{https://doi.org/10.1016/j.ecoinf.2018.11.003}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Heberling2021}{}}%
+Heberling, J Mason, Joseph T Miller, Daniel Noesgaard, Scott B Weingart C, Dmitry Schigel, and Douglas E Soltis. 2021. {``Data Integration Enables Global Biodiversity Synthesis.''} \emph{Proceedings of the National Academy of Sciences of the United States of America}. \url{https://doi.org/10.1073/pnas.2018093118/-/DCSupplemental}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Hare2016PLOS}{}}%
+Jonathan A. Hare, Mark W. Nelson, Wendy E. Morrison. n.d. {``A Vulnerability Assessment of Fish and Invertebrates to Climate Change on the Northeast u.s. Continental Shelf.''} \emph{PLoS ONE} 11 (2): e0146756. \url{https://doi.org/10.1371/journal.pone.0146756}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Jones2006}{}}%
+Jones, Matthew B., Mark P. Schildhauer, O. J. Reichman, and Shawn Bowers. 2006. {``The New Bioinformatics: Integrating Ecological Data from the Gene to the Biosphere.''} \emph{Annual Review of Ecology, Evolution, and Systematics}. \url{https://doi.org/10.1146/annurev.ecolsys.37.091305.110031}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Kavanaugh2016}{}}%
+Kavanaugh, Maria T., Matthew J. Oliver, Francisco P. Chavez, Ricardo M. Letelier, Frank E. Muller-Karger, and Scott C. Doney. 2016. {``Seascapes as a New Vernacular for Pelagic Ocean Monitoring, Management and Conservation.''} \emph{ICES Journal of Marine Science} 73 (July): 1839--50. \url{https://doi.org/10.1093/icesjms/fsw086}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Kot2010}{}}%
+Kot, Connie Y., Ei Fujioka, Lucie J. Hazen, Benjamin D. Best, Andrew J. Read, and Patrick N. Halpin. 2010. {``Spatio-Temporal Gap Analysis of OBIS-SEAMAP Project Data: Assessment and Way Forward.''} \emph{PLoS ONE} 5 (September): 12990. \url{https://doi.org/10.1371/journal.pone.0012990}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-OceanAdapt}{}}%
+Lab, Malin Pinksy. n.d. {``OceanAdapt.''} \emph{GitHub}. \url{https://oceanadapt.rutgers.edu/}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Lamprecht2019}{}}%
+Lamprecht, Anna-Lena, Leyla Garcia, Mateusz Kuzak, Carlos Martinez, Ricardo Arcila, Eva Martin Del Pico, Victoria Dominguez Del Angel, et al. 2019. {``Towards FAIR Principles for Research Software.''} Edited by Paul Groth. \emph{Data Science}, 1--23. \url{https://doi.org/10.3233/DS-190026}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Dornelas2014Science}{}}%
+Maria Dornelas, Brian McGill, Nicholas J. Gotelli. 2014. {``Assemblage Time Series Reveal Biodiversity Change but Not Systematic Loss.''} \emph{Science} 344 (6181): 296--99. \url{https://doi.org/10.1126/science.1248484}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-McKenna2021}{}}%
+McKenna, Megan F., Simone Baumann-Pickering, Annebelle C. M. Kok, William K. Oestreich, Jeffrey D. Adams, Jack Barkowski, Kurt M. Fristrup, et al. 2021. {``Advancing the Interpretation of Shallow Water Marine Soundscapes.''} \emph{Frontiers in Marine Science} 0 (September): 1426. \url{https://doi.org/10.3389/FMARS.2021.719258}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Miloslavich2018}{}}%
+Miloslavich, Patricia, Nicholas J. Bax, Samantha E. Simmons, Eduardo Klein, Ward Appeltans, Octavio Aburto-Oropeza, Melissa Andersen Garcia, et al. 2018. {``Essential Ocean Variables for Global Sustained Observations of Biodiversity and Ecosystem Changes.''} \emph{Global Change Biology} 24 (June): 2416--33. \url{https://doi.org/10.1111/gcb.14108}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Montes2020}{}}%
+Montes, Enrique, Anni Djurhuus, Frank E. Muller-Karger, Daniel Otis, Christopher R. Kelble, and Maria T. Kavanaugh. 2020. {``Dynamic Satellite Seascapes as a Biogeographic Framework for Understanding Phytoplankton Assemblages in the Florida Keys National Marine Sanctuary, United States.''} \emph{Frontiers in Marine Science} 7 (July): 575. \url{https://doi.org/10.3389/fmars.2020.00575}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Moustahfid2014}{}}%
+Moustahfid, Hassan, and Philip Goldstein. 2014. {``IOOS Biological Data Services Enrollment Procedures.''}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Moustahfid2011}{}}%
+Moustahfid, Hassan, Jim Potemra, Philip Goldstein, Roy Mendelssohn, and Annette Desrochers. 2011. {``Making United States Integrated Ocean Observing System (u.s. IOOS) Inclusive of Marine Biological Resources.''} \url{https://www.researchgate.net/publication/254013004}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Muller-Karger2018b}{}}%
+Muller-Karger, Frank E., Erin Hestir, Christiana Ade, Kevin Turpie, Dar A. Roberts, David Siegel, Robert J. Miller, et al. 2018. {``Satellite Sensor Requirements for Monitoring Essential Biodiversity Variables of Coastal Ecosystems.''} \emph{Ecological Applications} 28 (April): 749--60. \url{https://doi.org/10.1002/eap.1682}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Muller-Karger2018a}{}}%
+Muller-Karger, Frank E., Patricia Miloslavich, Nicholas J. Bax, Samantha Simmons, Mark J. Costello, Isabel Sousa Pinto, Gabrielle Canonico, et al. 2018. {``Advancing Marine Biological Observations and Data Requirements of the Complementary Essential Ocean Variables (EOVs) and Essential Biodiversity Variables (EBVs) Frameworks.''} \emph{Frontiers in Marine Science}. Frontiers Media S.A. \url{https://doi.org/10.3389/fmars.2018.00211}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Obrien2021}{}}%
+O'Brien, Margaret, Colin A. Smith, Eric R. Sokol, Corinna Gries, Nina Lany, Sydne Record, and Max C. N. Castorani. 2021. {``ecocomDP: A Flexible Data Design Pattern for Ecological Community Survey Data.''} \emph{Ecological Informatics} 64 (September): 101374. \url{https://doi.org/10.1016/J.ECOINF.2021.101374}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Pooter2017}{}}%
+Pooter, Daphnis De, Ward Appeltans, Nicolas Bailly, Sky Bristol, Klaas Deneudt, Menashè Eliezer, Ei Fujioka, et al. 2017. {``Toward a New Data Standard for Combined Marine Biological and Environmental Datasets - Expanding OBIS Beyond Species Occurrences.''} \emph{Biodiversity Data Journal} 5 (January): 10989. \url{https://doi.org/10.3897/BDJ.5.e10989}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-iobis_ebsa}{}}%
+Provoost, Pieter. n.d. {``Iobis/Ebsa.''} \emph{GitHub}. \url{https://github.com/iobis/ebsa}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-base}{}}%
+R Core Team. 2021. \emph{R: A Language and Environment for Statistical Computing}. Vienna, Austria: R Foundation for Statistical Computing. \url{https://www.R-project.org/}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Ruxfccknagel2015}{}}%
+Rücknagel, J., P. Vierkant, R. Ulrich, G. Kloska, E. Schnepf, D. Fichtmüller, E. Reuter, et al. 2015. {``Metadata Schema for the Description of Research Data Repositories. Version 3.0.''} \url{https://doi.org/10.2312/re3.008}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Rule2019}{}}%
+Rule, Adam, Amanda Birmingham, Cristal Zuniga, Ilkay Altintas, Shih-Cheng Huang, Rob Knight, Niema Moshiri, et al. 2019. {``Ten Simple Rules for Writing and Sharing Computational Analyses in Jupyter Notebooks.''} \emph{PLOS Computational Biology} 15 (July): e1007007. \url{https://doi.org/10.1371/JOURNAL.PCBI.1007007}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Santora2017}{}}%
+Santora, Jarrod A., Elliott L. Hazen, Isaac D. Schroeder, Steven J. Bograd, Keith M. Sakuma, and John C. Field. 2017. {``Impacts of Ocean Climate Variability on Biodiversity of Pelagic Forage Species in an Upwelling Ecosystem.''} \emph{Marine Ecology Progress Series} 580 (September): 205--20. \url{https://doi.org/10.3354/meps12278}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Taylor2012}{}}%
+Taylor, Gordon T., Frank E. Muller-Karger, Robert C. Thunell, Mary I. Scranton, Yrene Astor, Ramon Varela, Luis Troccoli Ghinaglia, et al. 2012. {``Ecosystem Responses in the Southern Caribbean Sea to Global Climate Change.''} \emph{Proceedings of the National Academy of Sciences of the United States of America} 109 (November): 19315--20. \url{https://doi.org/10.1073/pnas.1207514109}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-tittensor2010global}{}}%
+Tittensor, Derek P, Camilo Mora, Walter Jetz, Heike K Lotze, Daniel Ricard, Edward Vanden Berghe, and Boris Worm. 2010. {``Global Patterns and Predictors of Marine Biodiversity Across Taxa.''} \emph{Nature} 466 (7310): 1098.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Warren2018}{}}%
+Warren, R., J. Price, E. Graham, N. Forstenhaeusler, and J. VanDerWal. 2018. {``The Projected Effect on Insects, Vertebrates, and Plants of Limiting Global Warming to 1.5°c Rather Than 2°c.''} \emph{Science} 360 (May): 791--95. \url{https://doi.org/10.1126/science.aar3646}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Wieczorek2012}{}}%
+Wieczorek, John, David Bloom, Robert Guralnick, Stan Blum, Markus Döring, Renato Giovanni, Tim Robertson, and David Vieglais. 2012. {``Darwin Core: An Evolving Community-Developed Biodiversity Data Standard.''} \emph{PLoS ONE} 7 (January): 29715. \url{https://doi.org/10.1371/journal.pone.0029715}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Wilkinson2016}{}}%
+Wilkinson, Mark D., Michel Dumontier, IJsbrand Jan Aalbersberg, Gabrielle Appleton, Myles Axton, Arie Baak, Niklas Blomberg, et al. 2016. {``The FAIR Guiding Principles for Scientific Data Management and Stewardship.''} \emph{Scientific Data} 3 (March): 1--9. \url{https://doi.org/10.1038/sdata.2016.18}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-knitr2014}{}}%
+Xie, Yihui. 2014. {``Knitr: A Comprehensive Tool for Reproducible Research in {R}.''} In \emph{Implementing Reproducible Computational Research}, edited by Victoria Stodden, Friedrich Leisch, and Roger D. Peng. Chapman; Hall/CRC. \url{http://www.crcpress.com/product/isbn/9781466561595}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-xie2015}{}}%
+---------. 2015b. \emph{Dynamic Documents with {R} and Knitr}. 2nd ed. Boca Raton, Florida: Chapman; Hall/CRC. \url{http://yihui.name/knitr/}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-knitr2015}{}}%
+---------. 2015a. \emph{Dynamic Documents with {R} and Knitr}. 2nd ed. Boca Raton, Florida: Chapman; Hall/CRC. \url{https://yihui.org/knitr/}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-bookdown2016}{}}%
+---------. 2016. \emph{Bookdown: Authoring Books and Technical Documents with {R} Markdown}. Boca Raton, Florida: Chapman; Hall/CRC. \url{https://bookdown.org/yihui/bookdown}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-bookdown}{}}%
+---------. 2021a. \emph{Bookdown: Authoring Books and Technical Documents with r Markdown}. \url{https://CRAN.R-project.org/package=bookdown}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-knitr}{}}%
+---------. 2021b. \emph{Knitr: A General-Purpose Package for Dynamic Report Generation in r}. \url{https://yihui.org/knitr/}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-rmarkdown2018}{}}%
+Xie, Yihui, J. J. Allaire, and Garrett Grolemund. 2018. \emph{R Markdown: The Definitive Guide}. Boca Raton, Florida: Chapman; Hall/CRC. \url{https://bookdown.org/yihui/rmarkdown}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-rmarkdown2020}{}}%
+Xie, Yihui, Christophe Dervieux, and Emily Riederer. 2020. \emph{R Markdown Cookbook}. Boca Raton, Florida: Chapman; Hall/CRC. \url{https://bookdown.org/yihui/rmarkdown-cookbook}.
+
+\end{CSLReferences}
 
 \end{document}
