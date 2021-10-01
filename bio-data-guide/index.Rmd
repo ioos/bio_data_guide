@@ -6,7 +6,7 @@ url: https://ioos.github.io/bio_data_guide/
 github-repo: ioos/bio_data_guide
 site: bookdown::bookdown_site
 documentclass: book
-bibliography: ["book.bib", "packages.bib", "../OBIS_data_examples.bib"]
+bibliography: ["book.bib", "packages.bib", "OBIS_data_examples.bib"]
 biblio-style: apalike
 link-citations: yes
 nocite: |
