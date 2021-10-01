@@ -10,10 +10,10 @@
 
   <meta property="og:title" content="Page not found | Standardizing-Marine-Biological-Data" />
   <meta property="og:type" content="book" />
-  
+  <meta property="og:url" content="https://ioos.github.io/bio_data_guide/" />
   
   <meta property="og:description" content="Scaling multiple dimensions of diversity in biological data" />
-  
+  <meta name="github-repo" content="ioos/bio_data_guide" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Page not found | Standardizing-Marine-Biological-Data" />
@@ -245,15 +245,15 @@ the table of contents to find the page you are looking for.</p>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
+"github": true,
 "facebook": true,
 "twitter": true,
-"linkedin": false,
+"linkedin": true,
 "weibo": false,
 "instapaper": false,
 "vk": false,
 "whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": {}
 },
 "fontsettings": {
 "theme": "white",
@@ -261,15 +261,15 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
+"link": "https://github.com/ioos/bio_data_guide/edit/main/bio-data-guide/%s",
+"text": "Edit"
 },
 "history": {
 "link": null,
 "text": null
 },
 "view": {
-"link": null,
+"link": "https://github.com/ioos/bio_data_guide/blob/main/bio-data-guide/%s",
 "text": null
 },
 "download": ["bio-data-guide.pdf", "bio-data-guide.epub"],
@@ -279,7 +279,8 @@ gitbook.start({
 },
 "toc": {
 "collapse": "subsection"
-}
+},
+"info": false
 });
 });
 </script>

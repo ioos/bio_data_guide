@@ -2,6 +2,8 @@
 title: "Standardizing-Marine-Biological-Data"
 author: "Brett Johnson"
 date: "2021-10-01"
+url: https://ioos.github.io/bio_data_guide/
+github-repo: ioos/bio_data_guide
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: ["book.bib", "packages.bib", "../OBIS_data_examples.bib"]
