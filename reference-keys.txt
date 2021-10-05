@@ -1,4 +1,3 @@
-preface
 intro
 data-structures
 ontologies

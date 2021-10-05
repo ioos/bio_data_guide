@@ -1,7 +1,7 @@
 --- 
 title: "Standardizing-Marine-Biological-Data"
 author: "Brett Johnson"
-date: "2021-10-01"
+date: "2021-10-05"
 url: https://ioos.github.io/bio_data_guide/
 github-repo: ioos/bio_data_guide
 site: bookdown::bookdown_site
@@ -14,7 +14,7 @@ nocite: |
 description: "Scaling multiple dimensions of diversity in biological data"
 ---
 
-# Preface
+# Preface {-}
 
 Biological data structures, definitions, measurements, and linkages are neccessarily as diverse as the systems they represent. This presents a real challenge when integrating data across biological research domains such as ecology, oceanography, fisheries, and climate sciences.
 
