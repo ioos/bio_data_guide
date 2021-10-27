@@ -5,7 +5,7 @@
 
 Contribute directly to chapters (01-Intro.Rmd). Either through the GitHub website and direct edits to the R markdown files prefixed with chapter numbers (eg. 01-intro.Rmd). You can write both markdown or R, and even python code. The site is built using the R package [bookdown](https://bookdown.org/) through GitHub Actions, so all you need to do is edit the R markdown file and GitHub will take care of the rest.
 
-If you are a member of the IOOS GitHub org you can edit the files directly on GitHub, or through a fork and then pull-request if you're an external  collaborator. Once the pull-request is approved and merged, the documentation site will update to reflect your changes.
+If you are a member of the IOOS GitHub biodata team you can edit the files directly on GitHub, or through a fork and then pull-request if you're an external  collaborator. Once the pull-request is approved and merged, the documentation site will update to reflect your changes (takes about 10 minutes for the site to update after PR is merged).
 
 :bangbang: Don't forget to add your name and orcid to the [citation file](https://github.com/ioos/bio_data_guide/blob/main/CITATION.cff)!
 
@@ -44,7 +44,7 @@ bookdown::render_book("index.Rmd", "bookdown::pdf_book")
 * The markdown and pdf will be saved in the local `bio-data-guide/docs` directory.
   * Reminder: `bio-data-guide/docs` is [ignored by git](https://github.com/ioos/bio_data_guide/blob/main/.gitignore).
           
-## Building and publishing the book on your fork
+## Building and publishing the book through GitHub on your fork
 
 * Create a fork of this repo under your ownership
 * create an empty `gh-pages` branch in your fork (see [here](https://jiafulow.github.io/blog/2020/07/09/create-gh-pages-branch-in-existing-repo/)).
