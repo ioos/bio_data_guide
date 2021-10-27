@@ -26,3 +26,8 @@ occurrence
 measurementorfact
 example-two
 final-words
+tools
+r
+python
+google-sheets
+validators
