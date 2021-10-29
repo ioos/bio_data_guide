@@ -1,7 +1,7 @@
 --- 
 title: "Standardizing-Marine-Biological-Data"
 author: "[Standardizing Marine Biological Data Working Group](https://github.com/ioos/bio_data_guide/graphs/contributors)"
-date: "2021-10-28"
+date: "2021-10-29"
 url: https://ioos.github.io/bio_data_guide/
 github-repo: ioos/bio_data_guide
 site: bookdown::bookdown_site
