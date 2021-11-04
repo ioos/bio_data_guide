@@ -24,7 +24,7 @@
 <meta name="author" content="Standardizing Marine Biological Data Working Group" />
 
 
-<meta name="date" content="2021-10-29" />
+<meta name="date" content="2021-11-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -197,7 +197,12 @@ div.csl-indent {
 <li class="chapter" data-level="2.1.3" data-path="applications.html"><a href="applications.html#occurrence"><i class="fa fa-check"></i><b>2.1.3</b> occurrence</a></li>
 <li class="chapter" data-level="2.1.4" data-path="applications.html"><a href="applications.html#measurementorfact"><i class="fa fa-check"></i><b>2.1.4</b> measurementOrFact</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>2.2</b> Example Two</a></li>
+<li class="chapter" data-level="2.2" data-path="applications.html"><a href="applications.html#hakai-seagrass"><i class="fa fa-check"></i><b>2.2</b> Hakai Seagrass</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="applications.html"><a href="applications.html#setup"><i class="fa fa-check"></i><b>2.2.1</b> Setup</a></li>
+<li class="chapter" data-level="2.2.2" data-path="applications.html"><a href="applications.html#convert-data-to-darwin-core---extended-measurement-or-fact-format"><i class="fa fa-check"></i><b>2.2.2</b> Convert Data to Darwin Core - Extended Measurement or Fact format</a></li>
+<li class="chapter" data-level="2.2.3" data-path="applications.html"><a href="applications.html#session-info"><i class="fa fa-check"></i><b>2.2.3</b> Session Info</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>3</b> Final Words</a></li>
 <li class="chapter" data-level="4" data-path="tools.html"><a href="tools.html"><i class="fa fa-check"></i><b>4</b> Tools</a>
@@ -330,97 +335,396 @@ div.csl-indent {
 <span id="cb2-55"><a href="applications.html#cb2-55" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-56"><a href="applications.html#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="co">#include bycatch species</span></span>
 <span id="cb2-57"><a href="applications.html#cb2-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-58"><a href="applications.html#cb2-58" aria-hidden="true" tabindex="-1"></a>unique_bycatch <span class="ot">&lt;-</span> <span class="fu">unique</span>(bycatch<span class="sc">$</span>scientificName) <span class="sc">%&gt;%</span>  <span class="fu">glimpse</span>()</span></code></pre></div>
-<pre><code>##  chr [1:29] &quot;Oncorhynchus nerka&quot; &quot;Oncorhynchus tshawytscha&quot; ...</code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="applications.html#cb4-1" aria-hidden="true" tabindex="-1"></a>by_worms_names <span class="ot">&lt;-</span> <span class="fu">wm_records_names</span>(unique_bycatch) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-2"><a href="applications.html#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb4-3"><a href="applications.html#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">scientificName =</span> scientificname,</span>
-<span id="cb4-4"><a href="applications.html#cb4-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">scientificNameAuthorship =</span> authority,</span>
-<span id="cb4-5"><a href="applications.html#cb4-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">taxonRank =</span> rank,</span>
-<span id="cb4-6"><a href="applications.html#cb4-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">scientificNameID =</span> lsid</span>
-<span id="cb4-7"><a href="applications.html#cb4-7" aria-hidden="true" tabindex="-1"></a>         )</span>
-<span id="cb4-8"><a href="applications.html#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="applications.html#cb4-9" aria-hidden="true" tabindex="-1"></a>bycatch_occurrence <span class="ot">&lt;-</span> bycatch <span class="sc">%&gt;%</span> </span>
-<span id="cb4-10"><a href="applications.html#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">eventID =</span> seine_id, occurrenceID, scientificName, <span class="st">`</span><span class="at">Life stage</span><span class="st">`</span> <span class="ot">=</span> bm_ageclass) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-11"><a href="applications.html#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(scientificName <span class="sc">!=</span> <span class="st">&quot;unknown&quot;</span>)</span>
-<span id="cb4-12"><a href="applications.html#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="applications.html#cb4-13" aria-hidden="true" tabindex="-1"></a>bycatch_occurrence<span class="sc">$</span><span class="st">`</span><span class="at">Life stage</span><span class="st">`</span>[bycatch_occurrence<span class="sc">$</span><span class="st">`</span><span class="at">Life stage</span><span class="st">`</span> <span class="sc">==</span> <span class="st">&quot;J&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;juvenile&quot;</span></span>
-<span id="cb4-14"><a href="applications.html#cb4-14" aria-hidden="true" tabindex="-1"></a>bycatch_occurrence<span class="sc">$</span><span class="st">`</span><span class="at">Life stage</span><span class="st">`</span>[bycatch_occurrence<span class="sc">$</span><span class="st">`</span><span class="at">Life stage</span><span class="st">`</span> <span class="sc">==</span> <span class="st">&quot;A&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;adult&quot;</span></span>
-<span id="cb4-15"><a href="applications.html#cb4-15" aria-hidden="true" tabindex="-1"></a>bycatch_occurrence<span class="sc">$</span><span class="st">`</span><span class="at">Life stage</span><span class="st">`</span>[bycatch_occurrence<span class="sc">$</span><span class="st">`</span><span class="at">Life stage</span><span class="st">`</span> <span class="sc">==</span> <span class="st">&quot;Y&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Young of year&quot;</span></span>
-<span id="cb4-16"><a href="applications.html#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="applications.html#cb4-17" aria-hidden="true" tabindex="-1"></a>combined_worms_names <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(by_worms_names, df_worms_names) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-18"><a href="applications.html#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(scientificName, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb4-19"><a href="applications.html#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-20"><a href="applications.html#cb4-20" aria-hidden="true" tabindex="-1"></a>occurrence <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(bycatch_occurrence, occurrence)</span>
-<span id="cb4-21"><a href="applications.html#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-22"><a href="applications.html#cb4-22" aria-hidden="true" tabindex="-1"></a>occurrence <span class="ot">&lt;-</span> <span class="fu">left_join</span>(occurrence, combined_worms_names) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-23"><a href="applications.html#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">basisOfRecord =</span> <span class="st">&quot;HumanObservation&quot;</span>,</span>
-<span id="cb4-24"><a href="applications.html#cb4-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">occurrenceStatus =</span> <span class="st">&quot;present&quot;</span>)</span>
-<span id="cb4-25"><a href="applications.html#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-26"><a href="applications.html#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(occurrence,<span class="st">&quot;../datasets/hakai_salmon_data/raw_data/occurrence.csv&quot;</span>) <span class="co"># here::here(&quot;..&quot;, &quot;datasets&quot;, &quot;hakai_salmon_data&quot;, &quot;raw_data&quot;,   &quot;occurrence.csv&quot;))</span></span>
-<span id="cb4-27"><a href="applications.html#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-28"><a href="applications.html#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co"># This removes events that didn&#39;t result in any occurrences</span></span>
-<span id="cb4-29"><a href="applications.html#cb4-29" aria-hidden="true" tabindex="-1"></a>event <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">semi_join</span>(event, occurrence, <span class="at">by =</span> <span class="st">&#39;eventID&#39;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-30"><a href="applications.html#cb4-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">coordinateUncertaintyInMeters =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(decimalLatitude), <span class="dv">1852</span>, coordinateUncertaintyInMeters))</span>
-<span id="cb4-31"><a href="applications.html#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-32"><a href="applications.html#cb4-32" aria-hidden="true" tabindex="-1"></a>simple_sites <span class="ot">&lt;-</span> sites <span class="sc">%&gt;%</span> </span>
-<span id="cb4-33"><a href="applications.html#cb4-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(site_id, ocgy_std_lat, ocgy_std_lon)</span>
-<span id="cb4-34"><a href="applications.html#cb4-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-35"><a href="applications.html#cb4-35" aria-hidden="true" tabindex="-1"></a>event <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">left_join</span>(event, simple_sites, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;locationID&quot;</span> <span class="ot">=</span> <span class="st">&quot;site_id&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-36"><a href="applications.html#cb4-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">decimalLatitude =</span> <span class="fu">coalesce</span>(decimalLatitude, ocgy_std_lat),</span>
-<span id="cb4-37"><a href="applications.html#cb4-37" aria-hidden="true" tabindex="-1"></a>         <span class="at">decimalLongitude =</span> <span class="fu">coalesce</span>(decimalLongitude, ocgy_std_lon)) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-38"><a href="applications.html#cb4-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(ocgy_std_lat, ocgy_std_lon))</span>
-<span id="cb4-39"><a href="applications.html#cb4-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-40"><a href="applications.html#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(event,<span class="st">&quot;../datasets/hakai_salmon_data/raw_data/event.csv&quot;</span>) <span class="co"># here::here(&quot;..&quot;, &quot;datasets&quot;, &quot;hakai_salmon_data&quot;, &quot;raw_data&quot;,   &quot;event.csv&quot;))</span></span></code></pre></div>
+<span id="cb2-58"><a href="applications.html#cb2-58" aria-hidden="true" tabindex="-1"></a>unique_bycatch <span class="ot">&lt;-</span> <span class="fu">unique</span>(bycatch<span class="sc">$</span>scientificName) <span class="sc">%&gt;%</span>  <span class="fu">glimpse</span>()</span>
+<span id="cb2-59"><a href="applications.html#cb2-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-60"><a href="applications.html#cb2-60" aria-hidden="true" tabindex="-1"></a>by_worms_names <span class="ot">&lt;-</span> <span class="fu">wm_records_names</span>(unique_bycatch) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-61"><a href="applications.html#cb2-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb2-62"><a href="applications.html#cb2-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">scientificName =</span> scientificname,</span>
+<span id="cb2-63"><a href="applications.html#cb2-63" aria-hidden="true" tabindex="-1"></a>         <span class="at">scientificNameAuthorship =</span> authority,</span>
+<span id="cb2-64"><a href="applications.html#cb2-64" aria-hidden="true" tabindex="-1"></a>         <span class="at">taxonRank =</span> rank,</span>
+<span id="cb2-65"><a href="applications.html#cb2-65" aria-hidden="true" tabindex="-1"></a>         <span class="at">scientificNameID =</span> lsid</span>
+<span id="cb2-66"><a href="applications.html#cb2-66" aria-hidden="true" tabindex="-1"></a>         )</span>
+<span id="cb2-67"><a href="applications.html#cb2-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-68"><a href="applications.html#cb2-68" aria-hidden="true" tabindex="-1"></a>bycatch_occurrence <span class="ot">&lt;-</span> bycatch <span class="sc">%&gt;%</span> </span>
+<span id="cb2-69"><a href="applications.html#cb2-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">eventID =</span> seine_id, occurrenceID, scientificName, <span class="st">`</span><span class="at">Life stage</span><span class="st">`</span> <span class="ot">=</span> bm_ageclass) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-70"><a href="applications.html#cb2-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(scientificName <span class="sc">!=</span> <span class="st">&quot;unknown&quot;</span>)</span>
+<span id="cb2-71"><a href="applications.html#cb2-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-72"><a href="applications.html#cb2-72" aria-hidden="true" tabindex="-1"></a>bycatch_occurrence<span class="sc">$</span><span class="st">`</span><span class="at">Life stage</span><span class="st">`</span>[bycatch_occurrence<span class="sc">$</span><span class="st">`</span><span class="at">Life stage</span><span class="st">`</span> <span class="sc">==</span> <span class="st">&quot;J&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;juvenile&quot;</span></span>
+<span id="cb2-73"><a href="applications.html#cb2-73" aria-hidden="true" tabindex="-1"></a>bycatch_occurrence<span class="sc">$</span><span class="st">`</span><span class="at">Life stage</span><span class="st">`</span>[bycatch_occurrence<span class="sc">$</span><span class="st">`</span><span class="at">Life stage</span><span class="st">`</span> <span class="sc">==</span> <span class="st">&quot;A&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;adult&quot;</span></span>
+<span id="cb2-74"><a href="applications.html#cb2-74" aria-hidden="true" tabindex="-1"></a>bycatch_occurrence<span class="sc">$</span><span class="st">`</span><span class="at">Life stage</span><span class="st">`</span>[bycatch_occurrence<span class="sc">$</span><span class="st">`</span><span class="at">Life stage</span><span class="st">`</span> <span class="sc">==</span> <span class="st">&quot;Y&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Young of year&quot;</span></span>
+<span id="cb2-75"><a href="applications.html#cb2-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-76"><a href="applications.html#cb2-76" aria-hidden="true" tabindex="-1"></a>combined_worms_names <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(by_worms_names, df_worms_names) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-77"><a href="applications.html#cb2-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(scientificName, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-78"><a href="applications.html#cb2-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-79"><a href="applications.html#cb2-79" aria-hidden="true" tabindex="-1"></a>occurrence <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(bycatch_occurrence, occurrence)</span>
+<span id="cb2-80"><a href="applications.html#cb2-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-81"><a href="applications.html#cb2-81" aria-hidden="true" tabindex="-1"></a>occurrence <span class="ot">&lt;-</span> <span class="fu">left_join</span>(occurrence, combined_worms_names) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-82"><a href="applications.html#cb2-82" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">basisOfRecord =</span> <span class="st">&quot;HumanObservation&quot;</span>,</span>
+<span id="cb2-83"><a href="applications.html#cb2-83" aria-hidden="true" tabindex="-1"></a>        <span class="at">occurrenceStatus =</span> <span class="st">&quot;present&quot;</span>)</span>
+<span id="cb2-84"><a href="applications.html#cb2-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-85"><a href="applications.html#cb2-85" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(occurrence,<span class="st">&quot;../datasets/hakai_salmon_data/raw_data/occurrence.csv&quot;</span>) <span class="co"># here::here(&quot;..&quot;, &quot;datasets&quot;, &quot;hakai_salmon_data&quot;, &quot;raw_data&quot;,   &quot;occurrence.csv&quot;))</span></span>
+<span id="cb2-86"><a href="applications.html#cb2-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-87"><a href="applications.html#cb2-87" aria-hidden="true" tabindex="-1"></a><span class="co"># This removes events that didn&#39;t result in any occurrences</span></span>
+<span id="cb2-88"><a href="applications.html#cb2-88" aria-hidden="true" tabindex="-1"></a>event <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">semi_join</span>(event, occurrence, <span class="at">by =</span> <span class="st">&#39;eventID&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-89"><a href="applications.html#cb2-89" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">coordinateUncertaintyInMeters =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(decimalLatitude), <span class="dv">1852</span>, coordinateUncertaintyInMeters))</span>
+<span id="cb2-90"><a href="applications.html#cb2-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-91"><a href="applications.html#cb2-91" aria-hidden="true" tabindex="-1"></a>simple_sites <span class="ot">&lt;-</span> sites <span class="sc">%&gt;%</span> </span>
+<span id="cb2-92"><a href="applications.html#cb2-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(site_id, ocgy_std_lat, ocgy_std_lon)</span>
+<span id="cb2-93"><a href="applications.html#cb2-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-94"><a href="applications.html#cb2-94" aria-hidden="true" tabindex="-1"></a>event <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">left_join</span>(event, simple_sites, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;locationID&quot;</span> <span class="ot">=</span> <span class="st">&quot;site_id&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-95"><a href="applications.html#cb2-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">decimalLatitude =</span> <span class="fu">coalesce</span>(decimalLatitude, ocgy_std_lat),</span>
+<span id="cb2-96"><a href="applications.html#cb2-96" aria-hidden="true" tabindex="-1"></a>         <span class="at">decimalLongitude =</span> <span class="fu">coalesce</span>(decimalLongitude, ocgy_std_lon)) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-97"><a href="applications.html#cb2-97" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(ocgy_std_lat, ocgy_std_lon))</span>
+<span id="cb2-98"><a href="applications.html#cb2-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-99"><a href="applications.html#cb2-99" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(event,<span class="st">&quot;../datasets/hakai_salmon_data/raw_data/event.csv&quot;</span>) <span class="co"># here::here(&quot;..&quot;, &quot;datasets&quot;, &quot;hakai_salmon_data&quot;, &quot;raw_data&quot;,   &quot;event.csv&quot;))</span></span></code></pre></div>
 </div>
 <div id="measurementorfact" class="section level3" number="2.1.4">
 <h3><span class="header-section-number">2.1.4</span> measurementOrFact</h3>
 <p>To convert all your measurements or facts from your normal format to Darwin Core you essentially need to put all your measurements into one column called measurementType and a corresponding column called MeasurementValue. This standardizes the column names are in the <code>measurementOrFact</code> table. There are a number of predefined <code>measurementType</code>s listed on the <a href="https://www.bodc.ac.uk/resources/vocabularies/">NERC</a> database that should be used where possible. I found it difficult to navigate this page to find the correct <code>measurementType</code>.</p>
 <p>Here I convert length, and weight measurements that relate to an event and an occurrence and call those <code>measurementTypes</code> as <code>length</code> and <code>weight</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="applications.html#cb5-1" aria-hidden="true" tabindex="-1"></a>mof_types <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/HakaiInstitute/jsp-data/master/OBIS_data/mof_type_units_id.csv&quot;</span>)</span>
-<span id="cb5-2"><a href="applications.html#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="applications.html#cb5-3" aria-hidden="true" tabindex="-1"></a>fish_data<span class="sc">$</span>weight <span class="ot">&lt;-</span> <span class="fu">coalesce</span>(fish_data<span class="sc">$</span>weight, fish_data<span class="sc">$</span>weight_field)</span>
-<span id="cb5-4"><a href="applications.html#cb5-4" aria-hidden="true" tabindex="-1"></a>fish_data<span class="sc">$</span>fork_length <span class="ot">&lt;-</span> <span class="fu">coalesce</span>(fish_data<span class="sc">$</span>fork_length, fish_data<span class="sc">$</span>fork_length_field)</span>
-<span id="cb5-5"><a href="applications.html#cb5-5" aria-hidden="true" tabindex="-1"></a>fish_data<span class="sc">$</span><span class="st">`</span><span class="at">Life stage</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="st">&quot;juvenile&quot;</span></span>
-<span id="cb5-6"><a href="applications.html#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="applications.html#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="applications.html#cb3-1" aria-hidden="true" tabindex="-1"></a>mof_types <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/HakaiInstitute/jsp-data/master/OBIS_data/mof_type_units_id.csv&quot;</span>)</span>
+<span id="cb3-2"><a href="applications.html#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="applications.html#cb3-3" aria-hidden="true" tabindex="-1"></a>fish_data<span class="sc">$</span>weight <span class="ot">&lt;-</span> <span class="fu">coalesce</span>(fish_data<span class="sc">$</span>weight, fish_data<span class="sc">$</span>weight_field)</span>
+<span id="cb3-4"><a href="applications.html#cb3-4" aria-hidden="true" tabindex="-1"></a>fish_data<span class="sc">$</span>fork_length <span class="ot">&lt;-</span> <span class="fu">coalesce</span>(fish_data<span class="sc">$</span>fork_length, fish_data<span class="sc">$</span>fork_length_field)</span>
+<span id="cb3-5"><a href="applications.html#cb3-5" aria-hidden="true" tabindex="-1"></a>fish_data<span class="sc">$</span><span class="st">`</span><span class="at">Life stage</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="st">&quot;juvenile&quot;</span></span>
+<span id="cb3-6"><a href="applications.html#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="applications.html#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="applications.html#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="applications.html#cb3-9" aria-hidden="true" tabindex="-1"></a>measurementOrFact <span class="ot">&lt;-</span> fish_data <span class="sc">%&gt;%</span></span>
+<span id="cb3-10"><a href="applications.html#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">occurrenceID =</span> <span class="fu">paste0</span>(<span class="st">&quot;hakai-jsp-&quot;</span>, ufn)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-11"><a href="applications.html#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(occurrenceID, <span class="at">eventID =</span> seine_id, <span class="st">&quot;Length (fork length)&quot;</span> <span class="ot">=</span> fork_length,</span>
+<span id="cb3-12"><a href="applications.html#cb3-12" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;Standard length&quot;</span> <span class="ot">=</span> standard_length, <span class="st">&quot;Weight&quot;</span> <span class="ot">=</span> weight, <span class="st">`</span><span class="at">Life stage</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-13"><a href="applications.html#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="st">`</span><span class="at">Length (fork length)</span><span class="st">`</span><span class="sc">:</span><span class="st">`</span><span class="at">Life stage</span><span class="st">`</span>,</span>
+<span id="cb3-14"><a href="applications.html#cb3-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;measurementType&quot;</span>,</span>
+<span id="cb3-15"><a href="applications.html#cb3-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;measurementValue&quot;</span>,</span>
+<span id="cb3-16"><a href="applications.html#cb3-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_transform =</span> <span class="fu">list</span>(<span class="at">measurementValue =</span> as.character)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-17"><a href="applications.html#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(measurementValue <span class="sc">!=</span> <span class="st">&quot;NA&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-18"><a href="applications.html#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(mof_types,<span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;measurementType&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-19"><a href="applications.html#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">measurementValueID =</span> <span class="fu">case_when</span>(measurementValue <span class="sc">==</span> <span class="st">&quot;juvenile&quot;</span> <span class="sc">~</span> <span class="st">&quot;http://vocab.nerc.ac.uk/collection/S11/current/S1127/&quot;</span>),</span>
+<span id="cb3-20"><a href="applications.html#cb3-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementID =</span> <span class="fu">paste</span>(eventID, measurementType, occurrenceID, <span class="at">sep =</span> <span class="st">&quot;-&quot;</span>))</span>
+<span id="cb3-21"><a href="applications.html#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="applications.html#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="applications.html#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(measurementOrFact,<span class="st">&quot;../datasets/hakai_salmon_data/raw_data/extendedMeasurementOrFact.csv&quot;</span>) <span class="co"># here::here(&quot;..&quot;, &quot;datasets&quot;, &quot;hakai_salmon_data&quot;, &quot;raw_data&quot;,   &quot;extendedMeasurementOrFact.csv&quot;))</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="applications.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Check that every eventID in Occurrence occurs in event table</span></span>
+<span id="cb4-2"><a href="applications.html#cb4-2" aria-hidden="true" tabindex="-1"></a>no_keys <span class="ot">&lt;-</span> <span class="fu">dm</span>(event, occurrence, measurementOrFact)</span>
+<span id="cb4-3"><a href="applications.html#cb4-3" aria-hidden="true" tabindex="-1"></a>only_pk <span class="ot">&lt;-</span> no_keys <span class="sc">%&gt;%</span> </span>
+<span id="cb4-4"><a href="applications.html#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dm_add_pk</span>(event, eventID) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-5"><a href="applications.html#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dm_add_pk</span>(occurrence, occurrenceID) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-6"><a href="applications.html#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dm_add_pk</span>(measurementOrFact, measurementID)</span>
+<span id="cb4-7"><a href="applications.html#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dm_examine_constraints</span>(only_pk)</span>
+<span id="cb4-8"><a href="applications.html#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="applications.html#cb4-9" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> only_pk <span class="sc">%&gt;%</span> </span>
+<span id="cb4-10"><a href="applications.html#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dm_add_fk</span>(occurrence, eventID, event) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-11"><a href="applications.html#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dm_add_fk</span>(measurementOrFact, occurrenceID, occurrence)</span>
+<span id="cb4-12"><a href="applications.html#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">dm_examine_constraints</span>(model)</span>
+<span id="cb4-13"><a href="applications.html#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="applications.html#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#TODO: Fix bookdown issues so that dm_draw shows data model html output. Perhaps add  `always_allow_html: true` to yaml front matter</span></span>
+<span id="cb4-15"><a href="applications.html#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># dm_draw(model, view_type = &quot;all&quot;) </span></span></code></pre></div>
+</div>
+</div>
+<div id="hakai-seagrass" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Hakai Seagrass</h2>
+<p>By: ZL Monteith, Hakai Institute</p>
+<div id="setup" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Setup</h3>
+<p>This section clears the workspace, checks the working directory, and
+installs packages (if required) and loads packages, and loads necessary
+datasets</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="applications.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The following command will remove all objects** for a fresh start. Make</span></span>
+<span id="cb5-2"><a href="applications.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   sure any objects you want to keep are saved before running!</span></span>
+<span id="cb5-3"><a href="applications.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
+<span id="cb5-4"><a href="applications.html#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="applications.html#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check working directory; set if necessary so document will compile</span></span>
+<span id="cb5-6"><a href="applications.html#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   properly</span></span>
+<span id="cb5-7"><a href="applications.html#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span>
 <span id="cb5-8"><a href="applications.html#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="applications.html#cb5-9" aria-hidden="true" tabindex="-1"></a>measurementOrFact <span class="ot">&lt;-</span> fish_data <span class="sc">%&gt;%</span></span>
-<span id="cb5-10"><a href="applications.html#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">occurrenceID =</span> <span class="fu">paste0</span>(<span class="st">&quot;hakai-jsp-&quot;</span>, ufn)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-11"><a href="applications.html#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(occurrenceID, <span class="at">eventID =</span> seine_id, <span class="st">&quot;Length (fork length)&quot;</span> <span class="ot">=</span> fork_length,</span>
-<span id="cb5-12"><a href="applications.html#cb5-12" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;Standard length&quot;</span> <span class="ot">=</span> standard_length, <span class="st">&quot;Weight&quot;</span> <span class="ot">=</span> weight, <span class="st">`</span><span class="at">Life stage</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-13"><a href="applications.html#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="st">`</span><span class="at">Length (fork length)</span><span class="st">`</span><span class="sc">:</span><span class="st">`</span><span class="at">Life stage</span><span class="st">`</span>,</span>
-<span id="cb5-14"><a href="applications.html#cb5-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;measurementType&quot;</span>,</span>
-<span id="cb5-15"><a href="applications.html#cb5-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;measurementValue&quot;</span>,</span>
-<span id="cb5-16"><a href="applications.html#cb5-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_transform =</span> <span class="fu">list</span>(<span class="at">measurementValue =</span> as.character)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-17"><a href="applications.html#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(measurementValue <span class="sc">!=</span> <span class="st">&quot;NA&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-18"><a href="applications.html#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(mof_types,<span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;measurementType&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-19"><a href="applications.html#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">measurementValueID =</span> <span class="fu">case_when</span>(measurementValue <span class="sc">==</span> <span class="st">&quot;juvenile&quot;</span> <span class="sc">~</span> <span class="st">&quot;http://vocab.nerc.ac.uk/collection/S11/current/S1127/&quot;</span>),</span>
-<span id="cb5-20"><a href="applications.html#cb5-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementID =</span> <span class="fu">paste</span>(eventID, measurementType, occurrenceID, <span class="at">sep =</span> <span class="st">&quot;-&quot;</span>))</span>
-<span id="cb5-21"><a href="applications.html#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-22"><a href="applications.html#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-23"><a href="applications.html#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(measurementOrFact,<span class="st">&quot;../datasets/hakai_salmon_data/raw_data/extendedMeasurementOrFact.csv&quot;</span>) <span class="co"># here::here(&quot;..&quot;, &quot;datasets&quot;, &quot;hakai_salmon_data&quot;, &quot;raw_data&quot;,   &quot;extendedMeasurementOrFact.csv&quot;))</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="applications.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Check that every eventID in Occurrence occurs in event table</span></span>
-<span id="cb6-2"><a href="applications.html#cb6-2" aria-hidden="true" tabindex="-1"></a>no_keys <span class="ot">&lt;-</span> <span class="fu">dm</span>(event, occurrence, measurementOrFact)</span>
-<span id="cb6-3"><a href="applications.html#cb6-3" aria-hidden="true" tabindex="-1"></a>only_pk <span class="ot">&lt;-</span> no_keys <span class="sc">%&gt;%</span> </span>
-<span id="cb6-4"><a href="applications.html#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dm_add_pk</span>(event, eventID) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-5"><a href="applications.html#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dm_add_pk</span>(occurrence, occurrenceID) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-6"><a href="applications.html#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dm_add_pk</span>(measurementOrFact, measurementID)</span>
-<span id="cb6-7"><a href="applications.html#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dm_examine_constraints</span>(only_pk)</span>
-<span id="cb6-8"><a href="applications.html#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="applications.html#cb6-9" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> only_pk <span class="sc">%&gt;%</span> </span>
-<span id="cb6-10"><a href="applications.html#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dm_add_fk</span>(occurrence, eventID, event) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-11"><a href="applications.html#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dm_add_fk</span>(measurementOrFact, occurrenceID, occurrence)</span>
-<span id="cb6-12"><a href="applications.html#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="fu">dm_examine_constraints</span>(model)</span>
-<span id="cb6-13"><a href="applications.html#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-14"><a href="applications.html#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#TODO: Fix bookdown issues so that dm_draw shows data model html output. Perhaps add  `always_allow_html: true` to yaml front matter</span></span>
-<span id="cb6-15"><a href="applications.html#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># dm_draw(model, view_type = &quot;all&quot;) </span></span></code></pre></div>
+<span id="cb5-9"><a href="applications.html#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Install packages; uncomment and run if packages not already installed</span></span>
+<span id="cb5-10"><a href="applications.html#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(c(&quot;tidyverse&quot;, &quot;uuid&quot;))</span></span>
+<span id="cb5-11"><a href="applications.html#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="applications.html#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages</span></span>
+<span id="cb5-13"><a href="applications.html#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(<span class="fu">c</span>(<span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;lubridate&quot;</span>, <span class="st">&quot;magrittr&quot;</span>, <span class="st">&quot;worrms&quot;</span>),</span>
+<span id="cb5-14"><a href="applications.html#cb5-14" aria-hidden="true" tabindex="-1"></a>       library, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div id="load-data" class="section level4" number="2.2.1.1">
+<h4><span class="header-section-number">2.2.1.1</span> Load Data</h4>
+<p>First load the seagrass density survey data, set variable classes, and have a quick look</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="applications.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load density data</span></span>
+<span id="cb6-2"><a href="applications.html#cb6-2" aria-hidden="true" tabindex="-1"></a>seagrassDensity <span class="ot">&lt;-</span></span>
+<span id="cb6-3"><a href="applications.html#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read.csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/ioos/bio_data_guide/main/datasets/hakai_seagrass_data/raw_data/seagrass_density_survey.csv&quot;</span>,</span>
+<span id="cb6-4"><a href="applications.html#cb6-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">colClass =</span> <span class="st">&quot;character&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="applications.html#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date             =</span> <span class="fu">ymd</span>(date),</span>
+<span id="cb6-6"><a href="applications.html#cb6-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">depth            =</span> <span class="fu">as.numeric</span>(depth),</span>
+<span id="cb6-7"><a href="applications.html#cb6-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">transect_dist    =</span> <span class="fu">factor</span>(transect_dist),</span>
+<span id="cb6-8"><a href="applications.html#cb6-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">collected_start  =</span> <span class="fu">ymd_hms</span>(collected_start),</span>
+<span id="cb6-9"><a href="applications.html#cb6-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">collected_end    =</span> <span class="fu">ymd_hms</span>(collected_end),</span>
+<span id="cb6-10"><a href="applications.html#cb6-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">density          =</span> <span class="fu">as.numeric</span>(density),</span>
+<span id="cb6-11"><a href="applications.html#cb6-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">density_msq      =</span> <span class="fu">as.numeric</span>(density_msq),</span>
+<span id="cb6-12"><a href="applications.html#cb6-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">canopy_height_cm =</span> <span class="fu">as.numeric</span>(canopy_height_cm),</span>
+<span id="cb6-13"><a href="applications.html#cb6-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">flowering_shoots =</span> <span class="fu">as.numeric</span>(flowering_shoots)) <span class="sc">%T&gt;%</span></span>
+<span id="cb6-14"><a href="applications.html#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div>
+<p>Next, load the habitat survey data, and same as above, set variable classes as necessary,
+and have a quick look.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="applications.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load habitat data, set variable classes, have a quick look</span></span>
+<span id="cb7-2"><a href="applications.html#cb7-2" aria-hidden="true" tabindex="-1"></a>seagrassHabitat <span class="ot">&lt;-</span></span>
+<span id="cb7-3"><a href="applications.html#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read.csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/ioos/bio_data_guide/main/datasets/hakai_seagrass_data/raw_data/seagrass_habitat_survey.csv&quot;</span>,</span>
+<span id="cb7-4"><a href="applications.html#cb7-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">colClasses =</span> <span class="st">&quot;character&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="applications.html#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date            =</span> <span class="fu">ymd</span>(date),</span>
+<span id="cb7-6"><a href="applications.html#cb7-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">depth           =</span> <span class="fu">as.numeric</span>(depth),</span>
+<span id="cb7-7"><a href="applications.html#cb7-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">hakai_id        =</span> <span class="fu">str_pad</span>(hakai_id, <span class="dv">5</span>, <span class="at">pad =</span> <span class="st">&quot;0&quot;</span>),</span>
+<span id="cb7-8"><a href="applications.html#cb7-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">transect_dist   =</span> <span class="fu">factor</span>(transect_dist),</span>
+<span id="cb7-9"><a href="applications.html#cb7-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">collected_start =</span> <span class="fu">ymd_hms</span>(collected_start),</span>
+<span id="cb7-10"><a href="applications.html#cb7-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">collected_end   =</span> <span class="fu">ymd_hms</span>(collected_end)) <span class="sc">%T&gt;%</span></span>
+<span id="cb7-11"><a href="applications.html#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div>
+<p>Finally, load coordinate data for surveys, and subset necessary variables</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="applications.html#cb8-1" aria-hidden="true" tabindex="-1"></a>coordinates <span class="ot">&lt;-</span></span>
+<span id="cb8-2"><a href="applications.html#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read.csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/ioos/bio_data_guide/main/datasets/hakai_seagrass_data/raw_data/seagrassCoordinates.csv&quot;</span>,</span>
+<span id="cb8-3"><a href="applications.html#cb8-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">colClass =</span> <span class="fu">c</span>(<span class="st">&quot;Point.Name&quot;</span> <span class="ot">=</span> <span class="st">&quot;character&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="applications.html#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Point.Name, Decimal.Lat, Decimal.Long) <span class="sc">%T&gt;%</span></span>
+<span id="cb8-5"><a href="applications.html#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div>
+</div>
+<div id="merge-datasets" class="section level4" number="2.2.1.2">
+<h4><span class="header-section-number">2.2.1.2</span> Merge Datasets</h4>
+<p>Now all the datasets have been loaded, and briefly formatted, we’ll join
+together the habitat and density surveys, and the coordinates for these.</p>
+<p>The seagrass density surveys collect data at discrete points (ie. 5 metres)
+along the transects, while the habitat surveys collect data over sections
+(ie. 0 - 5 metres) along the transects. In order to fit these two surveys
+together, we’ll narrow the habitat surveys from a range to a point so the
+locations will match. Based on how the habitat data is collected, the point
+the habitat survey is applied to will be the distance at the end of the
+swath (ie. 10-15m will become 15m). To account for no preceeding distance,
+the 0m distance will use the 0-5m section of the survey.</p>
+<p>First, well make the necessary transformations to the habitat dataset.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="applications.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reformat seagrassHabitat to merge with seagrassDensity</span></span>
+<span id="cb9-2"><a href="applications.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="do">## replicate 0 - 5m transect dist to match with 0m in density survey;</span></span>
+<span id="cb9-3"><a href="applications.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="do">## rest of habitat bins can map one to one with density (ie. 5 - 10m -&gt; 10m)</span></span>
+<span id="cb9-4"><a href="applications.html#cb9-4" aria-hidden="true" tabindex="-1"></a>seagrass0tmp <span class="ot">&lt;-</span></span>
+<span id="cb9-5"><a href="applications.html#cb9-5" aria-hidden="true" tabindex="-1"></a>  seagrassHabitat <span class="sc">%&gt;%</span></span>
+<span id="cb9-6"><a href="applications.html#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(transect_dist <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;0 - 5&quot;</span>, <span class="st">&quot;0 - 2.5&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-7"><a href="applications.html#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">transect_dist =</span> <span class="fu">factor</span>(<span class="dv">0</span>))</span>
+<span id="cb9-8"><a href="applications.html#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="applications.html#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="do">## collapse various levels to match with seagrassDensity transect_dist</span></span>
+<span id="cb9-10"><a href="applications.html#cb9-10" aria-hidden="true" tabindex="-1"></a>seagrassHabitat<span class="sc">$</span>transect_dist <span class="ot">&lt;-</span></span>
+<span id="cb9-11"><a href="applications.html#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fct_collapse</span>(seagrassHabitat<span class="sc">$</span>transect_dist,</span>
+<span id="cb9-12"><a href="applications.html#cb9-12" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot;5&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;0 - 5&quot;</span>, <span class="st">&quot;2.5 - 7.5&quot;</span>),</span>
+<span id="cb9-13"><a href="applications.html#cb9-13" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot;10&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;5 - 10&quot;</span>, <span class="st">&quot;7.5 - 12.5&quot;</span>),</span>
+<span id="cb9-14"><a href="applications.html#cb9-14" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot;15&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;10 - 15&quot;</span>, <span class="st">&quot;12.5 - 17.5&quot;</span>),</span>
+<span id="cb9-15"><a href="applications.html#cb9-15" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot;20&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;15 - 20&quot;</span>, <span class="st">&quot;17.5 - 22.5&quot;</span>),</span>
+<span id="cb9-16"><a href="applications.html#cb9-16" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot;25&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;20 - 25&quot;</span>, <span class="st">&quot;22.5 - 27.5&quot;</span>),</span>
+<span id="cb9-17"><a href="applications.html#cb9-17" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot;30&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;25 - 30&quot;</span>, <span class="st">&quot;27.5 - 30&quot;</span>))</span>
+<span id="cb9-18"><a href="applications.html#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="applications.html#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="do">## merge seagrass0tmp into seagrassHabitat to account for 0m samples,</span></span>
+<span id="cb9-20"><a href="applications.html#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="do">## set class for date, datetime variables</span></span>
+<span id="cb9-21"><a href="applications.html#cb9-21" aria-hidden="true" tabindex="-1"></a>seagrassHabitatFull <span class="ot">&lt;-</span></span>
+<span id="cb9-22"><a href="applications.html#cb9-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rbind</span>(seagrass0tmp, seagrassHabitat) <span class="sc">%&gt;%</span></span>
+<span id="cb9-23"><a href="applications.html#cb9-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(transect_dist <span class="sc">!=</span> <span class="st">&quot;0 - 2.5&quot;</span>)  <span class="sc">%&gt;%</span> <span class="co"># already captured in seagrass0tmp</span></span>
+<span id="cb9-24"><a href="applications.html#cb9-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">droplevels</span>(.)  <span class="co"># remove now unused factor levels</span></span></code></pre></div>
+<p>With the distances of habitat and density surveys now corresponding, we can
+now merge these two datasets plus there coordinates together, combine
+redundant fields, and remove unnecessary fields.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="applications.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge seagrassHabitatFull with seagrassDensity, then coordinates</span></span>
+<span id="cb10-2"><a href="applications.html#cb10-2" aria-hidden="true" tabindex="-1"></a>seagrass <span class="ot">&lt;-</span></span>
+<span id="cb10-3"><a href="applications.html#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(seagrassHabitatFull, seagrassDensity,</span>
+<span id="cb10-4"><a href="applications.html#cb10-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;organization&quot;</span>,</span>
+<span id="cb10-5"><a href="applications.html#cb10-5" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;work_area&quot;</span>,</span>
+<span id="cb10-6"><a href="applications.html#cb10-6" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;project&quot;</span>,</span>
+<span id="cb10-7"><a href="applications.html#cb10-7" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;survey&quot;</span>,</span>
+<span id="cb10-8"><a href="applications.html#cb10-8" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;site_id&quot;</span>,</span>
+<span id="cb10-9"><a href="applications.html#cb10-9" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;date&quot;</span>,</span>
+<span id="cb10-10"><a href="applications.html#cb10-10" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;transect_dist&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb10-11"><a href="applications.html#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># merge hakai_id.x and hakai_id.y into single variable field;</span></span>
+<span id="cb10-12"><a href="applications.html#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use combination of date, site_id, transect_dist, and field uid (hakai_id</span></span>
+<span id="cb10-13"><a href="applications.html#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># when present)</span></span>
+<span id="cb10-14"><a href="applications.html#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">field_uid =</span> <span class="fu">ifelse</span>(sample_collected <span class="sc">==</span> <span class="cn">TRUE</span>, hakai_id.x, <span class="st">&quot;NA&quot;</span>),</span>
+<span id="cb10-15"><a href="applications.html#cb10-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">hakai_id =</span> <span class="fu">paste</span>(date, <span class="st">&quot;HAKAI:CALVERT&quot;</span>, site_id, transect_dist, <span class="at">sep =</span> <span class="st">&quot;:&quot;</span>),</span>
+<span id="cb10-16"><a href="applications.html#cb10-16" aria-hidden="true" tabindex="-1"></a>         <span class="co"># below, aggregate metadata that didn&#39;t merge naturally (ie. due to minor</span></span>
+<span id="cb10-17"><a href="applications.html#cb10-17" aria-hidden="true" tabindex="-1"></a>         <span class="co"># differences in watch time or depth gauges)</span></span>
+<span id="cb10-18"><a href="applications.html#cb10-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">dive_supervisor =</span> dive_supervisor.x,</span>
+<span id="cb10-19"><a href="applications.html#cb10-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">collected_start =</span> <span class="fu">ymd_hms</span>(<span class="fu">ifelse</span>(<span class="fu">is.na</span>(collected_start.x),</span>
+<span id="cb10-20"><a href="applications.html#cb10-20" aria-hidden="true" tabindex="-1"></a>                                          collected_start.y,</span>
+<span id="cb10-21"><a href="applications.html#cb10-21" aria-hidden="true" tabindex="-1"></a>                                          collected_start.x)),</span>
+<span id="cb10-22"><a href="applications.html#cb10-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">collected_end   =</span> <span class="fu">ymd_hms</span>(<span class="fu">ifelse</span>(<span class="fu">is.na</span>(collected_start.x),</span>
+<span id="cb10-23"><a href="applications.html#cb10-23" aria-hidden="true" tabindex="-1"></a>                                          collected_start.y,</span>
+<span id="cb10-24"><a href="applications.html#cb10-24" aria-hidden="true" tabindex="-1"></a>                                          collected_start.x)),</span>
+<span id="cb10-25"><a href="applications.html#cb10-25" aria-hidden="true" tabindex="-1"></a>         <span class="at">depth_m         =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(depth.x), depth.y, depth.x),</span>
+<span id="cb10-26"><a href="applications.html#cb10-26" aria-hidden="true" tabindex="-1"></a>         <span class="at">sampling_bout   =</span> sampling_bout.x) <span class="sc">%&gt;%</span></span>
+<span id="cb10-27"><a href="applications.html#cb10-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(., coordinates,  <span class="co"># add coordinates</span></span>
+<span id="cb10-28"><a href="applications.html#cb10-28" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;site_id&quot;</span> <span class="ot">=</span> <span class="st">&quot;Point.Name&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb10-29"><a href="applications.html#cb10-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>( <span class="sc">-</span> <span class="fu">c</span>(X.x, X.y, hakai_id.x, hakai_id.y,  <span class="co"># remove unnecessary variables</span></span>
+<span id="cb10-30"><a href="applications.html#cb10-30" aria-hidden="true" tabindex="-1"></a>              dive_supervisor.x, dive_supervisor.y,</span>
+<span id="cb10-31"><a href="applications.html#cb10-31" aria-hidden="true" tabindex="-1"></a>              collected_start.x, collected_start.y,</span>
+<span id="cb10-32"><a href="applications.html#cb10-32" aria-hidden="true" tabindex="-1"></a>              collected_end.x, collected_end.y,</span>
+<span id="cb10-33"><a href="applications.html#cb10-33" aria-hidden="true" tabindex="-1"></a>              depth.x, depth.y,</span>
+<span id="cb10-34"><a href="applications.html#cb10-34" aria-hidden="true" tabindex="-1"></a>              sampling_bout.x, sampling_bout.y)) <span class="sc">%&gt;%</span></span>
+<span id="cb10-35"><a href="applications.html#cb10-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">density_msq =</span> <span class="fu">as.character</span>(density_msq),</span>
+<span id="cb10-36"><a href="applications.html#cb10-36" aria-hidden="true" tabindex="-1"></a>         <span class="at">canopy_height_cm =</span> <span class="fu">as.character</span>(canopy_height_cm),</span>
+<span id="cb10-37"><a href="applications.html#cb10-37" aria-hidden="true" tabindex="-1"></a>         <span class="at">flowering_shoots =</span> <span class="fu">as.character</span>(flowering_shoots),</span>
+<span id="cb10-38"><a href="applications.html#cb10-38" aria-hidden="true" tabindex="-1"></a>         <span class="at">depth_m =</span> <span class="fu">as.character</span>(depth_m)) <span class="sc">%T&gt;%</span></span>
+<span id="cb10-39"><a href="applications.html#cb10-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div>
 </div>
 </div>
-<div id="example-two" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Example Two</h2>
-<p>Add another example here, perhaps zooplankton?</p>
+<div id="convert-data-to-darwin-core---extended-measurement-or-fact-format" class="section level3" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Convert Data to Darwin Core - Extended Measurement or Fact format</h3>
+<p>The Darwin Core ExtendedMeasurementOrFact (eMoF) extension bases records
+around a core event (rather than occurrence as in standard Darwin Core),
+allowing for additional measurement variables to be associated with
+occurrence data.</p>
+<div id="add-event-id-and-occurrence-id-variables-to-dataset" class="section level4" number="2.2.2.1">
+<h4><span class="header-section-number">2.2.2.1</span> Add Event ID and Occurrence ID variables to dataset</h4>
+<p>As this dataset will be annually updated, rather than using
+natural keys (ie. using package::uuid to autogenerate) for event and
+occurence IDs, here we will use surrogate keys made up of a concatenation
+of date survey, transect location, observation distance, and sample ID
+(for occurrenceID, when a sample is present).</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="applications.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create and populate eventID variable</span></span>
+<span id="cb11-2"><a href="applications.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="do">## currently only event is used, but additional surveys and abiotic data</span></span>
+<span id="cb11-3"><a href="applications.html#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="do">## are associated with parent events that may be included at a later date</span></span>
+<span id="cb11-4"><a href="applications.html#cb11-4" aria-hidden="true" tabindex="-1"></a>seagrass<span class="sc">$</span>eventID <span class="ot">&lt;-</span> seagrass<span class="sc">$</span>hakai_id</span>
+<span id="cb11-5"><a href="applications.html#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="applications.html#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># create and populate occurrenceID; combine eventID with transect_dist</span></span>
+<span id="cb11-7"><a href="applications.html#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># and field_uid</span></span>
+<span id="cb11-8"><a href="applications.html#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="do">## in the event of &lt;NA&gt; field_uid, no sample was collected, but</span></span>
+<span id="cb11-9"><a href="applications.html#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="do">## measurements and occurrence are still taken; no further subsamples</span></span>
+<span id="cb11-10"><a href="applications.html#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="do">## are associated with &lt;NA&gt; field_uids</span></span>
+<span id="cb11-11"><a href="applications.html#cb11-11" aria-hidden="true" tabindex="-1"></a>seagrass<span class="sc">$</span>occurrenceID <span class="ot">&lt;-</span></span>
+<span id="cb11-12"><a href="applications.html#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(seagrass,</span>
+<span id="cb11-13"><a href="applications.html#cb11-13" aria-hidden="true" tabindex="-1"></a>       <span class="fu">paste</span>(eventID, transect_dist, field_uid, <span class="at">sep =</span> <span class="st">&quot;:&quot;</span>))</span></code></pre></div>
+</div>
+<div id="create-event-occurrence-and-emof-tables" class="section level4" number="2.2.2.2">
+<h4><span class="header-section-number">2.2.2.2</span> Create Event, Occurrence, and eMoF tables</h4>
+<p>Now that we’ve created eventIDs and occurrenceIDs to connect all the
+variables together, we can begin to create the Event, Occurrence,
+and extended Measurement or Fact table necessary for DarwinCore
+compliant datasets</p>
+<div id="event-table" class="section level5" number="2.2.2.2.1">
+<h5><span class="header-section-number">2.2.2.2.1</span> Event Table</h5>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="applications.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># subset seagrass to create event table</span></span>
+<span id="cb12-2"><a href="applications.html#cb12-2" aria-hidden="true" tabindex="-1"></a>seagrassEvent <span class="ot">&lt;-</span></span>
+<span id="cb12-3"><a href="applications.html#cb12-3" aria-hidden="true" tabindex="-1"></a>  seagrass <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="applications.html#cb12-4" aria-hidden="true" tabindex="-1"></a>  distinct <span class="sc">%&gt;%</span>  <span class="co"># some duplicates in data stemming from database conflicts</span></span>
+<span id="cb12-5"><a href="applications.html#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(date,</span>
+<span id="cb12-6"><a href="applications.html#cb12-6" aria-hidden="true" tabindex="-1"></a>         Decimal.Lat, Decimal.Long, transect_dist,</span>
+<span id="cb12-7"><a href="applications.html#cb12-7" aria-hidden="true" tabindex="-1"></a>         depth_m, eventID) <span class="sc">%&gt;%</span></span>
+<span id="cb12-8"><a href="applications.html#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">eventDate                     =</span> date,</span>
+<span id="cb12-9"><a href="applications.html#cb12-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">decimalLatitude               =</span> Decimal.Lat,</span>
+<span id="cb12-10"><a href="applications.html#cb12-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">decimalLongitude              =</span> Decimal.Long,</span>
+<span id="cb12-11"><a href="applications.html#cb12-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">coordinateUncertaintyInMeters =</span> transect_dist,</span>
+<span id="cb12-12"><a href="applications.html#cb12-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">minimumDepthInMeters          =</span> depth_m,</span>
+<span id="cb12-13"><a href="applications.html#cb12-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">maximumDepthInMeters          =</span> depth_m) <span class="sc">%&gt;%</span></span>
+<span id="cb12-14"><a href="applications.html#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">geodeticDatum  =</span> <span class="st">&quot;WGS84&quot;</span>,</span>
+<span id="cb12-15"><a href="applications.html#cb12-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">samplingEffort =</span> <span class="st">&quot;30 metre transect&quot;</span>) <span class="sc">%T&gt;%</span> glimpse</span>
+<span id="cb12-16"><a href="applications.html#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="applications.html#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co"># save event table to csv</span></span>
+<span id="cb12-18"><a href="applications.html#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(seagrassEvent, <span class="st">&quot;../datasets/hakai_seagrass_data/processed_data/hakaiSeagrassDwcEvent.csv&quot;</span>)</span></code></pre></div>
+</div>
+<div id="occurrence-table" class="section level5" number="2.2.2.2.2">
+<h5><span class="header-section-number">2.2.2.2.2</span> Occurrence Table</h5>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="applications.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># subset seagrass to create occurrence table</span></span>
+<span id="cb13-2"><a href="applications.html#cb13-2" aria-hidden="true" tabindex="-1"></a>seagrassOccurrence <span class="ot">&lt;-</span></span>
+<span id="cb13-3"><a href="applications.html#cb13-3" aria-hidden="true" tabindex="-1"></a>  seagrass <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="applications.html#cb13-4" aria-hidden="true" tabindex="-1"></a>  distinct <span class="sc">%&gt;%</span>  <span class="co"># some duplicates in data stemming from database conflicts</span></span>
+<span id="cb13-5"><a href="applications.html#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(eventID, occurrenceID) <span class="sc">%&gt;%</span></span>
+<span id="cb13-6"><a href="applications.html#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">basisOfRecord =</span> <span class="st">&quot;HumanObservation&quot;</span>,</span>
+<span id="cb13-7"><a href="applications.html#cb13-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">scientificName   =</span> <span class="st">&quot;Zostera subg. Zostera marina&quot;</span>,</span>
+<span id="cb13-8"><a href="applications.html#cb13-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">occurrenceStatus =</span> <span class="st">&quot;present&quot;</span>)</span>
+<span id="cb13-9"><a href="applications.html#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="applications.html#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Taxonomic name matching</span></span>
+<span id="cb13-11"><a href="applications.html#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># in addition to the above metadata, DarwinCore format requires further</span></span>
+<span id="cb13-12"><a href="applications.html#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># taxonomic data that can be acquired through the WoRMS register.</span></span>
+<span id="cb13-13"><a href="applications.html#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Load taxonomic info, downloaded via WoRMS tool</span></span>
+<span id="cb13-14"><a href="applications.html#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># zmWorms &lt;-</span></span>
+<span id="cb13-15"><a href="applications.html#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">#   read.delim(&quot;raw_data/zmworms_matched.txt&quot;,</span></span>
+<span id="cb13-16"><a href="applications.html#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">#              header = TRUE,</span></span>
+<span id="cb13-17"><a href="applications.html#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">#              nrows  = 1)</span></span>
+<span id="cb13-18"><a href="applications.html#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="applications.html#cb13-19" aria-hidden="true" tabindex="-1"></a>zmWorms <span class="ot">&lt;-</span> <span class="fu">wm_record</span>(<span class="at">id =</span> <span class="dv">145795</span>)</span>
+<span id="cb13-20"><a href="applications.html#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-21"><a href="applications.html#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="co"># join WoRMS name with seagrassOccurrence create above</span></span>
+<span id="cb13-22"><a href="applications.html#cb13-22" aria-hidden="true" tabindex="-1"></a>seagrassOccurrence <span class="ot">&lt;-</span></span>
+<span id="cb13-23"><a href="applications.html#cb13-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(seagrassOccurrence, zmWorms,</span>
+<span id="cb13-24"><a href="applications.html#cb13-24" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;scientificName&quot;</span> <span class="ot">=</span> <span class="st">&quot;scientificname&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-25"><a href="applications.html#cb13-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(eventID, occurrenceID, basisOfRecord, scientificName, occurrenceStatus, AphiaID,</span>
+<span id="cb13-26"><a href="applications.html#cb13-26" aria-hidden="true" tabindex="-1"></a>         url, authority, status, unacceptreason, taxonRankID, rank,</span>
+<span id="cb13-27"><a href="applications.html#cb13-27" aria-hidden="true" tabindex="-1"></a>         valid_AphiaID, valid_name, valid_authority, parentNameUsageID,</span>
+<span id="cb13-28"><a href="applications.html#cb13-28" aria-hidden="true" tabindex="-1"></a>         kingdom, phylum, class, order, family, genus, citation, lsid,</span>
+<span id="cb13-29"><a href="applications.html#cb13-29" aria-hidden="true" tabindex="-1"></a>         isMarine, match_type, modified) <span class="sc">%T&gt;%</span></span>
+<span id="cb13-30"><a href="applications.html#cb13-30" aria-hidden="true" tabindex="-1"></a>  glimpse</span>
+<span id="cb13-31"><a href="applications.html#cb13-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-32"><a href="applications.html#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="co"># save occurrence table to csv</span></span>
+<span id="cb13-33"><a href="applications.html#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(seagrassOccurrence, <span class="st">&quot;../datasets/hakai_seagrass_data/processed_data/hakaiSeagrassDwcOccurrence.csv&quot;</span>)</span></code></pre></div>
+</div>
+<div id="extended-measurementorfact-table" class="section level5" number="2.2.2.2.3">
+<h5><span class="header-section-number">2.2.2.2.3</span> Extended MeasurementOrFact table</h5>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="applications.html#cb14-1" aria-hidden="true" tabindex="-1"></a>seagrassMof <span class="ot">&lt;-</span></span>
+<span id="cb14-2"><a href="applications.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  seagrass <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="applications.html#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># select variables for eMoF table</span></span>
+<span id="cb14-4"><a href="applications.html#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(date,</span>
+<span id="cb14-5"><a href="applications.html#cb14-5" aria-hidden="true" tabindex="-1"></a>         eventID, survey, site_id, transect_dist,</span>
+<span id="cb14-6"><a href="applications.html#cb14-6" aria-hidden="true" tabindex="-1"></a>         substrate, patchiness, adj_habitat_1, adj_habitat_2,</span>
+<span id="cb14-7"><a href="applications.html#cb14-7" aria-hidden="true" tabindex="-1"></a>         vegetation_1, vegetation_2,</span>
+<span id="cb14-8"><a href="applications.html#cb14-8" aria-hidden="true" tabindex="-1"></a>         density_msq, canopy_height_cm, flowering_shoots) <span class="sc">%&gt;%</span></span>
+<span id="cb14-9"><a href="applications.html#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># split substrate into two variables (currently holds two substrate type in same variable)</span></span>
+<span id="cb14-10"><a href="applications.html#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(substrate, <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;substrate_1&quot;</span>, <span class="st">&quot;substrate_2&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-11"><a href="applications.html#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># change variables names to match NERC database (or to be more descriptive where none exist)</span></span>
+<span id="cb14-12"><a href="applications.html#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">measurementDeterminedDate   =</span> date,</span>
+<span id="cb14-13"><a href="applications.html#cb14-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">SubstrateTypeA              =</span> substrate_1,</span>
+<span id="cb14-14"><a href="applications.html#cb14-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">SubstrateTypeB              =</span> substrate_2,</span>
+<span id="cb14-15"><a href="applications.html#cb14-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">BarePatchLengthWithinSeagrass =</span> patchiness,</span>
+<span id="cb14-16"><a href="applications.html#cb14-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">PrimaryAdjacentHabitat      =</span> adj_habitat_1,</span>
+<span id="cb14-17"><a href="applications.html#cb14-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">SecondaryAdjacentHabitat    =</span> adj_habitat_2,</span>
+<span id="cb14-18"><a href="applications.html#cb14-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">PrimaryAlgaeSp              =</span> vegetation_1,</span>
+<span id="cb14-19"><a href="applications.html#cb14-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">SecondaryAlgaeSp            =</span> vegetation_2,</span>
+<span id="cb14-20"><a href="applications.html#cb14-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">BedAbund                    =</span> density_msq,</span>
+<span id="cb14-21"><a href="applications.html#cb14-21" aria-hidden="true" tabindex="-1"></a>         <span class="at">CanopyHeight                =</span> canopy_height_cm,</span>
+<span id="cb14-22"><a href="applications.html#cb14-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">FloweringBedAbund           =</span> flowering_shoots) <span class="sc">%&gt;%</span></span>
+<span id="cb14-23"><a href="applications.html#cb14-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># reformat variables into DwC MeasurementOrFact format</span></span>
+<span id="cb14-24"><a href="applications.html#cb14-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># (single values variable, with measurement type, unit, etc. variables)</span></span>
+<span id="cb14-25"><a href="applications.html#cb14-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>( <span class="sc">-</span> <span class="fu">c</span>(measurementDeterminedDate, eventID, survey, site_id, transect_dist),</span>
+<span id="cb14-26"><a href="applications.html#cb14-26" aria-hidden="true" tabindex="-1"></a>                <span class="at">names_to =</span> <span class="st">&quot;measurementType&quot;</span>,</span>
+<span id="cb14-27"><a href="applications.html#cb14-27" aria-hidden="true" tabindex="-1"></a>                <span class="at">values_to =</span> <span class="st">&quot;measurementValue&quot;</span>,</span>
+<span id="cb14-28"><a href="applications.html#cb14-28" aria-hidden="true" tabindex="-1"></a>                <span class="at">values_ptypes =</span> <span class="fu">list</span>(<span class="at">measurementValue =</span> <span class="st">&quot;character&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-29"><a href="applications.html#cb14-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use measurement type to fill in remainder of variables relating to</span></span>
+<span id="cb14-30"><a href="applications.html#cb14-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># NERC vocabulary and metadata fields</span></span>
+<span id="cb14-31"><a href="applications.html#cb14-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-32"><a href="applications.html#cb14-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">measurementTypeID =</span> <span class="fu">case_when</span>(</span>
+<span id="cb14-33"><a href="applications.html#cb14-33" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">&quot;BedAbund&quot;</span> <span class="sc">~</span> <span class="st">&quot;http://vocab.nerc.ac.uk/collection/P01/current/SDBIOL02/&quot;</span>,</span>
+<span id="cb14-34"><a href="applications.html#cb14-34" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">&quot;CanopyHeight&quot;</span> <span class="sc">~</span> <span class="st">&quot;http://vocab.nerc.ac.uk/collection/P01/current/OBSMAXLX/&quot;</span>,</span>
+<span id="cb14-35"><a href="applications.html#cb14-35" aria-hidden="true" tabindex="-1"></a>      <span class="co"># measurementType == &quot;BarePatchWithinSeagrass&quot; ~ &quot;&quot;,</span></span>
+<span id="cb14-36"><a href="applications.html#cb14-36" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">&quot;FloweringBedAbund&quot;</span> <span class="sc">~</span> <span class="st">&quot;http://vocab.nerc.ac.uk/collection/P01/current/SDBIOL02/&quot;</span>),</span>
+<span id="cb14-37"><a href="applications.html#cb14-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">measurementUnit =</span> <span class="fu">case_when</span>(</span>
+<span id="cb14-38"><a href="applications.html#cb14-38" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">&quot;BedAbund&quot;</span> <span class="sc">~</span> <span class="st">&quot;Number per square metre&quot;</span>,</span>
+<span id="cb14-39"><a href="applications.html#cb14-39" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">&quot;CanopyHeight&quot;</span> <span class="sc">~</span> <span class="st">&quot;Centimetres&quot;</span>,</span>
+<span id="cb14-40"><a href="applications.html#cb14-40" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">&quot;BarePatchhLengthWithinSeagrass&quot;</span> <span class="sc">~</span> <span class="st">&quot;Metres&quot;</span>,</span>
+<span id="cb14-41"><a href="applications.html#cb14-41" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">&quot;FloweringBedAbund&quot;</span> <span class="sc">~</span> <span class="st">&quot;Number per square metre&quot;</span>),</span>
+<span id="cb14-42"><a href="applications.html#cb14-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">measurementUnitID =</span> <span class="fu">case_when</span>(</span>
+<span id="cb14-43"><a href="applications.html#cb14-43" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">&quot;BedAbund&quot;</span> <span class="sc">~</span> <span class="st">&quot;http://vocab.nerc.ac.uk/collection/P06/current/UPMS/&quot;</span>,</span>
+<span id="cb14-44"><a href="applications.html#cb14-44" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">&quot;CanopyHeight&quot;</span> <span class="sc">~</span> <span class="st">&quot;http://vocab.nerc.ac.uk/collection/P06/current/ULCM/&quot;</span>,</span>
+<span id="cb14-45"><a href="applications.html#cb14-45" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">&quot;BarePatchhLengthWithinSeagrass&quot;</span> <span class="sc">~</span> <span class="st">&quot;http://vocab.nerc.ac.uk/collection/P06/current/ULAA/2/&quot;</span>,</span>
+<span id="cb14-46"><a href="applications.html#cb14-46" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">&quot;FloweringBedAbund&quot;</span> <span class="sc">~</span> <span class="st">&quot;http://vocab.nerc.ac.uk/collection/P06/current/UPMS/&quot;</span>),</span>
+<span id="cb14-47"><a href="applications.html#cb14-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">measurementAccuracy =</span> <span class="fu">case_when</span>(</span>
+<span id="cb14-48"><a href="applications.html#cb14-48" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">&quot;CanopyHeight&quot;</span> <span class="sc">~</span> <span class="dv">5</span>),</span>
+<span id="cb14-49"><a href="applications.html#cb14-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">measurementMethod =</span> <span class="fu">case_when</span>(</span>
+<span id="cb14-50"><a href="applications.html#cb14-50" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">&quot;BedAbund&quot;</span> <span class="sc">~</span> <span class="st">&quot;25cmx25cm quadrat count&quot;</span>,</span>
+<span id="cb14-51"><a href="applications.html#cb14-51" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">&quot;CanopyHeight&quot;</span> <span class="sc">~</span> <span class="st">&quot;in situ with ruler&quot;</span>,</span>
+<span id="cb14-52"><a href="applications.html#cb14-52" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">&quot;BarePatchhLengthWithinSeagrass&quot;</span> <span class="sc">~</span> <span class="st">&quot;estimated along transect line&quot;</span>,</span>
+<span id="cb14-53"><a href="applications.html#cb14-53" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">&quot;FloweringBedAbund&quot;</span> <span class="sc">~</span> <span class="st">&quot;25cmx25cm quadrat count&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-54"><a href="applications.html#cb14-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(eventID, measurementDeterminedDate, measurementType, measurementValue,</span>
+<span id="cb14-55"><a href="applications.html#cb14-55" aria-hidden="true" tabindex="-1"></a>         measurementTypeID, measurementUnit, measurementUnitID, measurementAccuracy,</span>
+<span id="cb14-56"><a href="applications.html#cb14-56" aria-hidden="true" tabindex="-1"></a>         measurementMethod) <span class="sc">%T&gt;%</span></span>
+<span id="cb14-57"><a href="applications.html#cb14-57" aria-hidden="true" tabindex="-1"></a><span class="co">#  select(!c(survey, site_id, transect_dist)) %T&gt;%</span></span>
+<span id="cb14-58"><a href="applications.html#cb14-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
+<span id="cb14-59"><a href="applications.html#cb14-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-60"><a href="applications.html#cb14-60" aria-hidden="true" tabindex="-1"></a><span class="co"># save eMoF table to csv</span></span>
+<span id="cb14-61"><a href="applications.html#cb14-61" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(seagrassMof, <span class="st">&quot;../datasets/hakai_seagrass_data/processed_data/hakaiSeagrassDwcEmof.csv&quot;</span>)</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="session-info" class="section level3" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> Session Info</h3>
+<p>Print session information below in case necessary for future reference</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="applications.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print Session Info for future reference</span></span>
+<span id="cb15-2"><a href="applications.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
 
+</div>
 </div>
 </div>
             </section>

@@ -138,7 +138,7 @@
 
 \title{Standardizing-Marine-Biological-Data}
 \author{\href{https://github.com/ioos/bio_data_guide/graphs/contributors}{Standardizing Marine Biological Data Working Group}}
-\date{2021-10-29}
+\date{2021-11-04}
 
 \begin{document}
 \maketitle
@@ -442,15 +442,7 @@ Not every fish is actually collected and given a Universal Fish Number (UFN) in 
 \CommentTok{\#include bycatch species}
 
 \NormalTok{unique\_bycatch }\OtherTok{\textless{}{-}} \FunctionTok{unique}\NormalTok{(bycatch}\SpecialCharTok{$}\NormalTok{scientificName) }\SpecialCharTok{\%\textgreater{}\%}  \FunctionTok{glimpse}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
 
-\begin{verbatim}
-##  chr [1:29] "Oncorhynchus nerka" "Oncorhynchus tshawytscha" ...
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \NormalTok{by\_worms\_names }\OtherTok{\textless{}{-}} \FunctionTok{wm\_records\_names}\NormalTok{(unique\_bycatch) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{bind\_rows}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{select}\NormalTok{(}\AttributeTok{scientificName =}\NormalTok{ scientificname,}
@@ -549,10 +541,376 @@ Here I convert length, and weight measurements that relate to an event and an oc
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{example-two}{%
-\section{Example Two}\label{example-two}}
+\hypertarget{hakai-seagrass}{%
+\section{Hakai Seagrass}\label{hakai-seagrass}}
 
-Add another example here, perhaps zooplankton?
+By: ZL Monteith, Hakai Institute
+
+\hypertarget{setup}{%
+\subsection{Setup}\label{setup}}
+
+This section clears the workspace, checks the working directory, and
+installs packages (if required) and loads packages, and loads necessary
+datasets
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# The following command will remove all objects** for a fresh start. Make}
+\CommentTok{\#   sure any objects you want to keep are saved before running!}
+\FunctionTok{rm}\NormalTok{(}\AttributeTok{list =} \FunctionTok{ls}\NormalTok{())}
+
+\CommentTok{\# Check working directory; set if necessary so document will compile}
+\CommentTok{\#   properly}
+\FunctionTok{getwd}\NormalTok{()}
+
+\CommentTok{\# Install packages; uncomment and run if packages not already installed}
+\CommentTok{\# install.packages(c("tidyverse", "uuid"))}
+
+\CommentTok{\# Load packages}
+\FunctionTok{lapply}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{, }\StringTok{"lubridate"}\NormalTok{, }\StringTok{"magrittr"}\NormalTok{, }\StringTok{"worrms"}\NormalTok{),}
+\NormalTok{       library, }\AttributeTok{character.only =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{load-data}{%
+\subsubsection{Load Data}\label{load-data}}
+
+First load the seagrass density survey data, set variable classes, and have a quick look
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Load density data}
+\NormalTok{seagrassDensity }\OtherTok{\textless{}{-}}
+  \FunctionTok{read.csv}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/ioos/bio\_data\_guide/main/datasets/hakai\_seagrass\_data/raw\_data/seagrass\_density\_survey.csv"}\NormalTok{,}
+           \AttributeTok{colClass =} \StringTok{"character"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{date             =} \FunctionTok{ymd}\NormalTok{(date),}
+         \AttributeTok{depth            =} \FunctionTok{as.numeric}\NormalTok{(depth),}
+         \AttributeTok{transect\_dist    =} \FunctionTok{factor}\NormalTok{(transect\_dist),}
+         \AttributeTok{collected\_start  =} \FunctionTok{ymd\_hms}\NormalTok{(collected\_start),}
+         \AttributeTok{collected\_end    =} \FunctionTok{ymd\_hms}\NormalTok{(collected\_end),}
+         \AttributeTok{density          =} \FunctionTok{as.numeric}\NormalTok{(density),}
+         \AttributeTok{density\_msq      =} \FunctionTok{as.numeric}\NormalTok{(density\_msq),}
+         \AttributeTok{canopy\_height\_cm =} \FunctionTok{as.numeric}\NormalTok{(canopy\_height\_cm),}
+         \AttributeTok{flowering\_shoots =} \FunctionTok{as.numeric}\NormalTok{(flowering\_shoots)) }\SpecialCharTok{\%T\textgreater{}\%}
+  \FunctionTok{glimpse}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Next, load the habitat survey data, and same as above, set variable classes as necessary,
+and have a quick look.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# load habitat data, set variable classes, have a quick look}
+\NormalTok{seagrassHabitat }\OtherTok{\textless{}{-}}
+  \FunctionTok{read.csv}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/ioos/bio\_data\_guide/main/datasets/hakai\_seagrass\_data/raw\_data/seagrass\_habitat\_survey.csv"}\NormalTok{,}
+           \AttributeTok{colClasses =} \StringTok{"character"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{date            =} \FunctionTok{ymd}\NormalTok{(date),}
+         \AttributeTok{depth           =} \FunctionTok{as.numeric}\NormalTok{(depth),}
+         \AttributeTok{hakai\_id        =} \FunctionTok{str\_pad}\NormalTok{(hakai\_id, }\DecValTok{5}\NormalTok{, }\AttributeTok{pad =} \StringTok{"0"}\NormalTok{),}
+         \AttributeTok{transect\_dist   =} \FunctionTok{factor}\NormalTok{(transect\_dist),}
+         \AttributeTok{collected\_start =} \FunctionTok{ymd\_hms}\NormalTok{(collected\_start),}
+         \AttributeTok{collected\_end   =} \FunctionTok{ymd\_hms}\NormalTok{(collected\_end)) }\SpecialCharTok{\%T\textgreater{}\%}
+  \FunctionTok{glimpse}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Finally, load coordinate data for surveys, and subset necessary variables
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{coordinates }\OtherTok{\textless{}{-}}
+  \FunctionTok{read.csv}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/ioos/bio\_data\_guide/main/datasets/hakai\_seagrass\_data/raw\_data/seagrassCoordinates.csv"}\NormalTok{,}
+           \AttributeTok{colClass =} \FunctionTok{c}\NormalTok{(}\StringTok{"Point.Name"} \OtherTok{=} \StringTok{"character"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(Point.Name, Decimal.Lat, Decimal.Long) }\SpecialCharTok{\%T\textgreater{}\%}
+  \FunctionTok{glimpse}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{merge-datasets}{%
+\subsubsection{Merge Datasets}\label{merge-datasets}}
+
+Now all the datasets have been loaded, and briefly formatted, we'll join
+together the habitat and density surveys, and the coordinates for these.
+
+The seagrass density surveys collect data at discrete points (ie. 5 metres)
+along the transects, while the habitat surveys collect data over sections
+(ie. 0 - 5 metres) along the transects. In order to fit these two surveys
+together, we'll narrow the habitat surveys from a range to a point so the
+locations will match. Based on how the habitat data is collected, the point
+the habitat survey is applied to will be the distance at the end of the
+swath (ie. 10-15m will become 15m). To account for no preceeding distance,
+the 0m distance will use the 0-5m section of the survey.
+
+First, well make the necessary transformations to the habitat dataset.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Reformat seagrassHabitat to merge with seagrassDensity}
+\DocumentationTok{\#\# replicate 0 {-} 5m transect dist to match with 0m in density survey;}
+\DocumentationTok{\#\# rest of habitat bins can map one to one with density (ie. 5 {-} 10m {-}\textgreater{} 10m)}
+\NormalTok{seagrass0tmp }\OtherTok{\textless{}{-}}
+\NormalTok{  seagrassHabitat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(transect\_dist }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"0 {-} 5"}\NormalTok{, }\StringTok{"0 {-} 2.5"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{transect\_dist =} \FunctionTok{factor}\NormalTok{(}\DecValTok{0}\NormalTok{))}
+
+\DocumentationTok{\#\# collapse various levels to match with seagrassDensity transect\_dist}
+\NormalTok{seagrassHabitat}\SpecialCharTok{$}\NormalTok{transect\_dist }\OtherTok{\textless{}{-}}
+  \FunctionTok{fct\_collapse}\NormalTok{(seagrassHabitat}\SpecialCharTok{$}\NormalTok{transect\_dist,}
+               \StringTok{"5"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"0 {-} 5"}\NormalTok{, }\StringTok{"2.5 {-} 7.5"}\NormalTok{),}
+               \StringTok{"10"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"5 {-} 10"}\NormalTok{, }\StringTok{"7.5 {-} 12.5"}\NormalTok{),}
+               \StringTok{"15"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"10 {-} 15"}\NormalTok{, }\StringTok{"12.5 {-} 17.5"}\NormalTok{),}
+               \StringTok{"20"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"15 {-} 20"}\NormalTok{, }\StringTok{"17.5 {-} 22.5"}\NormalTok{),}
+               \StringTok{"25"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"20 {-} 25"}\NormalTok{, }\StringTok{"22.5 {-} 27.5"}\NormalTok{),}
+               \StringTok{"30"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"25 {-} 30"}\NormalTok{, }\StringTok{"27.5 {-} 30"}\NormalTok{))}
+
+\DocumentationTok{\#\# merge seagrass0tmp into seagrassHabitat to account for 0m samples,}
+\DocumentationTok{\#\# set class for date, datetime variables}
+\NormalTok{seagrassHabitatFull }\OtherTok{\textless{}{-}}
+  \FunctionTok{rbind}\NormalTok{(seagrass0tmp, seagrassHabitat) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(transect\_dist }\SpecialCharTok{!=} \StringTok{"0 {-} 2.5"}\NormalTok{)  }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# already captured in seagrass0tmp}
+  \FunctionTok{droplevels}\NormalTok{(.)  }\CommentTok{\# remove now unused factor levels}
+\end{Highlighting}
+\end{Shaded}
+
+With the distances of habitat and density surveys now corresponding, we can
+now merge these two datasets plus there coordinates together, combine
+redundant fields, and remove unnecessary fields.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Merge seagrassHabitatFull with seagrassDensity, then coordinates}
+\NormalTok{seagrass }\OtherTok{\textless{}{-}}
+  \FunctionTok{full\_join}\NormalTok{(seagrassHabitatFull, seagrassDensity,}
+            \AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"organization"}\NormalTok{,}
+                   \StringTok{"work\_area"}\NormalTok{,}
+                   \StringTok{"project"}\NormalTok{,}
+                   \StringTok{"survey"}\NormalTok{,}
+                   \StringTok{"site\_id"}\NormalTok{,}
+                   \StringTok{"date"}\NormalTok{,}
+                   \StringTok{"transect\_dist"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \CommentTok{\# merge hakai\_id.x and hakai\_id.y into single variable field;}
+  \CommentTok{\# use combination of date, site\_id, transect\_dist, and field uid (hakai\_id}
+  \CommentTok{\# when present)}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{field\_uid =} \FunctionTok{ifelse}\NormalTok{(sample\_collected }\SpecialCharTok{==} \ConstantTok{TRUE}\NormalTok{, hakai\_id.x, }\StringTok{"NA"}\NormalTok{),}
+         \AttributeTok{hakai\_id =} \FunctionTok{paste}\NormalTok{(date, }\StringTok{"HAKAI:CALVERT"}\NormalTok{, site\_id, transect\_dist, }\AttributeTok{sep =} \StringTok{":"}\NormalTok{),}
+         \CommentTok{\# below, aggregate metadata that didn\textquotesingle{}t merge naturally (ie. due to minor}
+         \CommentTok{\# differences in watch time or depth gauges)}
+         \AttributeTok{dive\_supervisor =}\NormalTok{ dive\_supervisor.x,}
+         \AttributeTok{collected\_start =} \FunctionTok{ymd\_hms}\NormalTok{(}\FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(collected\_start.x),}
+\NormalTok{                                          collected\_start.y,}
+\NormalTok{                                          collected\_start.x)),}
+         \AttributeTok{collected\_end   =} \FunctionTok{ymd\_hms}\NormalTok{(}\FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(collected\_start.x),}
+\NormalTok{                                          collected\_start.y,}
+\NormalTok{                                          collected\_start.x)),}
+         \AttributeTok{depth\_m         =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(depth.x), depth.y, depth.x),}
+         \AttributeTok{sampling\_bout   =}\NormalTok{ sampling\_bout.x) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{left\_join}\NormalTok{(., coordinates,  }\CommentTok{\# add coordinates}
+            \AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"site\_id"} \OtherTok{=} \StringTok{"Point.Name"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{( }\SpecialCharTok{{-}} \FunctionTok{c}\NormalTok{(X.x, X.y, hakai\_id.x, hakai\_id.y,  }\CommentTok{\# remove unnecessary variables}
+\NormalTok{              dive\_supervisor.x, dive\_supervisor.y,}
+\NormalTok{              collected\_start.x, collected\_start.y,}
+\NormalTok{              collected\_end.x, collected\_end.y,}
+\NormalTok{              depth.x, depth.y,}
+\NormalTok{              sampling\_bout.x, sampling\_bout.y)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{density\_msq =} \FunctionTok{as.character}\NormalTok{(density\_msq),}
+         \AttributeTok{canopy\_height\_cm =} \FunctionTok{as.character}\NormalTok{(canopy\_height\_cm),}
+         \AttributeTok{flowering\_shoots =} \FunctionTok{as.character}\NormalTok{(flowering\_shoots),}
+         \AttributeTok{depth\_m =} \FunctionTok{as.character}\NormalTok{(depth\_m)) }\SpecialCharTok{\%T\textgreater{}\%}
+  \FunctionTok{glimpse}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{convert-data-to-darwin-core---extended-measurement-or-fact-format}{%
+\subsection{Convert Data to Darwin Core - Extended Measurement or Fact format}\label{convert-data-to-darwin-core---extended-measurement-or-fact-format}}
+
+The Darwin Core ExtendedMeasurementOrFact (eMoF) extension bases records
+around a core event (rather than occurrence as in standard Darwin Core),
+allowing for additional measurement variables to be associated with
+occurrence data.
+
+\hypertarget{add-event-id-and-occurrence-id-variables-to-dataset}{%
+\subsubsection{Add Event ID and Occurrence ID variables to dataset}\label{add-event-id-and-occurrence-id-variables-to-dataset}}
+
+As this dataset will be annually updated, rather than using
+natural keys (ie. using package::uuid to autogenerate) for event and
+occurence IDs, here we will use surrogate keys made up of a concatenation
+of date survey, transect location, observation distance, and sample ID
+(for occurrenceID, when a sample is present).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# create and populate eventID variable}
+\DocumentationTok{\#\# currently only event is used, but additional surveys and abiotic data}
+\DocumentationTok{\#\# are associated with parent events that may be included at a later date}
+\NormalTok{seagrass}\SpecialCharTok{$}\NormalTok{eventID }\OtherTok{\textless{}{-}}\NormalTok{ seagrass}\SpecialCharTok{$}\NormalTok{hakai\_id}
+
+\CommentTok{\# create and populate occurrenceID; combine eventID with transect\_dist}
+\CommentTok{\# and field\_uid}
+\DocumentationTok{\#\# in the event of \textless{}NA\textgreater{} field\_uid, no sample was collected, but}
+\DocumentationTok{\#\# measurements and occurrence are still taken; no further subsamples}
+\DocumentationTok{\#\# are associated with \textless{}NA\textgreater{} field\_uids}
+\NormalTok{seagrass}\SpecialCharTok{$}\NormalTok{occurrenceID }\OtherTok{\textless{}{-}}
+  \FunctionTok{with}\NormalTok{(seagrass,}
+       \FunctionTok{paste}\NormalTok{(eventID, transect\_dist, field\_uid, }\AttributeTok{sep =} \StringTok{":"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{create-event-occurrence-and-emof-tables}{%
+\subsubsection{Create Event, Occurrence, and eMoF tables}\label{create-event-occurrence-and-emof-tables}}
+
+Now that we've created eventIDs and occurrenceIDs to connect all the
+variables together, we can begin to create the Event, Occurrence,
+and extended Measurement or Fact table necessary for DarwinCore
+compliant datasets
+
+\hypertarget{event-table}{%
+\paragraph{Event Table}\label{event-table}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# subset seagrass to create event table}
+\NormalTok{seagrassEvent }\OtherTok{\textless{}{-}}
+\NormalTok{  seagrass }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  distinct }\SpecialCharTok{\%\textgreater{}\%}  \CommentTok{\# some duplicates in data stemming from database conflicts}
+  \FunctionTok{select}\NormalTok{(date,}
+\NormalTok{         Decimal.Lat, Decimal.Long, transect\_dist,}
+\NormalTok{         depth\_m, eventID) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{eventDate                     =}\NormalTok{ date,}
+         \AttributeTok{decimalLatitude               =}\NormalTok{ Decimal.Lat,}
+         \AttributeTok{decimalLongitude              =}\NormalTok{ Decimal.Long,}
+         \AttributeTok{coordinateUncertaintyInMeters =}\NormalTok{ transect\_dist,}
+         \AttributeTok{minimumDepthInMeters          =}\NormalTok{ depth\_m,}
+         \AttributeTok{maximumDepthInMeters          =}\NormalTok{ depth\_m) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{geodeticDatum  =} \StringTok{"WGS84"}\NormalTok{,}
+         \AttributeTok{samplingEffort =} \StringTok{"30 metre transect"}\NormalTok{) }\SpecialCharTok{\%T\textgreater{}\%}\NormalTok{ glimpse}
+
+\CommentTok{\# save event table to csv}
+\FunctionTok{write.csv}\NormalTok{(seagrassEvent, }\StringTok{"../datasets/hakai\_seagrass\_data/processed\_data/hakaiSeagrassDwcEvent.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{occurrence-table}{%
+\paragraph{Occurrence Table}\label{occurrence-table}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# subset seagrass to create occurrence table}
+\NormalTok{seagrassOccurrence }\OtherTok{\textless{}{-}}
+\NormalTok{  seagrass }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  distinct }\SpecialCharTok{\%\textgreater{}\%}  \CommentTok{\# some duplicates in data stemming from database conflicts}
+  \FunctionTok{select}\NormalTok{(eventID, occurrenceID) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{basisOfRecord =} \StringTok{"HumanObservation"}\NormalTok{,}
+         \AttributeTok{scientificName   =} \StringTok{"Zostera subg. Zostera marina"}\NormalTok{,}
+         \AttributeTok{occurrenceStatus =} \StringTok{"present"}\NormalTok{)}
+
+\CommentTok{\# Taxonomic name matching}
+\CommentTok{\# in addition to the above metadata, DarwinCore format requires further}
+\CommentTok{\# taxonomic data that can be acquired through the WoRMS register.}
+\DocumentationTok{\#\# Load taxonomic info, downloaded via WoRMS tool}
+\CommentTok{\# zmWorms \textless{}{-}}
+\CommentTok{\#   read.delim("raw\_data/zmworms\_matched.txt",}
+\CommentTok{\#              header = TRUE,}
+\CommentTok{\#              nrows  = 1)}
+
+\NormalTok{zmWorms }\OtherTok{\textless{}{-}} \FunctionTok{wm\_record}\NormalTok{(}\AttributeTok{id =} \DecValTok{145795}\NormalTok{)}
+
+\CommentTok{\# join WoRMS name with seagrassOccurrence create above}
+\NormalTok{seagrassOccurrence }\OtherTok{\textless{}{-}}
+  \FunctionTok{full\_join}\NormalTok{(seagrassOccurrence, zmWorms,}
+            \AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"scientificName"} \OtherTok{=} \StringTok{"scientificname"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(eventID, occurrenceID, basisOfRecord, scientificName, occurrenceStatus, AphiaID,}
+\NormalTok{         url, authority, status, unacceptreason, taxonRankID, rank,}
+\NormalTok{         valid\_AphiaID, valid\_name, valid\_authority, parentNameUsageID,}
+\NormalTok{         kingdom, phylum, class, order, family, genus, citation, lsid,}
+\NormalTok{         isMarine, match\_type, modified) }\SpecialCharTok{\%T\textgreater{}\%}
+\NormalTok{  glimpse}
+
+\CommentTok{\# save occurrence table to csv}
+\FunctionTok{write.csv}\NormalTok{(seagrassOccurrence, }\StringTok{"../datasets/hakai\_seagrass\_data/processed\_data/hakaiSeagrassDwcOccurrence.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{extended-measurementorfact-table}{%
+\paragraph{Extended MeasurementOrFact table}\label{extended-measurementorfact-table}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{seagrassMof }\OtherTok{\textless{}{-}}
+\NormalTok{  seagrass }\SpecialCharTok{\%\textgreater{}\%}
+  \CommentTok{\# select variables for eMoF table}
+  \FunctionTok{select}\NormalTok{(date,}
+\NormalTok{         eventID, survey, site\_id, transect\_dist,}
+\NormalTok{         substrate, patchiness, adj\_habitat\_1, adj\_habitat\_2,}
+\NormalTok{         vegetation\_1, vegetation\_2,}
+\NormalTok{         density\_msq, canopy\_height\_cm, flowering\_shoots) }\SpecialCharTok{\%\textgreater{}\%}
+  \CommentTok{\# split substrate into two variables (currently holds two substrate type in same variable)}
+  \FunctionTok{separate}\NormalTok{(substrate, }\AttributeTok{sep =} \StringTok{","}\NormalTok{, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"substrate\_1"}\NormalTok{, }\StringTok{"substrate\_2"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \CommentTok{\# change variables names to match NERC database (or to be more descriptive where none exist)}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{measurementDeterminedDate   =}\NormalTok{ date,}
+         \AttributeTok{SubstrateTypeA              =}\NormalTok{ substrate\_1,}
+         \AttributeTok{SubstrateTypeB              =}\NormalTok{ substrate\_2,}
+         \AttributeTok{BarePatchLengthWithinSeagrass =}\NormalTok{ patchiness,}
+         \AttributeTok{PrimaryAdjacentHabitat      =}\NormalTok{ adj\_habitat\_1,}
+         \AttributeTok{SecondaryAdjacentHabitat    =}\NormalTok{ adj\_habitat\_2,}
+         \AttributeTok{PrimaryAlgaeSp              =}\NormalTok{ vegetation\_1,}
+         \AttributeTok{SecondaryAlgaeSp            =}\NormalTok{ vegetation\_2,}
+         \AttributeTok{BedAbund                    =}\NormalTok{ density\_msq,}
+         \AttributeTok{CanopyHeight                =}\NormalTok{ canopy\_height\_cm,}
+         \AttributeTok{FloweringBedAbund           =}\NormalTok{ flowering\_shoots) }\SpecialCharTok{\%\textgreater{}\%}
+  \CommentTok{\# reformat variables into DwC MeasurementOrFact format}
+  \CommentTok{\# (single values variable, with measurement type, unit, etc. variables)}
+  \FunctionTok{pivot\_longer}\NormalTok{( }\SpecialCharTok{{-}} \FunctionTok{c}\NormalTok{(measurementDeterminedDate, eventID, survey, site\_id, transect\_dist),}
+                \AttributeTok{names\_to =} \StringTok{"measurementType"}\NormalTok{,}
+                \AttributeTok{values\_to =} \StringTok{"measurementValue"}\NormalTok{,}
+                \AttributeTok{values\_ptypes =} \FunctionTok{list}\NormalTok{(}\AttributeTok{measurementValue =} \StringTok{"character"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \CommentTok{\# use measurement type to fill in remainder of variables relating to}
+  \CommentTok{\# NERC vocabulary and metadata fields}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{measurementTypeID =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{      measurementType }\SpecialCharTok{==} \StringTok{"BedAbund"} \SpecialCharTok{\textasciitilde{}} \StringTok{"http://vocab.nerc.ac.uk/collection/P01/current/SDBIOL02/"}\NormalTok{,}
+\NormalTok{      measurementType }\SpecialCharTok{==} \StringTok{"CanopyHeight"} \SpecialCharTok{\textasciitilde{}} \StringTok{"http://vocab.nerc.ac.uk/collection/P01/current/OBSMAXLX/"}\NormalTok{,}
+      \CommentTok{\# measurementType == "BarePatchWithinSeagrass" \textasciitilde{} "",}
+\NormalTok{      measurementType }\SpecialCharTok{==} \StringTok{"FloweringBedAbund"} \SpecialCharTok{\textasciitilde{}} \StringTok{"http://vocab.nerc.ac.uk/collection/P01/current/SDBIOL02/"}\NormalTok{),}
+    \AttributeTok{measurementUnit =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{      measurementType }\SpecialCharTok{==} \StringTok{"BedAbund"} \SpecialCharTok{\textasciitilde{}} \StringTok{"Number per square metre"}\NormalTok{,}
+\NormalTok{      measurementType }\SpecialCharTok{==} \StringTok{"CanopyHeight"} \SpecialCharTok{\textasciitilde{}} \StringTok{"Centimetres"}\NormalTok{,}
+\NormalTok{      measurementType }\SpecialCharTok{==} \StringTok{"BarePatchhLengthWithinSeagrass"} \SpecialCharTok{\textasciitilde{}} \StringTok{"Metres"}\NormalTok{,}
+\NormalTok{      measurementType }\SpecialCharTok{==} \StringTok{"FloweringBedAbund"} \SpecialCharTok{\textasciitilde{}} \StringTok{"Number per square metre"}\NormalTok{),}
+    \AttributeTok{measurementUnitID =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{      measurementType }\SpecialCharTok{==} \StringTok{"BedAbund"} \SpecialCharTok{\textasciitilde{}} \StringTok{"http://vocab.nerc.ac.uk/collection/P06/current/UPMS/"}\NormalTok{,}
+\NormalTok{      measurementType }\SpecialCharTok{==} \StringTok{"CanopyHeight"} \SpecialCharTok{\textasciitilde{}} \StringTok{"http://vocab.nerc.ac.uk/collection/P06/current/ULCM/"}\NormalTok{,}
+\NormalTok{      measurementType }\SpecialCharTok{==} \StringTok{"BarePatchhLengthWithinSeagrass"} \SpecialCharTok{\textasciitilde{}} \StringTok{"http://vocab.nerc.ac.uk/collection/P06/current/ULAA/2/"}\NormalTok{,}
+\NormalTok{      measurementType }\SpecialCharTok{==} \StringTok{"FloweringBedAbund"} \SpecialCharTok{\textasciitilde{}} \StringTok{"http://vocab.nerc.ac.uk/collection/P06/current/UPMS/"}\NormalTok{),}
+    \AttributeTok{measurementAccuracy =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{      measurementType }\SpecialCharTok{==} \StringTok{"CanopyHeight"} \SpecialCharTok{\textasciitilde{}} \DecValTok{5}\NormalTok{),}
+    \AttributeTok{measurementMethod =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{      measurementType }\SpecialCharTok{==} \StringTok{"BedAbund"} \SpecialCharTok{\textasciitilde{}} \StringTok{"25cmx25cm quadrat count"}\NormalTok{,}
+\NormalTok{      measurementType }\SpecialCharTok{==} \StringTok{"CanopyHeight"} \SpecialCharTok{\textasciitilde{}} \StringTok{"in situ with ruler"}\NormalTok{,}
+\NormalTok{      measurementType }\SpecialCharTok{==} \StringTok{"BarePatchhLengthWithinSeagrass"} \SpecialCharTok{\textasciitilde{}} \StringTok{"estimated along transect line"}\NormalTok{,}
+\NormalTok{      measurementType }\SpecialCharTok{==} \StringTok{"FloweringBedAbund"} \SpecialCharTok{\textasciitilde{}} \StringTok{"25cmx25cm quadrat count"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(eventID, measurementDeterminedDate, measurementType, measurementValue,}
+\NormalTok{         measurementTypeID, measurementUnit, measurementUnitID, measurementAccuracy,}
+\NormalTok{         measurementMethod) }\SpecialCharTok{\%T\textgreater{}\%}
+\CommentTok{\#  select(!c(survey, site\_id, transect\_dist)) \%T\textgreater{}\%}
+  \FunctionTok{glimpse}\NormalTok{()}
+
+\CommentTok{\# save eMoF table to csv}
+\FunctionTok{write.csv}\NormalTok{(seagrassMof, }\StringTok{"../datasets/hakai\_seagrass\_data/processed\_data/hakaiSeagrassDwcEmof.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{session-info}{%
+\subsection{Session Info}\label{session-info}}
+
+Print session information below in case necessary for future reference
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Print Session Info for future reference}
+\FunctionTok{sessionInfo}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{final-words}{%
 \chapter{Final Words}\label{final-words}}

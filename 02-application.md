@@ -121,13 +121,7 @@ df_worms_names <- bind_rows(worms_names) %>%
 #include bycatch species
 
 unique_bycatch <- unique(bycatch$scientificName) %>%  glimpse()
-```
 
-```
-##  chr [1:29] "Oncorhynchus nerka" "Oncorhynchus tshawytscha" ...
-```
-
-```r
 by_worms_names <- wm_records_names(unique_bycatch) %>% 
   bind_rows() %>% 
   select(scientificName = scientificname,
@@ -222,6 +216,344 @@ dm_examine_constraints(model)
 # dm_draw(model, view_type = "all") 
 ```
 
-## Example Two
+## Hakai Seagrass
 
-Add another example here, perhaps zooplankton?
+By: ZL Monteith, Hakai Institute
+
+### Setup
+This section clears the workspace, checks the working directory, and
+installs packages (if required) and loads packages, and loads necessary
+datasets
+
+
+```r
+# The following command will remove all objects** for a fresh start. Make
+#   sure any objects you want to keep are saved before running!
+rm(list = ls())
+
+# Check working directory; set if necessary so document will compile
+#   properly
+getwd()
+
+# Install packages; uncomment and run if packages not already installed
+# install.packages(c("tidyverse", "uuid"))
+
+# Load packages
+lapply(c("tidyverse", "lubridate", "magrittr", "worrms"),
+       library, character.only = TRUE)
+```
+
+#### Load Data
+First load the seagrass density survey data, set variable classes, and have a quick look
+
+
+```r
+# Load density data
+seagrassDensity <-
+  read.csv("https://raw.githubusercontent.com/ioos/bio_data_guide/main/datasets/hakai_seagrass_data/raw_data/seagrass_density_survey.csv",
+           colClass = "character") %>%
+  mutate(date             = ymd(date),
+         depth            = as.numeric(depth),
+         transect_dist    = factor(transect_dist),
+         collected_start  = ymd_hms(collected_start),
+         collected_end    = ymd_hms(collected_end),
+         density          = as.numeric(density),
+         density_msq      = as.numeric(density_msq),
+         canopy_height_cm = as.numeric(canopy_height_cm),
+         flowering_shoots = as.numeric(flowering_shoots)) %T>%
+  glimpse()
+```
+
+Next, load the habitat survey data, and same as above, set variable classes as necessary,
+and have a quick look.
+
+
+```r
+# load habitat data, set variable classes, have a quick look
+seagrassHabitat <-
+  read.csv("https://raw.githubusercontent.com/ioos/bio_data_guide/main/datasets/hakai_seagrass_data/raw_data/seagrass_habitat_survey.csv",
+           colClasses = "character") %>%
+  mutate(date            = ymd(date),
+         depth           = as.numeric(depth),
+         hakai_id        = str_pad(hakai_id, 5, pad = "0"),
+         transect_dist   = factor(transect_dist),
+         collected_start = ymd_hms(collected_start),
+         collected_end   = ymd_hms(collected_end)) %T>%
+  glimpse()
+```
+
+Finally, load coordinate data for surveys, and subset necessary variables
+
+
+```r
+coordinates <-
+  read.csv("https://raw.githubusercontent.com/ioos/bio_data_guide/main/datasets/hakai_seagrass_data/raw_data/seagrassCoordinates.csv",
+           colClass = c("Point.Name" = "character")) %>%
+  select(Point.Name, Decimal.Lat, Decimal.Long) %T>%
+  glimpse()
+```
+
+#### Merge Datasets
+Now all the datasets have been loaded, and briefly formatted, we'll join
+together the habitat and density surveys, and the coordinates for these.
+
+The seagrass density surveys collect data at discrete points (ie. 5 metres)
+along the transects, while the habitat surveys collect data over sections
+(ie. 0 - 5 metres) along the transects. In order to fit these two surveys
+together, we'll narrow the habitat surveys from a range to a point so the
+locations will match. Based on how the habitat data is collected, the point
+the habitat survey is applied to will be the distance at the end of the
+swath (ie. 10-15m will become 15m). To account for no preceeding distance,
+the 0m distance will use the 0-5m section of the survey.
+
+First, well make the necessary transformations to the habitat dataset.
+
+
+```r
+# Reformat seagrassHabitat to merge with seagrassDensity
+## replicate 0 - 5m transect dist to match with 0m in density survey;
+## rest of habitat bins can map one to one with density (ie. 5 - 10m -> 10m)
+seagrass0tmp <-
+  seagrassHabitat %>%
+  filter(transect_dist %in% c("0 - 5", "0 - 2.5")) %>%
+  mutate(transect_dist = factor(0))
+
+## collapse various levels to match with seagrassDensity transect_dist
+seagrassHabitat$transect_dist <-
+  fct_collapse(seagrassHabitat$transect_dist,
+               "5" = c("0 - 5", "2.5 - 7.5"),
+               "10" = c("5 - 10", "7.5 - 12.5"),
+               "15" = c("10 - 15", "12.5 - 17.5"),
+               "20" = c("15 - 20", "17.5 - 22.5"),
+               "25" = c("20 - 25", "22.5 - 27.5"),
+               "30" = c("25 - 30", "27.5 - 30"))
+
+## merge seagrass0tmp into seagrassHabitat to account for 0m samples,
+## set class for date, datetime variables
+seagrassHabitatFull <-
+  rbind(seagrass0tmp, seagrassHabitat) %>%
+  filter(transect_dist != "0 - 2.5")  %>% # already captured in seagrass0tmp
+  droplevels(.)  # remove now unused factor levels
+```
+
+With the distances of habitat and density surveys now corresponding, we can
+now merge these two datasets plus there coordinates together, combine
+redundant fields, and remove unnecessary fields.
+
+
+```r
+# Merge seagrassHabitatFull with seagrassDensity, then coordinates
+seagrass <-
+  full_join(seagrassHabitatFull, seagrassDensity,
+            by = c("organization",
+                   "work_area",
+                   "project",
+                   "survey",
+                   "site_id",
+                   "date",
+                   "transect_dist")) %>%
+  # merge hakai_id.x and hakai_id.y into single variable field;
+  # use combination of date, site_id, transect_dist, and field uid (hakai_id
+  # when present)
+  mutate(field_uid = ifelse(sample_collected == TRUE, hakai_id.x, "NA"),
+         hakai_id = paste(date, "HAKAI:CALVERT", site_id, transect_dist, sep = ":"),
+         # below, aggregate metadata that didn't merge naturally (ie. due to minor
+         # differences in watch time or depth gauges)
+         dive_supervisor = dive_supervisor.x,
+         collected_start = ymd_hms(ifelse(is.na(collected_start.x),
+                                          collected_start.y,
+                                          collected_start.x)),
+         collected_end   = ymd_hms(ifelse(is.na(collected_start.x),
+                                          collected_start.y,
+                                          collected_start.x)),
+         depth_m         = ifelse(is.na(depth.x), depth.y, depth.x),
+         sampling_bout   = sampling_bout.x) %>%
+  left_join(., coordinates,  # add coordinates
+            by = c("site_id" = "Point.Name")) %>%
+  select( - c(X.x, X.y, hakai_id.x, hakai_id.y,  # remove unnecessary variables
+              dive_supervisor.x, dive_supervisor.y,
+              collected_start.x, collected_start.y,
+              collected_end.x, collected_end.y,
+              depth.x, depth.y,
+              sampling_bout.x, sampling_bout.y)) %>%
+  mutate(density_msq = as.character(density_msq),
+         canopy_height_cm = as.character(canopy_height_cm),
+         flowering_shoots = as.character(flowering_shoots),
+         depth_m = as.character(depth_m)) %T>%
+  glimpse()
+```
+
+### Convert Data to Darwin Core - Extended Measurement or Fact format
+The Darwin Core ExtendedMeasurementOrFact (eMoF) extension bases records
+around a core event (rather than occurrence as in standard Darwin Core),
+allowing for additional measurement variables to be associated with
+occurrence data.
+
+#### Add Event ID and Occurrence ID variables to dataset
+As this dataset will be annually updated, rather than using
+natural keys (ie. using package::uuid to autogenerate) for event and
+occurence IDs, here we will use surrogate keys made up of a concatenation
+of date survey, transect location, observation distance, and sample ID
+(for occurrenceID, when a sample is present).
+
+
+```r
+# create and populate eventID variable
+## currently only event is used, but additional surveys and abiotic data
+## are associated with parent events that may be included at a later date
+seagrass$eventID <- seagrass$hakai_id
+
+# create and populate occurrenceID; combine eventID with transect_dist
+# and field_uid
+## in the event of <NA> field_uid, no sample was collected, but
+## measurements and occurrence are still taken; no further subsamples
+## are associated with <NA> field_uids
+seagrass$occurrenceID <-
+  with(seagrass,
+       paste(eventID, transect_dist, field_uid, sep = ":"))
+```
+
+#### Create Event, Occurrence, and eMoF tables
+Now that we've created eventIDs and occurrenceIDs to connect all the
+variables together, we can begin to create the Event, Occurrence,
+and extended Measurement or Fact table necessary for DarwinCore
+compliant datasets
+
+##### Event Table
+
+
+```r
+# subset seagrass to create event table
+seagrassEvent <-
+  seagrass %>%
+  distinct %>%  # some duplicates in data stemming from database conflicts
+  select(date,
+         Decimal.Lat, Decimal.Long, transect_dist,
+         depth_m, eventID) %>%
+  rename(eventDate                     = date,
+         decimalLatitude               = Decimal.Lat,
+         decimalLongitude              = Decimal.Long,
+         coordinateUncertaintyInMeters = transect_dist,
+         minimumDepthInMeters          = depth_m,
+         maximumDepthInMeters          = depth_m) %>%
+  mutate(geodeticDatum  = "WGS84",
+         samplingEffort = "30 metre transect") %T>% glimpse
+
+# save event table to csv
+write.csv(seagrassEvent, "../datasets/hakai_seagrass_data/processed_data/hakaiSeagrassDwcEvent.csv")
+```
+
+##### Occurrence Table
+
+
+```r
+# subset seagrass to create occurrence table
+seagrassOccurrence <-
+  seagrass %>%
+  distinct %>%  # some duplicates in data stemming from database conflicts
+  select(eventID, occurrenceID) %>%
+  mutate(basisOfRecord = "HumanObservation",
+         scientificName   = "Zostera subg. Zostera marina",
+         occurrenceStatus = "present")
+
+# Taxonomic name matching
+# in addition to the above metadata, DarwinCore format requires further
+# taxonomic data that can be acquired through the WoRMS register.
+## Load taxonomic info, downloaded via WoRMS tool
+# zmWorms <-
+#   read.delim("raw_data/zmworms_matched.txt",
+#              header = TRUE,
+#              nrows  = 1)
+
+zmWorms <- wm_record(id = 145795)
+
+# join WoRMS name with seagrassOccurrence create above
+seagrassOccurrence <-
+  full_join(seagrassOccurrence, zmWorms,
+            by = c("scientificName" = "scientificname")) %>%
+  select(eventID, occurrenceID, basisOfRecord, scientificName, occurrenceStatus, AphiaID,
+         url, authority, status, unacceptreason, taxonRankID, rank,
+         valid_AphiaID, valid_name, valid_authority, parentNameUsageID,
+         kingdom, phylum, class, order, family, genus, citation, lsid,
+         isMarine, match_type, modified) %T>%
+  glimpse
+
+# save occurrence table to csv
+write.csv(seagrassOccurrence, "../datasets/hakai_seagrass_data/processed_data/hakaiSeagrassDwcOccurrence.csv")
+```
+
+##### Extended MeasurementOrFact table
+
+
+```r
+seagrassMof <-
+  seagrass %>%
+  # select variables for eMoF table
+  select(date,
+         eventID, survey, site_id, transect_dist,
+         substrate, patchiness, adj_habitat_1, adj_habitat_2,
+         vegetation_1, vegetation_2,
+         density_msq, canopy_height_cm, flowering_shoots) %>%
+  # split substrate into two variables (currently holds two substrate type in same variable)
+  separate(substrate, sep = ",", into = c("substrate_1", "substrate_2")) %>%
+  # change variables names to match NERC database (or to be more descriptive where none exist)
+  rename(measurementDeterminedDate   = date,
+         SubstrateTypeA              = substrate_1,
+         SubstrateTypeB              = substrate_2,
+         BarePatchLengthWithinSeagrass = patchiness,
+         PrimaryAdjacentHabitat      = adj_habitat_1,
+         SecondaryAdjacentHabitat    = adj_habitat_2,
+         PrimaryAlgaeSp              = vegetation_1,
+         SecondaryAlgaeSp            = vegetation_2,
+         BedAbund                    = density_msq,
+         CanopyHeight                = canopy_height_cm,
+         FloweringBedAbund           = flowering_shoots) %>%
+  # reformat variables into DwC MeasurementOrFact format
+  # (single values variable, with measurement type, unit, etc. variables)
+  pivot_longer( - c(measurementDeterminedDate, eventID, survey, site_id, transect_dist),
+                names_to = "measurementType",
+                values_to = "measurementValue",
+                values_ptypes = list(measurementValue = "character")) %>%
+  # use measurement type to fill in remainder of variables relating to
+  # NERC vocabulary and metadata fields
+  mutate(
+    measurementTypeID = case_when(
+      measurementType == "BedAbund" ~ "http://vocab.nerc.ac.uk/collection/P01/current/SDBIOL02/",
+      measurementType == "CanopyHeight" ~ "http://vocab.nerc.ac.uk/collection/P01/current/OBSMAXLX/",
+      # measurementType == "BarePatchWithinSeagrass" ~ "",
+      measurementType == "FloweringBedAbund" ~ "http://vocab.nerc.ac.uk/collection/P01/current/SDBIOL02/"),
+    measurementUnit = case_when(
+      measurementType == "BedAbund" ~ "Number per square metre",
+      measurementType == "CanopyHeight" ~ "Centimetres",
+      measurementType == "BarePatchhLengthWithinSeagrass" ~ "Metres",
+      measurementType == "FloweringBedAbund" ~ "Number per square metre"),
+    measurementUnitID = case_when(
+      measurementType == "BedAbund" ~ "http://vocab.nerc.ac.uk/collection/P06/current/UPMS/",
+      measurementType == "CanopyHeight" ~ "http://vocab.nerc.ac.uk/collection/P06/current/ULCM/",
+      measurementType == "BarePatchhLengthWithinSeagrass" ~ "http://vocab.nerc.ac.uk/collection/P06/current/ULAA/2/",
+      measurementType == "FloweringBedAbund" ~ "http://vocab.nerc.ac.uk/collection/P06/current/UPMS/"),
+    measurementAccuracy = case_when(
+      measurementType == "CanopyHeight" ~ 5),
+    measurementMethod = case_when(
+      measurementType == "BedAbund" ~ "25cmx25cm quadrat count",
+      measurementType == "CanopyHeight" ~ "in situ with ruler",
+      measurementType == "BarePatchhLengthWithinSeagrass" ~ "estimated along transect line",
+      measurementType == "FloweringBedAbund" ~ "25cmx25cm quadrat count")) %>%
+  select(eventID, measurementDeterminedDate, measurementType, measurementValue,
+         measurementTypeID, measurementUnit, measurementUnitID, measurementAccuracy,
+         measurementMethod) %T>%
+#  select(!c(survey, site_id, transect_dist)) %T>%
+  glimpse()
+
+# save eMoF table to csv
+write.csv(seagrassMof, "../datasets/hakai_seagrass_data/processed_data/hakaiSeagrassDwcEmof.csv")
+```
+
+### Session Info
+Print session information below in case necessary for future reference
+
+
+```r
+# Print Session Info for future reference
+sessionInfo()
+```
