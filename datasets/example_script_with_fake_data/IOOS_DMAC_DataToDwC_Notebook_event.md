@@ -1,7 +1,9 @@
-Aligning Data to Darwin Core - Sampling Event with Measurement or Fact
+## Aligning Data to Darwin Core - Sampling Event with Measurement or Fact
+
 Abby Benson  
 October 8,2019 
-## General information about this notebook
+
+### General information about this notebook
 This notebook was created for the IOOS DMAC Code Sprint Biological Data Session
 The data in this notebook were created specifically as an example and meant solely to be
 illustrative of the process for aligning data to the biological data standard - Darwin Core.
@@ -187,7 +189,7 @@ Finally we'll add required information that's missing.
 occurrence$occurrenceStatus <-  ifelse (occurrence$`percent cover` == 0, "absent", "present")
 ```
 
-## Taxonomic Name Matching
+### Taxonomic Name Matching
 A requirement for OBIS is that all scientific names match to the World Register of 
 Marine Species (WoRMS) and a scientificNameID is included. A scientificNameID looks
 like this "urn:lsid:marinespecies.org:taxname:275730" with the last digits after
