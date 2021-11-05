@@ -35,6 +35,7 @@ jobs:
       - name: Render Book
         run: Rscript -e '
           setwd("bio-data-guide/"); 
+          options(knitr.duplicate.label = "allow");
           bookdown::render_book("index.Rmd");
           bookdown::render_book("index.Rmd", "bookdown::pdf_book");
           bookdown::render_book("index.Rmd", "bookdown::epub_book")'
