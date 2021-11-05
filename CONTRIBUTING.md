@@ -35,10 +35,12 @@ tinytex::install_tinytex()
 * To build the book:
 ``` r
 setwd("bio-data-guide/")
+options(knitr.duplicate.label = "allow")
 bookdown::render_book("index.Rmd")
 ```
 * OR, make a PDF of the book:
 ``` r
+options(knitr.duplicate.label = "allow")
 bookdown::render_book("index.Rmd", "bookdown::pdf_book")
 ```
 * The markdown and pdf will be saved in the local `bio-data-guide/docs` directory.
