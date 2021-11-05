@@ -35,6 +35,9 @@ event-table
 occurrence-table
 extended-measurementorfact-table
 session-info
+aligning-data-to-darwin-core---sampling-event-with-measurement-or-fact
+general-information-about-this-notebook
+taxonomic-name-matching
 final-words
 tools
 r
