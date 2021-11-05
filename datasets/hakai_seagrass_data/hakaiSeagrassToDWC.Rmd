@@ -10,7 +10,8 @@ output:
         toc_float: true
         number_sections: true
 ---
-# Setup
+## Hakai Seagrass
+### Setup
 This section clears the workspace, checks the working directory, and
 installs packages (if required) and loads packages, and loads necessary
 datasets
@@ -41,7 +42,7 @@ lapply(c("tidyverse", "lubridate", "magrittr", "worrms"),
        library, character.only = TRUE)
 ```
 
-## Load Data
+#### Load Data
 First load the seagrass density survey data, set variable classes, and have a quick look
 
 ```{r loadDensity}
@@ -88,7 +89,7 @@ coordinates <-
   glimpse()
 ```
 
-## Merge Datasets
+#### Merge Datasets
 Now all the datasets have been loaded, and briefly formatted, we'll join
 together the habitat and density surveys, and the coordinates for these.
 
@@ -176,13 +177,13 @@ seagrass <-
   glimpse()
 ```
 
-# Convert Data to Darwin Core - Extended Measurement or Fact format
+### Convert Data to Darwin Core - Extended Measurement or Fact format
 The Darwin Core ExtendedMeasurementOrFact (eMoF) extension bases records
 around a core event (rather than occurrence as in standard Darwin Core),
 allowing for additional measurement variables to be associated with
 occurrence data.
 
-## Add Event ID and Occurrence ID variables to dataset
+#### Add Event ID and Occurrence ID variables to dataset
 As this dataset will be annually updated, rather than using
 natural keys (ie. using package::uuid to autogenerate) for event and 
 occurence IDs, here we will use surrogate keys made up of a concatenation
@@ -205,13 +206,13 @@ seagrass$occurrenceID <-
        paste(eventID, transect_dist, field_uid, sep = ":"))
 ```
 
-## Create Event, Occurrence, and eMoF tables
+#### Create Event, Occurrence, and eMoF tables
 Now that we've created eventIDs and occurrenceIDs to connect all the
 variables together, we can begin to create the Event, Occurrence,
 and extended Measurement or Fact table necessary for DarwinCore
 compliant datasets
 
-### Event Table
+##### Event Table
 
 ```{r createEventTable}
 # subset seagrass to create event table
@@ -234,7 +235,7 @@ seagrassEvent <-
 write.csv(seagrassEvent, "processed_data/hakaiSeagrassDwcEvent.csv")
 ```
 
-### Occurrence Table
+##### Occurrence Table
 
 ```{r createOccurrenceTable}
 # subset seagrass to create occurrence table
@@ -272,7 +273,7 @@ seagrassOccurrence <-
 write.csv(seagrassOccurrence, "processed_data/hakaiSeagrassDwcOccurrence.csv")
 ```
 
-### Extended MeasurementOrFact table
+##### Extended MeasurementOrFact table
 
 ```{r create eMoF table}
 seagrassMof <-
@@ -338,7 +339,7 @@ seagrassMof <-
 write.csv(seagrassMof, "processed_data/hakaiSeagrassDwcEmof.csv")
 ```
 
-# Session Info
+### Session Info
 Print session information below in case necessary for future reference 
 
 ```{r sessionInfo}

@@ -1,6 +1,3 @@
 # Final Words
 
 We have finished a nice book.
-
-#```{r, child=c("../datasets/hakai_salmon_data/salmon-darwin-core-remap.Rmd", "../datasets/hakai_seagrass_data/hakaiSeagrassToDWC.Rmd", "../datasets/example_script_with_fake_data/IOOS_DMAC_DataToDwC_Notebook_event.md"),echo=TRUE,eval=TRUE}
-#```
