@@ -1,5 +1,5 @@
 --- 
-title: "Standardizing-Marine-Biological-Data"
+title: "Darwin Core Guide"
 author: "[Standardizing Marine Biological Data Working Group](https://github.com/ioos/bio_data_guide/graphs/contributors)"
 date: "`r Sys.Date()`"
 url: https://ioos.github.io/bio_data_guide/

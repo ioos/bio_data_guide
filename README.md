@@ -1,5 +1,6 @@
 # Darwin Core Guide
-:notebook: This repository contains living documentation to help those just getting started with biological data or those looking to learn and contribute to IOOS's best practices for biological data.
+:notebook: This repository contains living documentation to help those just getting started with biological data or 
+those looking to learn and contribute to IOOS's best practices for biological data.
 
 ## :question: Have Questions? :question:
 * See the "issues" tab above to ask questions or discuss with the IOOS biodata community.
@@ -10,18 +11,24 @@
 * :floppy_disk: small datasets can be uploaded into `./datasets/` and we can help you align with best practices
 * :link: dataset repositories or other hosted data can be included in the links in the `Datasets` section below
 
-# Standardizing Marine Biological Data Guide
+# Darwin Core Guide
 
 See the guide [here](https://ioos.github.io/bio_data_guide/intro.html)
 
-We are documenting, in the form of a :notebook: Guide, relevant resources and standards which apply to various marine biological data sets. This is a work in progress, a growing guide that is being put together by scientists and data managers responsible for transforming their data to meet international standards. The Guide is exported into multiple formats, including a [pdf](https://github.com/ioos/bio_data_guide/raw/gh-pages/bio-data-guide.pdf) and an [epub](https://github.com/ioos/bio_data_guide/raw/gh-pages/bio-data-guide.epub) document. Chapters are written in R Markdown files; [contributions are welcome!](https://github.com/ioos/bio_data_guide/blob/main/CONTRIBUTING.md)
+We are documenting, in the form of a :notebook: Guide, relevant resources and standards which apply to various marine 
+biological data sets. This is a work in progress, a growing guide that is being put together by scientists and data 
+managers responsible for transforming their data to meet international standards. The Guide is exported into multiple 
+formats, including a [pdf](https://github.com/ioos/bio_data_guide/raw/gh-pages/darwin-core-guide.pdf) and an 
+[epub](https://github.com/ioos/bio_data_guide/raw/gh-pages/darwin-core-guide.epub) document. Chapters are written in R 
+Markdown files; [contributions are welcome!](https://github.com/ioos/bio_data_guide/blob/main/CONTRIBUTING.md)
 
 ## Building the book on your local machine (_optional_)
 
 ### To build the book using Rstudio: 
 
 * Make sure you have the most recent version of R and R Studio
-  * Check that [pandoc](https://pandoc.org/installing.html) is installed and functioning on your machine (`library(rmarkdown); pandoc_available()` should return `TRUE`)
+  * Check that [pandoc](https://pandoc.org/installing.html) is installed and functioning on your machine 
+(`library(rmarkdown); pandoc_available()` should return `TRUE`)
 * Start a new project in R Studio using version control
 * Fork or clone the GitHub repository from this url: https://github.com/ioos/bio_data_guide.git
 * Install all the required packages: specifically `bookdown` and others as required
@@ -30,7 +37,8 @@ We are documenting, in the form of a :notebook: Guide, relevant resources and st
 
 ### To build the book using R Console:
 * Make sure you have the most recent version of R
-* Check that [pandoc](https://pandoc.org/installing.html) is installed and functioning on your machine (`library(rmarkdown); pandoc_available()` should return `TRUE`) 
+* Check that [pandoc](https://pandoc.org/installing.html) is installed and functioning on your machine 
+(`library(rmarkdown); pandoc_available()` should return `TRUE`) 
 * Fork or clone the GitHub repository from this url: https://github.com/ioos/bio_data_guide.git
 * Install the [required packages](https://github.com/ioos/bio_data_guide/blob/e5ce8894dc5d00729ff3c0df754d282ba4681119/.github/workflows/deploy_bookdown.yml#L26-L31):
 ``` r
