@@ -1,0 +1,36 @@
+# Dealing with errors
+Datasets can have a wide variety of errors that pop up during the darwin core alignment process. This chapter details
+ways in which a data manager can identify, discuss, and resolve potential errors in the data.
+
+It should be noted that, in most cases, the data manager/scientist aligning the data to darwin core should reach out
+to the data originator to ensure the actions taken are not incorrectly representing the observations.
+
+
+## Example using GitHub to resolve errors
+1. Dataset sent to OBIS-USA via email.
+2. OBIS-USA uploaded to IPT.
+3. Once the data were uploaded, the IPT identified there was an issue with the `occurrenceID` field. The issue was then
+presented and discussed in a GitHub ticket:
+   [![issue 78](./figs/issue_78.png)](https://github.com/ioos/bio_data_guide/issues/78)
+4. The data manager uploaded the raw data and code to GitHub through the pull request below. This included a fix for
+the `occurrenceID` issue.
+   [![PR 77](./figs/PR_77.png)](https://github.com/ioos/bio_data_guide/pull/77)
+5. The OBIS node manager was notified of the availability of a revised dataset by pointing directly to the appropriate
+commit in GitHub:
+   [![commit ef17f89](./figs/commit_ef17f89.png)](https://github.com/ioos/bio_data_guide/commit/ef17f89f23316a6227fdf58de509582bd9854a55)
+6. The OBIS node manager downloaded the data from the commit above and uploaded them to the IPT.
+7. The IPT returned a summary of the dataset including that 434 records had invalid `scientificNameID` records in the
+occurrence file.
+8. After some data sleuthing, the data manager noticed that the code accidentally removed trailing zeros from
+`scientificNameID` that ended in `0`:
+   [![code snippet](./figs/code_snippet.png)](https://nbviewer.org/github/ioos/bio_data_guide/blob/ef17f89f23316a6227fdf58de509582bd9854a55/datasets/AMBON_zooplankton/2017zooplanton_to_dwc%282%29_mmb.ipynb#END-of-ID-generation)
+9. So, the data manager updated the code to resolve the issue and generate a new occurrence file.
+   [![PR 82](./figs/PR_82.png)](https://github.com/ioos/bio_data_guide/pull/82)
+   1. Here is fixing the `scientificNameID` generation: ![code change 1](./figs/code_change1.png)
+   2. Here is removing the problematic code: ![code change 2](./figs/code_change2.png) ![code change 3](./figs/code_change3.png)
+10. The revised occurrence file was then resubmitted to the OBIS node manager by pointing them at the appropriate commit
+record:
+    [![commit a0919e](./figs/commit_a0919e.png)](https://github.com/ioos/bio_data_guide/commit/a0919e5b788b0737fc4c8e2c4b874c2e287769dd)
+11. The OBIS node manager downloaded the data from the commit above and uploaded them to the IPT.
+12. The IPT and OBIS landing page now indicated that no more issues with these data are present:
+    [![obis dataset](./figs/obis_dataset.png)](https://obis.org/dataset/bc01451e-d990-4ad1-8315-e3fb6e9cf461)
