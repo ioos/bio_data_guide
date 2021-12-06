@@ -38,6 +38,8 @@ session-info
 aligning-data-to-darwin-core---sampling-event-with-measurement-or-fact
 general-information-about-this-notebook
 taxonomic-name-matching
+dealing-with-errors
+example-using-github-to-resolve-errors
 final-words
 tools
 r

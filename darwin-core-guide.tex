@@ -138,7 +138,7 @@
 
 \title{Darwin Core Guide}
 \author{\href{https://github.com/ioos/bio_data_guide/graphs/contributors}{Standardizing Marine Biological Data Working Group}}
-\date{2021-11-18}
+\date{2021-12-06}
 
 \begin{document}
 \maketitle
@@ -1029,24 +1029,24 @@ Print session information below in case necessary for future reference
 ## other attached packages:
 ##  [1] worrms_0.4.2    magrittr_2.0.1  knitr_1.36      lubridate_1.8.0
 ##  [5] here_1.0.1      forcats_0.5.1   stringr_1.4.0   dplyr_1.0.7    
-##  [9] purrr_0.3.4     readr_2.1.0     tidyr_1.1.4     tibble_3.1.6   
+##  [9] purrr_0.3.4     readr_2.1.1     tidyr_1.1.4     tibble_3.1.6   
 ## [13] ggplot2_3.3.5   tidyverse_1.3.1
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.7       assertthat_0.2.1 rprojroot_2.0.2  digest_0.6.28   
-##  [5] utf8_1.2.2       R6_2.5.1         cellranger_1.1.0 backports_1.3.0 
+##  [1] Rcpp_1.0.7       assertthat_0.2.1 rprojroot_2.0.2  digest_0.6.29   
+##  [5] utf8_1.2.2       R6_2.5.1         cellranger_1.1.0 backports_1.4.0 
 ##  [9] reprex_2.0.1     evaluate_0.14    httr_1.4.2       pillar_1.6.4    
 ## [13] rlang_0.4.12     curl_4.3.2       readxl_1.3.1     rstudioapi_0.13 
 ## [17] jquerylib_0.1.4  rmarkdown_2.11   urltools_1.7.3   triebeard_0.3.0 
 ## [21] bit_4.0.4        munsell_0.5.0    broom_0.7.10     compiler_4.1.1  
 ## [25] modelr_0.1.8     xfun_0.28        pkgconfig_2.0.3  htmltools_0.5.2 
 ## [29] tidyselect_1.1.1 httpcode_0.3.0   bookdown_0.24    fansi_0.5.0     
-## [33] crayon_1.4.2     tzdb_0.2.0       dbplyr_2.1.1     withr_2.4.2     
-## [37] crul_1.1.0       grid_4.1.1       jsonlite_1.7.2   gtable_0.3.0    
+## [33] crayon_1.4.2     tzdb_0.2.0       dbplyr_2.1.1     withr_2.4.3     
+## [37] crul_1.2.0       grid_4.1.1       jsonlite_1.7.2   gtable_0.3.0    
 ## [41] lifecycle_1.0.1  DBI_1.1.1        scales_1.1.1     cli_3.1.0       
-## [45] stringi_1.7.5    vroom_1.5.6      fs_1.5.0         xml2_1.3.2      
+## [45] stringi_1.7.6    vroom_1.5.7      fs_1.5.1         xml2_1.3.3      
 ## [49] ellipsis_0.3.2   generics_0.1.1   vctrs_0.3.8      tools_4.1.1     
-## [53] bit64_4.0.5      glue_1.5.0       hms_1.1.1        parallel_4.1.1  
+## [53] bit64_4.0.5      glue_1.5.1       hms_1.1.1        parallel_4.1.1  
 ## [57] fastmap_1.1.0    yaml_2.2.1       colorspace_2.0-2 rvest_1.0.2     
 ## [61] haven_2.4.3
 \end{verbatim}
@@ -1517,6 +1517,69 @@ Let's check to see what it looks like
 \end{Highlighting}
 \end{Shaded}
 
+\hypertarget{dealing-with-errors}{%
+\chapter{Dealing with errors}\label{dealing-with-errors}}
+
+Datasets can have a wide variety of errors that pop up during the darwin core alignment process. This chapter details
+ways in which a data manager can identify, discuss, and resolve potential errors in the data.
+
+It should be noted that, in most cases, the data manager/scientist aligning the data to darwin core should reach out
+to the data originator to ensure the actions taken are not incorrectly representing the observations.
+
+\hypertarget{example-using-github-to-resolve-errors}{%
+\section{Example using GitHub to resolve errors}\label{example-using-github-to-resolve-errors}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Dataset sent to OBIS-USA via email.
+\item
+  OBIS-USA uploaded to IPT.
+\item
+  Once the data were uploaded, the IPT identified there was an issue with the \texttt{occurrenceID} field. The issue was then
+  presented and discussed in a GitHub ticket:
+  \href{https://github.com/ioos/bio_data_guide/issues/78}{\includegraphics{./figs/issue_78.png}}
+\item
+  The data manager uploaded the raw data and code to GitHub through the pull request below. This included a fix for
+  the \texttt{occurrenceID} issue.
+  \href{https://github.com/ioos/bio_data_guide/pull/77}{\includegraphics{./figs/PR_77.png}}
+\item
+  The OBIS node manager was notified of the availability of a revised dataset by pointing directly to the appropriate
+  commit in GitHub:
+  \href{https://github.com/ioos/bio_data_guide/commit/ef17f89f23316a6227fdf58de509582bd9854a55}{\includegraphics{./figs/commit_ef17f89.png}}
+\item
+  The OBIS node manager downloaded the data from the commit above and uploaded them to the IPT.
+\item
+  The IPT returned a summary of the dataset including that 434 records had invalid \texttt{scientificNameID} records in the
+  occurrence file.
+\item
+  After some data sleuthing, the data manager noticed that the code accidentally removed trailing zeros from
+  \texttt{scientificNameID} that ended in \texttt{0}:
+  \href{https://nbviewer.org/github/ioos/bio_data_guide/blob/ef17f89f23316a6227fdf58de509582bd9854a55/datasets/AMBON_zooplankton/2017zooplanton_to_dwc\%282\%29_mmb.ipynb\#END-of-ID-generation}{\includegraphics{./figs/code_snippet.png}}
+\item
+  So, the data manager updated the code to resolve the issue and generate a new occurrence file.
+  \href{https://github.com/ioos/bio_data_guide/pull/82}{\includegraphics{./figs/PR_82.png}}
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    Here is fixing the \texttt{scientificNameID} generation: \includegraphics{./figs/code_change1.png}
+  \item
+    Here is removing the problematic code: \includegraphics{./figs/code_change2.png} \includegraphics{./figs/code_change3.png}
+  \end{enumerate}
+\item
+  The revised occurrence file was then resubmitted to the OBIS node manager by pointing them at the appropriate commit
+  record:
+  \href{https://github.com/ioos/bio_data_guide/commit/a0919e5b788b0737fc4c8e2c4b874c2e287769dd}{\includegraphics{./figs/commit_a0919e.png}}
+\item
+  The OBIS node manager downloaded the data from the commit above and uploaded them to the IPT.
+\item
+  The IPT and OBIS landing page now indicated that no more issues with these data are present:
+  \href{https://obis.org/dataset/bc01451e-d990-4ad1-8315-e3fb6e9cf461}{\includegraphics{./figs/obis_dataset.png}}
+\end{enumerate}
+
 \hypertarget{final-words}{%
 \chapter{Final Words}\label{final-words}}
 
@@ -1797,7 +1860,7 @@ Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takaha
 Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2021. \emph{Dplyr: A Grammar of Data Manipulation}. \url{https://CRAN.R-project.org/package=dplyr}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-readr}{}}%
-Wickham, Hadley, and Jim Hester. 2021. \emph{Readr: Read Rectangular Text Data}. \url{https://CRAN.R-project.org/package=readr}.
+Wickham, Hadley, Jim Hester, and Jennifer Bryan. 2021. \emph{Readr: Read Rectangular Text Data}. \url{https://CRAN.R-project.org/package=readr}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Wieczorek2012}{}}%
 Wieczorek, John, David Bloom, Robert Guralnick, Stan Blum, Markus Döring, Renato Giovanni, Tim Robertson, and David Vieglais. 2012. {``Darwin Core: An Evolving Community-Developed Biodiversity Data Standard.''} \emph{PLoS ONE} 7 (January): 29715. \url{https://doi.org/10.1371/journal.pone.0029715}.
