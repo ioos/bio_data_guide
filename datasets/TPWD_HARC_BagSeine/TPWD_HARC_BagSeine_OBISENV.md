@@ -26,7 +26,7 @@ Note that if not already done you'll need to run the TPWD_Taxonomy.R script to g
 
 To start we will create the Darwin Core Event file. This is the file that will have all the information about the sampling event such as date, location, depth, sampling protocol. Basically anything about the cruise or the way the sampling was done will go in this file. You can see all the Darwin Core terms that are part of the event file here http://tools.gbif.org/dwca-validator/extension.do?id=dwc:Event.
 
-The original format for these TPWD HARC files has all of the information associated as the event in the first approximately 50 columns and then all of the information about the occurrence (species) as columns for each species. We will need to start by grabbing all of the event information only.
+The original format for these TPWD HARC files has all of the information associated as the event in the first approximately 50 columns and then all of the information about the occurrence (species) as columns for each species. We will need to start by limiting to the event information only.
 ```r
 event <- BagSeine[,1:47]
 ```
@@ -81,7 +81,7 @@ event <- event %>%
          sampleSizeValue = surface_area_num,
          eventDate = CompDate)
 ```
-The next file we need to create is the occurrence file. This file includes all the information about the species that were observed. An occurrence in Darwin Core is the intersection of an organism at a time and a place. We have already done the work to identify the time and place in the event file so we don't need to do that again here. What we do need to is identify all the information about the organisms. Another piece of information that goes in here is basisOfRecord which is a required field and has a controlled vocabulary. For the data we work with you'll usually put "HumanObservation" or "MachineObservation". If it's eDNA data you'll use "MaterialSample". If your data are part of a museum collection you'll use "PreservedSpecimen". 
+The next file we need to create is the Occurrence file. This file includes all the information about the species that were observed. An occurrence in Darwin Core is the intersection of an organism at a time and a place. We have already done the work to identify the time and place in the event file so we don't need to do that again here. What we do need to is identify all the information about the organisms. Another piece of information that goes in here is basisOfRecord which is a required field and has a controlled vocabulary. For the data we work with you'll usually put "HumanObservation" or "MachineObservation". If it's eDNA data you'll use "MaterialSample". If your data are part of a museum collection you'll use "PreservedSpecimen". 
 
 Important to note that there is overlap in the Darwin Core terms that "allowed" to be in the event file and in the occurrence file. This is because data can be submitted as "Occurrence Only" where you don't have a separate event file. In that case, the location and date information will need to be included in the occurrence file. Since we are formatting this dataset as a sampling event we will not include location and date information in the occurrence file. To see all the Darwin Core terms that can go in the occurrence file go here https://tools.gbif.org/dwca-validator/extension.do?id=dwc:occurrence.
 
@@ -91,7 +91,7 @@ occurrence <- melt(BagSeine, id=1:47, measure=48:109, variable.name="vernacularN
 ```
 You'll notice when we did that step we went from 5481 obs (or rows) in the data to 339822 obs. We went from wide to long.
 
-Now as with the even file we have several pieces of information that need to be added or changed to make sure the data are following Darwin Core. We always want to include as much information as possible to make the data as reusable as possible.
+Now as with the event file we have several pieces of information that need to be added or changed to make sure the data are following Darwin Core. We always want to include as much information as possible to make the data as reusable as possible.
 ```r
 occurrence <- occurrence %>%
   mutate(vernacularName = gsub("\\.",' ', vernacularName),
@@ -104,7 +104,7 @@ occurrence <- occurrence %>%
 
 We will match the taxa list with our occurrence file data to bring in the taxonomic information that we pulled from WoRMS. To save time you'll just import the processed taxa list which includes the taxonomic hierarchy and the required term scientificNameID which is one of the most important pieces of information to include for OBIS.
 ```r
-taxaList <- read.csv("FIX THIS", stringsAsFactors = FALSE)
+taxaList <- read.csv("https://www.sciencebase.gov/catalog/file/get/53a887f4e4b075096c60cfdd?f=__disk__49%2F0a%2F73%2F490a7337fa94039715809496b22f5d003b8a79a2&allowOpen=true", stringsAsFactors = FALSE)
 ## Merge taxaList with occurrence
 occurrence <- merge(occurrence, taxaList, by = "vernacularName")
 ## Test that all the vernacularNames found a match in taxaList_updated
@@ -116,15 +116,17 @@ We need to create a unique ID for each row in the occurrence file. This is known
 ```r
 occurrence$occurrenceID <- paste(occurrence$eventID, gsub(" ", "_",occurrence$scientificName), sep = "_")
 ```
-For the occurrence file we only have one column to rename.
+For the occurrence file we only have one column to rename. We could have avoided this step if we had named it organismQuantity up above but I kept this to remind me what the data providers had called this.
 ```r
 occurrence <- occurrence %>%
   rename(organismQuantity = relativeAbundance)
 ```
 
-The final file we are going to create is the extended measurement or fact extension. This is a bit like a catch all for any measurements or facts that are not captured in Darwin Core. Darwin Core does not have terms for things like temperature, salinity, gear type, cruise  number, length, weight, etc. We are going to create a long format file where each of these is a set of rows in the extended measurement or fact file. OBIS uses the BODC NERC Vocabulary Server to provide explicit definitions for each of the measurements. You can find all the terms in this extension here https://tools.gbif.org/dwca-validator/extension.do?id=http://rs.iobis.org/obis/terms/ExtendedMeasurementOrFact. 
+The final file we are going to create is the extended measurement or fact extension. This is a bit like a catch all for any measurements or facts that are not captured in Darwin Core. Darwin Core does not have terms for things like temperature, salinity, gear type, cruise  number, length, weight, etc. We are going to create a long format file where each of these is a set of rows in the extended measurement or fact file. You can find all the terms in this extension here https://tools.gbif.org/dwca-validator/extension.do?id=http://rs.iobis.org/obis/terms/ExtendedMeasurementOrFact. 
 
-For this dataset I was only able to find code definitions for some of the measurements. I included the ones that I was able to find code definitions and left out any that I couldn't find those for. The ones I was able to find code definitions for were Total.Of.Samples_Count, gear_size, start_wind_speed_num, start_barometric_pressure_num, start_temperature_num, start_salinity_num, start_dissolved_oxygen_num. All the others I left out.
+OBIS uses the BODC NERC Vocabulary Server to provide explicit definitions for each of the measurements https://vocab.nerc.ac.uk/search_nvs/.
+
+For this dataset I was only able to find code definitions provided by the data providers for some of the measurements. I included the ones that I was able to find code definitions and left out any that I couldn't find those for. The ones I was able to find code definitions for were Total.Of.Samples_Count, gear_size, start_wind_speed_num, start_barometric_pressure_num, start_temperature_num, start_salinity_num, start_dissolved_oxygen_num. All the others I left out.
 
 
 ```r
