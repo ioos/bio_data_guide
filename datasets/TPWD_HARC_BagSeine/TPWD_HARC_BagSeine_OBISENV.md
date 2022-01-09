@@ -1,4 +1,4 @@
-## Aligning Data to Darwin Core - Sampling Event with Extended Measurement or Fact
+## Aligning Data to Darwin Core - Event Core with Extended Measurement or Fact
 
 Abby Benson  
 January 9, 2022 
@@ -59,7 +59,50 @@ event <- event %>%
 ```
 ```r
 head(event[,48:64], n = 10)
-
+    type   modified language                                                    license institutionCode
+1  Event 2022-01-09       en http://creativecommons.org/publicdomain/zero/1.0/legalcode            TPWD
+2  Event 2022-01-09       en http://creativecommons.org/publicdomain/zero/1.0/legalcode            TPWD
+3  Event 2022-01-09       en http://creativecommons.org/publicdomain/zero/1.0/legalcode            TPWD
+4  Event 2022-01-09       en http://creativecommons.org/publicdomain/zero/1.0/legalcode            TPWD
+5  Event 2022-01-09       en http://creativecommons.org/publicdomain/zero/1.0/legalcode            TPWD
+6  Event 2022-01-09       en http://creativecommons.org/publicdomain/zero/1.0/legalcode            TPWD
+7  Event 2022-01-09       en http://creativecommons.org/publicdomain/zero/1.0/legalcode            TPWD
+8  Event 2022-01-09       en http://creativecommons.org/publicdomain/zero/1.0/legalcode            TPWD
+9  Event 2022-01-09       en http://creativecommons.org/publicdomain/zero/1.0/legalcode            TPWD
+10 Event 2022-01-09       en http://creativecommons.org/publicdomain/zero/1.0/legalcode            TPWD
+   ownerInstitutionCode coordinateUncertaintyInMeters geodeticDatum georeferenceProtocol       country
+1                  HARC                           100         WGS84         Handheld GPS United States
+2                  HARC                           100         WGS84         Handheld GPS United States
+3                  HARC                           100         WGS84         Handheld GPS United States
+4                  HARC                           100         WGS84         Handheld GPS United States
+5                  HARC                           100         WGS84         Handheld GPS United States
+6                  HARC                           100         WGS84         Handheld GPS United States
+7                  HARC                           100         WGS84         Handheld GPS United States
+8                  HARC                           100         WGS84         Handheld GPS United States
+9                  HARC                           100         WGS84         Handheld GPS United States
+10                 HARC                           100         WGS84         Handheld GPS United States
+   countryCode stateProvince                             datasetID                                eventID
+1           US         Texas TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_95_Date_09JAN1997:14:35:00.000
+2           US         Texas TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_95_Date_18AUG2000:11:02:00.000
+3           US         Texas TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_28JUN2005:08:41:00.000
+4           US         Texas TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_23AUG2006:11:47:00.000
+5           US         Texas TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_17OCT2006:14:23:00.000
+6           US         Texas TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_19FEB1996:10:27:00.000
+7           US         Texas TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_11JUN2001:14:12:00.000
+8           US         Texas TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_16MAR1992:09:46:00.000
+9           US         Texas TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_25SEP1996:11:28:00.000
+10          US         Texas TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_08MAY1997:13:20:00.000
+   sampleSizeUnit minimumDepthInMeters maximumDepthInMeters
+1        hectares                  0.0                  0.6
+2        hectares                  0.1                  0.5
+3        hectares                  0.4                  0.6
+4        hectares                  0.2                  0.4
+5        hectares                  0.7                  0.8
+6        hectares                  0.1                  0.3
+7        hectares                  0.4                  0.5
+8        hectares                  0.0                  0.4
+9        hectares                  0.3                  0.7
+10       hectares                  0.4                  0.6
 ```
 For this dataset there was a start timestamp and end timestamp that we can use to identify the sampling effort which can be really valuable information for downstream users when trying to reuse data from multiple projects.
 
@@ -94,7 +137,9 @@ occurrence <- melt(BagSeine, id=1:47, measure=48:109, variable.name="vernacularN
 You'll notice when we did that step we went from 5481 obs (or rows) in the data to 339822 obs. We went from wide to long.
 ```r
 dim(BagSeine)
+[1] 5481  109
 dim(occurrence)
+[1] 334341     49
 ```
 
 Now as with the event file we have several pieces of information that need to be added or changed to make sure the data are following Darwin Core. We always want to include as much information as possible to make the data as reusable as possible.
@@ -115,12 +160,19 @@ taxaList <- read.csv("https://www.sciencebase.gov/catalog/file/get/53a887f4e4b07
 occurrence <- merge(occurrence, taxaList, by = "vernacularName", all.x = T)
 ## Test that all the vernacularNames found a match in taxaList_updated
 Hmisc::describe(occurrence$scientificNameID)
+       n  missing distinct 
+  334341        0       61 
+
+lowest : urn:lsid:marinespecies.org:taxname:105792 urn:lsid:marinespecies.org:taxname:107034 urn:lsid:marinespecies.org:taxname:107379 urn:lsid:marinespecies.org:taxname:126983 urn:lsid:marinespecies.org:taxname:127089
+highest: urn:lsid:marinespecies.org:taxname:367528 urn:lsid:marinespecies.org:taxname:396707 urn:lsid:marinespecies.org:taxname:421784 urn:lsid:marinespecies.org:taxname:422069 urn:lsid:marinespecies.org:taxname:443955
 ```
 For that last line of code we are expecting to see no missing values for scientificNameID. Every row in the file should have a value in scientificNameID which should be a WoRMS LSID that look like this "urn:lsid:marinespecies.org:taxname:144531"
 
 We need to create a unique ID for each row in the occurrence file. This is known as the occurrenceID and is a required term. The occurrenceID needs to be globally unique and needs to be permanent and kept in place if any updates to the dataset are made. You should not create brand new occurrenceIDs when you update a dataset. To facilitate this I like to build the occurrenceID from pieces of information available in the dataset to create a unique ID for each row in the occurrence file. For this dataset I used the eventID (Station + Date) plus the scientific name. This only works if there is only one scientific name per station per date so if you have different ages or sexes of species at the same station and date this method of creating the occurrenceID won't work for you.
 ```r
 occurrence$occurrenceID <- paste(occurrence$eventID, gsub(" ", "_",occurrence$scientificName), sep = "_")
+occurrence[1,]$occurrenceID
+[1] "Station_95_Date_09JAN1997:14:35:00.000_Atractosteus_spatula"
 ```
 For the occurrence file we only have one column to rename. We could have avoided this step if we had named it organismQuantity up above but I kept this to remind me what the data providers had called this.
 ```r
@@ -230,7 +282,49 @@ mof <- rbind(totalOfSamples, start_barometric_pressure_num, start_dissolved_oxyg
              start_salinity_num, start_temperature_num, start_wind_speed_num, gear_size,
              alternate_station_code, organismQuantity)
 head(mof)
+ measurementValue                                eventID
+1               18 Station_95_Date_09JAN1997:14:35:00.000
+2              103 Station_95_Date_18AUG2000:11:02:00.000
+3              401 Station_96_Date_28JUN2005:08:41:00.000
+4               35 Station_96_Date_23AUG2006:11:47:00.000
+5               57 Station_96_Date_17OCT2006:14:23:00.000
+6                5 Station_96_Date_19FEB1996:10:27:00.000
+                                               measurementType measurementUnit measurementTypeID
+1 Total number of samples used to calculate relative abundance                                  
+2 Total number of samples used to calculate relative abundance                                  
+3 Total number of samples used to calculate relative abundance                                  
+4 Total number of samples used to calculate relative abundance                                  
+5 Total number of samples used to calculate relative abundance                                  
+6 Total number of samples used to calculate relative abundance                                  
+  measurementUnitID occurrenceID
+1                               
+2                               
+3                               
+4                               
+5                               
+6                               
 tail(mof)
+       measurementValue                                 eventID    measurementType measurementUnit
+334336        0.0000000 Station_217_Date_03APR2003:13:28:00.000 relative abundance                
+334337        0.0000000 Station_217_Date_24FEB2006:10:12:00.000 relative abundance                
+334338        0.1428571 Station_217_Date_23JUN2001:12:28:00.000 relative abundance                
+334339        0.0000000 Station_212_Date_23MAY1990:10:43:00.000 relative abundance                
+334340        0.1224490 Station_212_Date_24JUL1990:09:34:00.000 relative abundance                
+334341        0.0000000 Station_212_Date_21MAR2001:11:52:00.000 relative abundance                
+                                              measurementTypeID measurementUnitID
+334336 http://vocab.nerc.ac.uk/collection/S06/current/S0600020/                  
+334337 http://vocab.nerc.ac.uk/collection/S06/current/S0600020/                  
+334338 http://vocab.nerc.ac.uk/collection/S06/current/S0600020/                  
+334339 http://vocab.nerc.ac.uk/collection/S06/current/S0600020/                  
+334340 http://vocab.nerc.ac.uk/collection/S06/current/S0600020/                  
+334341 http://vocab.nerc.ac.uk/collection/S06/current/S0600020/                  
+                                                        occurrenceID
+334336 Station_217_Date_03APR2003:13:28:00.000_Litopenaeus_setiferus
+334337 Station_217_Date_24FEB2006:10:12:00.000_Litopenaeus_setiferus
+334338 Station_217_Date_23JUN2001:12:28:00.000_Litopenaeus_setiferus
+334339 Station_212_Date_23MAY1990:10:43:00.000_Litopenaeus_setiferus
+334340 Station_212_Date_24JUL1990:09:34:00.000_Litopenaeus_setiferus
+334341 Station_212_Date_21MAR2001:11:52:00.000_Litopenaeus_setiferus
 
 # Write out the file
 write.csv(mof, file = (paste0(event[1,]$datasetID, "_mof_", lubridate::today(),".csv")), fileEncoding = "UTF-8", row.names = F, na = "")
@@ -247,6 +341,48 @@ event <- event[c("samplingProtocol","locality","waterBody","decimalLatitude","de
                  "geodeticDatum", "georeferenceProtocol","country","countryCode","stateProvince",
                  "datasetID","eventID","sampleSizeUnit","samplingEffort")]
 head(event)
+  samplingProtocol                locality   waterBody decimalLatitude decimalLongitude
+1        Bag Seine Mission-Aransas Estuary Aransas Bay        28.13472        -97.00833
+2        Bag Seine Mission-Aransas Estuary Aransas Bay        28.13528        -97.00722
+3        Bag Seine Mission-Aransas Estuary Aransas Bay        28.13444        -96.99611
+4        Bag Seine Mission-Aransas Estuary Aransas Bay        28.13444        -96.99611
+5        Bag Seine Mission-Aransas Estuary Aransas Bay        28.13444        -96.99611
+6        Bag Seine Mission-Aransas Estuary Aransas Bay        28.13472        -96.99583
+            eventDate sampleSizeValue minimumDepthInMeters maximumDepthInMeters  type   modified language
+1 1997-01-09 14:35:00            0.03                  0.0                  0.6 Event 2022-01-09       en
+2 2000-08-18 11:02:00            0.03                  0.1                  0.5 Event 2022-01-09       en
+3 2005-06-28 08:41:00            0.03                  0.4                  0.6 Event 2022-01-09       en
+4 2006-08-23 11:47:00            0.03                  0.2                  0.4 Event 2022-01-09       en
+5 2006-10-17 14:23:00            0.03                  0.7                  0.8 Event 2022-01-09       en
+6 1996-02-19 10:27:00            0.03                  0.1                  0.3 Event 2022-01-09       en
+                                                     license institutionCode ownerInstitutionCode
+1 http://creativecommons.org/publicdomain/zero/1.0/legalcode            TPWD                 HARC
+2 http://creativecommons.org/publicdomain/zero/1.0/legalcode            TPWD                 HARC
+3 http://creativecommons.org/publicdomain/zero/1.0/legalcode            TPWD                 HARC
+4 http://creativecommons.org/publicdomain/zero/1.0/legalcode            TPWD                 HARC
+5 http://creativecommons.org/publicdomain/zero/1.0/legalcode            TPWD                 HARC
+6 http://creativecommons.org/publicdomain/zero/1.0/legalcode            TPWD                 HARC
+  coordinateUncertaintyInMeters geodeticDatum georeferenceProtocol       country countryCode stateProvince
+1                           100         WGS84         Handheld GPS United States          US         Texas
+2                           100         WGS84         Handheld GPS United States          US         Texas
+3                           100         WGS84         Handheld GPS United States          US         Texas
+4                           100         WGS84         Handheld GPS United States          US         Texas
+5                           100         WGS84         Handheld GPS United States          US         Texas
+6                           100         WGS84         Handheld GPS United States          US         Texas
+                              datasetID                                eventID sampleSizeUnit
+1 TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_95_Date_09JAN1997:14:35:00.000       hectares
+2 TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_95_Date_18AUG2000:11:02:00.000       hectares
+3 TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_28JUN2005:08:41:00.000       hectares
+4 TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_23AUG2006:11:47:00.000       hectares
+5 TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_17OCT2006:14:23:00.000       hectares
+6 TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_19FEB1996:10:27:00.000       hectares
+  samplingEffort
+1    120 seconds
+2    120 seconds
+3    120 seconds
+4    120 seconds
+5    120 seconds
+6    120 seconds
 
 write.csv(event, file = paste0(event[1,]$datasetID, "_event_", lubridate::today(),".csv"), fileEncoding = "UTF-8", row.names = F, na = "")                    
 
@@ -256,6 +392,34 @@ occurrence <- occurrence[c("vernacularName","eventID","occurrenceStatus","basisO
                            "scientificNameAuthorship","taxonRank", "organismQuantity",
                            "organismQuantityType", "occurrenceID","collectionCode")]
 head(occurrence)
+  vernacularName                                eventID occurrenceStatus    basisOfRecord
+1  Alligator gar Station_95_Date_09JAN1997:14:35:00.000           Absent HumanObservation
+2  Alligator gar Station_95_Date_18AUG2000:11:02:00.000           Absent HumanObservation
+3  Alligator gar Station_96_Date_28JUN2005:08:41:00.000           Absent HumanObservation
+4  Alligator gar Station_96_Date_23AUG2006:11:47:00.000           Absent HumanObservation
+5  Alligator gar Station_96_Date_17OCT2006:14:23:00.000           Absent HumanObservation
+6  Alligator gar Station_96_Date_19FEB1996:10:27:00.000           Absent HumanObservation
+        scientificName                          scientificNameID  kingdom   phylum       class
+1 Atractosteus spatula urn:lsid:marinespecies.org:taxname:279822 Animalia Chordata Actinopteri
+2 Atractosteus spatula urn:lsid:marinespecies.org:taxname:279822 Animalia Chordata Actinopteri
+3 Atractosteus spatula urn:lsid:marinespecies.org:taxname:279822 Animalia Chordata Actinopteri
+4 Atractosteus spatula urn:lsid:marinespecies.org:taxname:279822 Animalia Chordata Actinopteri
+5 Atractosteus spatula urn:lsid:marinespecies.org:taxname:279822 Animalia Chordata Actinopteri
+6 Atractosteus spatula urn:lsid:marinespecies.org:taxname:279822 Animalia Chordata Actinopteri
+             order        family        genus scientificNameAuthorship taxonRank organismQuantity
+1 Lepisosteiformes Lepisosteidae Atractosteus         (Lacepède, 1803)   Species                0
+2 Lepisosteiformes Lepisosteidae Atractosteus         (Lacepède, 1803)   Species                0
+3 Lepisosteiformes Lepisosteidae Atractosteus         (Lacepède, 1803)   Species                0
+4 Lepisosteiformes Lepisosteidae Atractosteus         (Lacepède, 1803)   Species                0
+5 Lepisosteiformes Lepisosteidae Atractosteus         (Lacepède, 1803)   Species                0
+6 Lepisosteiformes Lepisosteidae Atractosteus         (Lacepède, 1803)   Species                0
+  organismQuantityType                                                occurrenceID        collectionCode
+1   Relative Abundance Station_95_Date_09JAN1997:14:35:00.000_Atractosteus_spatula Aransas Bay Bag Seine
+2   Relative Abundance Station_95_Date_18AUG2000:11:02:00.000_Atractosteus_spatula Aransas Bay Bag Seine
+3   Relative Abundance Station_96_Date_28JUN2005:08:41:00.000_Atractosteus_spatula Aransas Bay Bag Seine
+4   Relative Abundance Station_96_Date_23AUG2006:11:47:00.000_Atractosteus_spatula Aransas Bay Bag Seine
+5   Relative Abundance Station_96_Date_17OCT2006:14:23:00.000_Atractosteus_spatula Aransas Bay Bag Seine
+6   Relative Abundance Station_96_Date_19FEB1996:10:27:00.000_Atractosteus_spatula Aransas Bay Bag Seine
                            
 write.csv(occurrence, file = paste0(event[1,]$datasetID, "_occurrence_",lubridate::today(),".csv"), fileEncoding = "UTF-8", row.names = F, na = "")
 ```
