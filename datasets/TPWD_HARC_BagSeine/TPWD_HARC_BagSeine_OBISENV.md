@@ -134,7 +134,7 @@ This dataset in its original format is in "wide format". All that means is that 
 ```r
 occurrence <- melt(BagSeine, id=1:47, measure=48:109, variable.name="vernacularName", value.name="relativeAbundance")
 ```
-You'll notice when we did that step we went from 5481 obs (or rows) in the data to 339822 obs. We went from wide to long.
+You'll notice when we did that step we went from 5481 obs (or rows) in the data to 334341 obs. We went from wide to long.
 ```r
 dim(BagSeine)
 [1] 5481  109
