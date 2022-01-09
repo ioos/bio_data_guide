@@ -1,13 +1,11 @@
-## Aligning Data to Darwin Core - Sampling Event with Measurement or Fact
+## Aligning Data to Darwin Core - Sampling Event with Extended Measurement or Fact
 
 Abby Benson  
-December 16, 2021 
+January 9, 2022 
 
 ### General information about this notebook
-Script to process the Texas Parks and Wildlife Department (TPWD) bag seine data from
-the format used by the Houston Advanced Research Center (HARC) for bays in Texas.
-Taxonomy was processed using a separate script (TPWD_Taxonomy.R) using a taxa list 
-pulled from the pdf "2009 Resource Monitoring Operations Manual".
+Script to process the Texas Parks and Wildlife Department (TPWD) Aransas Bay bag seine data from
+the format used by the Houston Advanced Research Center (HARC) for bays in Texas. Taxonomy was processed using a separate script (TPWD_Taxonomy.R) using a taxa list pulled from the pdf "2009 Resource Monitoring Operations Manual". All original data, processed data and scripts are stored on [an item](https://www.sciencebase.gov/catalog/item/53a887f4e4b075096c60cfdd) in USGS ScienceBase. 
 
 
 ```r
@@ -59,6 +57,10 @@ event <- event %>%
          maximumDepthInMeters = ifelse(start_deep_water_depth_num > start_shallow_water_depth_num,
                                        start_deep_water_depth_num, start_shallow_water_depth_num))
 ```
+```r
+head(event[,48:64], n = 10)
+
+```
 For this dataset there was a start timestamp and end timestamp that we can use to identify the sampling effort which can be really valuable information for downstream users when trying to reuse data from multiple projects.
 
 ```r
@@ -90,6 +92,10 @@ This dataset in its original format is in "wide format". All that means is that 
 occurrence <- melt(BagSeine, id=1:47, measure=48:109, variable.name="vernacularName", value.name="relativeAbundance")
 ```
 You'll notice when we did that step we went from 5481 obs (or rows) in the data to 339822 obs. We went from wide to long.
+```r
+dim(BagSeine)
+dim(occurrence)
+```
 
 Now as with the event file we have several pieces of information that need to be added or changed to make sure the data are following Darwin Core. We always want to include as much information as possible to make the data as reusable as possible.
 ```r
@@ -106,7 +112,7 @@ We will match the taxa list with our occurrence file data to bring in the taxono
 ```r
 taxaList <- read.csv("https://www.sciencebase.gov/catalog/file/get/53a887f4e4b075096c60cfdd?f=__disk__49%2F0a%2F73%2F490a7337fa94039715809496b22f5d003b8a79a2&allowOpen=true", stringsAsFactors = FALSE)
 ## Merge taxaList with occurrence
-occurrence <- merge(occurrence, taxaList, by = "vernacularName")
+occurrence <- merge(occurrence, taxaList, by = "vernacularName", all.x = T)
 ## Test that all the vernacularNames found a match in taxaList_updated
 Hmisc::describe(occurrence$scientificNameID)
 ```
@@ -223,6 +229,8 @@ organismQuantity <- organismQuantity %>%
 mof <- rbind(totalOfSamples, start_barometric_pressure_num, start_dissolved_oxygen_num, 
              start_salinity_num, start_temperature_num, start_wind_speed_num, gear_size,
              alternate_station_code, organismQuantity)
+head(mof)
+tail(mof)
 
 # Write out the file
 write.csv(mof, file = (paste0(event[1,]$datasetID, "_mof_", lubridate::today(),".csv")), fileEncoding = "UTF-8", row.names = F, na = "")
@@ -238,6 +246,7 @@ event <- event[c("samplingProtocol","locality","waterBody","decimalLatitude","de
                  "ownerInstitutionCode","coordinateUncertaintyInMeters",
                  "geodeticDatum", "georeferenceProtocol","country","countryCode","stateProvince",
                  "datasetID","eventID","sampleSizeUnit","samplingEffort")]
+head(event)
 
 write.csv(event, file = paste0(event[1,]$datasetID, "_event_", lubridate::today(),".csv"), fileEncoding = "UTF-8", row.names = F, na = "")                    
 
@@ -246,6 +255,7 @@ occurrence <- occurrence[c("vernacularName","eventID","occurrenceStatus","basisO
                            "order","family","genus",
                            "scientificNameAuthorship","taxonRank", "organismQuantity",
                            "organismQuantityType", "occurrenceID","collectionCode")]
+head(occurrence)
                            
 write.csv(occurrence, file = paste0(event[1,]$datasetID, "_occurrence_",lubridate::today(),".csv"), fileEncoding = "UTF-8", row.names = F, na = "")
 ```
