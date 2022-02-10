@@ -138,7 +138,7 @@
 
 \title{Darwin Core Guide}
 \author{\href{https://github.com/ioos/bio_data_guide/graphs/contributors}{Standardizing Marine Biological Data Working Group}}
-\date{2022-02-04}
+\date{2022-02-10}
 
 \begin{document}
 \maketitle
@@ -1032,7 +1032,7 @@ Print session information below in case necessary for future reference
 ## 
 ## other attached packages:
 ##  [1] worrms_0.4.2    magrittr_2.0.2  knitr_1.37      lubridate_1.8.0
-##  [5] here_1.0.1      forcats_0.5.1   stringr_1.4.0   dplyr_1.0.7    
+##  [5] here_1.0.1      forcats_0.5.1   stringr_1.4.0   dplyr_1.0.8    
 ##  [9] purrr_0.3.4     readr_2.1.2     tidyr_1.2.0     tibble_3.1.6   
 ## [13] ggplot2_3.3.5   tidyverse_1.3.1
 ## 
@@ -1040,7 +1040,7 @@ Print session information below in case necessary for future reference
 ##  [1] Rcpp_1.0.8       assertthat_0.2.1 rprojroot_2.0.2  digest_0.6.29   
 ##  [5] utf8_1.2.2       R6_2.5.1         cellranger_1.1.0 backports_1.4.1 
 ##  [9] reprex_2.0.1     evaluate_0.14    httr_1.4.2       pillar_1.7.0    
-## [13] rlang_1.0.0      curl_4.3.2       readxl_1.3.1     rstudioapi_0.13 
+## [13] rlang_1.0.1      curl_4.3.2       readxl_1.3.1     rstudioapi_0.13 
 ## [17] jquerylib_0.1.4  rmarkdown_2.11   urltools_1.7.3   triebeard_0.3.0 
 ## [21] bit_4.0.4        munsell_0.5.0    broom_0.7.12     compiler_4.1.1  
 ## [25] modelr_0.1.8     xfun_0.29        pkgconfig_2.0.3  htmltools_0.5.2 
@@ -1054,6 +1054,237 @@ Print session information below in case necessary for future reference
 ## [57] fastmap_1.1.0    yaml_2.2.2       colorspace_2.0-2 rvest_1.0.2     
 ## [61] haven_2.4.3
 \end{verbatim}
+
+\hypertarget{trawl-data}{%
+\section{Trawl Data}\label{trawl-data}}
+
+One of the more common datasets that can be standardized to Darwin Core and integrated within OBIS is catch data from e.g.~a trawl sampling event, or a zooplankton net tow. Of special concern here are datasets that include both a total (species-specific) catch weight, in addition to individual measurements (for a subset of the overall data). In this case, through our standardization to Darwin Core, we want to ensure that data users understand that the individual measurements are a part of, or subset of, the overall (species-specific) record, whilst at the same time ensure that data providers are not duplicating occurrence records to OBIS.
+
+The GitHub issue related to application is can be found \href{https://github.com/iobis/env-data/issues/10}{here}
+
+\hypertarget{workflow-overview}{%
+\section{Workflow Overview}\label{workflow-overview}}
+
+In our current setup, this relationship between the overall catch data and subsetted information is provided in the \href{https://tools.gbif.org/dwca-validator/extension.do?id=dwc:ResourceRelationship}{resourceRelationship} extension. This extension \emph{cannot} currently be harvested by GBIF. The required terms for this extension are \texttt{resourceID}, \texttt{relatedResourceID}, \texttt{resourceRelationshipID} and \texttt{relationshipOfResource}. The \texttt{relatedResourceID} here refers to the \emph{object} of the relationship, whereas the \texttt{resourceID} refers to the \emph{subject} of the relationship:
+
+\begin{itemize}
+\tightlist
+\item
+  resourceRelationshipID: a unique identifier for the relationship between one resource (the subject) and another (relatedResource, object).
+\item
+  resourceID: a unique identifier for the resource that is the subject of the relationship.
+\item
+  relatedResourceID: a unique identifier for the resource that is the object of the relationship.
+\item
+  relationshipOfResource: The relationship of the subject (identified by the resourceID) to the object (relatedResourceID). The relationshipOfResource is a free text field.
+\end{itemize}
+
+A few resources have been published to OBIS that contain the resourceRelationship extension (examples). Here, I'll lay out the process and coding used for the \href{http://ipt.iobis.org/obiscanada/resource?r=trawl-catch-and-species-abundance-from-the-2019-gulf-of-alaska-international-year-of-the-salmon-expedition}{Trawl Catch and Species Abundance from the 2019 Gulf of Alaska International Year of the Salmon Expedition}. In the following code chunks some details are omitted to improve the readability - the overall code to standardize the catch data can be found \href{https://github.com/HakaiInstitute/iys-oos/blob/develop/datasets/GoA_2019/Trawl/2019/data_wrangle_trawl2019.Rmd}{here}. This dataset includes species-specific total catch data at multiple stations (sampling events). From each catch, individual measurements were also taken. Depending on the number of individual caught in the trawl, this was either the total number of species individuals caught, or only a subset (in case of large numbers of individuals caught).
+
+In this specific data record, we created a single Event Core with three extensions: an \emph{occurrence} extension, \emph{measurement or fact} extension, and the \emph{resourceRelationship} extension. However, in this walk-through I'll only touch on the Event Core, occurrence extension and resourceRelationship extension.
+
+The trawl data is part of a larger project collecting various data types related to salmon ocean ecology. Therefore, in our Event Core we nested information related to the sampling event in the specific layer. (include a visual representation of the schema). Prior to creating the Event Core, we ensured that e.g.~dates and times followed the correct ISO-8601 standards, and converted to the correct time zone.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Time is recorded numerically (1037 instead of 10:37), so need to change these columns:}
+\NormalTok{trawl2019}\SpecialCharTok{$}\NormalTok{END\_DEPLOYMENT\_TIME }\OtherTok{\textless{}{-}} \FunctionTok{substr}\NormalTok{(}\FunctionTok{as.POSIXct}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"\%04.0f"}\NormalTok{, trawl2019}\SpecialCharTok{$}\NormalTok{END\_DEPLOYMENT\_TIME), }\AttributeTok{format =} \StringTok{"\%H\%M"}\NormalTok{), }\DecValTok{12}\NormalTok{, }\DecValTok{16}\NormalTok{)}
+\NormalTok{trawl2019}\SpecialCharTok{$}\NormalTok{BEGIN\_RETRIEVAL\_TIME }\OtherTok{\textless{}{-}} \FunctionTok{substr}\NormalTok{(}\FunctionTok{as.POSIXct}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"\%04.0f"}\NormalTok{, trawl2019}\SpecialCharTok{$}\NormalTok{BEGIN\_RETRIEVAL\_TIME), }\AttributeTok{format =} \StringTok{"\%H\%M"}\NormalTok{), }\DecValTok{12}\NormalTok{, }\DecValTok{16}\NormalTok{)}
+\CommentTok{\# Additionally, the vessel time is recorded in \textquotesingle{}Vladivostok\textquotesingle{} according to the metadata tab. This has to be converted to UTC.  }
+\NormalTok{trawl2019 }\OtherTok{\textless{}{-}}\NormalTok{ trawl2019 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{eventDate\_start =} \FunctionTok{format\_iso\_8601}\NormalTok{(}\FunctionTok{as.POSIXct}\NormalTok{(}\FunctionTok{paste}\NormalTok{(EVENT\_DATE\_START, END\_DEPLOYMENT\_TIME),}
+                                                      \AttributeTok{tz =} \StringTok{"Asia/Vladivostok"}\NormalTok{)),}
+         \AttributeTok{eventDate\_start =} \FunctionTok{str\_replace}\NormalTok{(eventDate\_start, }\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{+00:00"}\NormalTok{, }\StringTok{"Z"}\NormalTok{),}
+         \AttributeTok{eventDate\_finish =} \FunctionTok{format\_iso\_8601}\NormalTok{(}\FunctionTok{as.POSIXct}\NormalTok{(}\FunctionTok{paste}\NormalTok{(EVENT\_DATE\_FINISH, BEGIN\_RETRIEVAL\_TIME),}
+                                                       \AttributeTok{tz =} \StringTok{"Asia/Vladivostok"}\NormalTok{)),}
+         \AttributeTok{eventDate\_finish =} \FunctionTok{str\_replace}\NormalTok{(eventDate\_finish, }\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{+00:00"}\NormalTok{, }\StringTok{"Z"}\NormalTok{),}
+         \AttributeTok{eventDate =} \FunctionTok{paste}\NormalTok{(eventDate\_start, eventDate\_finish, }\AttributeTok{sep =} \StringTok{"/"}\NormalTok{),}
+         \AttributeTok{project =} \StringTok{"IYS"}\NormalTok{,}
+         \AttributeTok{cruise =} \FunctionTok{paste}\NormalTok{(project, }\StringTok{"GoA2019"}\NormalTok{, }\AttributeTok{sep =} \StringTok{":"}\NormalTok{), }
+         \AttributeTok{station =} \FunctionTok{paste}\NormalTok{(cruise, TOW\_NUMBER, }\AttributeTok{sep=}\StringTok{":Stn"}\NormalTok{),}
+         \AttributeTok{trawl =} \FunctionTok{paste}\NormalTok{(station, }\StringTok{"trawl"}\NormalTok{, }\AttributeTok{sep=}\StringTok{":"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Then we created the various layers of our Event Core. We created these layers/data frames from two separate datasets that data are pulled from - one dataset that contains the \emph{overall} catch data, and one dataset that contains the \emph{specimen} data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trawl2019\_allCatch }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"Trawl"}\NormalTok{, }\StringTok{"2019"}\NormalTok{, }\StringTok{"raw\_data"}\NormalTok{, }
+                                      \StringTok{"2019\_GoA\_Fish\_Trawl\_catchdata.xlsx"}\NormalTok{), }\AttributeTok{sheet =} \StringTok{"CATCH\_FINAL"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{project =} \StringTok{"IYS"}\NormalTok{,}
+         \AttributeTok{cruise =} \FunctionTok{paste}\NormalTok{(project, }\StringTok{"GoA2019"}\NormalTok{, }\AttributeTok{sep =} \StringTok{":"}\NormalTok{),}
+         \AttributeTok{station =} \FunctionTok{paste}\NormalTok{(cruise, }\StringTok{\textasciigrave{}}\AttributeTok{TOW\_NUMBER (number)}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{sep =} \StringTok{":Stn"}\NormalTok{),}
+         \AttributeTok{trawl =} \FunctionTok{paste}\NormalTok{(station, }\StringTok{"trawl"}\NormalTok{, }\AttributeTok{sep =} \StringTok{":"}\NormalTok{))}
+
+\NormalTok{trawl2019\_specimen }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"Trawl"}\NormalTok{, }\StringTok{"2019"}\NormalTok{, }\StringTok{"raw\_data"}\NormalTok{, }\StringTok{"2019\_GoA\_Fish\_Specimen\_data.xlsx"}\NormalTok{), }
+                                 \AttributeTok{sheet =} \StringTok{"SPECIMEN\_FINAL"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{project =} \StringTok{"IYS"}\NormalTok{,}
+         \AttributeTok{cruise =} \FunctionTok{paste}\NormalTok{(project, }\StringTok{"GoA2019"}\NormalTok{, }\AttributeTok{sep =} \StringTok{":"}\NormalTok{),}
+         \AttributeTok{station =} \FunctionTok{paste}\NormalTok{(cruise, TOW\_NUMBER, }\AttributeTok{sep =} \StringTok{":Stn"}\NormalTok{),}
+         \AttributeTok{trawl =} \FunctionTok{paste}\NormalTok{(station, }\StringTok{"trawl"}\NormalTok{, }\AttributeTok{sep =} \StringTok{":"}\NormalTok{),}
+         \AttributeTok{sample =} \FunctionTok{paste}\NormalTok{(trawl, }\StringTok{"sample"}\NormalTok{, }\AttributeTok{sep =} \StringTok{":"}\NormalTok{),}
+         \AttributeTok{sample =} \FunctionTok{paste}\NormalTok{(sample, }\FunctionTok{row\_number}\NormalTok{(), }\AttributeTok{sep =} \StringTok{""}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Next we created the Event Core, ensuring that we connect the data to the right layer (i.e.~date and time should be connected to the layer associated with the sampling event). Please note that because we are creating multiple layers and nesting information, and then at a later stage combining different tables, this results in cells being populated with \texttt{NA}. These have to be removed prior to publishing the Event Core through the IPT.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trawl2019\_project }\OtherTok{\textless{}{-}}\NormalTok{ trawl2019 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\AttributeTok{eventID =}\NormalTok{ project) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{distinct}\NormalTok{(eventID) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{type =} \StringTok{"project"}\NormalTok{)}
+
+\NormalTok{trawl2019\_cruise }\OtherTok{\textless{}{-}}\NormalTok{ trawl2019 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\AttributeTok{eventID =}\NormalTok{ cruise,}
+         \AttributeTok{parentEventID =}\NormalTok{ project) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{distinct}\NormalTok{(eventID, }\AttributeTok{.keep\_all =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{type =} \StringTok{"cruise"}\NormalTok{)}
+
+\NormalTok{trawl2019\_station }\OtherTok{\textless{}{-}}\NormalTok{ trawl2019 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\AttributeTok{eventID =}\NormalTok{ station,}
+         \AttributeTok{parentEventID =}\NormalTok{ cruise) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{distinct}\NormalTok{(eventID, }\AttributeTok{.keep\_all =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{type =} \StringTok{"station"}\NormalTok{)}
+
+\CommentTok{\# The coordinates associated to the trawl need to be presented in a LINESTRING.}
+\CommentTok{\# END\_LONGITUDE\_DD needs to be inverted (has to be between {-}180 and 180, inclusive). }
+\NormalTok{trawl2019\_coordinates }\OtherTok{\textless{}{-}}\NormalTok{ trawl2019 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\AttributeTok{eventID =}\NormalTok{ trawl,}
+\NormalTok{         START\_LATITUDE\_DD,}
+\NormalTok{         longitude,}
+\NormalTok{         END\_LATITUDE\_DD,}
+\NormalTok{         END\_LONGITUDE\_DD) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{END\_LONGITUDE\_DD =}\NormalTok{ END\_LONGITUDE\_DD }\SpecialCharTok{*} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}
+         \AttributeTok{footprintWKT =} \FunctionTok{paste}\NormalTok{(}\StringTok{"LINESTRING ("}\NormalTok{, longitude, START\_LATITUDE\_DD, }\StringTok{","}\NormalTok{, }
+\NormalTok{                              END\_LONGITUDE\_DD, END\_LATITUDE\_DD, }\StringTok{")"}\NormalTok{)) }
+\NormalTok{trawl2019\_linestring }\OtherTok{\textless{}{-}}\NormalTok{ obistools}\SpecialCharTok{::}\FunctionTok{calculate\_centroid}\NormalTok{(trawl2019\_coordinates}\SpecialCharTok{$}\NormalTok{footprintWKT)}
+\NormalTok{trawl2019\_linestring }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(trawl2019\_coordinates, trawl2019\_linestring) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(eventID, footprintWKT, decimalLatitude, decimalLongitude, coordinateUncertaintyInMeters)}
+
+\NormalTok{trawl2019\_trawl }\OtherTok{\textless{}{-}}\NormalTok{ trawl2019 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\AttributeTok{eventID =}\NormalTok{ trawl,}
+         \AttributeTok{parentEventID =}\NormalTok{ station,}
+\NormalTok{         eventDate,}
+\NormalTok{         year,}
+\NormalTok{         month,}
+\NormalTok{         day) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{minimumDepthInMeters =} \DecValTok{0}\NormalTok{, }\CommentTok{\# headrope was at the surface}
+         \AttributeTok{maximumDepthInMeters =}\NormalTok{ trawl2019}\SpecialCharTok{$}\NormalTok{MOUTH\_OPENING\_HEIGHT,}
+         \AttributeTok{samplingProtocol =} \StringTok{"midwater trawl"}\NormalTok{, }\CommentTok{\# when available add DOI to paper here}
+         \AttributeTok{locality =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{           trawl2019}\SpecialCharTok{$}\NormalTok{EVENT\_SUB\_TYPE }\SpecialCharTok{==} \StringTok{"Can EEZ"} \SpecialCharTok{\textasciitilde{}} \StringTok{"Canadian EEZ"}\NormalTok{),}
+         \AttributeTok{locationID =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{           trawl2019}\SpecialCharTok{$}\NormalTok{EVENT\_SUB\_TYPE }\SpecialCharTok{==} \StringTok{"Can EEZ"} \SpecialCharTok{\textasciitilde{}} \StringTok{"http://marineregions.org/mrgid/8493"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{left\_join}\NormalTok{(trawl2019\_linestring, }\AttributeTok{by =} \StringTok{"eventID"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{distinct}\NormalTok{(eventID, }\AttributeTok{.keep\_all =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{type =} \StringTok{"midwater trawl"}\NormalTok{)}
+  
+\NormalTok{trawl2019\_sample }\OtherTok{\textless{}{-}}\NormalTok{ trawl2019\_specimen }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\AttributeTok{eventID =}\NormalTok{ sample,}
+         \AttributeTok{parentEventID =}\NormalTok{ trawl) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{distinct}\NormalTok{(eventID, }\AttributeTok{.keep\_all =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{type =} \StringTok{"individual sample"}\NormalTok{)}
+
+\NormalTok{trawl2019\_event }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(trawl2019\_project, }
+\NormalTok{                             trawl2019\_cruise,}
+\NormalTok{                             trawl2019\_station,}
+\NormalTok{                             trawl2019\_trawl,}
+\NormalTok{                             trawl2019\_sample) }
+
+\CommentTok{\# Remove NAs from the Event Core:}
+\NormalTok{trawl2019\_event }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(trawl2019\_event, as.character)}
+\NormalTok{trawl2019\_event[}\FunctionTok{is.na}\NormalTok{(trawl2019\_event)] }\OtherTok{\textless{}{-}} \StringTok{""}
+\NormalTok{trawl2019\_event }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(trawl2019\_event)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{TO DO: Add visual of e.g.~the top 10 rows of the Event Core.}
+
+Now that we created the Event Core, we create the occurrence extension. To do this, we create two separate occurrence data tables: one that includes the occurrence data for the \emph{total} catch, and one data table for the \emph{specimen} data. Finally, the Occurrence extension is created by combining these two data frames. Personally, I prefer to re-order it so it makes visual sense to me (nest the specimen occurrence records under their respective overall catch data).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trawl2019\_allCatch\_worms }\OtherTok{\textless{}{-}}\NormalTok{ worrms}\SpecialCharTok{::}\FunctionTok{wm\_records\_names}\NormalTok{(}\FunctionTok{unique}\NormalTok{(trawl2019\_allCatch}\SpecialCharTok{$}\NormalTok{scientificname))}
+\NormalTok{trawl2019\_occ }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(trawl2019\_allCatch, trawl2019\_allCatch\_worms, }\AttributeTok{by =} \StringTok{"scientificname"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{eventID =}\NormalTok{ trawl,}
+         \AttributeTok{specificEpithet =}\NormalTok{ species,}
+         \AttributeTok{scientificNameAuthorship =}\NormalTok{ authority,}
+         \AttributeTok{taxonomicStatus =}\NormalTok{ status,}
+         \AttributeTok{taxonRank =}\NormalTok{ rank,}
+         \AttributeTok{scientificName =}\NormalTok{ scientificname,}
+         \AttributeTok{scientificNameID =}\NormalTok{ lsid,}
+         \AttributeTok{individualCount =} \StringTok{\textasciigrave{}}\AttributeTok{CATCH\_COUNT (pieces)(**includes Russian expansion for some species)}\StringTok{\textasciigrave{}}\NormalTok{,}
+         \AttributeTok{occurrenceRemarks =}\NormalTok{ COMMENTS) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{occurrenceID =} \FunctionTok{paste}\NormalTok{(eventID, }\StringTok{"occ"}\NormalTok{, }\AttributeTok{sep =} \StringTok{":"}\NormalTok{),}
+         \AttributeTok{occurrenceID =} \FunctionTok{paste}\NormalTok{(occurrenceID, }\FunctionTok{row\_number}\NormalTok{(), }\AttributeTok{sep =} \StringTok{":"}\NormalTok{),}
+         \AttributeTok{occurrenceStatus =} \StringTok{"present"}\NormalTok{,}
+         \AttributeTok{sex =} \StringTok{""}\NormalTok{)}
+
+\NormalTok{trawl2019\_catch\_ind\_worms }\OtherTok{\textless{}{-}}\NormalTok{ worrms}\SpecialCharTok{::}\FunctionTok{wm\_records\_names}\NormalTok{(}\FunctionTok{unique}\NormalTok{(trawl2019\_catch\_ind}\SpecialCharTok{$}\NormalTok{scientificname)) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{bind\_rows}\NormalTok{()}
+\NormalTok{trawl2019\_catch\_ind\_occ }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(trawl2019\_catch\_ind, trawl2019\_catch\_ind\_worms, }\AttributeTok{by =} \StringTok{"scientificname"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{scientificNameAuthorship =}\NormalTok{ authority,}
+         \AttributeTok{taxonomicStatus =}\NormalTok{ status,}
+         \AttributeTok{taxonRank =}\NormalTok{ rank,}
+         \AttributeTok{scientificName =}\NormalTok{ scientificname,}
+         \AttributeTok{scientificNameID =}\NormalTok{ lsid) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{occurrenceID =} \FunctionTok{paste}\NormalTok{(eventID, }\StringTok{"occ"}\NormalTok{, }\AttributeTok{sep =} \StringTok{":"}\NormalTok{),}
+         \AttributeTok{occurrenceStatus =} \StringTok{"present"}\NormalTok{,}
+         \AttributeTok{individualCount =} \DecValTok{1}\NormalTok{)}
+
+\CommentTok{\# Combine the two occurrence data frames:}
+\NormalTok{trawl2019\_occ\_ext }\OtherTok{\textless{}{-}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{bind\_rows}\NormalTok{(trawl2019\_occ\_fnl, trawl2019\_catch\_ind\_fnl)}
+
+\CommentTok{\# To re{-}order the occurrenceID, use following code:}
+\NormalTok{order }\OtherTok{\textless{}{-}}\NormalTok{ stringr}\SpecialCharTok{::}\FunctionTok{str\_sort}\NormalTok{(trawl2019\_occ\_ext}\SpecialCharTok{$}\NormalTok{occurrenceID, }\AttributeTok{numeric=}\ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{trawl2019\_occ\_ext }\OtherTok{\textless{}{-}}\NormalTok{ trawl2019\_occ\_ext[}\FunctionTok{match}\NormalTok{(order, trawl2019\_occ\_ext}\SpecialCharTok{$}\NormalTok{occurrenceID),] }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{basisOfRecord =} \StringTok{"HumanObservation"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{TO DO: Add visual of e.g.~the top 10 rows of the Occurrence extension.}
+
+\textbf{Please note} that in the \emph{overall} species-specific occurrence data frame, \emph{individualCount} was not included. This term should not be used for abundance studies, but to avoid confusion and the appearance that the specimen records are an additional observation on top of the overall catch record, the \emph{individualCount} term was left blank for the overall catch data.
+
+A resource relationship extension is created to further highlight that the individual samples in the occurrence extension are part of a larger overall catch that was also listed in the occurrence extension. In this extension, we wanted to make sure to highlight that the \emph{specimen} occurrence records are \emph{a subset of} the \emph{overall} catch data through the field \texttt{relationshipOfResource1}. Each of these relationships gets a unique \texttt{resourceRelationshipID}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trawl\_resourceRelationship }\OtherTok{\textless{}{-}}\NormalTok{ trawl2019\_occ\_ext }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(eventID, occurrenceID, scientificName) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{resourceID =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"sample"}\NormalTok{, trawl2019\_occ\_ext}\SpecialCharTok{$}\NormalTok{occurrenceID), trawl2019\_occ\_ext}\SpecialCharTok{$}\NormalTok{occurrenceID, }\ConstantTok{NA}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{eventID =} \FunctionTok{gsub}\NormalTok{(}\StringTok{":sample.*"}\NormalTok{, }\StringTok{""}\NormalTok{, trawl2019\_occ\_ext}\SpecialCharTok{$}\NormalTok{eventID)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(eventID, scientificName) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{n}\NormalTok{() }\SpecialCharTok{!=} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ungroup}\NormalTok{()}
+
+\NormalTok{trawl\_resourceRelationship }\OtherTok{\textless{}{-}}\NormalTok{ trawl\_resourceRelationship }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{relatedResourceID =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"sample"}\NormalTok{, trawl\_resourceRelationship}\SpecialCharTok{$}\NormalTok{occurrenceID), }\ConstantTok{NA}\NormalTok{, trawl\_resourceRelationship}\SpecialCharTok{$}\NormalTok{occurrenceID)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{relationshipOfResource =} \FunctionTok{ifelse}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(resourceID), }\StringTok{"is a subset of"}\NormalTok{, }\ConstantTok{NA}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{arrange}\NormalTok{(eventID, scientificName) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{fill}\NormalTok{(relatedResourceID) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(resourceID))}
+
+\NormalTok{order }\OtherTok{\textless{}{-}}\NormalTok{ stringr}\SpecialCharTok{::}\FunctionTok{str\_sort}\NormalTok{(trawl\_resourceRelationship}\SpecialCharTok{$}\NormalTok{resourceID, }\AttributeTok{numeric =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{trawl\_resourceRelationship }\OtherTok{\textless{}{-}}\NormalTok{ trawl\_resourceRelationship[}\FunctionTok{match}\NormalTok{(order, trawl\_resourceRelationship}\SpecialCharTok{$}\NormalTok{resourceID),]}
+
+\NormalTok{trawl\_resourceRelationship }\OtherTok{\textless{}{-}}\NormalTok{ trawl\_resourceRelationship }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{resourceRelationshipID =} \FunctionTok{paste}\NormalTok{(relatedResourceID, }\StringTok{"rr"}\NormalTok{, }\AttributeTok{sep =} \StringTok{":"}\NormalTok{),}
+         \AttributeTok{ID =} \FunctionTok{sprintf}\NormalTok{(}\StringTok{"\%03d"}\NormalTok{, }\FunctionTok{row\_number}\NormalTok{()),}
+         \AttributeTok{resourceRelationshipID =} \FunctionTok{paste}\NormalTok{(resourceRelationshipID, ID, }\AttributeTok{sep =} \StringTok{":"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(eventID, resourceRelationshipID, resourceID, relationshipOfResource, relatedResourceID)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{TO DO: Add visual of e.g.~the top 10 rows of the ResourceRelationship extension.}
+
+\hypertarget{faq}{%
+\subsection{FAQ}\label{faq}}
+
+\textbf{Q1}. Why not use the terms \emph{associatedOccurrence} or \emph{associatedTaxa}?
+\textbf{A}. There seems to be a movement away from the term \emph{associatedOccurrence} as the \texttt{resourceRelationship} extension has a much broader use case. Some issues that were raised on GitHub exemplify this, see e.g.~\href{https://github.com/tdwg/dwc/issues/324}{here}. \emph{associatedTaxa} is used to provide identifiers or names of taxa and the associations of an Occurrence with them. This term is not apt for establishing relationships between taxa, only between specific Occurrences of an organism with other taxa. As noted on the \href{https://dwc.tdwg.org/terms/\#dwc:associatedTaxa}{TDWG website}, \emph{{[}\ldots{]} Note that the ResourceRelationship class is an alternative means of representing associations, and with more detail.} See also e.g.~\href{https://github.com/tdwg/dwc/issues/331}{this issue}.
 
 \hypertarget{aligning-data-to-darwin-core---sampling-event-with-measurement-or-fact}{%
 \section{Aligning Data to Darwin Core - Sampling Event with Measurement or Fact}\label{aligning-data-to-darwin-core---sampling-event-with-measurement-or-fact}}
@@ -1859,7 +2090,7 @@ Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D'Agostino Mc
 Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, and Dewey Dunnington. 2021. \emph{Ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics}. \url{https://CRAN.R-project.org/package=ggplot2}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-dplyr}{}}%
-Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2021. \emph{Dplyr: A Grammar of Data Manipulation}. \url{https://CRAN.R-project.org/package=dplyr}.
+Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2022. \emph{Dplyr: A Grammar of Data Manipulation}. \url{https://CRAN.R-project.org/package=dplyr}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-tidyr}{}}%
 Wickham, Hadley, and Maximilian Girlich. 2022. \emph{Tidyr: Tidy Messy Data}. \url{https://CRAN.R-project.org/package=tidyr}.
