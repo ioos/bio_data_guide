@@ -5,7 +5,7 @@ January 9, 2022
 
 ### General information about this notebook
 Script to process the Texas Parks and Wildlife Department (TPWD) Aransas Bay bag seine data from
-the format used by the Houston Advanced Research Center (HARC) for bays in Texas. Taxonomy was processed using a separate script (TPWD_Taxonomy.R) using a taxa list pulled from the pdf "2009 Resource Monitoring Operations Manual". All original data, processed data and scripts are stored on [an item](https://www.sciencebase.gov/catalog/item/53a887f4e4b075096c60cfdd) in USGS ScienceBase. 
+the format used by the Houston Advanced Research Center (HARC) for bays in Texas. Taxonomy was processed using a separate script ([TPWD_Taxonomy.R](https://www.sciencebase.gov/catalog/file/get/53a887f4e4b075096c60cfdd?f=__disk__ab%2F6e%2Ff8%2Fab6ef8426ea328cb6c54d13ee7b6b7ce791d23f8)) using a taxa list pulled from the pdf "[2009 Resource Monitoring Operations Manual](https://www.sciencebase.gov/catalog/file/get/53a887f4e4b075096c60cfdd?f=__disk__d9%2Ff6%2F46%2Fd9f646b40cf7c6cc3fa77d1e7aebe88f46cf7145)". All original data, processed data and scripts are stored on [an item](https://www.sciencebase.gov/catalog/item/53a887f4e4b075096c60cfdd) in USGS ScienceBase. 
 
 
 ```r
@@ -20,9 +20,11 @@ library(readr)
 BagSeine <- read.csv("https://www.sciencebase.gov/catalog/file/get/53a887f4e4b075096c60cfdd?f=__disk__6e%2F6a%2F67%2F6e6a678c41cf928e025fd30339789cc8b893a815&allowOpen=true", stringsAsFactors=FALSE, strip.white = TRUE)
 ```
 
-Note that if not already done you'll need to run the TPWD_Taxonomy.R script to get the taxaList file squared away or load the taxonomy file to the World Register of Marine Species Taxon Match Tool https://www.marinespecies.org/aphia.php?p=match
+Note that if not already done you'll need to run the [TPWD_Taxonomy.R](https://www.sciencebase.gov/catalog/file/get/53a887f4e4b075096c60cfdd?f=__disk__ab%2F6e%2Ff8%2Fab6ef8426ea328cb6c54d13ee7b6b7ce791d23f8) script to get the taxaList file squared away or load the taxonomy file to the World Register of Marine Species Taxon Match Tool https://www.marinespecies.org/aphia.php?p=match
 
-To start we will create the Darwin Core Event file. This is the file that will have all the information about the sampling event such as date, location, depth, sampling protocol. Basically anything about the cruise or the way the sampling was done will go in this file. You can see all the Darwin Core terms that are part of the event file here http://tools.gbif.org/dwca-validator/extension.do?id=dwc:Event.
+### Event file
+
+To start we will create the Darwin Core **Event** file. This is the file that will have all the information about the sampling event such as date, location, depth, sampling protocol. Basically anything about the cruise or the way the sampling was done will go in this file. You can see all the Darwin Core terms that are part of the event file here http://tools.gbif.org/dwca-validator/extension.do?id=dwc:Event.
 
 The original format for these TPWD HARC files has all of the information associated as the event in the first approximately 50 columns and then all of the information about the occurrence (species) as columns for each species. We will need to start by limiting to the event information only.
 ```r
@@ -126,7 +128,10 @@ event <- event %>%
          sampleSizeValue = surface_area_num,
          eventDate = CompDate)
 ```
-The next file we need to create is the Occurrence file. This file includes all the information about the species that were observed. An occurrence in Darwin Core is the intersection of an organism at a time and a place. We have already done the work to identify the time and place in the event file so we don't need to do that again here. What we do need to is identify all the information about the organisms. Another piece of information that goes in here is basisOfRecord which is a required field and has a controlled vocabulary. For the data we work with you'll usually put "HumanObservation" or "MachineObservation". If it's eDNA data you'll use "MaterialSample". If your data are part of a museum collection you'll use "PreservedSpecimen". 
+
+### Occurrence file
+
+The next file we need to create is the **Occurrence** file. This file includes all the information about the species that were observed. An occurrence in Darwin Core is the intersection of an organism at a time and a place. We have already done the work to identify the time and place in the event file so we don't need to do that again here. What we do need to is identify all the information about the organisms. Another piece of information that goes in here is basisOfRecord which is a required field and has a controlled vocabulary. For the data we work with you'll usually put `HumanObservation` or `MachineObservation`. If it's eDNA data you'll use `MaterialSample`. If your data are part of a museum collection you'll use `PreservedSpecimen`. 
 
 Important to note that there is overlap in the Darwin Core terms that "allowed" to be in the event file and in the occurrence file. This is because data can be submitted as "Occurrence Only" where you don't have a separate event file. In that case, the location and date information will need to be included in the occurrence file. Since we are formatting this dataset as a sampling event we will not include location and date information in the occurrence file. To see all the Darwin Core terms that can go in the occurrence file go here https://tools.gbif.org/dwca-validator/extension.do?id=dwc:occurrence.
 
@@ -166,25 +171,27 @@ Hmisc::describe(occurrence$scientificNameID)
 lowest : urn:lsid:marinespecies.org:taxname:105792 urn:lsid:marinespecies.org:taxname:107034 urn:lsid:marinespecies.org:taxname:107379 urn:lsid:marinespecies.org:taxname:126983 urn:lsid:marinespecies.org:taxname:127089
 highest: urn:lsid:marinespecies.org:taxname:367528 urn:lsid:marinespecies.org:taxname:396707 urn:lsid:marinespecies.org:taxname:421784 urn:lsid:marinespecies.org:taxname:422069 urn:lsid:marinespecies.org:taxname:443955
 ```
-For that last line of code we are expecting to see no missing values for scientificNameID. Every row in the file should have a value in scientificNameID which should be a WoRMS LSID that look like this "urn:lsid:marinespecies.org:taxname:144531"
+For that last line of code we are expecting to see no missing values for scientificNameID. Every row in the file should have a value in scientificNameID which should be a WoRMS LSID that look like this `urn:lsid:marinespecies.org:taxname:144531`
 
-We need to create a unique ID for each row in the occurrence file. This is known as the occurrenceID and is a required term. The occurrenceID needs to be globally unique and needs to be permanent and kept in place if any updates to the dataset are made. You should not create brand new occurrenceIDs when you update a dataset. To facilitate this I like to build the occurrenceID from pieces of information available in the dataset to create a unique ID for each row in the occurrence file. For this dataset I used the eventID (Station + Date) plus the scientific name. This only works if there is only one scientific name per station per date so if you have different ages or sexes of species at the same station and date this method of creating the occurrenceID won't work for you.
+We need to create a unique ID for each row in the occurrence file. This is known as the `occurrenceID` and is a required term. The `occurrenceID` needs to be globally unique and needs to be permanent and kept in place if any updates to the dataset are made. You should not create brand new occurrenceIDs when you update a dataset. To facilitate this I like to build the `occurrenceID` from pieces of information available in the dataset to create a unique ID for each row in the occurrence file. For this dataset I used the `eventID` (Station + Date) plus the scientific name. This only works if there is only one scientific name per station per date so if you have different ages or sexes of species at the same station and date this method of creating the occurrenceID won't work for you.
 ```r
 occurrence$occurrenceID <- paste(occurrence$eventID, gsub(" ", "_",occurrence$scientificName), sep = "_")
 occurrence[1,]$occurrenceID
 [1] "Station_95_Date_09JAN1997:14:35:00.000_Atractosteus_spatula"
 ```
-For the occurrence file we only have one column to rename. We could have avoided this step if we had named it organismQuantity up above but I kept this to remind me what the data providers had called this.
+For the occurrence file we only have one column to rename. We could have avoided this step if we had named it `organismQuantity` up above but I kept this to remind me what the data providers had called this.
 ```r
 occurrence <- occurrence %>%
   rename(organismQuantity = relativeAbundance)
 ```
 
-The final file we are going to create is the extended measurement or fact extension. This is a bit like a catch all for any measurements or facts that are not captured in Darwin Core. Darwin Core does not have terms for things like temperature, salinity, gear type, cruise  number, length, weight, etc. We are going to create a long format file where each of these is a set of rows in the extended measurement or fact file. You can find all the terms in this extension here https://tools.gbif.org/dwca-validator/extension.do?id=http://rs.iobis.org/obis/terms/ExtendedMeasurementOrFact. 
+### Extended Measurement or Fact extension file
+
+The final file we are going to create is the **Extended Measurement or Fact extension (emof)**. This is a bit like a catch all for any measurements or facts that are not captured in Darwin Core. Darwin Core does not have terms for things like temperature, salinity, gear type, cruise  number, length, weight, etc. We are going to create a long format file where each of these is a set of rows in the extended measurement or fact file. You can find all the terms in this extension here https://tools.gbif.org/dwca-validator/extension.do?id=http://rs.iobis.org/obis/terms/ExtendedMeasurementOrFact. 
 
 OBIS uses the BODC NERC Vocabulary Server to provide explicit definitions for each of the measurements https://vocab.nerc.ac.uk/search_nvs/.
 
-For this dataset I was only able to find code definitions provided by the data providers for some of the measurements. I included the ones that I was able to find code definitions and left out any that I couldn't find those for. The ones I was able to find code definitions for were Total.Of.Samples_Count, gear_size, start_wind_speed_num, start_barometric_pressure_num, start_temperature_num, start_salinity_num, start_dissolved_oxygen_num. All the others I left out.
+For this dataset I was only able to find code definitions provided by the data providers for some of the measurements. I included the ones that I was able to find code definitions and left out any that I couldn't find those for. The ones I was able to find code definitions for were `Total.Of.Samples_Count`, `gear_size`, `start_wind_speed_num`, `start_barometric_pressure_num`, `start_temperature_num`, `start_salinity_num`, `start_dissolved_oxygen_num`. All the others I left out.
 
 
 ```r
@@ -330,7 +337,9 @@ tail(mof)
 write.csv(mof, file = (paste0(event[1,]$datasetID, "_mof_", lubridate::today(),".csv")), fileEncoding = "UTF-8", row.names = F, na = "")
 ```
 
-Now that we have all of our files created we can clean up the event and occurrence files to remove the columns that are not following Darwin Core. We had to leave the extra bits in before because we needed them to create the mof file above.
+### Cleaning up Event and Occurrence files
+
+Now that we have all of our files created we can clean up the **Event** and **Occurrence** files to remove the columns that are not following Darwin Core. We had to leave the extra bits in before because we needed them to create the **emof** file above.
 
 
 ```r
