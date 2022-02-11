@@ -4,3 +4,4 @@ Some applications are demonstrated in this chapter.
 
 ```{r, child=c("../datasets/hakai_salmon_data/salmon-darwin-core-remap.Rmd", "../datasets/hakai_seagrass_data/hakaiSeagrassToDWC.Rmd", "../datasets/trawl_catch_data/trawl-catch-data.Rmd", "../datasets/example_script_with_fake_data/IOOS_DMAC_DataToDwC_Notebook_event.md"),echo=TRUE,eval=TRUE}
 ```
+
