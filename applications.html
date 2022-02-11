@@ -24,7 +24,7 @@
 <meta name="author" content="Standardizing Marine Biological Data Working Group" />
 
 
-<meta name="date" content="2022-02-10" />
+<meta name="date" content="2022-02-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -203,15 +203,15 @@ div.csl-indent {
 <li class="chapter" data-level="2.2.2" data-path="applications.html"><a href="applications.html#convert-data-to-darwin-core---extended-measurement-or-fact-format"><i class="fa fa-check"></i><b>2.2.2</b> Convert Data to Darwin Core - Extended Measurement or Fact format</a></li>
 <li class="chapter" data-level="2.2.3" data-path="applications.html"><a href="applications.html#session-info"><i class="fa fa-check"></i><b>2.2.3</b> Session Info</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="applications.html"><a href="applications.html#trawl-data"><i class="fa fa-check"></i><b>2.3</b> Trawl Data</a></li>
-<li class="chapter" data-level="2.4" data-path="applications.html"><a href="applications.html#workflow-overview"><i class="fa fa-check"></i><b>2.4</b> Workflow Overview</a>
+<li class="chapter" data-level="2.3" data-path="applications.html"><a href="applications.html#trawl-data"><i class="fa fa-check"></i><b>2.3</b> Trawl Data</a>
 <ul>
-<li class="chapter" data-level="2.4.1" data-path="applications.html"><a href="applications.html#faq"><i class="fa fa-check"></i><b>2.4.1</b> FAQ</a></li>
+<li class="chapter" data-level="2.3.1" data-path="applications.html"><a href="applications.html#workflow-overview"><i class="fa fa-check"></i><b>2.3.1</b> Workflow Overview</a></li>
+<li class="chapter" data-level="2.3.2" data-path="applications.html"><a href="applications.html#faq"><i class="fa fa-check"></i><b>2.3.2</b> FAQ</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="applications.html"><a href="applications.html#aligning-data-to-darwin-core---sampling-event-with-measurement-or-fact"><i class="fa fa-check"></i><b>2.5</b> Aligning Data to Darwin Core - Sampling Event with Measurement or Fact</a>
+<li class="chapter" data-level="2.4" data-path="applications.html"><a href="applications.html#aligning-data-to-darwin-core---sampling-event-with-measurement-or-fact"><i class="fa fa-check"></i><b>2.4</b> Aligning Data to Darwin Core - Sampling Event with Measurement or Fact</a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="applications.html"><a href="applications.html#general-information-about-this-notebook"><i class="fa fa-check"></i><b>2.5.1</b> General information about this notebook</a></li>
-<li class="chapter" data-level="2.5.2" data-path="applications.html"><a href="applications.html#taxonomic-name-matching"><i class="fa fa-check"></i><b>2.5.2</b> Taxonomic Name Matching</a></li>
+<li class="chapter" data-level="2.4.1" data-path="applications.html"><a href="applications.html#general-information-about-this-notebook"><i class="fa fa-check"></i><b>2.4.1</b> General information about this notebook</a></li>
+<li class="chapter" data-level="2.4.2" data-path="applications.html"><a href="applications.html#taxonomic-name-matching"><i class="fa fa-check"></i><b>2.4.2</b> Taxonomic Name Matching</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="dealing-with-errors.html"><a href="dealing-with-errors.html"><i class="fa fa-check"></i><b>3</b> Dealing with errors</a>
@@ -844,9 +844,8 @@ compliant datasets</p>
 <h2><span class="header-section-number">2.3</span> Trawl Data</h2>
 <p>One of the more common datasets that can be standardized to Darwin Core and integrated within OBIS is catch data from e.g. a trawl sampling event, or a zooplankton net tow. Of special concern here are datasets that include both a total (species-specific) catch weight, in addition to individual measurements (for a subset of the overall data). In this case, through our standardization to Darwin Core, we want to ensure that data users understand that the individual measurements are a part of, or subset of, the overall (species-specific) record, whilst at the same time ensure that data providers are not duplicating occurrence records to OBIS.</p>
 <p>The GitHub issue related to application is can be found <a href="https://github.com/iobis/env-data/issues/10">here</a></p>
-</div>
-<div id="workflow-overview" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Workflow Overview</h2>
+<div id="workflow-overview" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Workflow Overview</h3>
 <p>In our current setup, this relationship between the overall catch data and subsetted information is provided in the <a href="https://tools.gbif.org/dwca-validator/extension.do?id=dwc:ResourceRelationship">resourceRelationship</a> extension. This extension <em>cannot</em> currently be harvested by GBIF. The required terms for this extension are <code>resourceID</code>, <code>relatedResourceID</code>, <code>resourceRelationshipID</code> and <code>relationshipOfResource</code>. The <code>relatedResourceID</code> here refers to the <em>object</em> of the relationship, whereas the <code>resourceID</code> refers to the <em>subject</em> of the relationship:</p>
 <ul>
 <li>resourceRelationshipID: a unique identifier for the relationship between one resource (the subject) and another (relatedResource, object).</li>
@@ -1019,18 +1018,19 @@ compliant datasets</p>
 <span id="cb31-22"><a href="applications.html#cb31-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">resourceRelationshipID =</span> <span class="fu">paste</span>(resourceRelationshipID, ID, <span class="at">sep =</span> <span class="st">&quot;:&quot;</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb31-23"><a href="applications.html#cb31-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(eventID, resourceRelationshipID, resourceID, relationshipOfResource, relatedResourceID)</span></code></pre></div>
 <p><strong>TO DO: Add visual of e.g. the top 10 rows of the ResourceRelationship extension.</strong></p>
-<div id="faq" class="section level3" number="2.4.1">
-<h3><span class="header-section-number">2.4.1</span> FAQ</h3>
+</div>
+<div id="faq" class="section level3" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> FAQ</h3>
 <p><strong>Q1</strong>. Why not use the terms <em>associatedOccurrence</em> or <em>associatedTaxa</em>?
 <strong>A</strong>. There seems to be a movement away from the term <em>associatedOccurrence</em> as the <code>resourceRelationship</code> extension has a much broader use case. Some issues that were raised on GitHub exemplify this, see e.g. <a href="https://github.com/tdwg/dwc/issues/324">here</a>. <em>associatedTaxa</em> is used to provide identifiers or names of taxa and the associations of an Occurrence with them. This term is not apt for establishing relationships between taxa, only between specific Occurrences of an organism with other taxa. As noted on the <a href="https://dwc.tdwg.org/terms/#dwc:associatedTaxa">TDWG website</a>, <em>[…] Note that the ResourceRelationship class is an alternative means of representing associations, and with more detail.</em> See also e.g. <a href="https://github.com/tdwg/dwc/issues/331">this issue</a>.</p>
 </div>
 </div>
-<div id="aligning-data-to-darwin-core---sampling-event-with-measurement-or-fact" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span> Aligning Data to Darwin Core - Sampling Event with Measurement or Fact</h2>
+<div id="aligning-data-to-darwin-core---sampling-event-with-measurement-or-fact" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Aligning Data to Darwin Core - Sampling Event with Measurement or Fact</h2>
 <p>Abby Benson<br />
 October 8,2019</p>
-<div id="general-information-about-this-notebook" class="section level3" number="2.5.1">
-<h3><span class="header-section-number">2.5.1</span> General information about this notebook</h3>
+<div id="general-information-about-this-notebook" class="section level3" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> General information about this notebook</h3>
 <p>This notebook was created for the IOOS DMAC Code Sprint Biological Data Session
 The data in this notebook were created specifically as an example and meant solely to be
 illustrative of the process for aligning data to the biological data standard - Darwin Core.
@@ -1143,8 +1143,8 @@ per site.</p>
 <p>Finally we’ll add required information that’s missing.</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="applications.html#cb47-1" aria-hidden="true" tabindex="-1"></a>occurrence<span class="sc">$</span>occurrenceStatus <span class="ot">&lt;-</span>  <span class="fu">ifelse</span> (occurrence<span class="sc">$</span><span class="st">`</span><span class="at">percent cover</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">0</span>, <span class="st">&quot;absent&quot;</span>, <span class="st">&quot;present&quot;</span>)</span></code></pre></div>
 </div>
-<div id="taxonomic-name-matching" class="section level3" number="2.5.2">
-<h3><span class="header-section-number">2.5.2</span> Taxonomic Name Matching</h3>
+<div id="taxonomic-name-matching" class="section level3" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> Taxonomic Name Matching</h3>
 <p>A requirement for OBIS is that all scientific names match to the World Register of
 Marine Species (WoRMS) and a scientificNameID is included. A scientificNameID looks
 like this “<a href="urn:lsid:marinespecies.org:taxname:275730" class="uri">urn:lsid:marinespecies.org:taxname:275730</a>” with the last digits after

@@ -138,7 +138,7 @@
 
 \title{Darwin Core Guide}
 \author{\href{https://github.com/ioos/bio_data_guide/graphs/contributors}{Standardizing Marine Biological Data Working Group}}
-\date{2022-02-10}
+\date{2022-02-11}
 
 \begin{document}
 \maketitle
@@ -1063,7 +1063,7 @@ One of the more common datasets that can be standardized to Darwin Core and inte
 The GitHub issue related to application is can be found \href{https://github.com/iobis/env-data/issues/10}{here}
 
 \hypertarget{workflow-overview}{%
-\section{Workflow Overview}\label{workflow-overview}}
+\subsection{Workflow Overview}\label{workflow-overview}}
 
 In our current setup, this relationship between the overall catch data and subsetted information is provided in the \href{https://tools.gbif.org/dwca-validator/extension.do?id=dwc:ResourceRelationship}{resourceRelationship} extension. This extension \emph{cannot} currently be harvested by GBIF. The required terms for this extension are \texttt{resourceID}, \texttt{relatedResourceID}, \texttt{resourceRelationshipID} and \texttt{relationshipOfResource}. The \texttt{relatedResourceID} here refers to the \emph{object} of the relationship, whereas the \texttt{resourceID} refers to the \emph{subject} of the relationship:
 
