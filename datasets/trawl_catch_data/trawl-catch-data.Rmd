@@ -15,7 +15,7 @@ One of the more common datasets that can be standardized to Darwin Core and inte
 
 The GitHub issue related to application is can be found [here](https://github.com/iobis/env-data/issues/10)
 
-## Workflow Overview
+### Workflow Overview
 
 In our current setup, this relationship between the overall catch data and subsetted information is provided in the [resourceRelationship](https://tools.gbif.org/dwca-validator/extension.do?id=dwc:ResourceRelationship) extension. This extension _cannot_ currently be harvested by GBIF. The required terms for this extension are `resourceID`, `relatedResourceID`, `resourceRelationshipID` and `relationshipOfResource`. The `relatedResourceID` here refers to the _object_ of the relationship, whereas the `resourceID` refers to the _subject_ of the relationship:
 
