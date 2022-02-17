@@ -170,469 +170,486 @@ There are a few concepts necessary to make this possible such as standard data s
 
 Some applications are demonstrated in this chapter.
 
-\hypertarget{aligning-data-to-darwin-core---sampling-event-with-measurement-or-fact}{%
-\section{Aligning Data to Darwin Core - Sampling Event with Measurement or Fact}\label{aligning-data-to-darwin-core---sampling-event-with-measurement-or-fact}}
+\hypertarget{aligning-data-to-darwin-core---event-core-with-extended-measurement-or-fact}{%
+\section{Aligning Data to Darwin Core - Event Core with Extended Measurement or Fact}\label{aligning-data-to-darwin-core---event-core-with-extended-measurement-or-fact}}
 
 Abby Benson\\
-October 8,2019
+January 9, 2022
 
 \hypertarget{general-information-about-this-notebook}{%
 \subsection{General information about this notebook}\label{general-information-about-this-notebook}}
 
-This notebook was created for the IOOS DMAC Code Sprint Biological Data Session
-The data in this notebook were created specifically as an example and meant solely to be
-illustrative of the process for aligning data to the biological data standard - Darwin Core.
-These data should not be considered actually occurrences of species and any measurements
-are also contrived. This notebook is meant to provide a step by step process for taking
-original data and aligning it to Darwin Core.
+Script to process the Texas Parks and Wildlife Department (TPWD) Aransas Bay bag seine data from
+the format used by the Houston Advanced Research Center (HARC) for bays in Texas. Taxonomy was processed using a separate script (\href{https://www.sciencebase.gov/catalog/file/get/53a887f4e4b075096c60cfdd?f=__disk__ab\%2F6e\%2Ff8\%2Fab6ef8426ea328cb6c54d13ee7b6b7ce791d23f8}{TPWD\_Taxonomy.R}) using a taxa list pulled from the pdf ``\href{https://www.sciencebase.gov/catalog/file/get/53a887f4e4b075096c60cfdd?f=__disk__d9\%2Ff6\%2F46\%2Fd9f646b40cf7c6cc3fa77d1e7aebe88f46cf7145}{2009 Resource Monitoring Operations Manual}''. All original data, processed data and scripts are stored on \href{https://www.sciencebase.gov/catalog/item/53a887f4e4b075096c60cfdd}{an item} in USGS ScienceBase.
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\# Load some of the libraries}
+\FunctionTok{library}\NormalTok{(reshape2)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
 \FunctionTok{library}\NormalTok{(readr)}
-\FunctionTok{library}\NormalTok{(uuid)}
-\FunctionTok{library}\NormalTok{(dplyr)}
-
-\NormalTok{MadeUpDataForBiologicalDataTraining }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"\textasciitilde{}/OBIS/Reference Documentation/Presentations/IOOS DMAC Code Sprint/MadeUpDataForBiologicalDataTraining.csv"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## Parsed with column specification:
-## cols(
-##   date = col_character(),
-##   lat = col_double(),
-##   lon = col_double(),
-##   region = col_character(),
-##   station = col_double(),
-##   transect = col_double(),
-##   `scientific name` = col_character(),
-##   `percent cover` = col_double(),
-##   depth = col_double(),
-##   `bottom type` = col_character(),
-##   rugosity = col_double(),
-##   temperature = col_double()
-## )
-\end{verbatim}
-
-First we need to to decide if we will provide an occurrence only version of the data or
-a sampling event with measurement or facts version of the data. Occurrence only is easier
-to create. It's only one file to produce. However, several pieces of information will be
-left out if we choose that option. If we choose to do sampling event with measurement or
-fact we'll be able to capture all of the data in the file creating a lossless version.
-Here we decide to use the sampling event option to include as much information as we can.
-First let's create the eventID and occurrenceID in the original file so that information
-can be reused for all necessary files down the line.
-
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{MadeUpDataForBiologicalDataTraining}\SpecialCharTok{$}\NormalTok{eventID }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(MadeUpDataForBiologicalDataTraining}\SpecialCharTok{$}\NormalTok{region, }
-\NormalTok{                                                     MadeUpDataForBiologicalDataTraining}\SpecialCharTok{$}\NormalTok{station, }
-\NormalTok{                                                     MadeUpDataForBiologicalDataTraining}\SpecialCharTok{$}\NormalTok{transect, }\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{) }
-\NormalTok{MadeUpDataForBiologicalDataTraining}\SpecialCharTok{$}\NormalTok{occurrenceID }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{MadeUpDataForBiologicalDataTraining}\SpecialCharTok{$}\NormalTok{occurrenceID }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(MadeUpDataForBiologicalDataTraining}\SpecialCharTok{$}\NormalTok{occurrenceID, }
-                                       \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{UUIDgenerate}\NormalTok{(}\AttributeTok{use.time =} \ConstantTok{TRUE}\NormalTok{))}
+\CommentTok{\# Load the data}
+\NormalTok{BagSeine }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"https://www.sciencebase.gov/catalog/file/get/53a887f4e4b075096c60cfdd?f=\_\_disk\_\_6e\%2F6a\%2F67\%2F6e6a678c41cf928e025fd30339789cc8b893a815\&allowOpen=true"}\NormalTok{, }\AttributeTok{stringsAsFactors=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{strip.white =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-We will need to create three separate files to comply with the sampling event format.
-We'll start with the event file but we only need to include the columns that are relevant
-to the event file.
+Note that if not already done you'll need to run the \href{https://www.sciencebase.gov/catalog/file/get/53a887f4e4b075096c60cfdd?f=__disk__ab\%2F6e\%2Ff8\%2Fab6ef8426ea328cb6c54d13ee7b6b7ce791d23f8}{TPWD\_Taxonomy.R} script to get the taxaList file squared away or load the taxonomy file to the World Register of Marine Species Taxon Match Tool \url{https://www.marinespecies.org/aphia.php?p=match}
+
+\hypertarget{event-file}{%
+\subsection{Event file}\label{event-file}}
+
+To start we will create the Darwin Core \textbf{Event} file. This is the file that will have all the information about the sampling event such as date, location, depth, sampling protocol. Basically anything about the cruise or the way the sampling was done will go in this file. You can see all the Darwin Core terms that are part of the event file here \url{http://tools.gbif.org/dwca-validator/extension.do?id=dwc:Event}.
+
+The original format for these TPWD HARC files has all of the information associated as the event in the first approximately 50 columns and then all of the information about the occurrence (species) as columns for each species. We will need to start by limiting to the event information only.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{event }\OtherTok{\textless{}{-}}\NormalTok{ MadeUpDataForBiologicalDataTraining[}\FunctionTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"lat"}\NormalTok{, }\StringTok{"lon"}\NormalTok{, }\StringTok{"region"}\NormalTok{, }\StringTok{"station"}\NormalTok{,}
-                                               \StringTok{"transect"}\NormalTok{, }\StringTok{"depth"}\NormalTok{, }\StringTok{"bottom type"}\NormalTok{, }\StringTok{"eventID"}\NormalTok{)]}
+\NormalTok{event }\OtherTok{\textless{}{-}}\NormalTok{ BagSeine[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{47}\NormalTok{]}
 \end{Highlighting}
 \end{Shaded}
 
-Next we need to rename any columns of data that match directly to Darwin Core. We know
-this based on our crosswalk spreadsheet CrosswalkToDarwinCore.csv
+Next there are several pieces of information that need
+1) to be added like the geodeticDatum
+2) to be pieced together from multiple columns like datasetID or
+3) minor changes like the minimum and maximum depth.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{decimalLatitude }\OtherTok{\textless{}{-}}\NormalTok{ event}\SpecialCharTok{$}\NormalTok{lat}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{decimalLongitude }\OtherTok{\textless{}{-}}\NormalTok{ event}\SpecialCharTok{$}\NormalTok{lon}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{minimumDepthInMeters }\OtherTok{\textless{}{-}}\NormalTok{ event}\SpecialCharTok{$}\NormalTok{depth}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{maximumDepthInMeters }\OtherTok{\textless{}{-}}\NormalTok{ event}\SpecialCharTok{$}\NormalTok{depth}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{habitat }\OtherTok{\textless{}{-}}\NormalTok{ event}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{bottom type}\StringTok{\textasciigrave{}}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{island }\OtherTok{\textless{}{-}}\NormalTok{ event}\SpecialCharTok{$}\NormalTok{region}
+\NormalTok{event }\OtherTok{\textless{}{-}}\NormalTok{ event }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{type =} \StringTok{"Event"}\NormalTok{,}
+         \AttributeTok{modified =}\NormalTok{ lubridate}\SpecialCharTok{::}\FunctionTok{today}\NormalTok{(),}
+         \AttributeTok{language =} \StringTok{"en"}\NormalTok{,}
+         \AttributeTok{license =} \StringTok{"http://creativecommons.org/publicdomain/zero/1.0/legalcode"}\NormalTok{,}
+         \AttributeTok{institutionCode =} \StringTok{"TPWD"}\NormalTok{,}
+         \AttributeTok{ownerInstitutionCode =} \StringTok{"HARC"}\NormalTok{,}
+         \AttributeTok{coordinateUncertaintyInMeters =} \StringTok{"100"}\NormalTok{,}
+         \AttributeTok{geodeticDatum =} \StringTok{"WGS84"}\NormalTok{,}
+         \AttributeTok{georeferenceProtocol =} \StringTok{"Handheld GPS"}\NormalTok{,}
+         \AttributeTok{country =} \StringTok{"United States"}\NormalTok{,}
+         \AttributeTok{countryCode =} \StringTok{"US"}\NormalTok{,}
+         \AttributeTok{stateProvince =} \StringTok{"Texas"}\NormalTok{,}
+         \AttributeTok{datasetID =} \FunctionTok{gsub}\NormalTok{(}\StringTok{" "}\NormalTok{, }\StringTok{"\_"}\NormalTok{, }\FunctionTok{paste}\NormalTok{(}\StringTok{"TPWD\_HARC\_Texas"}\NormalTok{, event}\SpecialCharTok{$}\NormalTok{Bay, event}\SpecialCharTok{$}\NormalTok{Gear\_Type)),}
+         \AttributeTok{eventID =} \FunctionTok{paste}\NormalTok{(}\StringTok{"Station"}\NormalTok{, event}\SpecialCharTok{$}\NormalTok{station\_code, }\StringTok{"Date"}\NormalTok{, event}\SpecialCharTok{$}\NormalTok{completion\_dttm, }\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{),}
+         \AttributeTok{sampleSizeUnit =} \StringTok{"hectares"}\NormalTok{,}
+         \AttributeTok{CompDate =}\NormalTok{ lubridate}\SpecialCharTok{::}\FunctionTok{mdy\_hms}\NormalTok{(event}\SpecialCharTok{$}\NormalTok{CompDate, }\AttributeTok{tz=}\StringTok{"America/Chicago"}\NormalTok{), }
+         \AttributeTok{StartDate =}\NormalTok{ lubridate}\SpecialCharTok{::}\FunctionTok{mdy\_hms}\NormalTok{(event}\SpecialCharTok{$}\NormalTok{StartDate, }\AttributeTok{tz=}\StringTok{"America/Chicago"}\NormalTok{),}
+         \AttributeTok{minimumDepthInMeters =} \FunctionTok{ifelse}\NormalTok{(start\_shallow\_water\_depth\_num }\SpecialCharTok{\textless{}}\NormalTok{ start\_deep\_water\_depth\_num, }
+\NormalTok{                                       start\_shallow\_water\_depth\_num, start\_deep\_water\_depth\_num),}
+         \AttributeTok{maximumDepthInMeters =} \FunctionTok{ifelse}\NormalTok{(start\_deep\_water\_depth\_num }\SpecialCharTok{\textgreater{}}\NormalTok{ start\_shallow\_water\_depth\_num,}
+\NormalTok{                                       start\_deep\_water\_depth\_num, start\_shallow\_water\_depth\_num))}
 \end{Highlighting}
 \end{Shaded}
 
-Let's see how it looks:
-
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{head}\NormalTok{(event, }\AttributeTok{n =} \DecValTok{10}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(event[,}\DecValTok{48}\SpecialCharTok{:}\DecValTok{64}\NormalTok{], }\AttributeTok{n =} \DecValTok{10}\NormalTok{)}
+\NormalTok{    type   modified language                                                    license institutionCode}
+\DecValTok{1}\NormalTok{  Event }\DecValTok{2022{-}01{-}09}\NormalTok{       en http}\SpecialCharTok{:}\ErrorTok{//}\NormalTok{creativecommons.org}\SpecialCharTok{/}\NormalTok{publicdomain}\SpecialCharTok{/}\NormalTok{zero}\SpecialCharTok{/}\FloatTok{1.0}\SpecialCharTok{/}\NormalTok{legalcode            TPWD}
+\DecValTok{2}\NormalTok{  Event }\DecValTok{2022{-}01{-}09}\NormalTok{       en http}\SpecialCharTok{:}\ErrorTok{//}\NormalTok{creativecommons.org}\SpecialCharTok{/}\NormalTok{publicdomain}\SpecialCharTok{/}\NormalTok{zero}\SpecialCharTok{/}\FloatTok{1.0}\SpecialCharTok{/}\NormalTok{legalcode            TPWD}
+\DecValTok{3}\NormalTok{  Event }\DecValTok{2022{-}01{-}09}\NormalTok{       en http}\SpecialCharTok{:}\ErrorTok{//}\NormalTok{creativecommons.org}\SpecialCharTok{/}\NormalTok{publicdomain}\SpecialCharTok{/}\NormalTok{zero}\SpecialCharTok{/}\FloatTok{1.0}\SpecialCharTok{/}\NormalTok{legalcode            TPWD}
+\DecValTok{4}\NormalTok{  Event }\DecValTok{2022{-}01{-}09}\NormalTok{       en http}\SpecialCharTok{:}\ErrorTok{//}\NormalTok{creativecommons.org}\SpecialCharTok{/}\NormalTok{publicdomain}\SpecialCharTok{/}\NormalTok{zero}\SpecialCharTok{/}\FloatTok{1.0}\SpecialCharTok{/}\NormalTok{legalcode            TPWD}
+\DecValTok{5}\NormalTok{  Event }\DecValTok{2022{-}01{-}09}\NormalTok{       en http}\SpecialCharTok{:}\ErrorTok{//}\NormalTok{creativecommons.org}\SpecialCharTok{/}\NormalTok{publicdomain}\SpecialCharTok{/}\NormalTok{zero}\SpecialCharTok{/}\FloatTok{1.0}\SpecialCharTok{/}\NormalTok{legalcode            TPWD}
+\DecValTok{6}\NormalTok{  Event }\DecValTok{2022{-}01{-}09}\NormalTok{       en http}\SpecialCharTok{:}\ErrorTok{//}\NormalTok{creativecommons.org}\SpecialCharTok{/}\NormalTok{publicdomain}\SpecialCharTok{/}\NormalTok{zero}\SpecialCharTok{/}\FloatTok{1.0}\SpecialCharTok{/}\NormalTok{legalcode            TPWD}
+\DecValTok{7}\NormalTok{  Event }\DecValTok{2022{-}01{-}09}\NormalTok{       en http}\SpecialCharTok{:}\ErrorTok{//}\NormalTok{creativecommons.org}\SpecialCharTok{/}\NormalTok{publicdomain}\SpecialCharTok{/}\NormalTok{zero}\SpecialCharTok{/}\FloatTok{1.0}\SpecialCharTok{/}\NormalTok{legalcode            TPWD}
+\DecValTok{8}\NormalTok{  Event }\DecValTok{2022{-}01{-}09}\NormalTok{       en http}\SpecialCharTok{:}\ErrorTok{//}\NormalTok{creativecommons.org}\SpecialCharTok{/}\NormalTok{publicdomain}\SpecialCharTok{/}\NormalTok{zero}\SpecialCharTok{/}\FloatTok{1.0}\SpecialCharTok{/}\NormalTok{legalcode            TPWD}
+\DecValTok{9}\NormalTok{  Event }\DecValTok{2022{-}01{-}09}\NormalTok{       en http}\SpecialCharTok{:}\ErrorTok{//}\NormalTok{creativecommons.org}\SpecialCharTok{/}\NormalTok{publicdomain}\SpecialCharTok{/}\NormalTok{zero}\SpecialCharTok{/}\FloatTok{1.0}\SpecialCharTok{/}\NormalTok{legalcode            TPWD}
+\DecValTok{10}\NormalTok{ Event }\DecValTok{2022{-}01{-}09}\NormalTok{       en http}\SpecialCharTok{:}\ErrorTok{//}\NormalTok{creativecommons.org}\SpecialCharTok{/}\NormalTok{publicdomain}\SpecialCharTok{/}\NormalTok{zero}\SpecialCharTok{/}\FloatTok{1.0}\SpecialCharTok{/}\NormalTok{legalcode            TPWD}
+\NormalTok{   ownerInstitutionCode coordinateUncertaintyInMeters geodeticDatum georeferenceProtocol       country}
+\DecValTok{1}\NormalTok{                  HARC                           }\DecValTok{100}\NormalTok{         WGS84         Handheld GPS United States}
+\DecValTok{2}\NormalTok{                  HARC                           }\DecValTok{100}\NormalTok{         WGS84         Handheld GPS United States}
+\DecValTok{3}\NormalTok{                  HARC                           }\DecValTok{100}\NormalTok{         WGS84         Handheld GPS United States}
+\DecValTok{4}\NormalTok{                  HARC                           }\DecValTok{100}\NormalTok{         WGS84         Handheld GPS United States}
+\DecValTok{5}\NormalTok{                  HARC                           }\DecValTok{100}\NormalTok{         WGS84         Handheld GPS United States}
+\DecValTok{6}\NormalTok{                  HARC                           }\DecValTok{100}\NormalTok{         WGS84         Handheld GPS United States}
+\DecValTok{7}\NormalTok{                  HARC                           }\DecValTok{100}\NormalTok{         WGS84         Handheld GPS United States}
+\DecValTok{8}\NormalTok{                  HARC                           }\DecValTok{100}\NormalTok{         WGS84         Handheld GPS United States}
+\DecValTok{9}\NormalTok{                  HARC                           }\DecValTok{100}\NormalTok{         WGS84         Handheld GPS United States}
+\DecValTok{10}\NormalTok{                 HARC                           }\DecValTok{100}\NormalTok{         WGS84         Handheld GPS United States}
+\NormalTok{   countryCode stateProvince                             datasetID                                eventID}
+\DecValTok{1}\NormalTok{           US         Texas TPWD\_HARC\_Texas\_Aransas\_Bay\_Bag\_Seine Station\_95\_Date\_09JAN1997}\SpecialCharTok{:}\DecValTok{14}\SpecialCharTok{:}\DecValTok{35}\SpecialCharTok{:}\FloatTok{00.000}
+\DecValTok{2}\NormalTok{           US         Texas TPWD\_HARC\_Texas\_Aransas\_Bay\_Bag\_Seine Station\_95\_Date\_18AUG2000}\SpecialCharTok{:}\DecValTok{11}\SpecialCharTok{:}\DecValTok{02}\SpecialCharTok{:}\FloatTok{00.000}
+\DecValTok{3}\NormalTok{           US         Texas TPWD\_HARC\_Texas\_Aransas\_Bay\_Bag\_Seine Station\_96\_Date\_28JUN2005}\SpecialCharTok{:}\DecValTok{08}\SpecialCharTok{:}\DecValTok{41}\SpecialCharTok{:}\FloatTok{00.000}
+\DecValTok{4}\NormalTok{           US         Texas TPWD\_HARC\_Texas\_Aransas\_Bay\_Bag\_Seine Station\_96\_Date\_23AUG2006}\SpecialCharTok{:}\DecValTok{11}\SpecialCharTok{:}\DecValTok{47}\SpecialCharTok{:}\FloatTok{00.000}
+\DecValTok{5}\NormalTok{           US         Texas TPWD\_HARC\_Texas\_Aransas\_Bay\_Bag\_Seine Station\_96\_Date\_17OCT2006}\SpecialCharTok{:}\DecValTok{14}\SpecialCharTok{:}\DecValTok{23}\SpecialCharTok{:}\FloatTok{00.000}
+\DecValTok{6}\NormalTok{           US         Texas TPWD\_HARC\_Texas\_Aransas\_Bay\_Bag\_Seine Station\_96\_Date\_19FEB1996}\SpecialCharTok{:}\DecValTok{10}\SpecialCharTok{:}\DecValTok{27}\SpecialCharTok{:}\FloatTok{00.000}
+\DecValTok{7}\NormalTok{           US         Texas TPWD\_HARC\_Texas\_Aransas\_Bay\_Bag\_Seine Station\_96\_Date\_11JUN2001}\SpecialCharTok{:}\DecValTok{14}\SpecialCharTok{:}\DecValTok{12}\SpecialCharTok{:}\FloatTok{00.000}
+\DecValTok{8}\NormalTok{           US         Texas TPWD\_HARC\_Texas\_Aransas\_Bay\_Bag\_Seine Station\_96\_Date\_16MAR1992}\SpecialCharTok{:}\DecValTok{09}\SpecialCharTok{:}\DecValTok{46}\SpecialCharTok{:}\FloatTok{00.000}
+\DecValTok{9}\NormalTok{           US         Texas TPWD\_HARC\_Texas\_Aransas\_Bay\_Bag\_Seine Station\_96\_Date\_25SEP1996}\SpecialCharTok{:}\DecValTok{11}\SpecialCharTok{:}\DecValTok{28}\SpecialCharTok{:}\FloatTok{00.000}
+\DecValTok{10}\NormalTok{          US         Texas TPWD\_HARC\_Texas\_Aransas\_Bay\_Bag\_Seine Station\_96\_Date\_08MAY1997}\SpecialCharTok{:}\DecValTok{13}\SpecialCharTok{:}\DecValTok{20}\SpecialCharTok{:}\FloatTok{00.000}
+\NormalTok{   sampleSizeUnit minimumDepthInMeters maximumDepthInMeters}
+\DecValTok{1}\NormalTok{        hectares                  }\FloatTok{0.0}                  \FloatTok{0.6}
+\DecValTok{2}\NormalTok{        hectares                  }\FloatTok{0.1}                  \FloatTok{0.5}
+\DecValTok{3}\NormalTok{        hectares                  }\FloatTok{0.4}                  \FloatTok{0.6}
+\DecValTok{4}\NormalTok{        hectares                  }\FloatTok{0.2}                  \FloatTok{0.4}
+\DecValTok{5}\NormalTok{        hectares                  }\FloatTok{0.7}                  \FloatTok{0.8}
+\DecValTok{6}\NormalTok{        hectares                  }\FloatTok{0.1}                  \FloatTok{0.3}
+\DecValTok{7}\NormalTok{        hectares                  }\FloatTok{0.4}                  \FloatTok{0.5}
+\DecValTok{8}\NormalTok{        hectares                  }\FloatTok{0.0}                  \FloatTok{0.4}
+\DecValTok{9}\NormalTok{        hectares                  }\FloatTok{0.3}                  \FloatTok{0.7}
+\DecValTok{10}\NormalTok{       hectares                  }\FloatTok{0.4}                  \FloatTok{0.6}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## # A tibble: 10 x 15
-##    date    lat   lon region station transect depth `bottom type` eventID
-##    <chr> <dbl> <dbl> <chr>    <dbl>    <dbl> <dbl> <chr>         <chr>  
-##  1 7/16~  18.3 -64.8 St. J~     250        1    25 shallow reef~ St. Jo~
-##  2 7/16~  18.3 -64.8 St. J~     250        1    25 shallow reef~ St. Jo~
-##  3 7/16~  18.3 -64.8 St. J~     250        1    25 shallow reef~ St. Jo~
-##  4 7/16~  18.3 -64.8 St. J~     250        1    25 shallow reef~ St. Jo~
-##  5 7/16~  18.3 -64.8 St. J~     250        2    35 complex back~ St. Jo~
-##  6 7/16~  18.3 -64.8 St. J~     250        2    35 complex back~ St. Jo~
-##  7 7/16~  18.3 -64.8 St. J~     250        2    35 complex back~ St. Jo~
-##  8 7/16~  18.3 -64.8 St. J~     250        2    35 complex back~ St. Jo~
-##  9 7/16~  18.3 -64.8 St. J~     250        3    85 deep reef     St. Jo~
-## 10 7/16~  18.3 -64.8 St. J~     250        3    85 deep reef     St. Jo~
-## # ... with 6 more variables: decimalLatitude <dbl>,
-## #   decimalLongitude <dbl>, minimumDepthInMeters <dbl>,
-## #   maximumDepthInMeters <dbl>, habitat <chr>, island <chr>
-\end{verbatim}
-
-We need to convert the date to ISO format
+For this dataset there was a start timestamp and end timestamp that we can use to identify the sampling effort which can be really valuable information for downstream users when trying to reuse data from multiple projects.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{eventDate }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(event}\SpecialCharTok{$}\NormalTok{date, }\AttributeTok{format =} \StringTok{"\%m/\%d/\%Y"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-We will also have to add any missing required fields
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{basisOfRecord }\OtherTok{\textless{}{-}} \StringTok{"HumanObservation"}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{geodeticDatum }\OtherTok{\textless{}{-}} \StringTok{"EPSG:4326 WGS84"}
-\end{Highlighting}
-\end{Shaded}
-
-Then we'll remove any columns that we no longer need to clean things up a bit.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{date }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{lat }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{lon }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{region }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{station }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{transect }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{depth }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{event}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{bottom type}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\end{Highlighting}
-\end{Shaded}
-
-We have too many repeating rows of information. We can pare this down using eventID which
-is a unique identifier for each sampling event in the data- which is six, three transects
-per site.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{event }\OtherTok{\textless{}{-}}\NormalTok{ event[}\FunctionTok{which}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{duplicated}\NormalTok{(event}\SpecialCharTok{$}\NormalTok{eventID)),]}
-
-\FunctionTok{head}\NormalTok{(event, }\AttributeTok{n =} \DecValTok{6}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 6 x 10
-##   eventID decimalLatitude decimalLongitude minimumDepthInM~
-##   <chr>             <dbl>            <dbl>            <dbl>
-## 1 St. Jo~            18.3            -64.8               25
-## 2 St. Jo~            18.3            -64.8               35
-## 3 St. Jo~            18.3            -64.8               85
-## 4 St. Jo~            18.3            -64.8               28
-## 5 St. Jo~            18.3            -64.8               16
-## 6 St. Jo~            18.3            -64.8               90
-## # ... with 6 more variables: maximumDepthInMeters <dbl>, habitat <chr>,
-## #   island <chr>, eventDate <date>, basisOfRecord <chr>,
-## #   geodeticDatum <chr>
-\end{verbatim}
-
-Finally we write out the event file
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{write.csv}\NormalTok{(event, }\AttributeTok{file=}\StringTok{"MadeUpData\_event.csv"}\NormalTok{, }\AttributeTok{row.names=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{fileEncoding=}\StringTok{"UTF{-}8"}\NormalTok{, }\AttributeTok{quote=}\ConstantTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-Next we need to create the occurrence file. We start by creating the dataframe.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{occurrence }\OtherTok{\textless{}{-}}\NormalTok{ MadeUpDataForBiologicalDataTraining[}\FunctionTok{c}\NormalTok{(}\StringTok{"scientific name"}\NormalTok{, }\StringTok{"eventID"}\NormalTok{, }\StringTok{"occurrenceID"}\NormalTok{, }\StringTok{"percent cover"}\NormalTok{)] }
-\end{Highlighting}
-\end{Shaded}
-
-Then we'll rename the columns that align directly with Darwin Core.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{occurrence}\SpecialCharTok{$}\NormalTok{scientificName }\OtherTok{\textless{}{-}}\NormalTok{ occurrence}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{scientific name}\StringTok{\textasciigrave{}}
-\end{Highlighting}
-\end{Shaded}
-
-Finally we'll add required information that's missing.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{occurrence}\SpecialCharTok{$}\NormalTok{occurrenceStatus }\OtherTok{\textless{}{-}}  \FunctionTok{ifelse}\NormalTok{ (occurrence}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{percent cover}\StringTok{\textasciigrave{}} \SpecialCharTok{==} \DecValTok{0}\NormalTok{, }\StringTok{"absent"}\NormalTok{, }\StringTok{"present"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{taxonomic-name-matching}{%
-\subsection{Taxonomic Name Matching}\label{taxonomic-name-matching}}
-
-A requirement for OBIS is that all scientific names match to the World Register of
-Marine Species (WoRMS) and a scientificNameID is included. A scientificNameID looks
-like this ``\url{urn:lsid:marinespecies.org:taxname:275730}'' with the last digits after
-the colon being the WoRMS aphia ID. We'll need to go out to WoRMS to grab this
-information.
-Create a lookup table of unique scientific names
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{lut\_worms }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{unique}\NormalTok{(occurrence\_only}\SpecialCharTok{$}\NormalTok{scientificName))}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{scientificName }\OtherTok{\textless{}{-}} \FunctionTok{as.character}\NormalTok{(lut\_worms}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{unique(occurrence\_only$scientificName)}\StringTok{\textasciigrave{}}\NormalTok{)}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{unique(occurrence\_only$scientificName)}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{scientificName }\OtherTok{\textless{}{-}} \FunctionTok{as.character}\NormalTok{(lut\_worms}\SpecialCharTok{$}\NormalTok{scientificName)}
-\end{Highlighting}
-\end{Shaded}
-
-Add the columns that we can grab information from WoRMS including the required scientificNameID.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{acceptedname }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{acceptedID }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{scientificNameID }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{kingdom }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{phylum }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{class }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{order }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{family }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{genus }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{scientificNameAuthorship }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{taxonRank }\OtherTok{\textless{}{-}} \StringTok{""}
-\end{Highlighting}
-\end{Shaded}
-
-Taxonomic lookup using the library taxizesoap
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(lut\_worms))\{}
-\NormalTok{  df }\OtherTok{\textless{}{-}} \FunctionTok{worms\_records}\NormalTok{(}\AttributeTok{scientific =}\NormalTok{ lut\_worms}\SpecialCharTok{$}\NormalTok{scientificName[i])}
-\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{scientificNameID }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{lsid[}\DecValTok{1}\NormalTok{]}
-\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{acceptedname }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{valid\_name[}\DecValTok{1}\NormalTok{]}
-\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{acceptedID }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{valid\_AphiaID[}\DecValTok{1}\NormalTok{]}
-\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{kingdom }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{kingdom[}\DecValTok{1}\NormalTok{]}
-\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{phylum }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{phylum[}\DecValTok{1}\NormalTok{]}
-\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{class }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{class[}\DecValTok{1}\NormalTok{]}
-\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{order }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{order[}\DecValTok{1}\NormalTok{]}
-\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{family }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{family[}\DecValTok{1}\NormalTok{]}
-\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{genus }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{genus[}\DecValTok{1}\NormalTok{]}
-\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{scientificNameAuthorship }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{authority[}\DecValTok{1}\NormalTok{]}
-\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{taxonRank }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{rank[}\DecValTok{1}\NormalTok{]}
-  \FunctionTok{message}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"Looking up information for species:"}\NormalTok{, lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{scientificName))}
+\DocumentationTok{\#\# Calculate duration of bag seine event}
+\NormalTok{event}\SpecialCharTok{$}\NormalTok{samplingEffort }\OtherTok{\textless{}{-}} \StringTok{""}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(event))\{}
+\NormalTok{  event[i,]}\SpecialCharTok{$}\NormalTok{samplingEffort }\OtherTok{\textless{}{-}} \FunctionTok{abs}\NormalTok{(lubridate}\SpecialCharTok{::}\FunctionTok{as.duration}\NormalTok{(event[i,]}\SpecialCharTok{$}\NormalTok{CompDate }\SpecialCharTok{{-}}\NormalTok{ event[i,]}\SpecialCharTok{$}\NormalTok{StartDate))}
 \NormalTok{\}}
+\NormalTok{event}\SpecialCharTok{$}\NormalTok{samplingEffort }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(event}\SpecialCharTok{$}\NormalTok{samplingEffort, }\StringTok{"seconds"}\NormalTok{, }\AttributeTok{sep =} \StringTok{" "}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## Looking up information for species: Acropora cervicornis
-\end{verbatim}
-
-\begin{verbatim}
-## Looking up information for species: Madracis auretenra
-\end{verbatim}
-
-\begin{verbatim}
-## Looking up information for species: Mussa angulosa
-\end{verbatim}
-
-\begin{verbatim}
-## Looking up information for species: Siderastrea radians
-\end{verbatim}
-
-Merge the lookup table of unique scientific names back with the occurrence data.
+Finally there were a few columns that were a direct match to a Darwin Core term and therefore just need to be renamed to follow the standard.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{occurrence }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(occurrence, lut\_worms, }\AttributeTok{by =} \StringTok{"scientificName"}\NormalTok{)}
+\NormalTok{event }\OtherTok{\textless{}{-}}\NormalTok{ event }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{samplingProtocol =}\NormalTok{ Gear\_Type,}
+         \AttributeTok{locality =}\NormalTok{ Estuary,}
+         \AttributeTok{waterBody =}\NormalTok{ SubBay,}
+         \AttributeTok{decimalLatitude =}\NormalTok{ Latitude,}
+         \AttributeTok{decimalLongitude =}\NormalTok{ Longitude,}
+         \AttributeTok{sampleSizeValue =}\NormalTok{ surface\_area\_num,}
+         \AttributeTok{eventDate =}\NormalTok{ CompDate)}
 \end{Highlighting}
 \end{Shaded}
 
-We're going to remove any unnecessary columns to clean up the file
+\hypertarget{occurrence-file}{%
+\subsection{Occurrence file}\label{occurrence-file}}
+
+The next file we need to create is the \textbf{Occurrence} file. This file includes all the information about the species that were observed. An occurrence in Darwin Core is the intersection of an organism at a time and a place. We have already done the work to identify the time and place in the event file so we don't need to do that again here. What we do need to is identify all the information about the organisms. Another piece of information that goes in here is basisOfRecord which is a required field and has a controlled vocabulary. For the data we work with you'll usually put \texttt{HumanObservation} or \texttt{MachineObservation}. If it's eDNA data you'll use \texttt{MaterialSample}. If your data are part of a museum collection you'll use \texttt{PreservedSpecimen}.
+
+Important to note that there is overlap in the Darwin Core terms that ``allowed'' to be in the event file and in the occurrence file. This is because data can be submitted as ``Occurrence Only'' where you don't have a separate event file. In that case, the location and date information will need to be included in the occurrence file. Since we are formatting this dataset as a sampling event we will not include location and date information in the occurrence file. To see all the Darwin Core terms that can go in the occurrence file go here \url{https://tools.gbif.org/dwca-validator/extension.do?id=dwc:occurrence}.
+
+This dataset in its original format is in ``wide format''. All that means is that data that we would expect to be encoded as values in the rows are instead column headers. We have to pull all the scientific names out of the column headers and turn them into actual values in the data.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{occurrence}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{scientific name}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{occurrence}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{percent cover}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{occurrence }\OtherTok{\textless{}{-}} \FunctionTok{melt}\NormalTok{(BagSeine, }\AttributeTok{id=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{47}\NormalTok{, }\AttributeTok{measure=}\DecValTok{48}\SpecialCharTok{:}\DecValTok{109}\NormalTok{, }\AttributeTok{variable.name=}\StringTok{"vernacularName"}\NormalTok{, }\AttributeTok{value.name=}\StringTok{"relativeAbundance"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-Quick look at what we have before we write out the file
+You'll notice when we did that step we went from 5481 obs (or rows) in the data to 334341 obs. We went from wide to long.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{head}\NormalTok{(occurrence, }\AttributeTok{n =} \DecValTok{10}\NormalTok{)}
+\FunctionTok{dim}\NormalTok{(BagSeine)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\DecValTok{5481}  \DecValTok{109}
+\FunctionTok{dim}\NormalTok{(occurrence)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\DecValTok{334341}     \DecValTok{49}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-##          scientificName        eventID
-## 1  Acropora cervicornis St. John_250_1
-## 2  Acropora cervicornis St. John_250_2
-## 3  Acropora cervicornis St. John_250_3
-## 4  Acropora cervicornis St. John_356_1
-## 5  Acropora cervicornis St. John_356_2
-## 6  Acropora cervicornis St. John_356_3
-## 7    Madracis auretenra St. John_250_1
-## 8    Madracis auretenra St. John_250_2
-## 9    Madracis auretenra St. John_250_3
-## 10   Madracis auretenra St. John_356_1
-##                            occurrenceID occurrenceStatus
-## 1  63be8f7e-ea9a-11e9-8649-49c6324f3a06           absent
-## 2  63beb687-ea9a-11e9-8649-49c6324f3a06           absent
-## 3  63beb68b-ea9a-11e9-8649-49c6324f3a06          present
-## 4  63bedd76-ea9a-11e9-8649-49c6324f3a06          present
-## 5  63bedd7a-ea9a-11e9-8649-49c6324f3a06          present
-## 6  63bedd7e-ea9a-11e9-8649-49c6324f3a06          present
-## 7  63beb684-ea9a-11e9-8649-49c6324f3a06          present
-## 8  63beb688-ea9a-11e9-8649-49c6324f3a06          present
-## 9  63beb68c-ea9a-11e9-8649-49c6324f3a06           absent
-## 10 63bedd77-ea9a-11e9-8649-49c6324f3a06          present
-##            acceptedname acceptedID
-## 1  Acropora cervicornis     206989
-## 2  Acropora cervicornis     206989
-## 3  Acropora cervicornis     206989
-## 4  Acropora cervicornis     206989
-## 5  Acropora cervicornis     206989
-## 6  Acropora cervicornis     206989
-## 7    Madracis auretenra     430664
-## 8    Madracis auretenra     430664
-## 9    Madracis auretenra     430664
-## 10   Madracis auretenra     430664
-##                             scientificNameID  kingdom   phylum    class
-## 1  urn:lsid:marinespecies.org:taxname:206989 Animalia Cnidaria Anthozoa
-## 2  urn:lsid:marinespecies.org:taxname:206989 Animalia Cnidaria Anthozoa
-## 3  urn:lsid:marinespecies.org:taxname:206989 Animalia Cnidaria Anthozoa
-## 4  urn:lsid:marinespecies.org:taxname:206989 Animalia Cnidaria Anthozoa
-## 5  urn:lsid:marinespecies.org:taxname:206989 Animalia Cnidaria Anthozoa
-## 6  urn:lsid:marinespecies.org:taxname:206989 Animalia Cnidaria Anthozoa
-## 7  urn:lsid:marinespecies.org:taxname:430664 Animalia Cnidaria Anthozoa
-## 8  urn:lsid:marinespecies.org:taxname:430664 Animalia Cnidaria Anthozoa
-## 9  urn:lsid:marinespecies.org:taxname:430664 Animalia Cnidaria Anthozoa
-## 10 urn:lsid:marinespecies.org:taxname:430664 Animalia Cnidaria Anthozoa
-##           order         family    genus   scientificNameAuthorship
-## 1  Scleractinia    Acroporidae Acropora            (Lamarck, 1816)
-## 2  Scleractinia    Acroporidae Acropora            (Lamarck, 1816)
-## 3  Scleractinia    Acroporidae Acropora            (Lamarck, 1816)
-## 4  Scleractinia    Acroporidae Acropora            (Lamarck, 1816)
-## 5  Scleractinia    Acroporidae Acropora            (Lamarck, 1816)
-## 6  Scleractinia    Acroporidae Acropora            (Lamarck, 1816)
-## 7  Scleractinia Pocilloporidae Madracis Locke, Weil & Coates, 2007
-## 8  Scleractinia Pocilloporidae Madracis Locke, Weil & Coates, 2007
-## 9  Scleractinia Pocilloporidae Madracis Locke, Weil & Coates, 2007
-## 10 Scleractinia Pocilloporidae Madracis Locke, Weil & Coates, 2007
-##    taxonRank
-## 1    Species
-## 2    Species
-## 3    Species
-## 4    Species
-## 5    Species
-## 6    Species
-## 7    Species
-## 8    Species
-## 9    Species
-## 10   Species
-\end{verbatim}
-
-Write out the file. All done with occurrence!
+Now as with the event file we have several pieces of information that need to be added or changed to make sure the data are following Darwin Core. We always want to include as much information as possible to make the data as reusable as possible.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{write.csv}\NormalTok{(occurrence, }\AttributeTok{file=}\StringTok{"MadeUpData\_Occurrence.csv"}\NormalTok{, }\AttributeTok{row.names=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{fileEncoding=}\StringTok{"UTF{-}8"}\NormalTok{, }\AttributeTok{quote=}\ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{occurrence }\OtherTok{\textless{}{-}}\NormalTok{ occurrence }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{vernacularName =} \FunctionTok{gsub}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{."}\NormalTok{,}\StringTok{\textquotesingle{} \textquotesingle{}}\NormalTok{, vernacularName),}
+         \AttributeTok{eventID =} \FunctionTok{paste}\NormalTok{(}\StringTok{"Station"}\NormalTok{, station\_code, }\StringTok{"Date"}\NormalTok{, completion\_dttm, }\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{),}
+         \AttributeTok{occurrenceStatus =} \FunctionTok{ifelse}\NormalTok{(relativeAbundance }\SpecialCharTok{==} \DecValTok{0}\NormalTok{, }\StringTok{"Absent"}\NormalTok{, }\StringTok{"Present"}\NormalTok{),}
+         \AttributeTok{basisOfRecord =} \StringTok{"HumanObservation"}\NormalTok{,}
+         \AttributeTok{organismQuantityType =} \StringTok{"Relative Abundance"}\NormalTok{,}
+         \AttributeTok{collectionCode =} \FunctionTok{paste}\NormalTok{(Bay, Gear\_Type, }\AttributeTok{sep =} \StringTok{" "}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
-The last file we need to create is the measurement or fact file. For this we need to
-combine all of the measurements or facts that we want to include making sure to include
-IDs from the BODC NERC vocabulary where possible.
+We will match the taxa list with our occurrence file data to bring in the taxonomic information that we pulled from WoRMS. To save time you'll just import the processed taxa list which includes the taxonomic hierarchy and the required term scientificNameID which is one of the most important pieces of information to include for OBIS.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{temperature }\OtherTok{\textless{}{-}}\NormalTok{ MadeUpDataForBiologicalDataTraining[}\FunctionTok{c}\NormalTok{(}\StringTok{"eventID"}\NormalTok{, }\StringTok{"temperature"}\NormalTok{, }\StringTok{"date"}\NormalTok{)]}
-\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{occurrenceID }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementType }\OtherTok{\textless{}{-}} \StringTok{"temperature"}
-\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementTypeID }\OtherTok{\textless{}{-}} \StringTok{"http://vocab.nerc.ac.uk/collection/P25/current/WTEMP/"}
-\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementValue }\OtherTok{\textless{}{-}}\NormalTok{ temperature}\SpecialCharTok{$}\NormalTok{temperature}
-\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementUnit }\OtherTok{\textless{}{-}} \StringTok{"Celsius"}
-\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementUnitID }\OtherTok{\textless{}{-}} \StringTok{"http://vocab.nerc.ac.uk/collection/P06/current/UPAA/"}
-\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementAccuracy }\OtherTok{\textless{}{-}} \DecValTok{3}
-\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementDeterminedDate }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(temperature}\SpecialCharTok{$}\NormalTok{date, }\AttributeTok{format =} \StringTok{"\%m/\%d/\%Y"}\NormalTok{)}
-\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementMethod }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{temperature }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{date }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{rugosity }\OtherTok{\textless{}{-}}\NormalTok{ MadeUpDataForBiologicalDataTraining[}\FunctionTok{c}\NormalTok{(}\StringTok{"eventID"}\NormalTok{, }\StringTok{"rugosity"}\NormalTok{, }\StringTok{"date"}\NormalTok{)]}
-\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{occurrenceID }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measurementType }\OtherTok{\textless{}{-}} \StringTok{"rugosity"}
-\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measurementTypeID }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measurementValue }\OtherTok{\textless{}{-}}\NormalTok{ rugosity}\SpecialCharTok{$}\NormalTok{rugosity}
-\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measurementUnit }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measurementUnitID }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measuremntAccuracy }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measurementDeterminedDate }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(rugosity}\SpecialCharTok{$}\NormalTok{date, }\AttributeTok{format =} \StringTok{"\%m/\%d/\%Y"}\NormalTok{)}
-\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measurementMethod }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{rugosity }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{date }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{percentcover }\OtherTok{\textless{}{-}}\NormalTok{ MadeUpDataForBiologicalDataTraining[}\FunctionTok{c}\NormalTok{(}\StringTok{"eventID"}\NormalTok{, }\StringTok{"occurrenceID"}\NormalTok{, }\StringTok{"percent cover"}\NormalTok{, }\StringTok{"date"}\NormalTok{)]}
-\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measurementType }\OtherTok{\textless{}{-}} \StringTok{"Percent Cover"}
-\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measurementTypeID }\OtherTok{\textless{}{-}} \StringTok{"http://vocab.nerc.ac.uk/collection/P01/current/SDBIOL10/"}
-\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measurementValue }\OtherTok{\textless{}{-}}\NormalTok{ percentcover}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{percent cover}\StringTok{\textasciigrave{}}
-\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measurementUnit }\OtherTok{\textless{}{-}} \StringTok{"Percent/100m\^{}2"}
-\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measurementUnitID }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measuremntAccuracy }\OtherTok{\textless{}{-}} \DecValTok{5}
-\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measurementDeterminedDate }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(percentcover}\SpecialCharTok{$}\NormalTok{date, }\AttributeTok{format =} \StringTok{"\%m/\%d/\%Y"}\NormalTok{)}
-\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measurementMethod }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{percentcover}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{percent cover}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{date }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{measurementOrFact }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(temperature, rugosity, percentcover)}
+\NormalTok{taxaList }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"https://www.sciencebase.gov/catalog/file/get/53a887f4e4b075096c60cfdd?f=\_\_disk\_\_49\%2F0a\%2F73\%2F490a7337fa94039715809496b22f5d003b8a79a2\&allowOpen=true"}\NormalTok{, }\AttributeTok{stringsAsFactors =} \ConstantTok{FALSE}\NormalTok{)}
+\DocumentationTok{\#\# Merge taxaList with occurrence}
+\NormalTok{occurrence }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(occurrence, taxaList, }\AttributeTok{by =} \StringTok{"vernacularName"}\NormalTok{, }\AttributeTok{all.x =}\NormalTok{ T)}
+\DocumentationTok{\#\# Test that all the vernacularNames found a match in taxaList\_updated}
+\NormalTok{Hmisc}\SpecialCharTok{::}\FunctionTok{describe}\NormalTok{(occurrence}\SpecialCharTok{$}\NormalTok{scientificNameID)}
+\NormalTok{       n  missing distinct }
+  \DecValTok{334341}        \DecValTok{0}       \DecValTok{61} 
+
+\NormalTok{lowest }\SpecialCharTok{:}\NormalTok{ urn}\SpecialCharTok{:}\NormalTok{lsid}\SpecialCharTok{:}\NormalTok{marinespecies.org}\SpecialCharTok{:}\NormalTok{taxname}\SpecialCharTok{:}\DecValTok{105792}\NormalTok{ urn}\SpecialCharTok{:}\NormalTok{lsid}\SpecialCharTok{:}\NormalTok{marinespecies.org}\SpecialCharTok{:}\NormalTok{taxname}\SpecialCharTok{:}\DecValTok{107034}\NormalTok{ urn}\SpecialCharTok{:}\NormalTok{lsid}\SpecialCharTok{:}\NormalTok{marinespecies.org}\SpecialCharTok{:}\NormalTok{taxname}\SpecialCharTok{:}\DecValTok{107379}\NormalTok{ urn}\SpecialCharTok{:}\NormalTok{lsid}\SpecialCharTok{:}\NormalTok{marinespecies.org}\SpecialCharTok{:}\NormalTok{taxname}\SpecialCharTok{:}\DecValTok{126983}\NormalTok{ urn}\SpecialCharTok{:}\NormalTok{lsid}\SpecialCharTok{:}\NormalTok{marinespecies.org}\SpecialCharTok{:}\NormalTok{taxname}\SpecialCharTok{:}\DecValTok{127089}
+\NormalTok{highest}\SpecialCharTok{:}\NormalTok{ urn}\SpecialCharTok{:}\NormalTok{lsid}\SpecialCharTok{:}\NormalTok{marinespecies.org}\SpecialCharTok{:}\NormalTok{taxname}\SpecialCharTok{:}\DecValTok{367528}\NormalTok{ urn}\SpecialCharTok{:}\NormalTok{lsid}\SpecialCharTok{:}\NormalTok{marinespecies.org}\SpecialCharTok{:}\NormalTok{taxname}\SpecialCharTok{:}\DecValTok{396707}\NormalTok{ urn}\SpecialCharTok{:}\NormalTok{lsid}\SpecialCharTok{:}\NormalTok{marinespecies.org}\SpecialCharTok{:}\NormalTok{taxname}\SpecialCharTok{:}\DecValTok{421784}\NormalTok{ urn}\SpecialCharTok{:}\NormalTok{lsid}\SpecialCharTok{:}\NormalTok{marinespecies.org}\SpecialCharTok{:}\NormalTok{taxname}\SpecialCharTok{:}\DecValTok{422069}\NormalTok{ urn}\SpecialCharTok{:}\NormalTok{lsid}\SpecialCharTok{:}\NormalTok{marinespecies.org}\SpecialCharTok{:}\NormalTok{taxname}\SpecialCharTok{:}\DecValTok{443955}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## Error in match.names(clabs, names(xi)): names do not match previous names
-\end{verbatim}
+For that last line of code we are expecting to see no missing values for scientificNameID. Every row in the file should have a value in scientificNameID which should be a WoRMS LSID that look like this \texttt{urn:lsid:marinespecies.org:taxname:144531}
 
-Let's check to see what it looks like
+We need to create a unique ID for each row in the occurrence file. This is known as the \texttt{occurrenceID} and is a required term. The \texttt{occurrenceID} needs to be globally unique and needs to be permanent and kept in place if any updates to the dataset are made. You should not create brand new occurrenceIDs when you update a dataset. To facilitate this I like to build the \texttt{occurrenceID} from pieces of information available in the dataset to create a unique ID for each row in the occurrence file. For this dataset I used the \texttt{eventID} (Station + Date) plus the scientific name. This only works if there is only one scientific name per station per date so if you have different ages or sexes of species at the same station and date this method of creating the occurrenceID won't work for you.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{head}\NormalTok{(measurementOrFact, }\AttributeTok{n =} \DecValTok{50}\NormalTok{)}
+\NormalTok{occurrence}\SpecialCharTok{$}\NormalTok{occurrenceID }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(occurrence}\SpecialCharTok{$}\NormalTok{eventID, }\FunctionTok{gsub}\NormalTok{(}\StringTok{" "}\NormalTok{, }\StringTok{"\_"}\NormalTok{,occurrence}\SpecialCharTok{$}\NormalTok{scientificName), }\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{)}
+\NormalTok{occurrence[}\DecValTok{1}\NormalTok{,]}\SpecialCharTok{$}\NormalTok{occurrenceID}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\StringTok{"Station\_95\_Date\_09JAN1997:14:35:00.000\_Atractosteus\_spatula"}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## # A tibble: 50 x 9
-##    eventID occurrenceID measurementType measurementType~ measurementValue
-##    <chr>   <chr>        <chr>           <chr>                       <dbl>
-##  1 St. Jo~ ""           temperature     ""                           25.2
-##  2 St. Jo~ ""           temperature     ""                           25.2
-##  3 St. Jo~ ""           temperature     ""                           25.2
-##  4 St. Jo~ ""           temperature     ""                           25.2
-##  5 St. Jo~ ""           temperature     ""                           24.8
-##  6 St. Jo~ ""           temperature     ""                           24.8
-##  7 St. Jo~ ""           temperature     ""                           24.8
-##  8 St. Jo~ ""           temperature     ""                           24.8
-##  9 St. Jo~ ""           temperature     ""                           23.1
-## 10 St. Jo~ ""           temperature     ""                           23.1
-## # ... with 40 more rows, and 4 more variables: measurementUnit <chr>,
-## #   measurementUnitID <chr>, measurementDeterminedDate <date>,
-## #   measurementMethod <chr>
-\end{verbatim}
+For the occurrence file we only have one column to rename. We could have avoided this step if we had named it \texttt{organismQuantity} up above but I kept this to remind me what the data providers had called this.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{write.csv}\NormalTok{(measurementOrFact, }\AttributeTok{file=}\StringTok{"MadeUpData\_mof.csv"}\NormalTok{, }\AttributeTok{row.names=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{fileEncoding=}\StringTok{"UTF{-}8"}\NormalTok{, }\AttributeTok{quote=}\ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{occurrence }\OtherTok{\textless{}{-}}\NormalTok{ occurrence }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{organismQuantity =}\NormalTok{ relativeAbundance)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{extended-measurement-or-fact-extension-file}{%
+\subsection{Extended Measurement or Fact extension file}\label{extended-measurement-or-fact-extension-file}}
+
+The final file we are going to create is the \textbf{Extended Measurement or Fact extension (emof)}. This is a bit like a catch all for any measurements or facts that are not captured in Darwin Core. Darwin Core does not have terms for things like temperature, salinity, gear type, cruise number, length, weight, etc. We are going to create a long format file where each of these is a set of rows in the extended measurement or fact file. You can find all the terms in this extension here \url{https://tools.gbif.org/dwca-validator/extension.do?id=http://rs.iobis.org/obis/terms/ExtendedMeasurementOrFact}.
+
+OBIS uses the BODC NERC Vocabulary Server to provide explicit definitions for each of the measurements \url{https://vocab.nerc.ac.uk/search_nvs/}.
+
+For this dataset I was only able to find code definitions provided by the data providers for some of the measurements. I included the ones that I was able to find code definitions and left out any that I couldn't find those for. The ones I was able to find code definitions for were \texttt{Total.Of.Samples\_Count}, \texttt{gear\_size}, \texttt{start\_wind\_speed\_num}, \texttt{start\_barometric\_pressure\_num}, \texttt{start\_temperature\_num}, \texttt{start\_salinity\_num}, \texttt{start\_dissolved\_oxygen\_num}. All the others I left out.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{totalOfSamples }\OtherTok{\textless{}{-}}\NormalTok{ event[}\FunctionTok{c}\NormalTok{(}\StringTok{"Total.Of.Samples\_Count"}\NormalTok{, }\StringTok{"eventID"}\NormalTok{)]}
+\NormalTok{totalOfSamples }\OtherTok{\textless{}{-}}\NormalTok{ totalOfSamples[}\FunctionTok{which}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(totalOfSamples}\SpecialCharTok{$}\NormalTok{Total.Of.Samples\_Count)),]}
+\NormalTok{totalOfSamples }\OtherTok{\textless{}{-}}\NormalTok{ totalOfSamples }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{measurementType =} \StringTok{"Total number of samples used to calculate relative abundance"}\NormalTok{,}
+         \AttributeTok{measurementUnit =} \StringTok{""}\NormalTok{,}
+         \AttributeTok{measurementTypeID =} \StringTok{""}\NormalTok{,}
+         \AttributeTok{measurementUnitID =} \StringTok{""}\NormalTok{,}
+         \AttributeTok{occurrenceID =} \StringTok{""}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{measurementValue =}\NormalTok{ Total.Of.Samples\_Count)}
+
+\NormalTok{gear\_size }\OtherTok{\textless{}{-}}\NormalTok{ event[}\FunctionTok{c}\NormalTok{(}\StringTok{"gear\_size"}\NormalTok{, }\StringTok{"eventID"}\NormalTok{)]}
+\NormalTok{gear\_size }\OtherTok{\textless{}{-}}\NormalTok{ gear\_size[}\FunctionTok{which}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(gear\_size}\SpecialCharTok{$}\NormalTok{gear\_size)),]}
+\NormalTok{gear\_size }\OtherTok{\textless{}{-}}\NormalTok{ gear\_size }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{measurementType =} \StringTok{"gear size"}\NormalTok{,}
+         \AttributeTok{measurementUnit =} \StringTok{"meters"}\NormalTok{,}
+         \AttributeTok{measurementTypeID =} \StringTok{"http://vocab.nerc.ac.uk/collection/P01/current/MTHAREA1/"}\NormalTok{,}
+         \AttributeTok{measurementUnitID =} \StringTok{"http://vocab.nerc.ac.uk/collection/P06/current/ULAA/"}\NormalTok{,}
+         \AttributeTok{occurrenceID =} \StringTok{""}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{measurementValue =}\NormalTok{ gear\_size)}
+
+\NormalTok{start\_wind\_speed\_num }\OtherTok{\textless{}{-}}\NormalTok{ event[}\FunctionTok{c}\NormalTok{(}\StringTok{"start\_wind\_speed\_num"}\NormalTok{, }\StringTok{"eventID"}\NormalTok{)]}
+\NormalTok{start\_wind\_speed\_num }\OtherTok{\textless{}{-}}\NormalTok{ start\_wind\_speed\_num[}\FunctionTok{which}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(start\_wind\_speed\_num}\SpecialCharTok{$}\NormalTok{start\_wind\_speed\_num)),]}
+\NormalTok{start\_wind\_speed\_num }\OtherTok{\textless{}{-}}\NormalTok{ start\_wind\_speed\_num }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{measurementType =} \StringTok{"wind speed"}\NormalTok{,}
+         \AttributeTok{measurementUnit =} \StringTok{"not provided"}\NormalTok{,}
+         \AttributeTok{measurementTypeID =} \StringTok{"http://vocab.nerc.ac.uk/collection/P01/current/EWSBZZ01/"}\NormalTok{,}
+         \AttributeTok{measurementUnitID =} \StringTok{""}\NormalTok{,}
+         \AttributeTok{occurrenceID =} \StringTok{""}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{measurementValue =}\NormalTok{ start\_wind\_speed\_num)}
+
+\NormalTok{start\_barometric\_pressure\_num }\OtherTok{\textless{}{-}}\NormalTok{ event[}\FunctionTok{c}\NormalTok{(}\StringTok{"start\_barometric\_pressure\_num"}\NormalTok{, }\StringTok{"eventID"}\NormalTok{)]}
+\NormalTok{start\_barometric\_pressure\_num }\OtherTok{\textless{}{-}}\NormalTok{ start\_barometric\_pressure\_num[}\FunctionTok{which}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(start\_barometric\_pressure\_num}\SpecialCharTok{$}\NormalTok{start\_barometric\_pressure\_num)),]}
+\NormalTok{start\_barometric\_pressure\_num }\OtherTok{\textless{}{-}}\NormalTok{ start\_barometric\_pressure\_num }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{measurementType =} \StringTok{"barometric pressure"}\NormalTok{,}
+         \AttributeTok{measurementUnit =} \StringTok{"not provided"}\NormalTok{,}
+         \AttributeTok{measurementTypeID =} \StringTok{"http://vocab.nerc.ac.uk/collection/P07/current/CFSN0015/"}\NormalTok{,}
+         \AttributeTok{measurementUnitID =} \StringTok{""}\NormalTok{,}
+         \AttributeTok{occurrenceID =} \StringTok{""}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{measurementValue =}\NormalTok{ start\_barometric\_pressure\_num)}
+
+\NormalTok{start\_temperature\_num }\OtherTok{\textless{}{-}}\NormalTok{ event[}\FunctionTok{c}\NormalTok{(}\StringTok{"start\_temperature\_num"}\NormalTok{, }\StringTok{"eventID"}\NormalTok{)]}
+\NormalTok{start\_temperature\_num }\OtherTok{\textless{}{-}}\NormalTok{ start\_temperature\_num[}\FunctionTok{which}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(start\_temperature\_num}\SpecialCharTok{$}\NormalTok{start\_temperature\_num)),]}
+\NormalTok{start\_temperature\_num }\OtherTok{\textless{}{-}}\NormalTok{ start\_temperature\_num }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{measurementType =} \StringTok{"water temperature"}\NormalTok{,}
+         \AttributeTok{measurementUnit =} \StringTok{"Celsius"}\NormalTok{,}
+         \AttributeTok{measurementTypeID =} \StringTok{"http://vocab.nerc.ac.uk/collection/P01/current/TEMPPR01/"}\NormalTok{,}
+         \AttributeTok{measurementUnitID =} \StringTok{"http://vocab.nerc.ac.uk/collection/P06/current/UPAA/"}\NormalTok{,}
+         \AttributeTok{occurrenceID =} \StringTok{""}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{measurementValue =}\NormalTok{ start\_temperature\_num)}
+
+\NormalTok{start\_salinity\_num }\OtherTok{\textless{}{-}}\NormalTok{ event[}\FunctionTok{c}\NormalTok{(}\StringTok{"start\_salinity\_num"}\NormalTok{, }\StringTok{"eventID"}\NormalTok{)]}
+\NormalTok{start\_salinity\_num }\OtherTok{\textless{}{-}}\NormalTok{ start\_salinity\_num[}\FunctionTok{which}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(start\_salinity\_num}\SpecialCharTok{$}\NormalTok{start\_salinity\_num)),]}
+\NormalTok{start\_salinity\_num }\OtherTok{\textless{}{-}}\NormalTok{ start\_salinity\_num }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{measurementType =} \StringTok{"salinity"}\NormalTok{,}
+         \AttributeTok{measurementUnit =} \StringTok{"ppt"}\NormalTok{,}
+         \AttributeTok{measurementTypeID =} \StringTok{"http://vocab.nerc.ac.uk/collection/P01/current/ODSDM021/"}\NormalTok{,}
+         \AttributeTok{measurementUnitID =} \StringTok{"http://vocab.nerc.ac.uk/collection/P06/current/UPPT/"}\NormalTok{,}
+         \AttributeTok{occurrenceID =} \StringTok{""}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{measurementValue =}\NormalTok{ start\_salinity\_num)}
+
+\NormalTok{start\_dissolved\_oxygen\_num }\OtherTok{\textless{}{-}}\NormalTok{ event[}\FunctionTok{c}\NormalTok{(}\StringTok{"start\_dissolved\_oxygen\_num"}\NormalTok{, }\StringTok{"eventID"}\NormalTok{)]}
+\NormalTok{start\_dissolved\_oxygen\_num }\OtherTok{\textless{}{-}}\NormalTok{ start\_dissolved\_oxygen\_num[}\FunctionTok{which}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(start\_dissolved\_oxygen\_num}\SpecialCharTok{$}\NormalTok{start\_dissolved\_oxygen\_num)),]}
+\NormalTok{start\_dissolved\_oxygen\_num }\OtherTok{\textless{}{-}}\NormalTok{ start\_dissolved\_oxygen\_num }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{measurementType =} \StringTok{"dissolved oxygen"}\NormalTok{,}
+         \AttributeTok{measurementUnit =} \StringTok{"ppm"}\NormalTok{,}
+         \AttributeTok{measurementTypeID =} \StringTok{"http://vocab.nerc.ac.uk/collection/P09/current/DOX2/"}\NormalTok{,}
+         \AttributeTok{measurementUnitID =} \StringTok{"http://vocab.nerc.ac.uk/collection/P06/current/UPPM/"}\NormalTok{,}
+         \AttributeTok{occurrenceID =} \StringTok{""}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{measurementValue =}\NormalTok{ start\_dissolved\_oxygen\_num)}
+
+\NormalTok{alternate\_station\_code }\OtherTok{\textless{}{-}}\NormalTok{ event[}\FunctionTok{c}\NormalTok{(}\StringTok{"alternate\_station\_code"}\NormalTok{, }\StringTok{"eventID"}\NormalTok{)]}
+\NormalTok{alternate\_station\_code }\OtherTok{\textless{}{-}}\NormalTok{ alternate\_station\_code[}\FunctionTok{which}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(alternate\_station\_code}\SpecialCharTok{$}\NormalTok{alternate\_station\_code)),]}
+\NormalTok{alternate\_station\_code }\OtherTok{\textless{}{-}}\NormalTok{ alternate\_station\_code }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{measurementType =} \StringTok{"alternate station code"}\NormalTok{,}
+         \AttributeTok{measurementUnit =} \StringTok{""}\NormalTok{,}
+         \AttributeTok{measurementTypeID =} \StringTok{""}\NormalTok{,}
+         \AttributeTok{measurementUnitID =} \StringTok{""}\NormalTok{,}
+         \AttributeTok{occurrenceID =} \StringTok{""}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{measurementValue =}\NormalTok{ alternate\_station\_code)}
+
+\NormalTok{organismQuantity }\OtherTok{\textless{}{-}}\NormalTok{ occurrence[}\FunctionTok{c}\NormalTok{(}\StringTok{"organismQuantity"}\NormalTok{, }\StringTok{"eventID"}\NormalTok{, }\StringTok{"occurrenceID"}\NormalTok{)]}
+\NormalTok{organismQuantity }\OtherTok{\textless{}{-}}\NormalTok{ organismQuantity[}\FunctionTok{which}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(organismQuantity}\SpecialCharTok{$}\NormalTok{organismQuantity)),]}
+\NormalTok{organismQuantity }\OtherTok{\textless{}{-}}\NormalTok{ organismQuantity }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{measurementType =} \StringTok{"relative abundance"}\NormalTok{,}
+         \AttributeTok{measurementUnit =} \StringTok{""}\NormalTok{,}
+         \AttributeTok{measurementTypeID =} \StringTok{"http://vocab.nerc.ac.uk/collection/S06/current/S0600020/"}\NormalTok{,}
+         \AttributeTok{measurementUnitID =} \StringTok{""}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{measurementValue =}\NormalTok{ organismQuantity)}
+
+\CommentTok{\# Bind the separate measurements together into one file  }
+\NormalTok{mof }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(totalOfSamples, start\_barometric\_pressure\_num, start\_dissolved\_oxygen\_num, }
+\NormalTok{             start\_salinity\_num, start\_temperature\_num, start\_wind\_speed\_num, gear\_size,}
+\NormalTok{             alternate\_station\_code, organismQuantity)}
+\FunctionTok{head}\NormalTok{(mof)}
+\NormalTok{ measurementValue                                eventID}
+\DecValTok{1}               \DecValTok{18}\NormalTok{ Station\_95\_Date\_09JAN1997}\SpecialCharTok{:}\DecValTok{14}\SpecialCharTok{:}\DecValTok{35}\SpecialCharTok{:}\FloatTok{00.000}
+\DecValTok{2}              \DecValTok{103}\NormalTok{ Station\_95\_Date\_18AUG2000}\SpecialCharTok{:}\DecValTok{11}\SpecialCharTok{:}\DecValTok{02}\SpecialCharTok{:}\FloatTok{00.000}
+\DecValTok{3}              \DecValTok{401}\NormalTok{ Station\_96\_Date\_28JUN2005}\SpecialCharTok{:}\DecValTok{08}\SpecialCharTok{:}\DecValTok{41}\SpecialCharTok{:}\FloatTok{00.000}
+\DecValTok{4}               \DecValTok{35}\NormalTok{ Station\_96\_Date\_23AUG2006}\SpecialCharTok{:}\DecValTok{11}\SpecialCharTok{:}\DecValTok{47}\SpecialCharTok{:}\FloatTok{00.000}
+\DecValTok{5}               \DecValTok{57}\NormalTok{ Station\_96\_Date\_17OCT2006}\SpecialCharTok{:}\DecValTok{14}\SpecialCharTok{:}\DecValTok{23}\SpecialCharTok{:}\FloatTok{00.000}
+\DecValTok{6}                \DecValTok{5}\NormalTok{ Station\_96\_Date\_19FEB1996}\SpecialCharTok{:}\DecValTok{10}\SpecialCharTok{:}\DecValTok{27}\SpecialCharTok{:}\FloatTok{00.000}
+\NormalTok{                                               measurementType measurementUnit measurementTypeID}
+\DecValTok{1}\NormalTok{ Total number of samples used to calculate relative abundance                                  }
+\DecValTok{2}\NormalTok{ Total number of samples used to calculate relative abundance                                  }
+\DecValTok{3}\NormalTok{ Total number of samples used to calculate relative abundance                                  }
+\DecValTok{4}\NormalTok{ Total number of samples used to calculate relative abundance                                  }
+\DecValTok{5}\NormalTok{ Total number of samples used to calculate relative abundance                                  }
+\DecValTok{6}\NormalTok{ Total number of samples used to calculate relative abundance                                  }
+\NormalTok{  measurementUnitID occurrenceID}
+\DecValTok{1}                               
+\DecValTok{2}                               
+\DecValTok{3}                               
+\DecValTok{4}                               
+\DecValTok{5}                               
+\DecValTok{6}                               
+\FunctionTok{tail}\NormalTok{(mof)}
+\NormalTok{       measurementValue                                 eventID    measurementType measurementUnit}
+\DecValTok{334336}        \FloatTok{0.0000000}\NormalTok{ Station\_217\_Date\_03APR2003}\SpecialCharTok{:}\DecValTok{13}\SpecialCharTok{:}\DecValTok{28}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{ relative abundance                }
+\DecValTok{334337}        \FloatTok{0.0000000}\NormalTok{ Station\_217\_Date\_24FEB2006}\SpecialCharTok{:}\DecValTok{10}\SpecialCharTok{:}\DecValTok{12}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{ relative abundance                }
+\DecValTok{334338}        \FloatTok{0.1428571}\NormalTok{ Station\_217\_Date\_23JUN2001}\SpecialCharTok{:}\DecValTok{12}\SpecialCharTok{:}\DecValTok{28}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{ relative abundance                }
+\DecValTok{334339}        \FloatTok{0.0000000}\NormalTok{ Station\_212\_Date\_23MAY1990}\SpecialCharTok{:}\DecValTok{10}\SpecialCharTok{:}\DecValTok{43}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{ relative abundance                }
+\DecValTok{334340}        \FloatTok{0.1224490}\NormalTok{ Station\_212\_Date\_24JUL1990}\SpecialCharTok{:}\DecValTok{09}\SpecialCharTok{:}\DecValTok{34}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{ relative abundance                }
+\DecValTok{334341}        \FloatTok{0.0000000}\NormalTok{ Station\_212\_Date\_21MAR2001}\SpecialCharTok{:}\DecValTok{11}\SpecialCharTok{:}\DecValTok{52}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{ relative abundance                }
+\NormalTok{                                              measurementTypeID measurementUnitID}
+\DecValTok{334336}\NormalTok{ http}\SpecialCharTok{:}\ErrorTok{//}\NormalTok{vocab.nerc.ac.uk}\SpecialCharTok{/}\NormalTok{collection}\SpecialCharTok{/}\NormalTok{S06}\SpecialCharTok{/}\NormalTok{current}\SpecialCharTok{/}\NormalTok{S0600020}\SpecialCharTok{/}                  
+\DecValTok{334337}\NormalTok{ http}\SpecialCharTok{:}\ErrorTok{//}\NormalTok{vocab.nerc.ac.uk}\SpecialCharTok{/}\NormalTok{collection}\SpecialCharTok{/}\NormalTok{S06}\SpecialCharTok{/}\NormalTok{current}\SpecialCharTok{/}\NormalTok{S0600020}\SpecialCharTok{/}                  
+\DecValTok{334338}\NormalTok{ http}\SpecialCharTok{:}\ErrorTok{//}\NormalTok{vocab.nerc.ac.uk}\SpecialCharTok{/}\NormalTok{collection}\SpecialCharTok{/}\NormalTok{S06}\SpecialCharTok{/}\NormalTok{current}\SpecialCharTok{/}\NormalTok{S0600020}\SpecialCharTok{/}                  
+\DecValTok{334339}\NormalTok{ http}\SpecialCharTok{:}\ErrorTok{//}\NormalTok{vocab.nerc.ac.uk}\SpecialCharTok{/}\NormalTok{collection}\SpecialCharTok{/}\NormalTok{S06}\SpecialCharTok{/}\NormalTok{current}\SpecialCharTok{/}\NormalTok{S0600020}\SpecialCharTok{/}                  
+\DecValTok{334340}\NormalTok{ http}\SpecialCharTok{:}\ErrorTok{//}\NormalTok{vocab.nerc.ac.uk}\SpecialCharTok{/}\NormalTok{collection}\SpecialCharTok{/}\NormalTok{S06}\SpecialCharTok{/}\NormalTok{current}\SpecialCharTok{/}\NormalTok{S0600020}\SpecialCharTok{/}                  
+\DecValTok{334341}\NormalTok{ http}\SpecialCharTok{:}\ErrorTok{//}\NormalTok{vocab.nerc.ac.uk}\SpecialCharTok{/}\NormalTok{collection}\SpecialCharTok{/}\NormalTok{S06}\SpecialCharTok{/}\NormalTok{current}\SpecialCharTok{/}\NormalTok{S0600020}\SpecialCharTok{/}                  
+\NormalTok{                                                        occurrenceID}
+\DecValTok{334336}\NormalTok{ Station\_217\_Date\_03APR2003}\SpecialCharTok{:}\DecValTok{13}\SpecialCharTok{:}\DecValTok{28}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{\_Litopenaeus\_setiferus}
+\DecValTok{334337}\NormalTok{ Station\_217\_Date\_24FEB2006}\SpecialCharTok{:}\DecValTok{10}\SpecialCharTok{:}\DecValTok{12}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{\_Litopenaeus\_setiferus}
+\DecValTok{334338}\NormalTok{ Station\_217\_Date\_23JUN2001}\SpecialCharTok{:}\DecValTok{12}\SpecialCharTok{:}\DecValTok{28}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{\_Litopenaeus\_setiferus}
+\DecValTok{334339}\NormalTok{ Station\_212\_Date\_23MAY1990}\SpecialCharTok{:}\DecValTok{10}\SpecialCharTok{:}\DecValTok{43}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{\_Litopenaeus\_setiferus}
+\DecValTok{334340}\NormalTok{ Station\_212\_Date\_24JUL1990}\SpecialCharTok{:}\DecValTok{09}\SpecialCharTok{:}\DecValTok{34}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{\_Litopenaeus\_setiferus}
+\DecValTok{334341}\NormalTok{ Station\_212\_Date\_21MAR2001}\SpecialCharTok{:}\DecValTok{11}\SpecialCharTok{:}\DecValTok{52}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{\_Litopenaeus\_setiferus}
+
+\CommentTok{\# Write out the file}
+\FunctionTok{write.csv}\NormalTok{(mof, }\AttributeTok{file =}\NormalTok{ (}\FunctionTok{paste0}\NormalTok{(event[}\DecValTok{1}\NormalTok{,]}\SpecialCharTok{$}\NormalTok{datasetID, }\StringTok{"\_mof\_"}\NormalTok{, lubridate}\SpecialCharTok{::}\FunctionTok{today}\NormalTok{(),}\StringTok{".csv"}\NormalTok{)), }\AttributeTok{fileEncoding =} \StringTok{"UTF{-}8"}\NormalTok{, }\AttributeTok{row.names =}\NormalTok{ F, }\AttributeTok{na =} \StringTok{""}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{cleaning-up-event-and-occurrence-files}{%
+\subsection{Cleaning up Event and Occurrence files}\label{cleaning-up-event-and-occurrence-files}}
+
+Now that we have all of our files created we can clean up the \textbf{Event} and \textbf{Occurrence} files to remove the columns that are not following Darwin Core. We had to leave the extra bits in before because we needed them to create the \textbf{emof} file above.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{event }\OtherTok{\textless{}{-}}\NormalTok{ event[}\FunctionTok{c}\NormalTok{(}\StringTok{"samplingProtocol"}\NormalTok{,}\StringTok{"locality"}\NormalTok{,}\StringTok{"waterBody"}\NormalTok{,}\StringTok{"decimalLatitude"}\NormalTok{,}\StringTok{"decimalLongitude"}\NormalTok{,}
+                 \StringTok{"eventDate"}\NormalTok{,}\StringTok{"sampleSizeValue"}\NormalTok{,}\StringTok{"minimumDepthInMeters"}\NormalTok{,}
+                 \StringTok{"maximumDepthInMeters"}\NormalTok{,}\StringTok{"type"}\NormalTok{,}\StringTok{"modified"}\NormalTok{,}\StringTok{"language"}\NormalTok{,}\StringTok{"license"}\NormalTok{,}\StringTok{"institutionCode"}\NormalTok{,}
+                 \StringTok{"ownerInstitutionCode"}\NormalTok{,}\StringTok{"coordinateUncertaintyInMeters"}\NormalTok{,}
+                 \StringTok{"geodeticDatum"}\NormalTok{, }\StringTok{"georeferenceProtocol"}\NormalTok{,}\StringTok{"country"}\NormalTok{,}\StringTok{"countryCode"}\NormalTok{,}\StringTok{"stateProvince"}\NormalTok{,}
+                 \StringTok{"datasetID"}\NormalTok{,}\StringTok{"eventID"}\NormalTok{,}\StringTok{"sampleSizeUnit"}\NormalTok{,}\StringTok{"samplingEffort"}\NormalTok{)]}
+\FunctionTok{head}\NormalTok{(event)}
+\NormalTok{  samplingProtocol                locality   waterBody decimalLatitude decimalLongitude}
+\DecValTok{1}\NormalTok{        Bag Seine Mission}\SpecialCharTok{{-}}\NormalTok{Aransas Estuary Aransas Bay        }\FloatTok{28.13472}        \SpecialCharTok{{-}}\FloatTok{97.00833}
+\DecValTok{2}\NormalTok{        Bag Seine Mission}\SpecialCharTok{{-}}\NormalTok{Aransas Estuary Aransas Bay        }\FloatTok{28.13528}        \SpecialCharTok{{-}}\FloatTok{97.00722}
+\DecValTok{3}\NormalTok{        Bag Seine Mission}\SpecialCharTok{{-}}\NormalTok{Aransas Estuary Aransas Bay        }\FloatTok{28.13444}        \SpecialCharTok{{-}}\FloatTok{96.99611}
+\DecValTok{4}\NormalTok{        Bag Seine Mission}\SpecialCharTok{{-}}\NormalTok{Aransas Estuary Aransas Bay        }\FloatTok{28.13444}        \SpecialCharTok{{-}}\FloatTok{96.99611}
+\DecValTok{5}\NormalTok{        Bag Seine Mission}\SpecialCharTok{{-}}\NormalTok{Aransas Estuary Aransas Bay        }\FloatTok{28.13444}        \SpecialCharTok{{-}}\FloatTok{96.99611}
+\DecValTok{6}\NormalTok{        Bag Seine Mission}\SpecialCharTok{{-}}\NormalTok{Aransas Estuary Aransas Bay        }\FloatTok{28.13472}        \SpecialCharTok{{-}}\FloatTok{96.99583}
+\NormalTok{            eventDate sampleSizeValue minimumDepthInMeters maximumDepthInMeters  type   modified language}
+\DecValTok{1} \DecValTok{1997{-}01{-}09} \DecValTok{14}\SpecialCharTok{:}\DecValTok{35}\SpecialCharTok{:}\DecValTok{00}            \FloatTok{0.03}                  \FloatTok{0.0}                  \FloatTok{0.6}\NormalTok{ Event }\DecValTok{2022{-}01{-}09}\NormalTok{       en}
+\DecValTok{2} \DecValTok{2000{-}08{-}18} \DecValTok{11}\SpecialCharTok{:}\DecValTok{02}\SpecialCharTok{:}\DecValTok{00}            \FloatTok{0.03}                  \FloatTok{0.1}                  \FloatTok{0.5}\NormalTok{ Event }\DecValTok{2022{-}01{-}09}\NormalTok{       en}
+\DecValTok{3} \DecValTok{2005{-}06{-}28} \DecValTok{08}\SpecialCharTok{:}\DecValTok{41}\SpecialCharTok{:}\DecValTok{00}            \FloatTok{0.03}                  \FloatTok{0.4}                  \FloatTok{0.6}\NormalTok{ Event }\DecValTok{2022{-}01{-}09}\NormalTok{       en}
+\DecValTok{4} \DecValTok{2006{-}08{-}23} \DecValTok{11}\SpecialCharTok{:}\DecValTok{47}\SpecialCharTok{:}\DecValTok{00}            \FloatTok{0.03}                  \FloatTok{0.2}                  \FloatTok{0.4}\NormalTok{ Event }\DecValTok{2022{-}01{-}09}\NormalTok{       en}
+\DecValTok{5} \DecValTok{2006{-}10{-}17} \DecValTok{14}\SpecialCharTok{:}\DecValTok{23}\SpecialCharTok{:}\DecValTok{00}            \FloatTok{0.03}                  \FloatTok{0.7}                  \FloatTok{0.8}\NormalTok{ Event }\DecValTok{2022{-}01{-}09}\NormalTok{       en}
+\DecValTok{6} \DecValTok{1996{-}02{-}19} \DecValTok{10}\SpecialCharTok{:}\DecValTok{27}\SpecialCharTok{:}\DecValTok{00}            \FloatTok{0.03}                  \FloatTok{0.1}                  \FloatTok{0.3}\NormalTok{ Event }\DecValTok{2022{-}01{-}09}\NormalTok{       en}
+\NormalTok{                                                     license institutionCode ownerInstitutionCode}
+\DecValTok{1}\NormalTok{ http}\SpecialCharTok{:}\ErrorTok{//}\NormalTok{creativecommons.org}\SpecialCharTok{/}\NormalTok{publicdomain}\SpecialCharTok{/}\NormalTok{zero}\SpecialCharTok{/}\FloatTok{1.0}\SpecialCharTok{/}\NormalTok{legalcode            TPWD                 HARC}
+\DecValTok{2}\NormalTok{ http}\SpecialCharTok{:}\ErrorTok{//}\NormalTok{creativecommons.org}\SpecialCharTok{/}\NormalTok{publicdomain}\SpecialCharTok{/}\NormalTok{zero}\SpecialCharTok{/}\FloatTok{1.0}\SpecialCharTok{/}\NormalTok{legalcode            TPWD                 HARC}
+\DecValTok{3}\NormalTok{ http}\SpecialCharTok{:}\ErrorTok{//}\NormalTok{creativecommons.org}\SpecialCharTok{/}\NormalTok{publicdomain}\SpecialCharTok{/}\NormalTok{zero}\SpecialCharTok{/}\FloatTok{1.0}\SpecialCharTok{/}\NormalTok{legalcode            TPWD                 HARC}
+\DecValTok{4}\NormalTok{ http}\SpecialCharTok{:}\ErrorTok{//}\NormalTok{creativecommons.org}\SpecialCharTok{/}\NormalTok{publicdomain}\SpecialCharTok{/}\NormalTok{zero}\SpecialCharTok{/}\FloatTok{1.0}\SpecialCharTok{/}\NormalTok{legalcode            TPWD                 HARC}
+\DecValTok{5}\NormalTok{ http}\SpecialCharTok{:}\ErrorTok{//}\NormalTok{creativecommons.org}\SpecialCharTok{/}\NormalTok{publicdomain}\SpecialCharTok{/}\NormalTok{zero}\SpecialCharTok{/}\FloatTok{1.0}\SpecialCharTok{/}\NormalTok{legalcode            TPWD                 HARC}
+\DecValTok{6}\NormalTok{ http}\SpecialCharTok{:}\ErrorTok{//}\NormalTok{creativecommons.org}\SpecialCharTok{/}\NormalTok{publicdomain}\SpecialCharTok{/}\NormalTok{zero}\SpecialCharTok{/}\FloatTok{1.0}\SpecialCharTok{/}\NormalTok{legalcode            TPWD                 HARC}
+\NormalTok{  coordinateUncertaintyInMeters geodeticDatum georeferenceProtocol       country countryCode stateProvince}
+\DecValTok{1}                           \DecValTok{100}\NormalTok{         WGS84         Handheld GPS United States          US         Texas}
+\DecValTok{2}                           \DecValTok{100}\NormalTok{         WGS84         Handheld GPS United States          US         Texas}
+\DecValTok{3}                           \DecValTok{100}\NormalTok{         WGS84         Handheld GPS United States          US         Texas}
+\DecValTok{4}                           \DecValTok{100}\NormalTok{         WGS84         Handheld GPS United States          US         Texas}
+\DecValTok{5}                           \DecValTok{100}\NormalTok{         WGS84         Handheld GPS United States          US         Texas}
+\DecValTok{6}                           \DecValTok{100}\NormalTok{         WGS84         Handheld GPS United States          US         Texas}
+\NormalTok{                              datasetID                                eventID sampleSizeUnit}
+\DecValTok{1}\NormalTok{ TPWD\_HARC\_Texas\_Aransas\_Bay\_Bag\_Seine Station\_95\_Date\_09JAN1997}\SpecialCharTok{:}\DecValTok{14}\SpecialCharTok{:}\DecValTok{35}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{       hectares}
+\DecValTok{2}\NormalTok{ TPWD\_HARC\_Texas\_Aransas\_Bay\_Bag\_Seine Station\_95\_Date\_18AUG2000}\SpecialCharTok{:}\DecValTok{11}\SpecialCharTok{:}\DecValTok{02}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{       hectares}
+\DecValTok{3}\NormalTok{ TPWD\_HARC\_Texas\_Aransas\_Bay\_Bag\_Seine Station\_96\_Date\_28JUN2005}\SpecialCharTok{:}\DecValTok{08}\SpecialCharTok{:}\DecValTok{41}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{       hectares}
+\DecValTok{4}\NormalTok{ TPWD\_HARC\_Texas\_Aransas\_Bay\_Bag\_Seine Station\_96\_Date\_23AUG2006}\SpecialCharTok{:}\DecValTok{11}\SpecialCharTok{:}\DecValTok{47}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{       hectares}
+\DecValTok{5}\NormalTok{ TPWD\_HARC\_Texas\_Aransas\_Bay\_Bag\_Seine Station\_96\_Date\_17OCT2006}\SpecialCharTok{:}\DecValTok{14}\SpecialCharTok{:}\DecValTok{23}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{       hectares}
+\DecValTok{6}\NormalTok{ TPWD\_HARC\_Texas\_Aransas\_Bay\_Bag\_Seine Station\_96\_Date\_19FEB1996}\SpecialCharTok{:}\DecValTok{10}\SpecialCharTok{:}\DecValTok{27}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{       hectares}
+\NormalTok{  samplingEffort}
+\DecValTok{1}    \DecValTok{120}\NormalTok{ seconds}
+\DecValTok{2}    \DecValTok{120}\NormalTok{ seconds}
+\DecValTok{3}    \DecValTok{120}\NormalTok{ seconds}
+\DecValTok{4}    \DecValTok{120}\NormalTok{ seconds}
+\DecValTok{5}    \DecValTok{120}\NormalTok{ seconds}
+\DecValTok{6}    \DecValTok{120}\NormalTok{ seconds}
+
+\FunctionTok{write.csv}\NormalTok{(event, }\AttributeTok{file =} \FunctionTok{paste0}\NormalTok{(event[}\DecValTok{1}\NormalTok{,]}\SpecialCharTok{$}\NormalTok{datasetID, }\StringTok{"\_event\_"}\NormalTok{, lubridate}\SpecialCharTok{::}\FunctionTok{today}\NormalTok{(),}\StringTok{".csv"}\NormalTok{), }\AttributeTok{fileEncoding =} \StringTok{"UTF{-}8"}\NormalTok{, }\AttributeTok{row.names =}\NormalTok{ F, }\AttributeTok{na =} \StringTok{""}\NormalTok{)                    }
+
+\NormalTok{occurrence }\OtherTok{\textless{}{-}}\NormalTok{ occurrence[}\FunctionTok{c}\NormalTok{(}\StringTok{"vernacularName"}\NormalTok{,}\StringTok{"eventID"}\NormalTok{,}\StringTok{"occurrenceStatus"}\NormalTok{,}\StringTok{"basisOfRecord"}\NormalTok{,}
+                           \StringTok{"scientificName"}\NormalTok{,}\StringTok{"scientificNameID"}\NormalTok{,}\StringTok{"kingdom"}\NormalTok{,}\StringTok{"phylum"}\NormalTok{,}\StringTok{"class"}\NormalTok{,}
+                           \StringTok{"order"}\NormalTok{,}\StringTok{"family"}\NormalTok{,}\StringTok{"genus"}\NormalTok{,}
+                           \StringTok{"scientificNameAuthorship"}\NormalTok{,}\StringTok{"taxonRank"}\NormalTok{, }\StringTok{"organismQuantity"}\NormalTok{,}
+                           \StringTok{"organismQuantityType"}\NormalTok{, }\StringTok{"occurrenceID"}\NormalTok{,}\StringTok{"collectionCode"}\NormalTok{)]}
+\FunctionTok{head}\NormalTok{(occurrence)}
+\NormalTok{  vernacularName                                eventID occurrenceStatus    basisOfRecord}
+\DecValTok{1}\NormalTok{  Alligator gar Station\_95\_Date\_09JAN1997}\SpecialCharTok{:}\DecValTok{14}\SpecialCharTok{:}\DecValTok{35}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{           Absent HumanObservation}
+\DecValTok{2}\NormalTok{  Alligator gar Station\_95\_Date\_18AUG2000}\SpecialCharTok{:}\DecValTok{11}\SpecialCharTok{:}\DecValTok{02}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{           Absent HumanObservation}
+\DecValTok{3}\NormalTok{  Alligator gar Station\_96\_Date\_28JUN2005}\SpecialCharTok{:}\DecValTok{08}\SpecialCharTok{:}\DecValTok{41}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{           Absent HumanObservation}
+\DecValTok{4}\NormalTok{  Alligator gar Station\_96\_Date\_23AUG2006}\SpecialCharTok{:}\DecValTok{11}\SpecialCharTok{:}\DecValTok{47}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{           Absent HumanObservation}
+\DecValTok{5}\NormalTok{  Alligator gar Station\_96\_Date\_17OCT2006}\SpecialCharTok{:}\DecValTok{14}\SpecialCharTok{:}\DecValTok{23}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{           Absent HumanObservation}
+\DecValTok{6}\NormalTok{  Alligator gar Station\_96\_Date\_19FEB1996}\SpecialCharTok{:}\DecValTok{10}\SpecialCharTok{:}\DecValTok{27}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{           Absent HumanObservation}
+\NormalTok{        scientificName                          scientificNameID  kingdom   phylum       class}
+\DecValTok{1}\NormalTok{ Atractosteus spatula urn}\SpecialCharTok{:}\NormalTok{lsid}\SpecialCharTok{:}\NormalTok{marinespecies.org}\SpecialCharTok{:}\NormalTok{taxname}\SpecialCharTok{:}\DecValTok{279822}\NormalTok{ Animalia Chordata Actinopteri}
+\DecValTok{2}\NormalTok{ Atractosteus spatula urn}\SpecialCharTok{:}\NormalTok{lsid}\SpecialCharTok{:}\NormalTok{marinespecies.org}\SpecialCharTok{:}\NormalTok{taxname}\SpecialCharTok{:}\DecValTok{279822}\NormalTok{ Animalia Chordata Actinopteri}
+\DecValTok{3}\NormalTok{ Atractosteus spatula urn}\SpecialCharTok{:}\NormalTok{lsid}\SpecialCharTok{:}\NormalTok{marinespecies.org}\SpecialCharTok{:}\NormalTok{taxname}\SpecialCharTok{:}\DecValTok{279822}\NormalTok{ Animalia Chordata Actinopteri}
+\DecValTok{4}\NormalTok{ Atractosteus spatula urn}\SpecialCharTok{:}\NormalTok{lsid}\SpecialCharTok{:}\NormalTok{marinespecies.org}\SpecialCharTok{:}\NormalTok{taxname}\SpecialCharTok{:}\DecValTok{279822}\NormalTok{ Animalia Chordata Actinopteri}
+\DecValTok{5}\NormalTok{ Atractosteus spatula urn}\SpecialCharTok{:}\NormalTok{lsid}\SpecialCharTok{:}\NormalTok{marinespecies.org}\SpecialCharTok{:}\NormalTok{taxname}\SpecialCharTok{:}\DecValTok{279822}\NormalTok{ Animalia Chordata Actinopteri}
+\DecValTok{6}\NormalTok{ Atractosteus spatula urn}\SpecialCharTok{:}\NormalTok{lsid}\SpecialCharTok{:}\NormalTok{marinespecies.org}\SpecialCharTok{:}\NormalTok{taxname}\SpecialCharTok{:}\DecValTok{279822}\NormalTok{ Animalia Chordata Actinopteri}
+\NormalTok{             order        family        genus scientificNameAuthorship taxonRank organismQuantity}
+\DecValTok{1}\NormalTok{ Lepisosteiformes Lepisosteidae }\FunctionTok{Atractosteus}\NormalTok{         (Lacepède, }\DecValTok{1803}\NormalTok{)   Species                }\DecValTok{0}
+\DecValTok{2}\NormalTok{ Lepisosteiformes Lepisosteidae }\FunctionTok{Atractosteus}\NormalTok{         (Lacepède, }\DecValTok{1803}\NormalTok{)   Species                }\DecValTok{0}
+\DecValTok{3}\NormalTok{ Lepisosteiformes Lepisosteidae }\FunctionTok{Atractosteus}\NormalTok{         (Lacepède, }\DecValTok{1803}\NormalTok{)   Species                }\DecValTok{0}
+\DecValTok{4}\NormalTok{ Lepisosteiformes Lepisosteidae }\FunctionTok{Atractosteus}\NormalTok{         (Lacepède, }\DecValTok{1803}\NormalTok{)   Species                }\DecValTok{0}
+\DecValTok{5}\NormalTok{ Lepisosteiformes Lepisosteidae }\FunctionTok{Atractosteus}\NormalTok{         (Lacepède, }\DecValTok{1803}\NormalTok{)   Species                }\DecValTok{0}
+\DecValTok{6}\NormalTok{ Lepisosteiformes Lepisosteidae }\FunctionTok{Atractosteus}\NormalTok{         (Lacepède, }\DecValTok{1803}\NormalTok{)   Species                }\DecValTok{0}
+\NormalTok{  organismQuantityType                                                occurrenceID        collectionCode}
+\DecValTok{1}\NormalTok{   Relative Abundance Station\_95\_Date\_09JAN1997}\SpecialCharTok{:}\DecValTok{14}\SpecialCharTok{:}\DecValTok{35}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{\_Atractosteus\_spatula Aransas Bay Bag Seine}
+\DecValTok{2}\NormalTok{   Relative Abundance Station\_95\_Date\_18AUG2000}\SpecialCharTok{:}\DecValTok{11}\SpecialCharTok{:}\DecValTok{02}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{\_Atractosteus\_spatula Aransas Bay Bag Seine}
+\DecValTok{3}\NormalTok{   Relative Abundance Station\_96\_Date\_28JUN2005}\SpecialCharTok{:}\DecValTok{08}\SpecialCharTok{:}\DecValTok{41}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{\_Atractosteus\_spatula Aransas Bay Bag Seine}
+\DecValTok{4}\NormalTok{   Relative Abundance Station\_96\_Date\_23AUG2006}\SpecialCharTok{:}\DecValTok{11}\SpecialCharTok{:}\DecValTok{47}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{\_Atractosteus\_spatula Aransas Bay Bag Seine}
+\DecValTok{5}\NormalTok{   Relative Abundance Station\_96\_Date\_17OCT2006}\SpecialCharTok{:}\DecValTok{14}\SpecialCharTok{:}\DecValTok{23}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{\_Atractosteus\_spatula Aransas Bay Bag Seine}
+\DecValTok{6}\NormalTok{   Relative Abundance Station\_96\_Date\_19FEB1996}\SpecialCharTok{:}\DecValTok{10}\SpecialCharTok{:}\DecValTok{27}\SpecialCharTok{:}\FloatTok{00.000}\NormalTok{\_Atractosteus\_spatula Aransas Bay Bag Seine}
+                           
+\FunctionTok{write.csv}\NormalTok{(occurrence, }\AttributeTok{file =} \FunctionTok{paste0}\NormalTok{(event[}\DecValTok{1}\NormalTok{,]}\SpecialCharTok{$}\NormalTok{datasetID, }\StringTok{"\_occurrence\_"}\NormalTok{,lubridate}\SpecialCharTok{::}\FunctionTok{today}\NormalTok{(),}\StringTok{".csv"}\NormalTok{), }\AttributeTok{fileEncoding =} \StringTok{"UTF{-}8"}\NormalTok{, }\AttributeTok{row.names =}\NormalTok{ F, }\AttributeTok{na =} \StringTok{""}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 

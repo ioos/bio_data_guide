@@ -1,8 +1,11 @@
 intro
 applications
-aligning-data-to-darwin-core---sampling-event-with-measurement-or-fact
+aligning-data-to-darwin-core---event-core-with-extended-measurement-or-fact
 general-information-about-this-notebook
-taxonomic-name-matching
+event-file
+occurrence-file
+extended-measurement-or-fact-extension-file
+cleaning-up-event-and-occurrence-files
 salmon-ocean-ecology-data
 intro-1
 event
