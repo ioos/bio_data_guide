@@ -170,6 +170,472 @@ There are a few concepts necessary to make this possible such as standard data s
 
 Some applications are demonstrated in this chapter.
 
+\hypertarget{aligning-data-to-darwin-core---sampling-event-with-measurement-or-fact}{%
+\section{Aligning Data to Darwin Core - Sampling Event with Measurement or Fact}\label{aligning-data-to-darwin-core---sampling-event-with-measurement-or-fact}}
+
+Abby Benson\\
+October 8,2019
+
+\hypertarget{general-information-about-this-notebook}{%
+\subsection{General information about this notebook}\label{general-information-about-this-notebook}}
+
+This notebook was created for the IOOS DMAC Code Sprint Biological Data Session
+The data in this notebook were created specifically as an example and meant solely to be
+illustrative of the process for aligning data to the biological data standard - Darwin Core.
+These data should not be considered actually occurrences of species and any measurements
+are also contrived. This notebook is meant to provide a step by step process for taking
+original data and aligning it to Darwin Core.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(readr)}
+\FunctionTok{library}\NormalTok{(uuid)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+
+\NormalTok{MadeUpDataForBiologicalDataTraining }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"\textasciitilde{}/OBIS/Reference Documentation/Presentations/IOOS DMAC Code Sprint/MadeUpDataForBiologicalDataTraining.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Parsed with column specification:
+## cols(
+##   date = col_character(),
+##   lat = col_double(),
+##   lon = col_double(),
+##   region = col_character(),
+##   station = col_double(),
+##   transect = col_double(),
+##   `scientific name` = col_character(),
+##   `percent cover` = col_double(),
+##   depth = col_double(),
+##   `bottom type` = col_character(),
+##   rugosity = col_double(),
+##   temperature = col_double()
+## )
+\end{verbatim}
+
+First we need to to decide if we will provide an occurrence only version of the data or
+a sampling event with measurement or facts version of the data. Occurrence only is easier
+to create. It's only one file to produce. However, several pieces of information will be
+left out if we choose that option. If we choose to do sampling event with measurement or
+fact we'll be able to capture all of the data in the file creating a lossless version.
+Here we decide to use the sampling event option to include as much information as we can.
+First let's create the eventID and occurrenceID in the original file so that information
+can be reused for all necessary files down the line.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{MadeUpDataForBiologicalDataTraining}\SpecialCharTok{$}\NormalTok{eventID }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(MadeUpDataForBiologicalDataTraining}\SpecialCharTok{$}\NormalTok{region, }
+\NormalTok{                                                     MadeUpDataForBiologicalDataTraining}\SpecialCharTok{$}\NormalTok{station, }
+\NormalTok{                                                     MadeUpDataForBiologicalDataTraining}\SpecialCharTok{$}\NormalTok{transect, }\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{) }
+\NormalTok{MadeUpDataForBiologicalDataTraining}\SpecialCharTok{$}\NormalTok{occurrenceID }\OtherTok{\textless{}{-}} \StringTok{""}
+\NormalTok{MadeUpDataForBiologicalDataTraining}\SpecialCharTok{$}\NormalTok{occurrenceID }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(MadeUpDataForBiologicalDataTraining}\SpecialCharTok{$}\NormalTok{occurrenceID, }
+                                       \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{UUIDgenerate}\NormalTok{(}\AttributeTok{use.time =} \ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+We will need to create three separate files to comply with the sampling event format.
+We'll start with the event file but we only need to include the columns that are relevant
+to the event file.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{event }\OtherTok{\textless{}{-}}\NormalTok{ MadeUpDataForBiologicalDataTraining[}\FunctionTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"lat"}\NormalTok{, }\StringTok{"lon"}\NormalTok{, }\StringTok{"region"}\NormalTok{, }\StringTok{"station"}\NormalTok{,}
+                                               \StringTok{"transect"}\NormalTok{, }\StringTok{"depth"}\NormalTok{, }\StringTok{"bottom type"}\NormalTok{, }\StringTok{"eventID"}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+Next we need to rename any columns of data that match directly to Darwin Core. We know
+this based on our crosswalk spreadsheet CrosswalkToDarwinCore.csv
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{event}\SpecialCharTok{$}\NormalTok{decimalLatitude }\OtherTok{\textless{}{-}}\NormalTok{ event}\SpecialCharTok{$}\NormalTok{lat}
+\NormalTok{event}\SpecialCharTok{$}\NormalTok{decimalLongitude }\OtherTok{\textless{}{-}}\NormalTok{ event}\SpecialCharTok{$}\NormalTok{lon}
+\NormalTok{event}\SpecialCharTok{$}\NormalTok{minimumDepthInMeters }\OtherTok{\textless{}{-}}\NormalTok{ event}\SpecialCharTok{$}\NormalTok{depth}
+\NormalTok{event}\SpecialCharTok{$}\NormalTok{maximumDepthInMeters }\OtherTok{\textless{}{-}}\NormalTok{ event}\SpecialCharTok{$}\NormalTok{depth}
+\NormalTok{event}\SpecialCharTok{$}\NormalTok{habitat }\OtherTok{\textless{}{-}}\NormalTok{ event}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{bottom type}\StringTok{\textasciigrave{}}
+\NormalTok{event}\SpecialCharTok{$}\NormalTok{island }\OtherTok{\textless{}{-}}\NormalTok{ event}\SpecialCharTok{$}\NormalTok{region}
+\end{Highlighting}
+\end{Shaded}
+
+Let's see how it looks:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(event, }\AttributeTok{n =} \DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 10 x 15
+##    date    lat   lon region station transect depth `bottom type` eventID
+##    <chr> <dbl> <dbl> <chr>    <dbl>    <dbl> <dbl> <chr>         <chr>  
+##  1 7/16~  18.3 -64.8 St. J~     250        1    25 shallow reef~ St. Jo~
+##  2 7/16~  18.3 -64.8 St. J~     250        1    25 shallow reef~ St. Jo~
+##  3 7/16~  18.3 -64.8 St. J~     250        1    25 shallow reef~ St. Jo~
+##  4 7/16~  18.3 -64.8 St. J~     250        1    25 shallow reef~ St. Jo~
+##  5 7/16~  18.3 -64.8 St. J~     250        2    35 complex back~ St. Jo~
+##  6 7/16~  18.3 -64.8 St. J~     250        2    35 complex back~ St. Jo~
+##  7 7/16~  18.3 -64.8 St. J~     250        2    35 complex back~ St. Jo~
+##  8 7/16~  18.3 -64.8 St. J~     250        2    35 complex back~ St. Jo~
+##  9 7/16~  18.3 -64.8 St. J~     250        3    85 deep reef     St. Jo~
+## 10 7/16~  18.3 -64.8 St. J~     250        3    85 deep reef     St. Jo~
+## # ... with 6 more variables: decimalLatitude <dbl>,
+## #   decimalLongitude <dbl>, minimumDepthInMeters <dbl>,
+## #   maximumDepthInMeters <dbl>, habitat <chr>, island <chr>
+\end{verbatim}
+
+We need to convert the date to ISO format
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{event}\SpecialCharTok{$}\NormalTok{eventDate }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(event}\SpecialCharTok{$}\NormalTok{date, }\AttributeTok{format =} \StringTok{"\%m/\%d/\%Y"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+We will also have to add any missing required fields
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{event}\SpecialCharTok{$}\NormalTok{basisOfRecord }\OtherTok{\textless{}{-}} \StringTok{"HumanObservation"}
+\NormalTok{event}\SpecialCharTok{$}\NormalTok{geodeticDatum }\OtherTok{\textless{}{-}} \StringTok{"EPSG:4326 WGS84"}
+\end{Highlighting}
+\end{Shaded}
+
+Then we'll remove any columns that we no longer need to clean things up a bit.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{event}\SpecialCharTok{$}\NormalTok{date }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{event}\SpecialCharTok{$}\NormalTok{lat }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{event}\SpecialCharTok{$}\NormalTok{lon }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{event}\SpecialCharTok{$}\NormalTok{region }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{event}\SpecialCharTok{$}\NormalTok{station }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{event}\SpecialCharTok{$}\NormalTok{transect }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{event}\SpecialCharTok{$}\NormalTok{depth }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{event}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{bottom type}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\end{Highlighting}
+\end{Shaded}
+
+We have too many repeating rows of information. We can pare this down using eventID which
+is a unique identifier for each sampling event in the data- which is six, three transects
+per site.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{event }\OtherTok{\textless{}{-}}\NormalTok{ event[}\FunctionTok{which}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{duplicated}\NormalTok{(event}\SpecialCharTok{$}\NormalTok{eventID)),]}
+
+\FunctionTok{head}\NormalTok{(event, }\AttributeTok{n =} \DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 10
+##   eventID decimalLatitude decimalLongitude minimumDepthInM~
+##   <chr>             <dbl>            <dbl>            <dbl>
+## 1 St. Jo~            18.3            -64.8               25
+## 2 St. Jo~            18.3            -64.8               35
+## 3 St. Jo~            18.3            -64.8               85
+## 4 St. Jo~            18.3            -64.8               28
+## 5 St. Jo~            18.3            -64.8               16
+## 6 St. Jo~            18.3            -64.8               90
+## # ... with 6 more variables: maximumDepthInMeters <dbl>, habitat <chr>,
+## #   island <chr>, eventDate <date>, basisOfRecord <chr>,
+## #   geodeticDatum <chr>
+\end{verbatim}
+
+Finally we write out the event file
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{write.csv}\NormalTok{(event, }\AttributeTok{file=}\StringTok{"MadeUpData\_event.csv"}\NormalTok{, }\AttributeTok{row.names=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{fileEncoding=}\StringTok{"UTF{-}8"}\NormalTok{, }\AttributeTok{quote=}\ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Next we need to create the occurrence file. We start by creating the dataframe.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{occurrence }\OtherTok{\textless{}{-}}\NormalTok{ MadeUpDataForBiologicalDataTraining[}\FunctionTok{c}\NormalTok{(}\StringTok{"scientific name"}\NormalTok{, }\StringTok{"eventID"}\NormalTok{, }\StringTok{"occurrenceID"}\NormalTok{, }\StringTok{"percent cover"}\NormalTok{)] }
+\end{Highlighting}
+\end{Shaded}
+
+Then we'll rename the columns that align directly with Darwin Core.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{occurrence}\SpecialCharTok{$}\NormalTok{scientificName }\OtherTok{\textless{}{-}}\NormalTok{ occurrence}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{scientific name}\StringTok{\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+Finally we'll add required information that's missing.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{occurrence}\SpecialCharTok{$}\NormalTok{occurrenceStatus }\OtherTok{\textless{}{-}}  \FunctionTok{ifelse}\NormalTok{ (occurrence}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{percent cover}\StringTok{\textasciigrave{}} \SpecialCharTok{==} \DecValTok{0}\NormalTok{, }\StringTok{"absent"}\NormalTok{, }\StringTok{"present"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{taxonomic-name-matching}{%
+\subsection{Taxonomic Name Matching}\label{taxonomic-name-matching}}
+
+A requirement for OBIS is that all scientific names match to the World Register of
+Marine Species (WoRMS) and a scientificNameID is included. A scientificNameID looks
+like this ``\url{urn:lsid:marinespecies.org:taxname:275730}'' with the last digits after
+the colon being the WoRMS aphia ID. We'll need to go out to WoRMS to grab this
+information.
+Create a lookup table of unique scientific names
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lut\_worms }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{unique}\NormalTok{(occurrence\_only}\SpecialCharTok{$}\NormalTok{scientificName))}
+\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{scientificName }\OtherTok{\textless{}{-}} \FunctionTok{as.character}\NormalTok{(lut\_worms}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{unique(occurrence\_only$scientificName)}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{lut\_worms}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{unique(occurrence\_only$scientificName)}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{scientificName }\OtherTok{\textless{}{-}} \FunctionTok{as.character}\NormalTok{(lut\_worms}\SpecialCharTok{$}\NormalTok{scientificName)}
+\end{Highlighting}
+\end{Shaded}
+
+Add the columns that we can grab information from WoRMS including the required scientificNameID.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{acceptedname }\OtherTok{\textless{}{-}} \StringTok{""}
+\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{acceptedID }\OtherTok{\textless{}{-}} \StringTok{""}
+\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{scientificNameID }\OtherTok{\textless{}{-}} \StringTok{""}
+\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{kingdom }\OtherTok{\textless{}{-}} \StringTok{""}
+\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{phylum }\OtherTok{\textless{}{-}} \StringTok{""}
+\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{class }\OtherTok{\textless{}{-}} \StringTok{""}
+\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{order }\OtherTok{\textless{}{-}} \StringTok{""}
+\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{family }\OtherTok{\textless{}{-}} \StringTok{""}
+\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{genus }\OtherTok{\textless{}{-}} \StringTok{""}
+\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{scientificNameAuthorship }\OtherTok{\textless{}{-}} \StringTok{""}
+\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{taxonRank }\OtherTok{\textless{}{-}} \StringTok{""}
+\end{Highlighting}
+\end{Shaded}
+
+Taxonomic lookup using the library taxizesoap
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(lut\_worms))\{}
+\NormalTok{  df }\OtherTok{\textless{}{-}} \FunctionTok{worms\_records}\NormalTok{(}\AttributeTok{scientific =}\NormalTok{ lut\_worms}\SpecialCharTok{$}\NormalTok{scientificName[i])}
+\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{scientificNameID }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{lsid[}\DecValTok{1}\NormalTok{]}
+\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{acceptedname }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{valid\_name[}\DecValTok{1}\NormalTok{]}
+\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{acceptedID }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{valid\_AphiaID[}\DecValTok{1}\NormalTok{]}
+\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{kingdom }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{kingdom[}\DecValTok{1}\NormalTok{]}
+\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{phylum }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{phylum[}\DecValTok{1}\NormalTok{]}
+\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{class }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{class[}\DecValTok{1}\NormalTok{]}
+\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{order }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{order[}\DecValTok{1}\NormalTok{]}
+\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{family }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{family[}\DecValTok{1}\NormalTok{]}
+\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{genus }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{genus[}\DecValTok{1}\NormalTok{]}
+\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{scientificNameAuthorship }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{authority[}\DecValTok{1}\NormalTok{]}
+\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{taxonRank }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{rank[}\DecValTok{1}\NormalTok{]}
+  \FunctionTok{message}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"Looking up information for species:"}\NormalTok{, lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{scientificName))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Looking up information for species: Acropora cervicornis
+\end{verbatim}
+
+\begin{verbatim}
+## Looking up information for species: Madracis auretenra
+\end{verbatim}
+
+\begin{verbatim}
+## Looking up information for species: Mussa angulosa
+\end{verbatim}
+
+\begin{verbatim}
+## Looking up information for species: Siderastrea radians
+\end{verbatim}
+
+Merge the lookup table of unique scientific names back with the occurrence data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{occurrence }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(occurrence, lut\_worms, }\AttributeTok{by =} \StringTok{"scientificName"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+We're going to remove any unnecessary columns to clean up the file
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{occurrence}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{scientific name}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{occurrence}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{percent cover}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\end{Highlighting}
+\end{Shaded}
+
+Quick look at what we have before we write out the file
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(occurrence, }\AttributeTok{n =} \DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          scientificName        eventID
+## 1  Acropora cervicornis St. John_250_1
+## 2  Acropora cervicornis St. John_250_2
+## 3  Acropora cervicornis St. John_250_3
+## 4  Acropora cervicornis St. John_356_1
+## 5  Acropora cervicornis St. John_356_2
+## 6  Acropora cervicornis St. John_356_3
+## 7    Madracis auretenra St. John_250_1
+## 8    Madracis auretenra St. John_250_2
+## 9    Madracis auretenra St. John_250_3
+## 10   Madracis auretenra St. John_356_1
+##                            occurrenceID occurrenceStatus
+## 1  63be8f7e-ea9a-11e9-8649-49c6324f3a06           absent
+## 2  63beb687-ea9a-11e9-8649-49c6324f3a06           absent
+## 3  63beb68b-ea9a-11e9-8649-49c6324f3a06          present
+## 4  63bedd76-ea9a-11e9-8649-49c6324f3a06          present
+## 5  63bedd7a-ea9a-11e9-8649-49c6324f3a06          present
+## 6  63bedd7e-ea9a-11e9-8649-49c6324f3a06          present
+## 7  63beb684-ea9a-11e9-8649-49c6324f3a06          present
+## 8  63beb688-ea9a-11e9-8649-49c6324f3a06          present
+## 9  63beb68c-ea9a-11e9-8649-49c6324f3a06           absent
+## 10 63bedd77-ea9a-11e9-8649-49c6324f3a06          present
+##            acceptedname acceptedID
+## 1  Acropora cervicornis     206989
+## 2  Acropora cervicornis     206989
+## 3  Acropora cervicornis     206989
+## 4  Acropora cervicornis     206989
+## 5  Acropora cervicornis     206989
+## 6  Acropora cervicornis     206989
+## 7    Madracis auretenra     430664
+## 8    Madracis auretenra     430664
+## 9    Madracis auretenra     430664
+## 10   Madracis auretenra     430664
+##                             scientificNameID  kingdom   phylum    class
+## 1  urn:lsid:marinespecies.org:taxname:206989 Animalia Cnidaria Anthozoa
+## 2  urn:lsid:marinespecies.org:taxname:206989 Animalia Cnidaria Anthozoa
+## 3  urn:lsid:marinespecies.org:taxname:206989 Animalia Cnidaria Anthozoa
+## 4  urn:lsid:marinespecies.org:taxname:206989 Animalia Cnidaria Anthozoa
+## 5  urn:lsid:marinespecies.org:taxname:206989 Animalia Cnidaria Anthozoa
+## 6  urn:lsid:marinespecies.org:taxname:206989 Animalia Cnidaria Anthozoa
+## 7  urn:lsid:marinespecies.org:taxname:430664 Animalia Cnidaria Anthozoa
+## 8  urn:lsid:marinespecies.org:taxname:430664 Animalia Cnidaria Anthozoa
+## 9  urn:lsid:marinespecies.org:taxname:430664 Animalia Cnidaria Anthozoa
+## 10 urn:lsid:marinespecies.org:taxname:430664 Animalia Cnidaria Anthozoa
+##           order         family    genus   scientificNameAuthorship
+## 1  Scleractinia    Acroporidae Acropora            (Lamarck, 1816)
+## 2  Scleractinia    Acroporidae Acropora            (Lamarck, 1816)
+## 3  Scleractinia    Acroporidae Acropora            (Lamarck, 1816)
+## 4  Scleractinia    Acroporidae Acropora            (Lamarck, 1816)
+## 5  Scleractinia    Acroporidae Acropora            (Lamarck, 1816)
+## 6  Scleractinia    Acroporidae Acropora            (Lamarck, 1816)
+## 7  Scleractinia Pocilloporidae Madracis Locke, Weil & Coates, 2007
+## 8  Scleractinia Pocilloporidae Madracis Locke, Weil & Coates, 2007
+## 9  Scleractinia Pocilloporidae Madracis Locke, Weil & Coates, 2007
+## 10 Scleractinia Pocilloporidae Madracis Locke, Weil & Coates, 2007
+##    taxonRank
+## 1    Species
+## 2    Species
+## 3    Species
+## 4    Species
+## 5    Species
+## 6    Species
+## 7    Species
+## 8    Species
+## 9    Species
+## 10   Species
+\end{verbatim}
+
+Write out the file. All done with occurrence!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{write.csv}\NormalTok{(occurrence, }\AttributeTok{file=}\StringTok{"MadeUpData\_Occurrence.csv"}\NormalTok{, }\AttributeTok{row.names=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{fileEncoding=}\StringTok{"UTF{-}8"}\NormalTok{, }\AttributeTok{quote=}\ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The last file we need to create is the measurement or fact file. For this we need to
+combine all of the measurements or facts that we want to include making sure to include
+IDs from the BODC NERC vocabulary where possible.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{temperature }\OtherTok{\textless{}{-}}\NormalTok{ MadeUpDataForBiologicalDataTraining[}\FunctionTok{c}\NormalTok{(}\StringTok{"eventID"}\NormalTok{, }\StringTok{"temperature"}\NormalTok{, }\StringTok{"date"}\NormalTok{)]}
+\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{occurrenceID }\OtherTok{\textless{}{-}} \StringTok{""}
+\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementType }\OtherTok{\textless{}{-}} \StringTok{"temperature"}
+\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementTypeID }\OtherTok{\textless{}{-}} \StringTok{"http://vocab.nerc.ac.uk/collection/P25/current/WTEMP/"}
+\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementValue }\OtherTok{\textless{}{-}}\NormalTok{ temperature}\SpecialCharTok{$}\NormalTok{temperature}
+\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementUnit }\OtherTok{\textless{}{-}} \StringTok{"Celsius"}
+\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementUnitID }\OtherTok{\textless{}{-}} \StringTok{"http://vocab.nerc.ac.uk/collection/P06/current/UPAA/"}
+\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementAccuracy }\OtherTok{\textless{}{-}} \DecValTok{3}
+\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementDeterminedDate }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(temperature}\SpecialCharTok{$}\NormalTok{date, }\AttributeTok{format =} \StringTok{"\%m/\%d/\%Y"}\NormalTok{)}
+\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementMethod }\OtherTok{\textless{}{-}} \StringTok{""}
+\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{temperature }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{date }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{rugosity }\OtherTok{\textless{}{-}}\NormalTok{ MadeUpDataForBiologicalDataTraining[}\FunctionTok{c}\NormalTok{(}\StringTok{"eventID"}\NormalTok{, }\StringTok{"rugosity"}\NormalTok{, }\StringTok{"date"}\NormalTok{)]}
+\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{occurrenceID }\OtherTok{\textless{}{-}} \StringTok{""}
+\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measurementType }\OtherTok{\textless{}{-}} \StringTok{"rugosity"}
+\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measurementTypeID }\OtherTok{\textless{}{-}} \StringTok{""}
+\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measurementValue }\OtherTok{\textless{}{-}}\NormalTok{ rugosity}\SpecialCharTok{$}\NormalTok{rugosity}
+\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measurementUnit }\OtherTok{\textless{}{-}} \StringTok{""}
+\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measurementUnitID }\OtherTok{\textless{}{-}} \StringTok{""}
+\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measuremntAccuracy }\OtherTok{\textless{}{-}} \StringTok{""}
+\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measurementDeterminedDate }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(rugosity}\SpecialCharTok{$}\NormalTok{date, }\AttributeTok{format =} \StringTok{"\%m/\%d/\%Y"}\NormalTok{)}
+\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measurementMethod }\OtherTok{\textless{}{-}} \StringTok{""}
+\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{rugosity }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{date }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{percentcover }\OtherTok{\textless{}{-}}\NormalTok{ MadeUpDataForBiologicalDataTraining[}\FunctionTok{c}\NormalTok{(}\StringTok{"eventID"}\NormalTok{, }\StringTok{"occurrenceID"}\NormalTok{, }\StringTok{"percent cover"}\NormalTok{, }\StringTok{"date"}\NormalTok{)]}
+\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measurementType }\OtherTok{\textless{}{-}} \StringTok{"Percent Cover"}
+\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measurementTypeID }\OtherTok{\textless{}{-}} \StringTok{"http://vocab.nerc.ac.uk/collection/P01/current/SDBIOL10/"}
+\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measurementValue }\OtherTok{\textless{}{-}}\NormalTok{ percentcover}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{percent cover}\StringTok{\textasciigrave{}}
+\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measurementUnit }\OtherTok{\textless{}{-}} \StringTok{"Percent/100m\^{}2"}
+\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measurementUnitID }\OtherTok{\textless{}{-}} \StringTok{""}
+\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measuremntAccuracy }\OtherTok{\textless{}{-}} \DecValTok{5}
+\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measurementDeterminedDate }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(percentcover}\SpecialCharTok{$}\NormalTok{date, }\AttributeTok{format =} \StringTok{"\%m/\%d/\%Y"}\NormalTok{)}
+\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measurementMethod }\OtherTok{\textless{}{-}} \StringTok{""}
+\NormalTok{percentcover}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{percent cover}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{date }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{measurementOrFact }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(temperature, rugosity, percentcover)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Error in match.names(clabs, names(xi)): names do not match previous names
+\end{verbatim}
+
+Let's check to see what it looks like
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(measurementOrFact, }\AttributeTok{n =} \DecValTok{50}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 50 x 9
+##    eventID occurrenceID measurementType measurementType~ measurementValue
+##    <chr>   <chr>        <chr>           <chr>                       <dbl>
+##  1 St. Jo~ ""           temperature     ""                           25.2
+##  2 St. Jo~ ""           temperature     ""                           25.2
+##  3 St. Jo~ ""           temperature     ""                           25.2
+##  4 St. Jo~ ""           temperature     ""                           25.2
+##  5 St. Jo~ ""           temperature     ""                           24.8
+##  6 St. Jo~ ""           temperature     ""                           24.8
+##  7 St. Jo~ ""           temperature     ""                           24.8
+##  8 St. Jo~ ""           temperature     ""                           24.8
+##  9 St. Jo~ ""           temperature     ""                           23.1
+## 10 St. Jo~ ""           temperature     ""                           23.1
+## # ... with 40 more rows, and 4 more variables: measurementUnit <chr>,
+## #   measurementUnitID <chr>, measurementDeterminedDate <date>,
+## #   measurementMethod <chr>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{write.csv}\NormalTok{(measurementOrFact, }\AttributeTok{file=}\StringTok{"MadeUpData\_mof.csv"}\NormalTok{, }\AttributeTok{row.names=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{fileEncoding=}\StringTok{"UTF{-}8"}\NormalTok{, }\AttributeTok{quote=}\ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
 \hypertarget{salmon-ocean-ecology-data}{%
 \section{Salmon Ocean Ecology Data}\label{salmon-ocean-ecology-data}}
 
@@ -1129,472 +1595,6 @@ A resource relationship extension is created to further highlight that the indiv
 
 \textbf{Q1}. Why not use the terms \emph{associatedOccurrence} or \emph{associatedTaxa}?
 \textbf{A}. There seems to be a movement away from the term \emph{associatedOccurrence} as the \texttt{resourceRelationship} extension has a much broader use case. Some issues that were raised on GitHub exemplify this, see e.g.~\href{https://github.com/tdwg/dwc/issues/324}{here}. \emph{associatedTaxa} is used to provide identifiers or names of taxa and the associations of an Occurrence with them. This term is not apt for establishing relationships between taxa, only between specific Occurrences of an organism with other taxa. As noted on the \href{https://dwc.tdwg.org/terms/\#dwc:associatedTaxa}{TDWG website}, \emph{{[}\ldots{]} Note that the ResourceRelationship class is an alternative means of representing associations, and with more detail.} See also e.g.~\href{https://github.com/tdwg/dwc/issues/331}{this issue}.
-
-\hypertarget{aligning-data-to-darwin-core---sampling-event-with-measurement-or-fact}{%
-\section{Aligning Data to Darwin Core - Sampling Event with Measurement or Fact}\label{aligning-data-to-darwin-core---sampling-event-with-measurement-or-fact}}
-
-Abby Benson\\
-October 8,2019
-
-\hypertarget{general-information-about-this-notebook}{%
-\subsection{General information about this notebook}\label{general-information-about-this-notebook}}
-
-This notebook was created for the IOOS DMAC Code Sprint Biological Data Session
-The data in this notebook were created specifically as an example and meant solely to be
-illustrative of the process for aligning data to the biological data standard - Darwin Core.
-These data should not be considered actually occurrences of species and any measurements
-are also contrived. This notebook is meant to provide a step by step process for taking
-original data and aligning it to Darwin Core.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(readr)}
-\FunctionTok{library}\NormalTok{(uuid)}
-\FunctionTok{library}\NormalTok{(dplyr)}
-
-\NormalTok{MadeUpDataForBiologicalDataTraining }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"\textasciitilde{}/OBIS/Reference Documentation/Presentations/IOOS DMAC Code Sprint/MadeUpDataForBiologicalDataTraining.csv"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Parsed with column specification:
-## cols(
-##   date = col_character(),
-##   lat = col_double(),
-##   lon = col_double(),
-##   region = col_character(),
-##   station = col_double(),
-##   transect = col_double(),
-##   `scientific name` = col_character(),
-##   `percent cover` = col_double(),
-##   depth = col_double(),
-##   `bottom type` = col_character(),
-##   rugosity = col_double(),
-##   temperature = col_double()
-## )
-\end{verbatim}
-
-First we need to to decide if we will provide an occurrence only version of the data or
-a sampling event with measurement or facts version of the data. Occurrence only is easier
-to create. It's only one file to produce. However, several pieces of information will be
-left out if we choose that option. If we choose to do sampling event with measurement or
-fact we'll be able to capture all of the data in the file creating a lossless version.
-Here we decide to use the sampling event option to include as much information as we can.
-First let's create the eventID and occurrenceID in the original file so that information
-can be reused for all necessary files down the line.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{MadeUpDataForBiologicalDataTraining}\SpecialCharTok{$}\NormalTok{eventID }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(MadeUpDataForBiologicalDataTraining}\SpecialCharTok{$}\NormalTok{region, }
-\NormalTok{                                                     MadeUpDataForBiologicalDataTraining}\SpecialCharTok{$}\NormalTok{station, }
-\NormalTok{                                                     MadeUpDataForBiologicalDataTraining}\SpecialCharTok{$}\NormalTok{transect, }\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{) }
-\NormalTok{MadeUpDataForBiologicalDataTraining}\SpecialCharTok{$}\NormalTok{occurrenceID }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{MadeUpDataForBiologicalDataTraining}\SpecialCharTok{$}\NormalTok{occurrenceID }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(MadeUpDataForBiologicalDataTraining}\SpecialCharTok{$}\NormalTok{occurrenceID, }
-                                       \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{UUIDgenerate}\NormalTok{(}\AttributeTok{use.time =} \ConstantTok{TRUE}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-We will need to create three separate files to comply with the sampling event format.
-We'll start with the event file but we only need to include the columns that are relevant
-to the event file.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{event }\OtherTok{\textless{}{-}}\NormalTok{ MadeUpDataForBiologicalDataTraining[}\FunctionTok{c}\NormalTok{(}\StringTok{"date"}\NormalTok{, }\StringTok{"lat"}\NormalTok{, }\StringTok{"lon"}\NormalTok{, }\StringTok{"region"}\NormalTok{, }\StringTok{"station"}\NormalTok{,}
-                                               \StringTok{"transect"}\NormalTok{, }\StringTok{"depth"}\NormalTok{, }\StringTok{"bottom type"}\NormalTok{, }\StringTok{"eventID"}\NormalTok{)]}
-\end{Highlighting}
-\end{Shaded}
-
-Next we need to rename any columns of data that match directly to Darwin Core. We know
-this based on our crosswalk spreadsheet CrosswalkToDarwinCore.csv
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{decimalLatitude }\OtherTok{\textless{}{-}}\NormalTok{ event}\SpecialCharTok{$}\NormalTok{lat}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{decimalLongitude }\OtherTok{\textless{}{-}}\NormalTok{ event}\SpecialCharTok{$}\NormalTok{lon}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{minimumDepthInMeters }\OtherTok{\textless{}{-}}\NormalTok{ event}\SpecialCharTok{$}\NormalTok{depth}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{maximumDepthInMeters }\OtherTok{\textless{}{-}}\NormalTok{ event}\SpecialCharTok{$}\NormalTok{depth}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{habitat }\OtherTok{\textless{}{-}}\NormalTok{ event}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{bottom type}\StringTok{\textasciigrave{}}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{island }\OtherTok{\textless{}{-}}\NormalTok{ event}\SpecialCharTok{$}\NormalTok{region}
-\end{Highlighting}
-\end{Shaded}
-
-Let's see how it looks:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{head}\NormalTok{(event, }\AttributeTok{n =} \DecValTok{10}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 10 x 15
-##    date    lat   lon region station transect depth `bottom type` eventID
-##    <chr> <dbl> <dbl> <chr>    <dbl>    <dbl> <dbl> <chr>         <chr>  
-##  1 7/16~  18.3 -64.8 St. J~     250        1    25 shallow reef~ St. Jo~
-##  2 7/16~  18.3 -64.8 St. J~     250        1    25 shallow reef~ St. Jo~
-##  3 7/16~  18.3 -64.8 St. J~     250        1    25 shallow reef~ St. Jo~
-##  4 7/16~  18.3 -64.8 St. J~     250        1    25 shallow reef~ St. Jo~
-##  5 7/16~  18.3 -64.8 St. J~     250        2    35 complex back~ St. Jo~
-##  6 7/16~  18.3 -64.8 St. J~     250        2    35 complex back~ St. Jo~
-##  7 7/16~  18.3 -64.8 St. J~     250        2    35 complex back~ St. Jo~
-##  8 7/16~  18.3 -64.8 St. J~     250        2    35 complex back~ St. Jo~
-##  9 7/16~  18.3 -64.8 St. J~     250        3    85 deep reef     St. Jo~
-## 10 7/16~  18.3 -64.8 St. J~     250        3    85 deep reef     St. Jo~
-## # ... with 6 more variables: decimalLatitude <dbl>,
-## #   decimalLongitude <dbl>, minimumDepthInMeters <dbl>,
-## #   maximumDepthInMeters <dbl>, habitat <chr>, island <chr>
-\end{verbatim}
-
-We need to convert the date to ISO format
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{eventDate }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(event}\SpecialCharTok{$}\NormalTok{date, }\AttributeTok{format =} \StringTok{"\%m/\%d/\%Y"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-We will also have to add any missing required fields
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{basisOfRecord }\OtherTok{\textless{}{-}} \StringTok{"HumanObservation"}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{geodeticDatum }\OtherTok{\textless{}{-}} \StringTok{"EPSG:4326 WGS84"}
-\end{Highlighting}
-\end{Shaded}
-
-Then we'll remove any columns that we no longer need to clean things up a bit.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{date }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{lat }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{lon }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{region }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{station }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{transect }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{event}\SpecialCharTok{$}\NormalTok{depth }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{event}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{bottom type}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\end{Highlighting}
-\end{Shaded}
-
-We have too many repeating rows of information. We can pare this down using eventID which
-is a unique identifier for each sampling event in the data- which is six, three transects
-per site.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{event }\OtherTok{\textless{}{-}}\NormalTok{ event[}\FunctionTok{which}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{duplicated}\NormalTok{(event}\SpecialCharTok{$}\NormalTok{eventID)),]}
-
-\FunctionTok{head}\NormalTok{(event, }\AttributeTok{n =} \DecValTok{6}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 6 x 10
-##   eventID decimalLatitude decimalLongitude minimumDepthInM~
-##   <chr>             <dbl>            <dbl>            <dbl>
-## 1 St. Jo~            18.3            -64.8               25
-## 2 St. Jo~            18.3            -64.8               35
-## 3 St. Jo~            18.3            -64.8               85
-## 4 St. Jo~            18.3            -64.8               28
-## 5 St. Jo~            18.3            -64.8               16
-## 6 St. Jo~            18.3            -64.8               90
-## # ... with 6 more variables: maximumDepthInMeters <dbl>, habitat <chr>,
-## #   island <chr>, eventDate <date>, basisOfRecord <chr>,
-## #   geodeticDatum <chr>
-\end{verbatim}
-
-Finally we write out the event file
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{write.csv}\NormalTok{(event, }\AttributeTok{file=}\StringTok{"MadeUpData\_event.csv"}\NormalTok{, }\AttributeTok{row.names=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{fileEncoding=}\StringTok{"UTF{-}8"}\NormalTok{, }\AttributeTok{quote=}\ConstantTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-Next we need to create the occurrence file. We start by creating the dataframe.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{occurrence }\OtherTok{\textless{}{-}}\NormalTok{ MadeUpDataForBiologicalDataTraining[}\FunctionTok{c}\NormalTok{(}\StringTok{"scientific name"}\NormalTok{, }\StringTok{"eventID"}\NormalTok{, }\StringTok{"occurrenceID"}\NormalTok{, }\StringTok{"percent cover"}\NormalTok{)] }
-\end{Highlighting}
-\end{Shaded}
-
-Then we'll rename the columns that align directly with Darwin Core.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{occurrence}\SpecialCharTok{$}\NormalTok{scientificName }\OtherTok{\textless{}{-}}\NormalTok{ occurrence}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{scientific name}\StringTok{\textasciigrave{}}
-\end{Highlighting}
-\end{Shaded}
-
-Finally we'll add required information that's missing.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{occurrence}\SpecialCharTok{$}\NormalTok{occurrenceStatus }\OtherTok{\textless{}{-}}  \FunctionTok{ifelse}\NormalTok{ (occurrence}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{percent cover}\StringTok{\textasciigrave{}} \SpecialCharTok{==} \DecValTok{0}\NormalTok{, }\StringTok{"absent"}\NormalTok{, }\StringTok{"present"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{taxonomic-name-matching}{%
-\subsection{Taxonomic Name Matching}\label{taxonomic-name-matching}}
-
-A requirement for OBIS is that all scientific names match to the World Register of
-Marine Species (WoRMS) and a scientificNameID is included. A scientificNameID looks
-like this ``\url{urn:lsid:marinespecies.org:taxname:275730}'' with the last digits after
-the colon being the WoRMS aphia ID. We'll need to go out to WoRMS to grab this
-information.
-Create a lookup table of unique scientific names
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{lut\_worms }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{unique}\NormalTok{(occurrence\_only}\SpecialCharTok{$}\NormalTok{scientificName))}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{scientificName }\OtherTok{\textless{}{-}} \FunctionTok{as.character}\NormalTok{(lut\_worms}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{unique(occurrence\_only$scientificName)}\StringTok{\textasciigrave{}}\NormalTok{)}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{unique(occurrence\_only$scientificName)}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{scientificName }\OtherTok{\textless{}{-}} \FunctionTok{as.character}\NormalTok{(lut\_worms}\SpecialCharTok{$}\NormalTok{scientificName)}
-\end{Highlighting}
-\end{Shaded}
-
-Add the columns that we can grab information from WoRMS including the required scientificNameID.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{acceptedname }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{acceptedID }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{scientificNameID }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{kingdom }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{phylum }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{class }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{order }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{family }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{genus }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{scientificNameAuthorship }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{lut\_worms}\SpecialCharTok{$}\NormalTok{taxonRank }\OtherTok{\textless{}{-}} \StringTok{""}
-\end{Highlighting}
-\end{Shaded}
-
-Taxonomic lookup using the library taxizesoap
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(lut\_worms))\{}
-\NormalTok{  df }\OtherTok{\textless{}{-}} \FunctionTok{worms\_records}\NormalTok{(}\AttributeTok{scientific =}\NormalTok{ lut\_worms}\SpecialCharTok{$}\NormalTok{scientificName[i])}
-\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{scientificNameID }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{lsid[}\DecValTok{1}\NormalTok{]}
-\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{acceptedname }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{valid\_name[}\DecValTok{1}\NormalTok{]}
-\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{acceptedID }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{valid\_AphiaID[}\DecValTok{1}\NormalTok{]}
-\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{kingdom }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{kingdom[}\DecValTok{1}\NormalTok{]}
-\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{phylum }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{phylum[}\DecValTok{1}\NormalTok{]}
-\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{class }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{class[}\DecValTok{1}\NormalTok{]}
-\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{order }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{order[}\DecValTok{1}\NormalTok{]}
-\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{family }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{family[}\DecValTok{1}\NormalTok{]}
-\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{genus }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{genus[}\DecValTok{1}\NormalTok{]}
-\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{scientificNameAuthorship }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{authority[}\DecValTok{1}\NormalTok{]}
-\NormalTok{  lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{taxonRank }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{rank[}\DecValTok{1}\NormalTok{]}
-  \FunctionTok{message}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"Looking up information for species:"}\NormalTok{, lut\_worms[i,]}\SpecialCharTok{$}\NormalTok{scientificName))}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Looking up information for species: Acropora cervicornis
-\end{verbatim}
-
-\begin{verbatim}
-## Looking up information for species: Madracis auretenra
-\end{verbatim}
-
-\begin{verbatim}
-## Looking up information for species: Mussa angulosa
-\end{verbatim}
-
-\begin{verbatim}
-## Looking up information for species: Siderastrea radians
-\end{verbatim}
-
-Merge the lookup table of unique scientific names back with the occurrence data.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{occurrence }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(occurrence, lut\_worms, }\AttributeTok{by =} \StringTok{"scientificName"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-We're going to remove any unnecessary columns to clean up the file
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{occurrence}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{scientific name}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{occurrence}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{percent cover}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\end{Highlighting}
-\end{Shaded}
-
-Quick look at what we have before we write out the file
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{head}\NormalTok{(occurrence, }\AttributeTok{n =} \DecValTok{10}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##          scientificName        eventID
-## 1  Acropora cervicornis St. John_250_1
-## 2  Acropora cervicornis St. John_250_2
-## 3  Acropora cervicornis St. John_250_3
-## 4  Acropora cervicornis St. John_356_1
-## 5  Acropora cervicornis St. John_356_2
-## 6  Acropora cervicornis St. John_356_3
-## 7    Madracis auretenra St. John_250_1
-## 8    Madracis auretenra St. John_250_2
-## 9    Madracis auretenra St. John_250_3
-## 10   Madracis auretenra St. John_356_1
-##                            occurrenceID occurrenceStatus
-## 1  63be8f7e-ea9a-11e9-8649-49c6324f3a06           absent
-## 2  63beb687-ea9a-11e9-8649-49c6324f3a06           absent
-## 3  63beb68b-ea9a-11e9-8649-49c6324f3a06          present
-## 4  63bedd76-ea9a-11e9-8649-49c6324f3a06          present
-## 5  63bedd7a-ea9a-11e9-8649-49c6324f3a06          present
-## 6  63bedd7e-ea9a-11e9-8649-49c6324f3a06          present
-## 7  63beb684-ea9a-11e9-8649-49c6324f3a06          present
-## 8  63beb688-ea9a-11e9-8649-49c6324f3a06          present
-## 9  63beb68c-ea9a-11e9-8649-49c6324f3a06           absent
-## 10 63bedd77-ea9a-11e9-8649-49c6324f3a06          present
-##            acceptedname acceptedID
-## 1  Acropora cervicornis     206989
-## 2  Acropora cervicornis     206989
-## 3  Acropora cervicornis     206989
-## 4  Acropora cervicornis     206989
-## 5  Acropora cervicornis     206989
-## 6  Acropora cervicornis     206989
-## 7    Madracis auretenra     430664
-## 8    Madracis auretenra     430664
-## 9    Madracis auretenra     430664
-## 10   Madracis auretenra     430664
-##                             scientificNameID  kingdom   phylum    class
-## 1  urn:lsid:marinespecies.org:taxname:206989 Animalia Cnidaria Anthozoa
-## 2  urn:lsid:marinespecies.org:taxname:206989 Animalia Cnidaria Anthozoa
-## 3  urn:lsid:marinespecies.org:taxname:206989 Animalia Cnidaria Anthozoa
-## 4  urn:lsid:marinespecies.org:taxname:206989 Animalia Cnidaria Anthozoa
-## 5  urn:lsid:marinespecies.org:taxname:206989 Animalia Cnidaria Anthozoa
-## 6  urn:lsid:marinespecies.org:taxname:206989 Animalia Cnidaria Anthozoa
-## 7  urn:lsid:marinespecies.org:taxname:430664 Animalia Cnidaria Anthozoa
-## 8  urn:lsid:marinespecies.org:taxname:430664 Animalia Cnidaria Anthozoa
-## 9  urn:lsid:marinespecies.org:taxname:430664 Animalia Cnidaria Anthozoa
-## 10 urn:lsid:marinespecies.org:taxname:430664 Animalia Cnidaria Anthozoa
-##           order         family    genus   scientificNameAuthorship
-## 1  Scleractinia    Acroporidae Acropora            (Lamarck, 1816)
-## 2  Scleractinia    Acroporidae Acropora            (Lamarck, 1816)
-## 3  Scleractinia    Acroporidae Acropora            (Lamarck, 1816)
-## 4  Scleractinia    Acroporidae Acropora            (Lamarck, 1816)
-## 5  Scleractinia    Acroporidae Acropora            (Lamarck, 1816)
-## 6  Scleractinia    Acroporidae Acropora            (Lamarck, 1816)
-## 7  Scleractinia Pocilloporidae Madracis Locke, Weil & Coates, 2007
-## 8  Scleractinia Pocilloporidae Madracis Locke, Weil & Coates, 2007
-## 9  Scleractinia Pocilloporidae Madracis Locke, Weil & Coates, 2007
-## 10 Scleractinia Pocilloporidae Madracis Locke, Weil & Coates, 2007
-##    taxonRank
-## 1    Species
-## 2    Species
-## 3    Species
-## 4    Species
-## 5    Species
-## 6    Species
-## 7    Species
-## 8    Species
-## 9    Species
-## 10   Species
-\end{verbatim}
-
-Write out the file. All done with occurrence!
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{write.csv}\NormalTok{(occurrence, }\AttributeTok{file=}\StringTok{"MadeUpData\_Occurrence.csv"}\NormalTok{, }\AttributeTok{row.names=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{fileEncoding=}\StringTok{"UTF{-}8"}\NormalTok{, }\AttributeTok{quote=}\ConstantTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-The last file we need to create is the measurement or fact file. For this we need to
-combine all of the measurements or facts that we want to include making sure to include
-IDs from the BODC NERC vocabulary where possible.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{temperature }\OtherTok{\textless{}{-}}\NormalTok{ MadeUpDataForBiologicalDataTraining[}\FunctionTok{c}\NormalTok{(}\StringTok{"eventID"}\NormalTok{, }\StringTok{"temperature"}\NormalTok{, }\StringTok{"date"}\NormalTok{)]}
-\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{occurrenceID }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementType }\OtherTok{\textless{}{-}} \StringTok{"temperature"}
-\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementTypeID }\OtherTok{\textless{}{-}} \StringTok{"http://vocab.nerc.ac.uk/collection/P25/current/WTEMP/"}
-\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementValue }\OtherTok{\textless{}{-}}\NormalTok{ temperature}\SpecialCharTok{$}\NormalTok{temperature}
-\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementUnit }\OtherTok{\textless{}{-}} \StringTok{"Celsius"}
-\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementUnitID }\OtherTok{\textless{}{-}} \StringTok{"http://vocab.nerc.ac.uk/collection/P06/current/UPAA/"}
-\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementAccuracy }\OtherTok{\textless{}{-}} \DecValTok{3}
-\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementDeterminedDate }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(temperature}\SpecialCharTok{$}\NormalTok{date, }\AttributeTok{format =} \StringTok{"\%m/\%d/\%Y"}\NormalTok{)}
-\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{measurementMethod }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{temperature }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{temperature}\SpecialCharTok{$}\NormalTok{date }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{rugosity }\OtherTok{\textless{}{-}}\NormalTok{ MadeUpDataForBiologicalDataTraining[}\FunctionTok{c}\NormalTok{(}\StringTok{"eventID"}\NormalTok{, }\StringTok{"rugosity"}\NormalTok{, }\StringTok{"date"}\NormalTok{)]}
-\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{occurrenceID }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measurementType }\OtherTok{\textless{}{-}} \StringTok{"rugosity"}
-\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measurementTypeID }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measurementValue }\OtherTok{\textless{}{-}}\NormalTok{ rugosity}\SpecialCharTok{$}\NormalTok{rugosity}
-\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measurementUnit }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measurementUnitID }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measuremntAccuracy }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measurementDeterminedDate }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(rugosity}\SpecialCharTok{$}\NormalTok{date, }\AttributeTok{format =} \StringTok{"\%m/\%d/\%Y"}\NormalTok{)}
-\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{measurementMethod }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{rugosity }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{rugosity}\SpecialCharTok{$}\NormalTok{date }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{percentcover }\OtherTok{\textless{}{-}}\NormalTok{ MadeUpDataForBiologicalDataTraining[}\FunctionTok{c}\NormalTok{(}\StringTok{"eventID"}\NormalTok{, }\StringTok{"occurrenceID"}\NormalTok{, }\StringTok{"percent cover"}\NormalTok{, }\StringTok{"date"}\NormalTok{)]}
-\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measurementType }\OtherTok{\textless{}{-}} \StringTok{"Percent Cover"}
-\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measurementTypeID }\OtherTok{\textless{}{-}} \StringTok{"http://vocab.nerc.ac.uk/collection/P01/current/SDBIOL10/"}
-\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measurementValue }\OtherTok{\textless{}{-}}\NormalTok{ percentcover}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{percent cover}\StringTok{\textasciigrave{}}
-\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measurementUnit }\OtherTok{\textless{}{-}} \StringTok{"Percent/100m\^{}2"}
-\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measurementUnitID }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measuremntAccuracy }\OtherTok{\textless{}{-}} \DecValTok{5}
-\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measurementDeterminedDate }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(percentcover}\SpecialCharTok{$}\NormalTok{date, }\AttributeTok{format =} \StringTok{"\%m/\%d/\%Y"}\NormalTok{)}
-\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{measurementMethod }\OtherTok{\textless{}{-}} \StringTok{""}
-\NormalTok{percentcover}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{percent cover}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{percentcover}\SpecialCharTok{$}\NormalTok{date }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\NormalTok{measurementOrFact }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(temperature, rugosity, percentcover)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Error in match.names(clabs, names(xi)): names do not match previous names
-\end{verbatim}
-
-Let's check to see what it looks like
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{head}\NormalTok{(measurementOrFact, }\AttributeTok{n =} \DecValTok{50}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 50 x 9
-##    eventID occurrenceID measurementType measurementType~ measurementValue
-##    <chr>   <chr>        <chr>           <chr>                       <dbl>
-##  1 St. Jo~ ""           temperature     ""                           25.2
-##  2 St. Jo~ ""           temperature     ""                           25.2
-##  3 St. Jo~ ""           temperature     ""                           25.2
-##  4 St. Jo~ ""           temperature     ""                           25.2
-##  5 St. Jo~ ""           temperature     ""                           24.8
-##  6 St. Jo~ ""           temperature     ""                           24.8
-##  7 St. Jo~ ""           temperature     ""                           24.8
-##  8 St. Jo~ ""           temperature     ""                           24.8
-##  9 St. Jo~ ""           temperature     ""                           23.1
-## 10 St. Jo~ ""           temperature     ""                           23.1
-## # ... with 40 more rows, and 4 more variables: measurementUnit <chr>,
-## #   measurementUnitID <chr>, measurementDeterminedDate <date>,
-## #   measurementMethod <chr>
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{write.csv}\NormalTok{(measurementOrFact, }\AttributeTok{file=}\StringTok{"MadeUpData\_mof.csv"}\NormalTok{, }\AttributeTok{row.names=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{fileEncoding=}\StringTok{"UTF{-}8"}\NormalTok{, }\AttributeTok{quote=}\ConstantTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
 
 \hypertarget{dealing-with-errors}{%
 \chapter{Dealing with errors}\label{dealing-with-errors}}

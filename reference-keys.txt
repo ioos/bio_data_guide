@@ -1,5 +1,8 @@
 intro
 applications
+aligning-data-to-darwin-core---sampling-event-with-measurement-or-fact
+general-information-about-this-notebook
+taxonomic-name-matching
 salmon-ocean-ecology-data
 intro-1
 event
@@ -19,9 +22,6 @@ session-info
 trawl-data
 workflow-overview
 faq
-aligning-data-to-darwin-core---sampling-event-with-measurement-or-fact
-general-information-about-this-notebook
-taxonomic-name-matching
 dealing-with-errors
 example-using-github-to-resolve-errors
 frequently-asked-questions
