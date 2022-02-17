@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Final Words | Darwin Core Guide</title>
+  <title>Chapter 4 Frequently Asked Questions | Darwin Core Guide</title>
   <meta name="description" content="Scaling multiple dimensions of diversity in biological data" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Final Words | Darwin Core Guide" />
+  <meta property="og:title" content="Chapter 4 Frequently Asked Questions | Darwin Core Guide" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://ioos.github.io/bio_data_guide/" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ioos/bio_data_guide" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Final Words | Darwin Core Guide" />
+  <meta name="twitter:title" content="Chapter 4 Frequently Asked Questions | Darwin Core Guide" />
   
   <meta name="twitter:description" content="Scaling multiple dimensions of diversity in biological data" />
   
@@ -191,7 +191,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="3.1" data-path="dealing-with-errors.html"><a href="dealing-with-errors.html#example-using-github-to-resolve-errors"><i class="fa fa-check"></i><b>3.1</b> Example using GitHub to resolve errors</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>4</b> Final Words</a></li>
+<li class="chapter" data-level="4" data-path="frequently-asked-questions.html"><a href="frequently-asked-questions.html"><i class="fa fa-check"></i><b>4</b> Frequently Asked Questions</a></li>
 <li class="chapter" data-level="5" data-path="tools.html"><a href="tools.html"><i class="fa fa-check"></i><b>5</b> Tools</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="tools.html"><a href="tools.html#r"><i class="fa fa-check"></i><b>5.1</b> R</a></li>
@@ -217,9 +217,37 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="final-words" class="section level1" number="4">
-<h1><span class="header-section-number">Chapter 4</span> Final Words</h1>
-<p>We have finished a nice book.</p>
+<div id="frequently-asked-questions" class="section level1" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Frequently Asked Questions</h1>
+<p>Q. What data structure does OBIS recommend?
+A. The OBIS-ENV Darwin Core Archive Data Structure. <a href="https://obis.org/manual/dataformat/#envdata">OBIS manual</a></p>
+<p>Q. What is a controlled vocabulary, why use them?
+A. There are a number of controlled vocabularies that are used to describe parameters commonly used in specific research domains. Using terms defined in a controlled vocabulary allows for greater interoperability of data sets within the domain, and ideally between domains by ensuring that variables that are the same can be identified.</p>
+<p>Q. What controlled vocabularies does OBIS rely on?
+A. <a href="https://www.marinespecies.org/">WoRMS</a>, <a href="http://vocab.nerc.ac.uk/">NERC Vocabulary Server</a> inlcuding:
+* <a href="http://vocab.nerc.ac.uk/collection/L05/current/">Device categories</a> using the SeaDataNet device categories</p>
+<ul>
+<li><p><a href="http://vocab.nerc.ac.uk/collection/L22/current/">Device make/model using the SeaVoX Device Catalogue</a></p></li>
+<li><p><a href="http://vocab.nerc.ac.uk/collection/L06/current/">Platform categories using SeaVoX Platform Categories</a></p></li>
+<li><p><a href="http://vocab.nerc.ac.uk/collection/C17/current/">Platform instances using the ICES Platform Codes</a></p></li>
+<li><p><a href="http://vocab.nerc.ac.uk/collection/P06/current/">Unit of measure</a></p></li>
+</ul>
+<p>Q. How can I find out which common measurementTypes are used in measurement or facts tables in existing OBIS datasets?
+A. See <a href="https://mof.obis.org/">Measurement Types in OBIS</a></p>
+<p>Q. What is an ontology?
+A. An ontology is a classification system for establishing a hierarchically related set of concepts. Concepts are often terms from controlled vocabularies. Ontologies can include all of the following, but are not required to include them.
+Classes (general things, types of things)
+Instances (individual things)
+Relationships among things
+Properties of things
+Functions, processes, constraints, and rules relating to things</p>
+<p>Q. What is ERDDAP?
+A. <a href="https://coastwatch.pfeg.noaa.gov/erddap/index.html">ERDDAP</a> is a data server. It provides ‘easier access to scientific data’ by providing a consistent interface that aggregates many disparate data sources. It does this by providing translation services between many common file types for gridded arrarys (‘net CDF’ files) and tabular data (spreadsheets). Data access is also made easier because it unifies different types of data servers and access protocols.</p>
+<p>Q. What metadata profile does OBIS use?
+A. OBIS uses the <a href="http://rs.gbif.org/schema/eml-gbif-profile/1.1/eml-gbif-profile.xsd">GBIF EML profile</a> (version 1.1)</p>
+<p>Q. Can Darwin Core be used in the Semantic Web/Resrouce Description Framework?
+A. See <a href="https://dwc.tdwg.org/rdf/">Darwin Core Resource Description Framework Guide</a> and
+<a href="http://www.semantic-web-journal.net/system/files/swj1093.pdf">Lessons learned from adapting the Darwin Core vocabulary standard for use in RDF</a></p>
 
 </div>
             </section>

@@ -24,7 +24,7 @@ general-information-about-this-notebook
 taxonomic-name-matching
 dealing-with-errors
 example-using-github-to-resolve-errors
-final-words
+frequently-asked-questions
 tools
 r
 python
