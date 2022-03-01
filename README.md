@@ -1,6 +1,6 @@
 # Darwin Core Guide
-:notebook: This repository contains living documentation to help those just getting started with biological data or 
-those looking to learn and contribute to IOOS's best practices for biological data.
+:notebook: This repository contains living documentation for anyone working with taxonomic data or 
+ looking to learn and contribute to IOOS's best practices for biological data.
 
 ## :question: Have Questions? :question:
 * See the "issues" tab above to ask questions or discuss with the IOOS biodata community.
