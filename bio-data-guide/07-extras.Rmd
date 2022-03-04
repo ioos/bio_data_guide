@@ -1,4 +1,4 @@
-# Extras
+# Extras {-}
 Below is some more in-depth information into specific areas associated with standardizing your data to Darwin Core and uploading it through the IPT.
 
 ## Ecological Metadata Language (EML)
