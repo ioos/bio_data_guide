@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 6 Extras | Darwin Core Guide</title>
+  <title>Extras | Darwin Core Guide</title>
   <meta name="description" content="Scaling multiple dimensions of diversity in biological data" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 6 Extras | Darwin Core Guide" />
+  <meta property="og:title" content="Extras | Darwin Core Guide" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://ioos.github.io/bio_data_guide/" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ioos/bio_data_guide" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 6 Extras | Darwin Core Guide" />
+  <meta name="twitter:title" content="Extras | Darwin Core Guide" />
   
   <meta name="twitter:description" content="Scaling multiple dimensions of diversity in biological data" />
   
@@ -204,9 +204,9 @@ div.csl-indent {
 <li class="chapter" data-level="5.4" data-path="tools.html"><a href="tools.html#validators"><i class="fa fa-check"></i><b>5.4</b> Validators<span></span></a></li>
 </ul></li>
 <li><a href="references.html#references">References<span></span></a></li>
-<li class="chapter" data-level="6" data-path="extras.html"><a href="extras.html"><i class="fa fa-check"></i><b>6</b> Extras<span></span></a>
+<li><a href="extras.html#extras">Extras<span></span></a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="extras.html"><a href="extras.html#ecological-metadata-language-eml"><i class="fa fa-check"></i><b>6.1</b> Ecological Metadata Language (EML)<span></span></a></li>
+<li class="chapter" data-level="5.5" data-path="extras.html"><a href="extras.html"><i class="fa fa-check"></i><b>5.5</b> Ecological Metadata Language (EML)<span></span></a></li>
 </ul></li>
 </ul>
 
@@ -225,11 +225,11 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="extras" class="section level1 hasAnchor" number="6">
-<h1><span class="header-section-number">Chapter 6</span> Extras<a href="extras.html#extras" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="extras" class="section level1 unnumbered hasAnchor">
+<h1>Extras<a href="extras.html#extras" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Below is some more in-depth information into specific areas associated with standardizing your data to Darwin Core and uploading it through the IPT.</p>
-<div id="ecological-metadata-language-eml" class="section level2 hasAnchor" number="6.1">
-<h2><span class="header-section-number">6.1</span> Ecological Metadata Language (EML)<a href="extras.html#ecological-metadata-language-eml" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="ecological-metadata-language-eml" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Ecological Metadata Language (EML)<a href="extras.html#ecological-metadata-language-eml" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The Ecological Metadata Language (EML) is a community developed and maintained metadata standard that is typically associated with ecological-, and earth and environmental data. The purpose of EML is to provide the ecological community with an extensible, flexible, metadata standard used in data analysis and archiving, which will allow automated machine processing, searching and retrieval. EML has been around since 2003, and can be considered a “dialect” or specification to XML to describe tables and other data objects. The XML Schema provides a framework for the metadata, with defined “rules” on how to organize the metadata without any stipulations (another way to put it, <em>XML is the language that defines the rules that govern the EML syntax</em>). The XML Schema defines the structure of some information in a document (e.g. elements and attributes names and relationships), but does not provide any specific details the information included within. An EML document or file (eml.xml) is used to provide detailed description of metadata related to data objects, including tables (and other data objects), their columns, typing etc, and how data tables are linked or grouped. EML is widely used for datasets about ecosystem level observations, and can be used to detail data table information to a high granularity, which allows data users to arrange data tables in any way they need to. EML is particularly useful for wide data tables as table level details are entirely contained within the metadata document, meaning that there is not necessarily a need for external definitions such as a code list. However, if you have a long table arrangement, like the Darwin Core Archive (DwC-A), you can define the allowable values for the column in the metadata as well.</p>
 <p>EML is excellent at describing the details of a column of data so that the data values in the tables can be read into analysis systems or an analysis environment using the metadata, or even into a relational database. EML allows for tables to be easily reusable, and read into workflows, translated or reformatted. A drawback to EML is that, compared to the ISO standard, EML is a community standard, adopting a more ‘bottom-up’ approach. This is contrary to the ISO standard, which are internationally agreed upon standards by experts (‘top-down’). However, at the time of EML development in the early 2000’s there was a gap in metadata options to describe ecological data tables, with ISO standards typically being more applicable to geographic data. EML can cover almost anything and is particularly good at tabular data. But at the same time, due to the self-contained nature, there can be little control from outside lists, which means that the description is left to the EML constructor (data provider/manager) and consequently, individual datasets can look quite different from each other, even when they contain similar measurements. As such, it will be important to document best practices and clear mapping of fields between different metadata schemas (e.g. cross-walks between ISO.xml and EML.xml). As of version 2.2, EML can link to external ontologies, and there is capacity for annotation with external terms (e.g. through their URIs). Code lists and external dictionaries can help as they sometimes contain additional information that might not fit into EML (e.g. protocols, or code lists stored in ontologies). Having these external code lists and exporting them as EML snippets could go a long way in reducing that heterogeneity, because the constructors can then select measurements from lists when developing EML documents.</p>
 <p>EML is implemented as a series of XML document types (modules) that can be used in an extensible manner to document ecological data. Each EML module is designed to describe one logical part of the total metadata that should be included with any ecological dataset. The architecture of EML was designed to serve the needs of the ecological community, and has benefitted from previous work in other related metadata standards. Using this format can facilitate future growth of the metadata language, and EML supports an active developer community (see e.g. NCEAS EML GitHub). EML adopts much of its syntax from the other metadata standards that have evolved from the expertise of groups in other disciplines. Whenever possible, EML adopted entire trees of information in order to facilitate conversion of EML documents into other metadata languages. The GBIF IPT is a tool used to create a single eml.xml file format inside the DwC-A data package. However, the IPT does not use any of the EML’s built-in table description modules, and perhaps primarily uses one EML module (resource module) for high-level metadata.</p>
