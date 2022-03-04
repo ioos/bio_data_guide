@@ -138,7 +138,7 @@
 
 \title{Darwin Core Guide}
 \author{\href{https://github.com/ioos/bio_data_guide/graphs/contributors}{Standardizing Marine Biological Data Working Group}}
-\date{2022-02-17}
+\date{2022-03-04}
 
 \begin{document}
 \maketitle
@@ -1366,20 +1366,20 @@ Print session information below in case necessary for future reference
 ## loaded via a namespace (and not attached):
 ##  [1] Rcpp_1.0.8       assertthat_0.2.1 rprojroot_2.0.2  digest_0.6.29   
 ##  [5] utf8_1.2.2       R6_2.5.1         cellranger_1.1.0 backports_1.4.1 
-##  [9] reprex_2.0.1     evaluate_0.14    httr_1.4.2       pillar_1.7.0    
+##  [9] reprex_2.0.1     evaluate_0.15    httr_1.4.2       pillar_1.7.0    
 ## [13] rlang_1.0.1      curl_4.3.2       readxl_1.3.1     rstudioapi_0.13 
-## [17] jquerylib_0.1.4  rmarkdown_2.11   urltools_1.7.3   triebeard_0.3.0 
+## [17] jquerylib_0.1.4  rmarkdown_2.12   urltools_1.7.3   triebeard_0.3.0 
 ## [21] bit_4.0.4        munsell_0.5.0    broom_0.7.12     compiler_4.1.1  
-## [25] modelr_0.1.8     xfun_0.29        pkgconfig_2.0.3  htmltools_0.5.2 
-## [29] tidyselect_1.1.1 httpcode_0.3.0   bookdown_0.24    fansi_1.0.2     
+## [25] modelr_0.1.8     xfun_0.30        pkgconfig_2.0.3  htmltools_0.5.2 
+## [29] tidyselect_1.1.2 httpcode_0.3.0   bookdown_0.24    fansi_1.0.2     
 ## [33] crayon_1.5.0     tzdb_0.2.0       dbplyr_2.1.1     withr_2.4.3     
-## [37] crul_1.2.0       grid_4.1.1       jsonlite_1.7.3   gtable_0.3.0    
+## [37] crul_1.2.0       grid_4.1.1       jsonlite_1.8.0   gtable_0.3.0    
 ## [41] lifecycle_1.0.1  DBI_1.1.2        scales_1.1.1     cli_3.2.0       
 ## [45] stringi_1.7.6    vroom_1.5.7      fs_1.5.2         xml2_1.3.3      
-## [49] ellipsis_0.3.2   generics_0.1.2   vctrs_0.3.8      tools_4.1.1     
-## [53] bit64_4.0.5      glue_1.6.1       hms_1.1.1        parallel_4.1.1  
-## [57] fastmap_1.1.0    yaml_2.2.2       colorspace_2.0-2 rvest_1.0.2     
-## [61] haven_2.4.3
+## [49] bslib_0.3.1      ellipsis_0.3.2   generics_0.1.2   vctrs_0.3.8     
+## [53] tools_4.1.1      bit64_4.0.5      glue_1.6.2       hms_1.1.1       
+## [57] parallel_4.1.1   fastmap_1.1.0    yaml_2.3.5       colorspace_2.0-3
+## [61] rvest_1.0.2      haven_2.4.3      sass_0.4.0
 \end{verbatim}
 
 \hypertarget{trawl-data}{%
@@ -1830,10 +1830,26 @@ Description
 \chapter*{References}\label{references}}
 \addcontentsline{toc}{chapter}{References}
 
+\hypertarget{extras}{%
+\chapter{Extras}\label{extras}}
+
+Below is some more in-depth information into specific areas associated with standardizing your data to Darwin Core and uploading it through the IPT.
+
+\hypertarget{ecological-metadata-language-eml}{%
+\section{Ecological Metadata Language (EML)}\label{ecological-metadata-language-eml}}
+
+The Ecological Metadata Language (EML) is a community developed and maintained metadata standard that is typically associated with ecological-, and earth and environmental data. The purpose of EML is to provide the ecological community with an extensible, flexible, metadata standard used in data analysis and archiving, which will allow automated machine processing, searching and retrieval. EML has been around since 2003, and can be considered a ``dialect'' or specification to XML to describe tables and other data objects. The XML Schema provides a framework for the metadata, with defined ``rules'' on how to organize the metadata without any stipulations (another way to put it, \emph{XML is the language that defines the rules that govern the EML syntax}). The XML Schema defines the structure of some information in a document (e.g.~elements and attributes names and relationships), but does not provide any specific details the information included within. An EML document or file (eml.xml) is used to provide detailed description of metadata related to data objects, including tables (and other data objects), their columns, typing etc, and how data tables are linked or grouped. EML is widely used for datasets about ecosystem level observations, and can be used to detail data table information to a high granularity, which allows data users to arrange data tables in any way they need to. EML is particularly useful for wide data tables as table level details are entirely contained within the metadata document, meaning that there is not necessarily a need for external definitions such as a code list. However, if you have a long table arrangement, like the Darwin Core Archive (DwC-A), you can define the allowable values for the column in the metadata as well.
+
+EML is excellent at describing the details of a column of data so that the data values in the tables can be read into analysis systems or an analysis environment using the metadata, or even into a relational database. EML allows for tables to be easily reusable, and read into workflows, translated or reformatted. A drawback to EML is that, compared to the ISO standard, EML is a community standard, adopting a more `bottom-up' approach. This is contrary to the ISO standard, which are internationally agreed upon standards by experts (`top-down'). However, at the time of EML development in the early 2000's there was a gap in metadata options to describe ecological data tables, with ISO standards typically being more applicable to geographic data. EML can cover almost anything and is particularly good at tabular data. But at the same time, due to the self-contained nature, there can be little control from outside lists, which means that the description is left to the EML constructor (data provider/manager) and consequently, individual datasets can look quite different from each other, even when they contain similar measurements. As such, it will be important to document best practices and clear mapping of fields between different metadata schemas (e.g.~cross-walks between ISO.xml and EML.xml). As of version 2.2, EML can link to external ontologies, and there is capacity for annotation with external terms (e.g.~through their URIs). Code lists and external dictionaries can help as they sometimes contain additional information that might not fit into EML (e.g.~protocols, or code lists stored in ontologies). Having these external code lists and exporting them as EML snippets could go a long way in reducing that heterogeneity, because the constructors can then select measurements from lists when developing EML documents.
+
+EML is implemented as a series of XML document types (modules) that can be used in an extensible manner to document ecological data. Each EML module is designed to describe one logical part of the total metadata that should be included with any ecological dataset. The architecture of EML was designed to serve the needs of the ecological community, and has benefitted from previous work in other related metadata standards. Using this format can facilitate future growth of the metadata language, and EML supports an active developer community (see e.g.~NCEAS EML GitHub). EML adopts much of its syntax from the other metadata standards that have evolved from the expertise of groups in other disciplines. Whenever possible, EML adopted entire trees of information in order to facilitate conversion of EML documents into other metadata languages. The GBIF IPT is a tool used to create a single eml.xml file format inside the DwC-A data package. However, the IPT does not use any of the EML's built-in table description modules, and perhaps primarily uses one EML module (resource module) for high-level metadata.
+
+However, it is important to know how both OBIS and GBIF use EML, as often a higher granularity of the metadata can be found in the original data tables. An example of this is spatial coverage. The IPT only allows for either a bounding box to be documented (populating North, South, East, and West coordinates), or a single polygon. The EML document however would be able to capture multiple polygons worth of spatial coverage (i.e.~a polygon for each transect surveyed). This more detailed information however is often captured in the data (in an OBIS record). Additionally, not all fields that can be populated in an EML document can be translated to the IPT, or harvested by OBIS and GBIF.
+
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
 \leavevmode\vadjust pre{\hypertarget{ref-R-rmarkdown}{}}%
-Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, Winston Chang, and Richard Iannone. 2021. \emph{Rmarkdown: Dynamic Documents for r}. \url{https://CRAN.R-project.org/package=rmarkdown}.
+Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, Winston Chang, and Richard Iannone. 2022. \emph{Rmarkdown: Dynamic Documents for r}. \url{https://CRAN.R-project.org/package=rmarkdown}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-magrittr}{}}%
 Bache, Stefan Milton, and Hadley Wickham. 2022. \emph{Magrittr: A Forward-Pipe Operator for r}. \url{https://CRAN.R-project.org/package=magrittr}.
