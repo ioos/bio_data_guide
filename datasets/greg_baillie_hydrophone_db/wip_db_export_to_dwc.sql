@@ -3,19 +3,6 @@
 // It is not yet clear to me if these would be occurrences or events.
 // This is for a single deployment of a single hydrophone, where there are human annotations of something like an orca. 
 // This might not be satisfactory for OBIS yet, but it's a work-in-progress.
-
-
-SELECT  d.deviceid, ah.startdate, ah.annotationsourceid, al.annotation, al.taxonid, al.taxonomyid
-FROM    device  d
-        JOIN    annotation_hdr  ah  ON  (
-            ah.resourcetypeid = 1000
-            AND ah.annotationsourceid = 5
-            AND ah.resourceid = d.deviceid
-        )
-        JOIN     annotation_line al  ON  al.annotationhdrid = ah.annotationhdrid
-WHERE   d.devicetypeid  =176
-        AND al.annotation ILIKE '%orca%'
-ORDER BY d.deviceid, ah.startdate;
         
         
 SELECT  // Required
@@ -25,36 +12,41 @@ SELECT  // Required
             TO_CHAR(ah.startdate, 'DDMONYYYY:HH24:MI:SS.MS'),
             '_',
             'Orcinus_orca'
-         ) AS occurrenceID,                                                                                     //occurrenceID	Station_95_Date_09JAN1997:14:35:00.000_Atractosteus_spatula
-        'HumanObservation' as basisOfRecord,                                                                    //basisOfRecord	HumanObservation
-        'Orcinus orca (Linnaeus, 1758)' as scientificName,                                                      //scientificName	Atractosteus spatula
-        'urn:lsid:marinespecies.org:taxname:137102' as scientificNameID,                                        //scientificNameID	urn:lsid:marinespecies.org:taxname:218214
-        TO_CHAR(ah.startdate, 'YYYY-MM-DD"T"HH24:MI:SS"Z"') as eventDate,                                       //eventDate	2009-02-20T08:40Z
-        (SELECT value FROM fixedvalueposition WHERE siteid=s.siteid AND sensortypeid=86) as decimalLatitude,    //decimalLatitude	-41.0983423
-        (SELECT value FROM fixedvalueposition WHERE siteid=s.siteid AND sensortypeid=140) as decimalLongitude,  //decimalLongitude	-121.1761111
-        'present' as occurrenceStatus,                                                                          //occurrenceStatus	US
-        NULL as countryCode,                                                                                    //countryCode,
-        'Animalia' as kingdom,                                                                                  //kingdom	Animalia
-        'WGS84' as geodeticDatum,                                                                               //geodeticDatum
+         ) AS "occurrenceID",                                                                                     //occurrenceID	Station_95_Date_09JAN1997:14:35:00.000_Atractosteus_spatula
+        'HumanObservation' AS "basisOfRecord",                                                                    //basisOfRecord	HumanObservation
+        'Orcinus orca (Linnaeus, 1758)' as "scientificName",                                                      //scientificName	Atractosteus spatula
+        'urn:lsid:marinespecies.org:taxname:137102' as "scientificNameID",                                        //scientificNameID	urn:lsid:marinespecies.org:taxname:218214
+        TO_CHAR(ah.startdate, 'YYYY-MM-DD"T"HH24:MI:SS"Z"') AS "eventDate",                                       //eventDate	2009-02-20T08:40Z
+        (SELECT value FROM fixedvalueposition WHERE siteid=s.siteid AND sensortypeid=86) AS "decimalLatitude",    //decimalLatitude	-41.0983423
+        (SELECT value FROM fixedvalueposition WHERE siteid=s.siteid AND sensortypeid=140) AS "decimalLongitude",  //decimalLongitude	-121.1761111
+        'present' AS "occurrenceStatus",                                                                          //occurrenceStatus	US
+        NULL AS "countryCode",                                                                                    //countryCode,
+        'Animalia' AS "kingdom",                                                                                  //kingdom	Animalia
+        'WGS84' AS "geodeticDatum",                                                                               //geodeticDatum
         // Additional
-        (SELECT value FROM fixedvalueposition WHERE siteid=s.siteid AND sensortypeid=96),                       //minimumDepthInMeters	0.1
-        (SELECT value FROM fixedvalueposition WHERE siteid=s.siteid AND sensortypeid=96),                       //maximumDepthInMeters	10.5
+        (SELECT value FROM fixedvalueposition WHERE siteid=s.siteid AND sensortypeid=96) AS "minimumDepthInMeters",   //minimumDepthInMeters	0.1
+        (SELECT value FROM fixedvalueposition WHERE siteid=s.siteid AND sensortypeid=96) AS "maximumDepthInMeters",   //maximumDepthInMeters	10.5
         // coordinateUncertaintyInMeters -- ??                                                                  //coordinateUncertaintyInMeters	0.1
-        'Hydrophone',                                                                                           //samplingProtocol	2
+        'Hydrophone' AS "samplingProtocol",                                                                     //samplingProtocol	2
         // organismQuantityType                                                                                 //organismQuantityType	Relative Abundance
         xpath(
             '/n:resource/n:titles/n:title/text()',
             dds.datacitemetadata::xml,
             '{{n,http://datacite.org/schema/kernel-4}}'
-        )  as  datasetName,                                                                                      //datasetName	 	extract title from XML?
+        )  AS  "datasetName",                                                                                   //datasetName	 	extract title from XML?
         //dataGeneralizations                                                                                   //dataGeneralizations
         //informationWithheld - COULD BE IMPORTANT FOR REAL_TIME ANNOTATIONS?                                   //informationWithheld
         //institutionCode                                                                                       //institutionCode
         
         // Suggested in chat for distinguishing between human- and machine-annotated
-        du.firstname || ' ' || du.lastname AS idenitifedBy                                                      // identifiedBy <- Human
+        // Note: Carolina Peralta suggest to include these in the occurrence core file for submission to OBIS
+        du.firstname || ' ' || du.lastname AS "identifiedBy",                                                  // identifiedBy <- Human
 		// identifiedByID <- ORCID
 		// identificationReferences <- software PAM
+		// identificationVerificationStatus <- use if annotation is verified
+		// identificationRemarks <- how it was determined to be a given species
+		al.annotation AS "verbatimIdentification"                                                               // verbatimIdentification <- the actual annotation?, if it is something like "possibly orca"
+		// occurrenceRemarks <- Comments or notes about the Occurrence. http://rs.tdwg.org/dwc/terms/occurrenceRemarks		
 FROM    device  d
         JOIN    annotation_hdr  ah  ON  (
             ah.resourcetypeid = 1000
@@ -89,17 +81,3 @@ WHERE   d.devicecategoryid = 19
         AND (
             al.annotation ILIKE '%orca%'
         );
-        
-SELECT * FROM sensortype;
-
-SELECT * FROM annotation_hdr WHERE annotationhdrid=186744
-
-SELECT xpath('/n:resource/n:titles/n:title/text()', dds.datacitemetadata::xml, '{{n,http://datacite.org/schema/kernel-4}}')
-FROM    pi_doidataset dds
-WHERE   doidataset LIKE '10.3%'
-LIMIT 10;
-
-SELECT datacitemetadata
-FROM    pi_doidataset dds
-WHERE   doidataset LIKE '10.3%'
-LIMIT 10;
