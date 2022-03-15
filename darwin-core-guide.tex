@@ -138,7 +138,7 @@
 
 \title{Darwin Core Guide}
 \author{\href{https://github.com/ioos/bio_data_guide/graphs/contributors}{Standardizing Marine Biological Data Working Group}}
-\date{2022-03-10}
+\date{2022-03-15}
 
 \begin{document}
 \maketitle
@@ -1364,11 +1364,11 @@ Print session information below in case necessary for future reference
 ## [13] ggplot2_3.3.5   tidyverse_1.3.1
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.8       assertthat_0.2.1 rprojroot_2.0.2  digest_0.6.29   
+##  [1] Rcpp_1.0.8.2     assertthat_0.2.1 rprojroot_2.0.2  digest_0.6.29   
 ##  [5] utf8_1.2.2       R6_2.5.1         cellranger_1.1.0 backports_1.4.1 
 ##  [9] reprex_2.0.1     evaluate_0.15    httr_1.4.2       pillar_1.7.0    
 ## [13] rlang_1.0.2      curl_4.3.2       readxl_1.3.1     rstudioapi_0.13 
-## [17] jquerylib_0.1.4  rmarkdown_2.12   urltools_1.7.3   triebeard_0.3.0 
+## [17] jquerylib_0.1.4  rmarkdown_2.13   urltools_1.7.3   triebeard_0.3.0 
 ## [21] bit_4.0.4        munsell_0.5.0    broom_0.7.12     compiler_4.1.1  
 ## [25] modelr_0.1.8     xfun_0.30        pkgconfig_2.0.3  htmltools_0.5.2 
 ## [29] tidyselect_1.1.2 httpcode_0.3.0   bookdown_0.24    fansi_1.0.2     
@@ -1826,10 +1826,6 @@ Description
 \bottomrule
 \end{longtable}
 
-\hypertarget{references}{%
-\chapter*{References}\label{references}}
-\addcontentsline{toc}{chapter}{References}
-
 \hypertarget{extras}{%
 \chapter{Extras}\label{extras}}
 
@@ -1849,6 +1845,10 @@ However, it is important to know how both OBIS and GBIF use EML, as often a high
 \emph{Important}: When reading the EML section in the \href{https://obis.org/manual/eml/}{OBIS manual}, you'll notice that it reads that OBIS uses the GBIF EML profile (version 1.1). However, the current EML version is 2.2.0, as per \href{https://eml.ecoinformatics.org/}{EcoInformatics}. This does not mean that these versions are not compatible, rather, it means that the GBIF IPT currently uses a subset of available EML 2.2.0 fields and attributes, the subset of which they have versioned 1.1.
 
 If you are interested in creating an EML metadata file, it is possible to upload those into the IPT. There are R packages that can help in developing an EML.xml file. These packages are e.g.~\href{https://github.com/ropensci/EML}{EML}, \href{https://github.com/ropensci/emld}{emld} or \href{https://ediorg.github.io/EMLassemblyline/articles/overview.html}{EMLassemblyline}.
+
+\hypertarget{references}{%
+\chapter*{References}\label{references}}
+\addcontentsline{toc}{chapter}{References}
 
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
