@@ -1,0 +1,223 @@
+---
+title: "trawl_catch_data"
+author: "Tim van der Stap"
+date: "2/10/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Trawl Data
+
+One of the more common datasets that can be standardized to Darwin Core and integrated within OBIS is catch data from e.g. a trawl sampling event, or a zooplankton net tow. Of special concern here are datasets that include both a total (species-specific) catch weight, in addition to individual measurements (for a subset of the overall data). In this case, through our standardization to Darwin Core, we want to ensure that data users understand that the individual measurements are a part of, or subset of, the overall (species-specific) record, whilst at the same time ensure that data providers are not duplicating occurrence records to OBIS. 
+
+The GitHub issue related to application is can be found [here](https://github.com/iobis/env-data/issues/10)
+
+### Workflow Overview
+
+In our current setup, this relationship between the overall catch data and subsetted information is provided in the [resourceRelationship](https://tools.gbif.org/dwca-validator/extension.do?id=dwc:ResourceRelationship) extension. This extension _cannot_ currently be harvested by GBIF. The required terms for this extension are `resourceID`, `relatedResourceID`, `resourceRelationshipID` and `relationshipOfResource`. The `relatedResourceID` here refers to the _object_ of the relationship, whereas the `resourceID` refers to the _subject_ of the relationship:
+
+* resourceRelationshipID: a unique identifier for the relationship between one resource (the subject) and another (relatedResource, object).
+* resourceID: a unique identifier for the resource that is the subject of the relationship.
+* relatedResourceID: a unique identifier for the resource that is the object of the relationship.
+* relationshipOfResource: The relationship of the subject (identified by the resourceID) to the object (relatedResourceID). The relationshipOfResource is a free text field. 
+
+A few resources have been published to OBIS that contain the resourceRelationship extension (examples). Here, I'll lay out the process and coding used for the [Trawl Catch and Species Abundance from the 2019 Gulf of Alaska International Year of the Salmon Expedition](http://ipt.iobis.org/obiscanada/resource?r=trawl-catch-and-species-abundance-from-the-2019-gulf-of-alaska-international-year-of-the-salmon-expedition). In the following code chunks some details are omitted to improve the readability - the overall code to standardize the catch data can be found [here](https://github.com/HakaiInstitute/iys-oos/blob/develop/datasets/GoA_2019/Trawl/2019/data_wrangle_trawl2019.Rmd). This dataset includes species-specific total catch data at multiple stations (sampling events). From each catch, individual measurements were also taken. Depending on the number of individual caught in the trawl, this was either the total number of species individuals caught, or only a subset (in case of large numbers of individuals caught).
+
+In this specific data record, we created a single Event Core with three extensions: an _occurrence_ extension, _measurement or fact_ extension, and the _resourceRelationship_ extension. However, in this walk-through I'll only touch on the Event Core, occurrence extension and resourceRelationship extension.
+
+The trawl data is part of a larger project collecting various data types related to salmon ocean ecology. Therefore, in our Event Core we nested information related to the sampling event in the specific layer. (include a visual representation of the schema). Prior to creating the Event Core, we ensured that e.g. dates and times followed the correct ISO-8601 standards, and converted to the correct time zone.
+
+```{r standardizing date and time, eval = FALSE}
+# Time is recorded numerically (1037 instead of 10:37), so need to change these columns:
+trawl2019$END_DEPLOYMENT_TIME <- substr(as.POSIXct(sprintf("%04.0f", trawl2019$END_DEPLOYMENT_TIME), format = "%H%M"), 12, 16)
+trawl2019$BEGIN_RETRIEVAL_TIME <- substr(as.POSIXct(sprintf("%04.0f", trawl2019$BEGIN_RETRIEVAL_TIME), format = "%H%M"), 12, 16)
+# Additionally, the vessel time is recorded in 'Vladivostok' according to the metadata tab. This has to be converted to UTC.  
+trawl2019 <- trawl2019 %>%
+  mutate(eventDate_start = format_iso_8601(as.POSIXct(paste(EVENT_DATE_START, END_DEPLOYMENT_TIME),
+                                                      tz = "Asia/Vladivostok")),
+         eventDate_start = str_replace(eventDate_start, "\\+00:00", "Z"),
+         eventDate_finish = format_iso_8601(as.POSIXct(paste(EVENT_DATE_FINISH, BEGIN_RETRIEVAL_TIME),
+                                                       tz = "Asia/Vladivostok")),
+         eventDate_finish = str_replace(eventDate_finish, "\\+00:00", "Z"),
+         eventDate = paste(eventDate_start, eventDate_finish, sep = "/"),
+         project = "IYS",
+         cruise = paste(project, "GoA2019", sep = ":"), 
+         station = paste(cruise, TOW_NUMBER, sep=":Stn"),
+         trawl = paste(station, "trawl", sep=":"))
+```
+
+Then we created the various layers of our Event Core. We created these layers/data frames from two separate datasets that data are pulled from - one dataset that contains the _overall_ catch data, and one dataset that contains the _specimen_ data:
+
+``` {r event core layers, eval = FALSE}
+trawl2019_allCatch <- read_excel(here("Trawl", "2019", "raw_data", 
+                                      "2019_GoA_Fish_Trawl_catchdata.xlsx"), sheet = "CATCH_FINAL") %>%
+  mutate(project = "IYS",
+         cruise = paste(project, "GoA2019", sep = ":"),
+         station = paste(cruise, `TOW_NUMBER (number)`, sep = ":Stn"),
+         trawl = paste(station, "trawl", sep = ":"))
+
+trawl2019_specimen <- read_excel(here("Trawl", "2019", "raw_data", "2019_GoA_Fish_Specimen_data.xlsx"), 
+                                 sheet = "SPECIMEN_FINAL") %>%
+  mutate(project = "IYS",
+         cruise = paste(project, "GoA2019", sep = ":"),
+         station = paste(cruise, TOW_NUMBER, sep = ":Stn"),
+         trawl = paste(station, "trawl", sep = ":"),
+         sample = paste(trawl, "sample", sep = ":"),
+         sample = paste(sample, row_number(), sep = ""))
+```
+
+Next we created the Event Core, ensuring that we connect the data to the right layer (i.e. date and time should be connected to the layer associated with the sampling event). Please note that because we are creating multiple layers and nesting information, and then at a later stage combining different tables, this results in cells being populated with `NA`. These have to be removed prior to publishing the Event Core through the IPT.  
+
+``` {r event Core, eval = FALSE}
+trawl2019_project <- trawl2019 %>%
+  select(eventID = project) %>%
+  distinct(eventID) %>%
+  mutate(type = "project")
+
+trawl2019_cruise <- trawl2019 %>% 
+  select(eventID = cruise,
+         parentEventID = project) %>% 
+  distinct(eventID, .keep_all = TRUE) %>%
+  mutate(type = "cruise")
+
+trawl2019_station <- trawl2019 %>% 
+  select(eventID = station,
+         parentEventID = cruise) %>% 
+  distinct(eventID, .keep_all = TRUE) %>%
+  mutate(type = "station")
+
+# The coordinates associated to the trawl need to be presented in a LINESTRING.
+# END_LONGITUDE_DD needs to be inverted (has to be between -180 and 180, inclusive). 
+trawl2019_coordinates <- trawl2019 %>%
+  select(eventID = trawl,
+         START_LATITUDE_DD,
+         longitude,
+         END_LATITUDE_DD,
+         END_LONGITUDE_DD) %>%
+  mutate(END_LONGITUDE_DD = END_LONGITUDE_DD * -1,
+         footprintWKT = paste("LINESTRING (", longitude, START_LATITUDE_DD, ",", 
+                              END_LONGITUDE_DD, END_LATITUDE_DD, ")")) 
+trawl2019_linestring <- obistools::calculate_centroid(trawl2019_coordinates$footprintWKT)
+trawl2019_linestring <- cbind(trawl2019_coordinates, trawl2019_linestring) %>%
+  select(eventID, footprintWKT, decimalLatitude, decimalLongitude, coordinateUncertaintyInMeters)
+
+trawl2019_trawl <- trawl2019 %>% 
+  select(eventID = trawl,
+         parentEventID = station,
+         eventDate,
+         year,
+         month,
+         day) %>%
+  mutate(minimumDepthInMeters = 0, # headrope was at the surface
+         maximumDepthInMeters = trawl2019$MOUTH_OPENING_HEIGHT,
+         samplingProtocol = "midwater trawl", # when available add DOI to paper here
+         locality = case_when(
+           trawl2019$EVENT_SUB_TYPE == "Can EEZ" ~ "Canadian EEZ"),
+         locationID = case_when(
+           trawl2019$EVENT_SUB_TYPE == "Can EEZ" ~ "http://marineregions.org/mrgid/8493")) %>%
+  left_join(trawl2019_linestring, by = "eventID") %>% 
+  distinct(eventID, .keep_all = TRUE) %>%
+    mutate(type = "midwater trawl")
+  
+trawl2019_sample <- trawl2019_specimen %>%
+  select(eventID = sample,
+         parentEventID = trawl) %>%
+  distinct(eventID, .keep_all = TRUE) %>%
+  mutate(type = "individual sample")
+
+trawl2019_event <- bind_rows(trawl2019_project, 
+                             trawl2019_cruise,
+                             trawl2019_station,
+                             trawl2019_trawl,
+                             trawl2019_sample) 
+
+# Remove NAs from the Event Core:
+trawl2019_event <- sapply(trawl2019_event, as.character)
+trawl2019_event[is.na(trawl2019_event)] <- ""
+trawl2019_event <- as.data.frame(trawl2019_event)
+```
+
+**TO DO: Add visual of e.g. the top 10 rows of the Event Core.**
+
+Now that we created the Event Core, we create the occurrence extension. To do this, we create two separate occurrence data tables: one that includes the occurrence data for the _total_ catch, and one data table for the _specimen_ data. Finally, the Occurrence extension is created by combining these two data frames. Personally, I prefer to re-order it so it makes visual sense to me (nest the specimen occurrence records under their respective overall catch data).
+
+``` {r occurrence data table, eval = FALSE}
+trawl2019_allCatch_worms <- worrms::wm_records_names(unique(trawl2019_allCatch$scientificname))
+trawl2019_occ <- left_join(trawl2019_allCatch, trawl2019_allCatch_worms, by = "scientificname") %>%
+  rename(eventID = trawl,
+         specificEpithet = species,
+         scientificNameAuthorship = authority,
+         taxonomicStatus = status,
+         taxonRank = rank,
+         scientificName = scientificname,
+         scientificNameID = lsid,
+         individualCount = `CATCH_COUNT (pieces)(**includes Russian expansion for some species)`,
+         occurrenceRemarks = COMMENTS) %>%
+  mutate(occurrenceID = paste(eventID, "occ", sep = ":"),
+         occurrenceID = paste(occurrenceID, row_number(), sep = ":"),
+         occurrenceStatus = "present",
+         sex = "")
+
+trawl2019_catch_ind_worms <- worrms::wm_records_names(unique(trawl2019_catch_ind$scientificname)) %>% bind_rows()
+trawl2019_catch_ind_occ <- left_join(trawl2019_catch_ind, trawl2019_catch_ind_worms, by = "scientificname") %>%
+  rename(scientificNameAuthorship = authority,
+         taxonomicStatus = status,
+         taxonRank = rank,
+         scientificName = scientificname,
+         scientificNameID = lsid) %>%
+  mutate(occurrenceID = paste(eventID, "occ", sep = ":"),
+         occurrenceStatus = "present",
+         individualCount = 1)
+
+# Combine the two occurrence data frames:
+trawl2019_occ_ext <- dplyr::bind_rows(trawl2019_occ_fnl, trawl2019_catch_ind_fnl)
+
+# To re-order the occurrenceID, use following code:
+order <- stringr::str_sort(trawl2019_occ_ext$occurrenceID, numeric=TRUE)
+trawl2019_occ_ext <- trawl2019_occ_ext[match(order, trawl2019_occ_ext$occurrenceID),] %>%
+  mutate(basisOfRecord = "HumanObservation")
+```
+
+**TO DO: Add visual of e.g. the top 10 rows of the Occurrence extension.**
+
+**Please note** that in the _overall_ species-specific occurrence data frame, _individualCount_ was not included. This term should not be used for abundance studies, but to avoid confusion and the appearance that the specimen records are an additional observation on top of the overall catch record, the _individualCount_ term was left blank for the overall catch data. 
+
+A resource relationship extension is created to further highlight that the individual samples in the occurrence extension are part of a larger overall catch that was also listed in the occurrence extension. In this extension, we wanted to make sure to highlight that the _specimen_ occurrence records are _a subset of_ the _overall_ catch data through the field `relationshipOfResource1`. Each of these relationships gets a unique `resourceRelationshipID`.
+
+``` {r resourceRelationship, eval = FALSE}
+trawl_resourceRelationship <- trawl2019_occ_ext %>%
+  select(eventID, occurrenceID, scientificName) %>%
+  mutate(resourceID = ifelse(grepl("sample", trawl2019_occ_ext$occurrenceID), trawl2019_occ_ext$occurrenceID, NA)) %>%
+  mutate(eventID = gsub(":sample.*", "", trawl2019_occ_ext$eventID)) %>%
+  group_by(eventID, scientificName) %>%
+  filter(n() != 1) %>%
+  ungroup()
+
+trawl_resourceRelationship <- trawl_resourceRelationship %>%
+  mutate(relatedResourceID = ifelse(grepl("sample", trawl_resourceRelationship$occurrenceID), NA, trawl_resourceRelationship$occurrenceID)) %>%
+  mutate(relationshipOfResource = ifelse(!is.na(resourceID), "is a subset of", NA)) %>%
+  dplyr::arrange(eventID, scientificName) %>%
+  fill(relatedResourceID) %>%
+  filter(!is.na(resourceID))
+
+order <- stringr::str_sort(trawl_resourceRelationship$resourceID, numeric = TRUE)
+trawl_resourceRelationship <- trawl_resourceRelationship[match(order, trawl_resourceRelationship$resourceID),]
+
+trawl_resourceRelationship <- trawl_resourceRelationship %>%
+  mutate(resourceRelationshipID = paste(relatedResourceID, "rr", sep = ":"),
+         ID = sprintf("%03d", row_number()),
+         resourceRelationshipID = paste(resourceRelationshipID, ID, sep = ":")) %>%
+  select(eventID, resourceRelationshipID, resourceID, relationshipOfResource, relatedResourceID)
+```
+
+**TO DO: Add visual of e.g. the top 10 rows of the ResourceRelationship extension.**
+
+### FAQ
+
+**Q1**. Why not use the terms _associatedOccurrence_ or _associatedTaxa_?
+**A**. There seems to be a movement away from the term _associatedOccurrence_ as the `resourceRelationship` extension has a much broader use case. Some issues that were raised on GitHub exemplify this, see e.g. [here](https://github.com/tdwg/dwc/issues/324). _associatedTaxa_ is used to provide identifiers or names of taxa and the associations of an Occurrence with them. This term is not apt for establishing relationships between taxa, only between specific Occurrences of an organism with other taxa. As noted on the [TDWG website](https://dwc.tdwg.org/terms/#dwc:associatedTaxa), _[...] Note that the ResourceRelationship class is an alternative means of representing associations, and with more detail._ See also e.g. [this issue](https://github.com/tdwg/dwc/issues/331).
+
+

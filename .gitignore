@@ -1,6 +1,3 @@
 /bio-data-guide/docs
 /bio-data-guide/bio-data-guide.rds
-.vscode/launch.json
-/datasets/.DS_Store
-/datasets/WBTS_MBON/.DS_Store
-/datasets/WBTS_MBON/results/*
+.Rproj.user

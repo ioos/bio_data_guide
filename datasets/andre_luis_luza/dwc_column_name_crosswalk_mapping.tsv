@@ -1,0 +1,22 @@
+OriginalCols	DwCTerm
+region	higherGeographyID
+locality	locationID
+site	locality
+transect_id	?
+observer	recordedBy
+lon	decimalLongitude
+lat	decimalLatitude
+verbatimDate	eventDate
+verbatimYear	eventYear
+depth_m	depth
+complexity	?
+obs	?
+family	family
+code	measurementValue
+diet_2012	measurementValue
+func_gr	measurementValue
+size_cm	measurementValue
+size_class	measurementValue
+abun	measurementValue
+biomass_g	measurementValue
+
