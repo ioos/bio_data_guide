@@ -1,6 +1,6 @@
 This dataset processed by Dylan Pugh during the 2022 Marine BioData Mobilization Workshop.
 
-The raw data is pulled from ERDDAP [here](www.neracoos.org/erddap/tabledap/WBTS_CFIN_2005_2017.csv).
+The raw data is pulled from ERDDAP [here](https://www.neracoos.org/erddap/tabledap/WBTS_CFIN_2005_2017.csv).
 
 The data is structured as an Event-core dataset using the occurrence and mof extensions.
 
