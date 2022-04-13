@@ -8,5 +8,5 @@ Datasets not included in this directory but still also good to look at are linke
 
 * [FL MBON Zooplankton](https://github.com/USF-IMARS/zoo-taxonomy-to-darwin-core)
 * [zooplankton net sampling from Emilio Mayorga](https://github.com/nanoos-pnw/obis-keisterhczoop)
-* TODO: add link on eDNA workflow w/ jupyter nb from Diana
+* [eDNA workflow using jupyter & mybinder.org from Diana](https://github.com/iobis/dataset-edna)
 
