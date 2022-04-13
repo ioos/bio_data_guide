@@ -36,11 +36,6 @@ A few datasets are highlighted below as especially instructive examples:
 
 * [example_script_with_fake_data](https://github.com/ioos/bio_data_guide/tree/main/datasets/example_script_with_fake_data) - fake data crafted by Abby Benson to illustrate a very basic conversion to DwC
 
-## Linked datasets
-Datasets not included in this directory but still meeting one of the criteria above are linked here:
-
-* [FL MBON Zooplankton](https://github.com/USF-IMARS/zoo-taxonomy-to-darwin-core)
-
 ------------------------------------------------------
 
 # The Standardizing Marine Bio Data Guide
