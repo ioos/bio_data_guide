@@ -12,3 +12,8 @@ pre {
 pre code {
   white-space: inherit;
 }
+
+.csl-bib-body {
+   text-indent: -40px;
+   padding-left: 40px;
+}
