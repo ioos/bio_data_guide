@@ -7,6 +7,8 @@
 
 -----------------------------------------------------------
 
+[![Join the chat at https://gitter.im/ioos/bio-data](https://badges.gitter.im/ioos/bio-data.svg)](https://gitter.im/ioos/bio-data?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 There are multiple resources in this GitHub repository, including:
 
 * :notebook: Living documentation for anyone working with, learning about, or conributing to IOOS's best practices for biological data.
