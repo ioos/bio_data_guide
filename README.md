@@ -23,6 +23,7 @@ We have open monthly meetings to discuss marine bio data issues. Please join us 
 ## :question: Have Questions? :question:
 * See the "issues" tab above to ask questions or discuss with the IOOS biodata community.
 * Also try searching for related issues which are open or have been closed (ie answered).
+* [![Join the chat at https://gitter.im/ioos/bio-data](https://badges.gitter.im/ioos/bio-data.svg)](https://gitter.im/ioos/bio-data?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Got Data to Share?
 * :speech_balloon: open an issue in the issues tab above and tell us about it.
