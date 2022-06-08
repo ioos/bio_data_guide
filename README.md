@@ -27,7 +27,7 @@ There are multiple resources in this GitHub repository, including:
 We have open monthly meetings to discuss marine bio data issues. Please join us every 2nd Wednesday of the month at 16:00 ET!
 
 * [Link to meeting minutes](https://docs.google.com/document/d/1JfXHFXhP0rB8juAK3-KvOtqtwDofPwewoAB_ZyFwSwY/edit?usp=sharing)
-* [**Join us** using details here!](https://docs.google.com/document/d/1JfXHFXhP0rB8juAK3-KvOtqtwDofPwewoAB_ZyFwSwY/edit#bookmark=id.1ksv4uv)
+* 👉[**Join us** using details here!](https://docs.google.com/document/d/1JfXHFXhP0rB8juAK3-KvOtqtwDofPwewoAB_ZyFwSwY/edit#bookmark=id.1ksv4uv)👈
 
 ## :question: Have Questions? :question:
 * See the "issues" tab above to ask questions or discuss with the IOOS biodata community.
