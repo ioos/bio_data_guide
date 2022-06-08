@@ -5,6 +5,15 @@
 
 👋 If so: **This is the place for you**.
 
+---
+## Current contributors:
+
+<a href="https://github.com/ioos/bio_data_guide/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=ioos/bio_data_guide" />
+</a>
+
+Made with [contrib.rocks](https://contrib.rocks).
+
 -----------------------------------------------------------
 
 There are multiple resources in this GitHub repository, including:
