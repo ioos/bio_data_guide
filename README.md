@@ -32,8 +32,9 @@ We have open monthly meetings to discuss marine bio data issues. Please join us 
 
 # Resources & Links
 * Training & workshop documents
-    * [2018 IOOS BioData Training in Seattle](https://ioos.github.io/BioData-Training-Workshop)
+    * [2022 BioData Mobilization Workshop](https://ioos.github.io/bio_mobilization_workshop/)
     * [2019 IOOS Code Sprint in Ann Arbor](https://github.com/marinebon/bio_data_scripts_ioos_workshop_2019)
+    * [2018 IOOS BioData Training in Seattle](https://ioos.github.io/BioData-Training-Workshop)
 * [marinebon.org](https://marinebon.org/)
 * [more links from IOOS Code Sprint discussions(gdoc)](https://docs.google.com/document/d/1MWLYBMG5apFwUYuD9ZaKFNCkqT7i3NBjgwK7bGdtEd8/edit#bookmark=id.v03uousdt0h6)
 
