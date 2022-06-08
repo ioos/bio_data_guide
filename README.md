@@ -33,6 +33,7 @@ We have open monthly meetings to discuss marine bio data issues. Please join us 
 * See the "issues" tab above to ask questions or discuss with the IOOS biodata community.
 * Also try searching for related issues which are open or have been closed (ie answered).
 * [![Join the chat at https://gitter.im/ioos/bio-data](https://badges.gitter.im/ioos/bio-data.svg)](https://gitter.im/ioos/bio-data?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+* [Join the ioos.slack.com slack and say hi on the #biological-data channel](https://join.slack.com/t/ioos/shared_invite/zt-1aa5z3rrb-ZBQ7mCWYTBZMo3HSxOs8xw)
 
 ## Got Data to Share?
 * :speech_balloon: open an issue in the issues tab above and tell us about it.
@@ -40,9 +41,9 @@ We have open monthly meetings to discuss marine bio data issues. Please join us 
 * :link: dataset repositories or other hosted data can be included in the links in the `Datasets` section below.
 
 # Our training & workshops
-    * [2022 BioData Mobilization Workshop](https://ioos.github.io/bio_mobilization_workshop/)
-    * [2019 IOOS Code Sprint in Ann Arbor](https://github.com/marinebon/bio_data_scripts_ioos_workshop_2019)
-    * [2018 IOOS BioData Training in Seattle](https://ioos.github.io/BioData-Training-Workshop)
+* [2022 BioData Mobilization Workshop](https://ioos.github.io/bio_mobilization_workshop/)
+* [2019 IOOS Code Sprint in Ann Arbor](https://github.com/marinebon/bio_data_scripts_ioos_workshop_2019)
+* [2018 IOOS BioData Training in Seattle](https://ioos.github.io/BioData-Training-Workshop)
 
 # Datasets
 The `./datasets/` directory in this repository contains small datasets which meet one of the following criteria:
