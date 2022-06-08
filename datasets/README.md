@@ -3,6 +3,8 @@ Of special interest are the subdirectories named `example_*`.
 
 Each subdirectory here should have a README file which will give further information about the data, documentation, and code that might be included in the dataset's directory.
 
+Each folder in this directory can get built into a chapter of the "Darwin Core Guide" book. For info on how to make that work see `CONTRIBUTING.md`.
+
 # Other Linked datasets
 Datasets not included in this directory but still also good to look at are linked below:
 
