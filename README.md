@@ -39,13 +39,10 @@ We have open monthly meetings to discuss marine bio data issues. Please join us 
 * :floppy_disk: small datasets can be uploaded into `./datasets/` so we can directly help you align with best practices.
 * :link: dataset repositories or other hosted data can be included in the links in the `Datasets` section below.
 
-# Resources & Links
-* Training & workshop documents
+# Our training & workshops
     * [2022 BioData Mobilization Workshop](https://ioos.github.io/bio_mobilization_workshop/)
     * [2019 IOOS Code Sprint in Ann Arbor](https://github.com/marinebon/bio_data_scripts_ioos_workshop_2019)
     * [2018 IOOS BioData Training in Seattle](https://ioos.github.io/BioData-Training-Workshop)
-* [marinebon.org](https://marinebon.org/)
-* [more links from IOOS Code Sprint discussions(gdoc)](https://docs.google.com/document/d/1MWLYBMG5apFwUYuD9ZaKFNCkqT7i3NBjgwK7bGdtEd8/edit#bookmark=id.v03uousdt0h6)
 
 # Datasets
 The `./datasets/` directory in this repository contains small datasets which meet one of the following criteria:
@@ -77,3 +74,9 @@ Technical details of how to work with the book can be found in [`/building-the-d
 
 This repo started at the 2019 IOOS code sprint.
 Original documents from the sprint are retained on a fork of this repo in [marinebon/bio_data_scripts_ioos_workshop_2019](https://github.com/marinebon/bio_data_scripts_ioos_workshop_2019).
+
+
+# more links:
+
+* [marinebon.org](https://marinebon.org/)
+* [more links from IOOS Code Sprint discussions(gdoc)](https://docs.google.com/document/d/1MWLYBMG5apFwUYuD9ZaKFNCkqT7i3NBjgwK7bGdtEd8/edit#bookmark=id.v03uousdt0h6)
