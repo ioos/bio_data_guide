@@ -1,0 +1,3 @@
+[submodule "datasets/dataset-edna"]
+	path = datasets/dataset-edna
+	url = https://github.com/iobis/dataset-edna

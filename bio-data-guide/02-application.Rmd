@@ -2,6 +2,6 @@
 
 Some applications are demonstrated in this chapter.
 
-```{r, child=c("../datasets/TPWD_HARC_BagSeine/TPWD_HARC_BagSeine_OBISENV.md", "../datasets/hakai_salmon_data/salmon-darwin-core-remap.Rmd", "../datasets/hakai_seagrass_data/hakaiSeagrassToDWC.Rmd", "../datasets/trawl_catch_data/trawl-catch-data.Rmd" ),echo=TRUE,eval=TRUE}
+```{r, child=c("../datasets/TPWD_HARC_BagSeine/TPWD_HARC_BagSeine_OBISENV.md", "../datasets/hakai_salmon_data/salmon-darwin-core-remap.Rmd", "../datasets/hakai_seagrass_data/hakaiSeagrassToDWC.Rmd", "../datasets/trawl_catch_data/trawl-catch-data.Rmd", "../datasets/dataset-edna/README.md"),echo=TRUE,eval=TRUE}
 ```
 
