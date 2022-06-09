@@ -23,7 +23,7 @@
 <meta name="author" content="Standardizing Marine Biological Data Working Group" />
 
 
-<meta name="date" content="2022-05-17" />
+<meta name="date" content="2022-06-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="intro.html"/>
-<link rel="next" href="dealing-with-errors.html"/>
+<link rel="next" href="dataset-edna.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -189,21 +189,27 @@ div.csl-indent {
 <li class="chapter" data-level="2.4.2" data-path="applications.html"><a href="applications.html#faq"><i class="fa fa-check"></i><b>2.4.2</b> FAQ</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="dealing-with-errors.html"><a href="dealing-with-errors.html"><i class="fa fa-check"></i><b>3</b> Dealing with errors</a>
+<li class="chapter" data-level="3" data-path="dataset-edna.html"><a href="dataset-edna.html"><i class="fa fa-check"></i><b>3</b> dataset-edna</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="dealing-with-errors.html"><a href="dealing-with-errors.html#example-using-github-to-resolve-errors"><i class="fa fa-check"></i><b>3.1</b> Example using GitHub to resolve errors</a></li>
+<li class="chapter" data-level="3.1" data-path="dataset-edna.html"><a href="dataset-edna.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="dataset-edna.html"><a href="dataset-edna.html#published-data"><i class="fa fa-check"></i><b>3.2</b> Published data</a></li>
+<li class="chapter" data-level="3.3" data-path="dataset-edna.html"><a href="dataset-edna.html#repo-structure"><i class="fa fa-check"></i><b>3.3</b> Repo structure</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="frequently-asked-questions.html"><a href="frequently-asked-questions.html"><i class="fa fa-check"></i><b>4</b> Frequently Asked Questions</a></li>
-<li class="chapter" data-level="5" data-path="tools.html"><a href="tools.html"><i class="fa fa-check"></i><b>5</b> Tools</a>
+<li class="chapter" data-level="4" data-path="dealing-with-errors.html"><a href="dealing-with-errors.html"><i class="fa fa-check"></i><b>4</b> Dealing with errors</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="tools.html"><a href="tools.html#r"><i class="fa fa-check"></i><b>5.1</b> R</a></li>
-<li class="chapter" data-level="5.2" data-path="tools.html"><a href="tools.html#python"><i class="fa fa-check"></i><b>5.2</b> Python</a></li>
-<li class="chapter" data-level="5.3" data-path="tools.html"><a href="tools.html#google-sheets"><i class="fa fa-check"></i><b>5.3</b> Google Sheets</a></li>
-<li class="chapter" data-level="5.4" data-path="tools.html"><a href="tools.html#validators"><i class="fa fa-check"></i><b>5.4</b> Validators</a></li>
+<li class="chapter" data-level="4.1" data-path="dealing-with-errors.html"><a href="dealing-with-errors.html#example-using-github-to-resolve-errors"><i class="fa fa-check"></i><b>4.1</b> Example using GitHub to resolve errors</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="extras.html"><a href="extras.html"><i class="fa fa-check"></i><b>6</b> Extras</a>
+<li class="chapter" data-level="5" data-path="frequently-asked-questions.html"><a href="frequently-asked-questions.html"><i class="fa fa-check"></i><b>5</b> Frequently Asked Questions</a></li>
+<li class="chapter" data-level="6" data-path="tools.html"><a href="tools.html"><i class="fa fa-check"></i><b>6</b> Tools</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="extras.html"><a href="extras.html#ecological-metadata-language-eml"><i class="fa fa-check"></i><b>6.1</b> Ecological Metadata Language (EML)</a></li>
+<li class="chapter" data-level="6.1" data-path="tools.html"><a href="tools.html#r"><i class="fa fa-check"></i><b>6.1</b> R</a></li>
+<li class="chapter" data-level="6.2" data-path="tools.html"><a href="tools.html#python"><i class="fa fa-check"></i><b>6.2</b> Python</a></li>
+<li class="chapter" data-level="6.3" data-path="tools.html"><a href="tools.html#google-sheets"><i class="fa fa-check"></i><b>6.3</b> Google Sheets</a></li>
+<li class="chapter" data-level="6.4" data-path="tools.html"><a href="tools.html#validators"><i class="fa fa-check"></i><b>6.4</b> Validators</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="extras.html"><a href="extras.html"><i class="fa fa-check"></i><b>7</b> Extras</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="extras.html"><a href="extras.html#ecological-metadata-language-eml"><i class="fa fa-check"></i><b>7.1</b> Ecological Metadata Language (EML)</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 </ul>
@@ -1196,7 +1202,7 @@ compliant datasets</p>
 ## [21] bit_4.0.4        munsell_0.5.0    broom_0.8.0      compiler_4.1.1  
 ## [25] modelr_0.1.8     xfun_0.31        pkgconfig_2.0.3  htmltools_0.5.2 
 ## [29] tidyselect_1.1.2 httpcode_0.3.0   bookdown_0.26    fansi_1.0.3     
-## [33] crayon_1.5.1     tzdb_0.3.0       dbplyr_2.1.1     withr_2.5.0     
+## [33] crayon_1.5.1     tzdb_0.3.0       dbplyr_2.2.0     withr_2.5.0     
 ## [37] crul_1.2.0       grid_4.1.1       jsonlite_1.8.0   gtable_0.3.0    
 ## [41] lifecycle_1.0.1  DBI_1.1.2        scales_1.2.0     cli_3.3.0       
 ## [45] stringi_1.7.6    vroom_1.5.7      fs_1.5.2         xml2_1.3.3      
@@ -1389,7 +1395,6 @@ compliant datasets</p>
 <h3><span class="header-section-number">2.4.2</span> FAQ<a href="applications.html#faq" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>Q1</strong>. Why not use the terms <em>associatedOccurrence</em> or <em>associatedTaxa</em>?
 <strong>A</strong>. There seems to be a movement away from the term <em>associatedOccurrence</em> as the <code>resourceRelationship</code> extension has a much broader use case. Some issues that were raised on GitHub exemplify this, see e.g. <a href="https://github.com/tdwg/dwc/issues/324">here</a>. <em>associatedTaxa</em> is used to provide identifiers or names of taxa and the associations of an Occurrence with them. This term is not apt for establishing relationships between taxa, only between specific Occurrences of an organism with other taxa. As noted on the <a href="https://dwc.tdwg.org/terms/#dwc:associatedTaxa">TDWG website</a>, <em>[…] Note that the ResourceRelationship class is an alternative means of representing associations, and with more detail.</em> See also e.g. <a href="https://github.com/tdwg/dwc/issues/331">this issue</a>.</p>
-
 </div>
 </div>
 </div>
@@ -1399,7 +1404,7 @@ compliant datasets</p>
         </div>
       </div>
 <a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="dealing-with-errors.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="dataset-edna.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

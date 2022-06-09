@@ -138,7 +138,7 @@
 
 \title{Darwin Core Guide}
 \author{\href{https://github.com/ioos/bio_data_guide/graphs/contributors}{Standardizing Marine Biological Data Working Group}}
-\date{2022-05-17}
+\date{2022-06-09}
 
 \begin{document}
 \maketitle
@@ -1368,18 +1368,17 @@ Print session information below in case necessary for future reference
 ##  [5] utf8_1.2.2       R6_2.5.1         cellranger_1.1.0 backports_1.4.1 
 ##  [9] reprex_2.0.1     evaluate_0.15    httr_1.4.3       pillar_1.7.0    
 ## [13] rlang_1.0.2      curl_4.3.2       readxl_1.4.0     rstudioapi_0.13 
-## [17] jquerylib_0.1.4  rmarkdown_2.14   urltools_1.7.3   triebeard_0.3.0 
-## [21] bit_4.0.4        munsell_0.5.0    broom_0.8.0      compiler_4.1.1  
-## [25] modelr_0.1.8     xfun_0.31        pkgconfig_2.0.3  htmltools_0.5.2 
-## [29] tidyselect_1.1.2 httpcode_0.3.0   bookdown_0.26    fansi_1.0.3     
-## [33] crayon_1.5.1     tzdb_0.3.0       dbplyr_2.1.1     withr_2.5.0     
-## [37] crul_1.2.0       grid_4.1.1       jsonlite_1.8.0   gtable_0.3.0    
-## [41] lifecycle_1.0.1  DBI_1.1.2        scales_1.2.0     cli_3.3.0       
-## [45] stringi_1.7.6    vroom_1.5.7      fs_1.5.2         xml2_1.3.3      
-## [49] bslib_0.3.1      ellipsis_0.3.2   generics_0.1.2   vctrs_0.4.1     
-## [53] tools_4.1.1      bit64_4.0.5      glue_1.6.2       hms_1.1.1       
-## [57] parallel_4.1.1   fastmap_1.1.0    yaml_2.3.5       colorspace_2.0-3
-## [61] rvest_1.0.2      haven_2.5.0      sass_0.4.1
+## [17] rmarkdown_2.14   urltools_1.7.3   triebeard_0.3.0  bit_4.0.4       
+## [21] munsell_0.5.0    broom_0.8.0      compiler_4.1.1   modelr_0.1.8    
+## [25] xfun_0.31        pkgconfig_2.0.3  htmltools_0.5.2  tidyselect_1.1.2
+## [29] httpcode_0.3.0   bookdown_0.26    fansi_1.0.3      crayon_1.5.1    
+## [33] tzdb_0.3.0       dbplyr_2.2.0     withr_2.5.0      crul_1.2.0      
+## [37] grid_4.1.1       jsonlite_1.8.0   gtable_0.3.0     lifecycle_1.0.1 
+## [41] DBI_1.1.2        scales_1.2.0     cli_3.3.0        stringi_1.7.6   
+## [45] vroom_1.5.7      fs_1.5.2         xml2_1.3.3       ellipsis_0.3.2  
+## [49] generics_0.1.2   vctrs_0.4.1      tools_4.1.1      bit64_4.0.5     
+## [53] glue_1.6.2       hms_1.1.1        parallel_4.1.1   fastmap_1.1.0   
+## [57] yaml_2.3.5       colorspace_2.0-3 rvest_1.0.2      haven_2.5.0
 \end{verbatim}
 
 \hypertarget{trawl-data}{%
@@ -1612,6 +1611,87 @@ A resource relationship extension is created to further highlight that the indiv
 
 \textbf{Q1}. Why not use the terms \emph{associatedOccurrence} or \emph{associatedTaxa}?
 \textbf{A}. There seems to be a movement away from the term \emph{associatedOccurrence} as the \texttt{resourceRelationship} extension has a much broader use case. Some issues that were raised on GitHub exemplify this, see e.g.~\href{https://github.com/tdwg/dwc/issues/324}{here}. \emph{associatedTaxa} is used to provide identifiers or names of taxa and the associations of an Occurrence with them. This term is not apt for establishing relationships between taxa, only between specific Occurrences of an organism with other taxa. As noted on the \href{https://dwc.tdwg.org/terms/\#dwc:associatedTaxa}{TDWG website}, \emph{{[}\ldots{]} Note that the ResourceRelationship class is an alternative means of representing associations, and with more detail.} See also e.g.~\href{https://github.com/tdwg/dwc/issues/331}{this issue}.
+
+\hypertarget{dataset-edna}{%
+\chapter{dataset-edna}\label{dataset-edna}}
+
+By \href{https://github.com/dianalg}{Diana LaScala-Gruenewald}
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+\textbf{Rationale:}
+
+DNA derived data are increasingly being used to document taxon
+occurrences. To ensure these data are useful to the broadest possible
+community, \href{https://www.gbif.org/}{GBIF} published a guide entitled ``\href{https://docs.gbif-uat.org/publishing-dna-derived-data/1.0/en/}{Publishing DNA-derived
+data through biodiversity data platforms}.''
+This guide is supported by the \href{https://tools.gbif.org/dwca-validator/extension.do?id=http://rs.gbif.org/terms/1.0/DNADerivedData}{DNA derived data extension}
+for \href{https://dwc.tdwg.org/}{Darwin Core}, which incorporates \href{https://gensc.org/mixs/}{MIxS}
+terms into the Darwin Core standard.
+
+This use case draws on both the guide and the extension to illustrate
+how to incorporate a DNA derived data extension file into a Darwin Core
+archive.
+
+For further information on this use case and the DNA Derived data extension
+in general, see the recording of the \href{https://obis.org/2021/10/13/gendatawebinar/}{OBIS Webinar on Genetic Data}.
+
+\textbf{Project abstract:}
+
+The example data employed in this use case are from marine
+filtered seawater samples collected at a nearshore station in
+Monterey Bay, California, USA. They were collected by CTD
+rosette and filtered by a peristaltic pump system. Subsequently,
+they underwent metabarcoding for the 18S V9 region. The resulting
+ASVs, their assigned taxonomy, and the metadata associated with their
+collection are the input data for the conversion scripts
+presented here.
+
+A selection of samples from this collection were included in the
+publication ``\href{https://www.nature.com/articles/s41467-019-14105-1}{Environmental DNA reveals seasonal shifts and potential
+interactions in a marine community}''
+which was published with open access in \emph{Nature Communications} in 2020.
+
+\textbf{Contacts:}
+- Francisco Chavez - Principle Investigator (\url{chfr@mbari.org})
+- Kathleen Pitz - Research Associate (\url{kpitz@mbari.org})
+- Diana LaScala-Gruenewald - Point of Contact (\url{dianalg@mbari.org})
+
+\hypertarget{published-data}{%
+\section{Published data}\label{published-data}}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://www.gbif.org/dataset/e0b59ee7-19ae-4eb0-9217-33317fb50d47}{GBIF}
+\item
+  \href{https://obis.org/dataset/62b97724-da17-4ca7-9b26-b2a22aeaab51}{OBIS}
+\end{itemize}
+
+\hypertarget{repo-structure}{%
+\section{Repo structure}\label{repo-structure}}
+
+\begin{verbatim}
+.
++-- README.md                   :Description of this repository
++-- LICENSE                     :Repository license
++-- .gitignore                  :Files and directories to be ignored by git
+|
++-- raw
+|   +-- asv_table.csv           :Source data containing ASV sequences and number of reads
+|   +-- taxa_table.csv          :Source data containing taxon matches for each ASV
+|   +-- metadata_table.csv      :Source data containing metadata about samples (e.g. collection information)
+|
++-- src
+|   +-- conversion_code.py      :Darwin Core mapping script
+|   +-- conversion_code.ipynb   :Darwin Core mapping Jupyter Notebook
+|   +-- WoRMS.py                :Functions for querying the World Register of Marine Species
+|
++-- processed
+|   +-- occurrence.csv          :Occurrence file, generated by conversion_code
+|   +-- dna_extension.csv       :DNA Derived Data Extension file, generated by conversion_code
+\end{verbatim}
 
 \hypertarget{dealing-with-errors}{%
 \chapter{Dealing with errors}\label{dealing-with-errors}}
@@ -1861,9 +1941,6 @@ If you are interested in creating an EML metadata file, it is possible to upload
 \leavevmode\vadjust pre{\hypertarget{ref-R-rmarkdown}{}}%
 Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, Winston Chang, and Richard Iannone. 2022. \emph{Rmarkdown: Dynamic Documents for r}. \url{https://CRAN.R-project.org/package=rmarkdown}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-R-magrittr}{}}%
-Bache, Stefan Milton, and Hadley Wickham. 2022. \emph{Magrittr: A Forward-Pipe Operator for r}. \url{https://CRAN.R-project.org/package=magrittr}.
-
 \leavevmode\vadjust pre{\hypertarget{ref-Barbier2017}{}}%
 Barbier, Edward B. 2017. {``Marine Ecosystem Services.''} \emph{Current Biology}. Cell Press. \url{https://doi.org/10.1016/j.cub.2017.03.020}.
 
@@ -1882,9 +1959,6 @@ Borer, Elizabeth T., Eric W. Seabloom, Matthew B. Jones, and Mark Schildhauer. 2
 \leavevmode\vadjust pre{\hypertarget{ref-Canonico2019}{}}%
 Canonico, Gabrielle, Pier Luigi Buttigieg, Enrique Montes, Frank E. Muller-Karger, Carol Stepien, Dawn Wright, Abigail Benson, et al. 2019. {``Global Observational Needs and Resources for Marine Biodiversity.''} \emph{Frontiers in Marine Science}. Frontiers Media S.A. \url{https://doi.org/10.3389/fmars.2019.00367}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-R-worrms}{}}%
-Chamberlain, Scott. 2020. \emph{Worrms: World Register of Marine Species (WoRMS) Client}. \url{https://CRAN.R-project.org/package=worrms}.
-
 \leavevmode\vadjust pre{\hypertarget{ref-Crystal-Ornela2021}{}}%
 Crystal-Ornelas, Robert, Charuleka Varadharajan, Ben Bond-Lamberty, Kristin Boye, Madison Burrus, Shreyas Cholia, Michael Crow, et al. 2021. {``A Guide to Using GitHub for Developing and Versioning Data Standards and Reporting Formats.''} \emph{Earth and Space Science}, July, e2021EA001797. \url{https://doi.org/10.1029/2021EA001797}.
 
@@ -1900,17 +1974,11 @@ Duffy, J. Emmett, Linda A. Amaral-Zettler, Daphne G. Fautin, Gustav Paulay, Tati
 \leavevmode\vadjust pre{\hypertarget{ref-Fornwall2012}{}}%
 Fornwall, M, R Gisiner, S E Simmons, H Moustahfid, G Canonico, P Halpin, P Goldstein, et al. 2012. {``Expanding Biological Data Standards Development Processes for US IOOS: Visual Line Transect Observing Community for Mammal, Bird, and Turtle Data.''} IOOS. \url{https://www.researchgate.net/publication/255681522}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-lubridate2011}{}}%
-Grolemund, Garrett, and Hadley Wickham. 2011. {``Dates and Times Made Easy with {lubridate}.''} \emph{Journal of Statistical Software} 40 (3): 1--25. \url{https://www.jstatsoft.org/v40/i03/}.
-
 \leavevmode\vadjust pre{\hypertarget{ref-Hardisty2019}{}}%
 Hardisty, Alex R., William K. Michener, Donat Agosti, Enrique Alonso García, Lucy Bastin, Lee Belbin, Anne Bowser, et al. 2019. {``The Bari Manifesto: An Interoperability Framework for Essential Biodiversity Variables.''} \emph{Ecological Informatics} 49 (January): 22--31. \url{https://doi.org/10.1016/j.ecoinf.2018.11.003}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Heberling2021}{}}%
 Heberling, J Mason, Joseph T Miller, Daniel Noesgaard, Scott B Weingart C, Dmitry Schigel, and Douglas E Soltis. 2021. {``Data Integration Enables Global Biodiversity Synthesis.''} \emph{Proceedings of the National Academy of Sciences of the United States of America}. \url{https://doi.org/10.1073/pnas.2018093118/-/DCSupplemental}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-purrr}{}}%
-Henry, Lionel, and Hadley Wickham. 2020. \emph{Purrr: Functional Programming Tools}. \url{https://CRAN.R-project.org/package=purrr}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Hare2016PLOS}{}}%
 Jonathan A. Hare, Mark W. Nelson, Wendy E. Morrison. n.d. {``A Vulnerability Assessment of Fish and Invertebrates to Climate Change on the Northeast u.s. Continental Shelf.''} \emph{PLoS ONE} 11 (2): e0146756. \url{https://doi.org/10.1371/journal.pone.0146756}.
@@ -1948,12 +2016,6 @@ Moustahfid, Hassan, and Philip Goldstein. 2014. {``IOOS Biological Data Services
 \leavevmode\vadjust pre{\hypertarget{ref-Moustahfid2011}{}}%
 Moustahfid, Hassan, Jim Potemra, Philip Goldstein, Roy Mendelssohn, and Annette Desrochers. 2011. {``Making United States Integrated Ocean Observing System (u.s. IOOS) Inclusive of Marine Biological Resources.''} \url{https://www.researchgate.net/publication/254013004}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-R-here}{}}%
-Müller, Kirill. 2020. \emph{Here: A Simpler Way to Find Your Files}. \url{https://CRAN.R-project.org/package=here}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-tibble}{}}%
-Müller, Kirill, and Hadley Wickham. 2022. \emph{Tibble: Simple Data Frames}. \url{https://CRAN.R-project.org/package=tibble}.
-
 \leavevmode\vadjust pre{\hypertarget{ref-Muller-Karger2018b}{}}%
 Muller-Karger, Frank E., Erin Hestir, Christiana Ade, Kevin Turpie, Dar A. Roberts, David Siegel, Robert J. Miller, et al. 2018. {``Satellite Sensor Requirements for Monitoring Essential Biodiversity Variables of Coastal Ecosystems.''} \emph{Ecological Applications} 28 (April): 749--60. \url{https://doi.org/10.1002/eap.1682}.
 
@@ -1987,9 +2049,6 @@ Santora, Jarrod A., Elliott L. Hazen, Isaac D. Schroeder, Steven J. Bograd, Keit
 \leavevmode\vadjust pre{\hypertarget{ref-Schmid_Daprano_Jacobson_Sullivan_Briseuxf1o-Avena_Luo_Cowen_2021}{}}%
 Schmid, Moritz S, Dominic Daprano, Kyler M Jacobson, Christopher Sullivan, Christian Briseño-Avena, Jessica Y Luo, and Robert K Cowen. 2021. \emph{A Convolutional Neural Network Based High-Throughput Image Classification Pipeline - Code and Documentation to Process Plankton Underwater Imagery Using Local HPC Infrastructure and NSF's XSEDE}. Zenodo. \url{https://doi.org/10.5281/ZENODO.4641158}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-R-lubridate}{}}%
-Spinu, Vitalie, Garrett Grolemund, and Hadley Wickham. 2021. \emph{Lubridate: Make Dealing with Dates a Little Easier}. \url{https://CRAN.R-project.org/package=lubridate}.
-
 \leavevmode\vadjust pre{\hypertarget{ref-Taylor2012}{}}%
 Taylor, Gordon T., Frank E. Muller-Karger, Robert C. Thunell, Mary I. Scranton, Yrene Astor, Ramon Varela, Luis Troccoli Ghinaglia, et al. 2012. {``Ecosystem Responses in the Southern Caribbean Sea to Global Climate Change.''} \emph{Proceedings of the National Academy of Sciences of the United States of America} 109 (November): 19315--20. \url{https://doi.org/10.1073/pnas.1207514109}.
 
@@ -1998,33 +2057,6 @@ Tittensor, Derek P, Camilo Mora, Walter Jetz, Heike K Lotze, Daniel Ricard, Edwa
 
 \leavevmode\vadjust pre{\hypertarget{ref-Warren2018}{}}%
 Warren, R., J. Price, E. Graham, N. Forstenhaeusler, and J. VanDerWal. 2018. {``The Projected Effect on Insects, Vertebrates, and Plants of Limiting Global Warming to 1.5°c Rather Than 2°c.''} \emph{Science} 360 (May): 791--95. \url{https://doi.org/10.1126/science.aar3646}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-ggplot22016}{}}%
-Wickham, Hadley. 2016. \emph{Ggplot2: Elegant Graphics for Data Analysis}. Springer-Verlag New York. \url{https://ggplot2.tidyverse.org}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-stringr}{}}%
----------. 2019. \emph{Stringr: Simple, Consistent Wrappers for Common String Operations}. \url{https://CRAN.R-project.org/package=stringr}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-forcats}{}}%
----------. 2021a. \emph{Forcats: Tools for Working with Categorical Variables (Factors)}. \url{https://CRAN.R-project.org/package=forcats}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-tidyverse}{}}%
----------. 2021b. \emph{Tidyverse: Easily Install and Load the Tidyverse}. \url{https://CRAN.R-project.org/package=tidyverse}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-tidyverse2019}{}}%
-Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D'Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. {``Welcome to the {tidyverse}.''} \emph{Journal of Open Source Software} 4 (43): 1686. \url{https://doi.org/10.21105/joss.01686}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-ggplot2}{}}%
-Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, and Dewey Dunnington. 2022. \emph{Ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics}. \url{https://CRAN.R-project.org/package=ggplot2}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-dplyr}{}}%
-Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2022. \emph{Dplyr: A Grammar of Data Manipulation}. \url{https://CRAN.R-project.org/package=dplyr}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-tidyr}{}}%
-Wickham, Hadley, and Maximilian Girlich. 2022. \emph{Tidyr: Tidy Messy Data}. \url{https://CRAN.R-project.org/package=tidyr}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-readr}{}}%
-Wickham, Hadley, Jim Hester, and Jennifer Bryan. 2022. \emph{Readr: Read Rectangular Text Data}. \url{https://CRAN.R-project.org/package=readr}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Wieczorek2012}{}}%
 Wieczorek, John, David Bloom, Robert Guralnick, Stan Blum, Markus Döring, Renato Giovanni, Tim Robertson, and David Vieglais. 2012. {``Darwin Core: An Evolving Community-Developed Biodiversity Data Standard.''} \emph{PLoS ONE} 7 (January): 29715. \url{https://doi.org/10.1371/journal.pone.0029715}.
