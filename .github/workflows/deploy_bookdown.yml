@@ -17,10 +17,6 @@ jobs:
         with:
           submodules: 'recursive'
 
-      - name: remove binder image line from edna example
-        run: |
-          sed -i'' -e '/Binder/d' datasets/dataset-edna/README.md
-
       - uses: r-lib/actions/setup-r@v1
         with:
           r-version: '4.1.1'
@@ -38,13 +34,25 @@ jobs:
         env:
           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: Render Book
+      - name: Render Html Book
         run: Rscript -e '
           setwd("bio-data-guide/"); 
           options(knitr.duplicate.label = "allow");
-          bookdown::render_book("index.Rmd");
-          bookdown::render_book("index.Rmd", "bookdown::pdf_book");
+          bookdown::render_book("index.Rmd");'
+          
+      - name: Render epub book
+        run: Rscript -e '
+          options(knitr.duplicate.label = "allow");
           bookdown::render_book("index.Rmd", "bookdown::epub_book")'
+
+      - name: remove binder image line from edna example for pdf
+        run: |
+          sed -i'' -e '/Binder/d' datasets/dataset-edna/README.md
+
+      - name: Render pdf book
+        run: Rscript -e '
+          options(knitr.duplicate.label = "allow");
+          bookdown::render_book("index.Rmd", "bookdown::pdf_book")'
 
       - uses: actions/upload-artifact@v2
         with:
