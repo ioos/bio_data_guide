@@ -17,6 +17,10 @@ jobs:
         with:
           submodules: 'recursive'
 
+      - name: remove binder image line from edna example
+        run: |
+          sed -i '/Binder/d' datasets/dataset-edna/README.md
+
       - uses: r-lib/actions/setup-r@v1
         with:
           r-version: '4.1.1'
