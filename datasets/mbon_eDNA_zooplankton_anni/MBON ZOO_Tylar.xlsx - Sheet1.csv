@@ -1,0 +1,442 @@
+occurrenceID,decimalLatitude,decimalLongitude,scientificName,scientificNameID,occurrenceStatus,basisOfRecord,datasetID,eventDate,samplingProtocol,organismQuantity
+,,,Oncaea Venusta,,Present,Human observation,,,64um plankton net,572
+,,,Oncaea Venusta,,Present,Human observation,,,200 um plankton net,984
+,,,Oncaea Venusta,,Present,Human observation,,,500 um plankton net,4
+,,,Oncaea Venusta,,Present,Human observation,,,64um plankton net,256
+,,,Oncaea Venusta,,Present,Human observation,,,200 um plankton net,5920
+,,,Oncaea Venusta,,Absent,Human observation,,,500 um plankton net,0
+,,,Oncaea Venusta,,Present,Human observation,,,64um plankton net,344
+,,,Oncaea Venusta,,Present,Human observation,,,200 um plankton net,432
+,,,Oncaea Venusta,,Absent,Human observation,,,500 um plankton net,0
+,,,Larvacean,,Present,Human observation,,,64um plankton net,64
+,,,Larvacean,,Present,Human observation,,,200 um plankton net,68
+,,,Larvacean,,Present,Human observation,,,500 um plankton net,7
+,,,Larvacean,,Present,Human observation,,,64um plankton net,12
+,,,Larvacean,,Present,Human observation,,,200 um plankton net,96
+,,,Larvacean,,Absent,Human observation,,,500 um plankton net,0
+,,,Larvacean,,Present,Human observation,,,64um plankton net,128
+,,,Larvacean,,Absent,Human observation,,,200 um plankton net,0
+,,,Larvacean,,Absent,Human observation,,,500 um plankton net,0
+,,,unknown eggs,,Present,Human observation,,,64um plankton net,196
+,,,unknown eggs,,Present,Human observation,,,200 um plankton net,212
+,,,unknown eggs,,Present,Human observation,,,500 um plankton net,80
+,,,unknown eggs,,Absent,Human observation,,,64um plankton net,0
+,,,unknown eggs,,Present,Human observation,,,200 um plankton net,1696
+,,,unknown eggs,,Present,Human observation,,,500 um plankton net,17
+,,,unknown eggs,,Present,Human observation,,,64um plankton net,120
+,,,unknown eggs,,Absent,Human observation,,,200 um plankton net,0
+,,,unknown eggs,,Absent,Human observation,,,500 um plankton net,0
+,,,part of barnacle,,Absent,Human observation,,,64um plankton net,0
+,,,part of barnacle,,Present,Human observation,,,200 um plankton net,4
+,,,part of barnacle,,Absent,Human observation,,,500 um plankton net,0
+,,,part of barnacle,,Absent,Human observation,,,64um plankton net,0
+,,,part of barnacle,,Present,Human observation,,,200 um plankton net,32
+,,,part of barnacle,,Absent,Human observation,,,500 um plankton net,0
+,,,part of barnacle,,Absent,Human observation,,,64um plankton net,0
+,,,part of barnacle,,Absent,Human observation,,,200 um plankton net,0
+,,,part of barnacle,,Present,Human observation,,,500 um plankton net,2
+,,,calanoid,,Present,Human observation,,,64um plankton net,548
+,,,calanoid,,Present,Human observation,,,200 um plankton net,240
+,,,calanoid,,Present,Human observation,,,500 um plankton net,31
+,,,calanoid,,Present,Human observation,,,64um plankton net,1140
+,,,calanoid,,Present,Human observation,,,200 um plankton net,2592
+,,,calanoid,,Present,Human observation,,,500 um plankton net,2
+,,,calanoid,,Present,Human observation,,,64um plankton net,2552
+,,,calanoid,,Present,Human observation,,,200 um plankton net,2704
+,,,calanoid,,Present,Human observation,,,500 um plankton net,308
+,,,nauplii,,Present,Human observation,,,64um plankton net,584
+,,,nauplii,,Present,Human observation,,,200 um plankton net,88
+,,,nauplii,,Present,Human observation,,,500 um plankton net,2
+,,,nauplii,,Present,Human observation,,,64um plankton net,208
+,,,nauplii,,Absent,Human observation,,,200 um plankton net,0
+,,,nauplii,,Absent,Human observation,,,500 um plankton net,0
+,,,nauplii,,Present,Human observation,,,64um plankton net,3832
+,,,nauplii,,Absent,Human observation,,,200 um plankton net,0
+,,,nauplii,,Absent,Human observation,,,500 um plankton net,0
+,,,corycaeous amazonicus,,Present,Human observation,,,64um plankton net,400
+,,,corycaeous amazonicus,,Present,Human observation,,,200 um plankton net,256
+,,,corycaeous amazonicus,,Present,Human observation,,,500 um plankton net,58
+,,,corycaeous amazonicus,,Present,Human observation,,,64um plankton net,180
+,,,corycaeous amazonicus,,Present,Human observation,,,200 um plankton net,1888
+,,,corycaeous amazonicus,,Present,Human observation,,,500 um plankton net,4
+,,,corycaeous amazonicus,,Present,Human observation,,,64um plankton net,272
+,,,corycaeous amazonicus,,Present,Human observation,,,200 um plankton net,208
+,,,corycaeous amazonicus,,Present,Human observation,,,500 um plankton net,68
+,,,acartia tonsa,,Present,Human observation,,,64um plankton net,68
+,,,acartia tonsa,,Present,Human observation,,,200 um plankton net,144
+,,,acartia tonsa,,Present,Human observation,,,500 um plankton net,25
+,,,acartia tonsa,,Present,Human observation,,,64um plankton net,220
+,,,acartia tonsa,,Present,Human observation,,,200 um plankton net,576
+,,,acartia tonsa,,Absent,Human observation,,,500 um plankton net,0
+,,,acartia tonsa,,Present,Human observation,,,64um plankton net,440
+,,,acartia tonsa,,Absent,Human observation,,,200 um plankton net,0
+,,,acartia tonsa,,Absent,Human observation,,,500 um plankton net,0
+,,,microsetella,,Present,Human observation,,,64um plankton net,44
+,,,microsetella,,Present,Human observation,,,200 um plankton net,88
+,,,microsetella,,Present,Human observation,,,500 um plankton net,1
+,,,microsetella,,Present,Human observation,,,64um plankton net,32
+,,,microsetella,,Present,Human observation,,,200 um plankton net,32
+,,,microsetella,,Absent,Human observation,,,500 um plankton net,0
+,,,microsetella,,Present,Human observation,,,64um plankton net,152
+,,,microsetella,,Present,Human observation,,,200 um plankton net,64
+,,,microsetella,,Absent,Human observation,,,500 um plankton net,0
+,,,polycheate,,Present,Human observation,,,64um plankton net,68
+,,,polycheate,,Present,Human observation,,,200 um plankton net,24
+,,,polycheate,,Present,Human observation,,,500 um plankton net,8
+,,,polycheate,,Present,Human observation,,,64um plankton net,40
+,,,polycheate,,Present,Human observation,,,200 um plankton net,32
+,,,polycheate,,Present,Human observation,,,500 um plankton net,3
+,,,polycheate,,Present,Human observation,,,64um plankton net,128
+,,,polycheate,,Absent,Human observation,,,200 um plankton net,0
+,,,polycheate,,Present,Human observation,,,500 um plankton net,2
+,,,pseudodiaptomus,,Present,Human observation,,,64um plankton net,40
+,,,pseudodiaptomus,,Present,Human observation,,,200 um plankton net,80
+,,,pseudodiaptomus,,Present,Human observation,,,500 um plankton net,3
+,,,pseudodiaptomus,,Present,Human observation,,,64um plankton net,308
+,,,pseudodiaptomus,,Present,Human observation,,,200 um plankton net,832
+,,,pseudodiaptomus,,Absent,Human observation,,,500 um plankton net,0
+,,,pseudodiaptomus,,Present,Human observation,,,64um plankton net,856
+,,,pseudodiaptomus,,Present,Human observation,,,200 um plankton net,5216
+,,,pseudodiaptomus,,Present,Human observation,,,500 um plankton net,16
+,,,pteropod,,Present,Human observation,,,64um plankton net,152
+,,,pteropod,,Present,Human observation,,,200 um plankton net,52
+,,,pteropod,,Present,Human observation,,,500 um plankton net,9
+,,,pteropod,,Absent,Human observation,,,64um plankton net,0
+,,,pteropod,,Present,Human observation,,,200 um plankton net,128
+,,,pteropod,,Present,Human observation,,,500 um plankton net,3
+,,,pteropod,,Present,Human observation,,,64um plankton net,192
+,,,pteropod,,Absent,Human observation,,,200 um plankton net,0
+,,,pteropod,,Present,Human observation,,,500 um plankton net,2
+,,,labridocera aestiva,,Present,Human observation,,,64um plankton net,24
+,,,labridocera aestiva,,Present,Human observation,,,200 um plankton net,48
+,,,labridocera aestiva,,Present,Human observation,,,500 um plankton net,27
+,,,labridocera aestiva,,Absent,Human observation,,,64um plankton net,0
+,,,labridocera aestiva,,Present,Human observation,,,200 um plankton net,352
+,,,labridocera aestiva,,Present,Human observation,,,500 um plankton net,15
+,,,labridocera aestiva,,Present,Human observation,,,64um plankton net,128
+,,,labridocera aestiva,,Present,Human observation,,,200 um plankton net,96
+,,,labridocera aestiva,,Absent,Human observation,,,500 um plankton net,0
+,,,eucalanus pileatus,,Absent,Human observation,,,64um plankton net,0
+,,,eucalanus pileatus,,Present,Human observation,,,200 um plankton net,4
+,,,eucalanus pileatus,,Absent,Human observation,,,500 um plankton net,0
+,,,eucalanus pileatus,,Absent,Human observation,,,64um plankton net,0
+,,,eucalanus pileatus,,Absent,Human observation,,,200 um plankton net,0
+,,,eucalanus pileatus,,Absent,Human observation,,,500 um plankton net,0
+,,,eucalanus pileatus,,Absent,Human observation,,,64um plankton net,0
+,,,eucalanus pileatus,,Absent,Human observation,,,200 um plankton net,0
+,,,eucalanus pileatus,,Absent,Human observation,,,500 um plankton net,0
+,,,macrosetella,,Present,Human observation,,,64um plankton net,36
+,,,macrosetella,,Present,Human observation,,,200 um plankton net,8
+,,,macrosetella,,Present,Human observation,,,500 um plankton net,1
+,,,macrosetella,,Absent,Human observation,,,64um plankton net,0
+,,,macrosetella,,Present,Human observation,,,200 um plankton net,32
+,,,macrosetella,,Absent,Human observation,,,500 um plankton net,0
+,,,macrosetella,,Absent,Human observation,,,64um plankton net,0
+,,,macrosetella,,Absent,Human observation,,,200 um plankton net,0
+,,,macrosetella,,Absent,Human observation,,,500 um plankton net,0
+,,,sagitta,,Present,Human observation,,,64um plankton net,12
+,,,sagitta,,Present,Human observation,,,200 um plankton net,16
+,,,sagitta,,Present,Human observation,,,500 um plankton net,15
+,,,sagitta,,Present,Human observation,,,64um plankton net,44
+,,,sagitta,,Present,Human observation,,,200 um plankton net,256
+,,,sagitta,,Present,Human observation,,,500 um plankton net,30
+,,,sagitta,,Present,Human observation,,,64um plankton net,40
+,,,sagitta,,Present,Human observation,,,200 um plankton net,96
+,,,sagitta,,Present,Human observation,,,500 um plankton net,90
+,,,zoea,,Absent,Human observation,,,64um plankton net,0
+,,,zoea,,Present,Human observation,,,200 um plankton net,8
+,,,zoea,,Present,Human observation,,,500 um plankton net,4
+,,,zoea,,Present,Human observation,,,64um plankton net,4
+,,,zoea,,Present,Human observation,,,200 um plankton net,96
+,,,zoea,,Present,Human observation,,,500 um plankton net,2
+,,,zoea,,Present,Human observation,,,64um plankton net,16
+,,,zoea,,Absent,Human observation,,,200 um plankton net,0
+,,,zoea,,Absent,Human observation,,,500 um plankton net,0
+,,,candacia armata,,Absent,Human observation,,,64um plankton net,0
+,,,candacia armata,,Absent,Human observation,,,200 um plankton net,0
+,,,candacia armata,,Present,Human observation,,,500 um plankton net,7
+,,,candacia armata,,Absent,Human observation,,,64um plankton net,0
+,,,candacia armata,,Present,Human observation,,,200 um plankton net,32
+,,,candacia armata,,Absent,Human observation,,,500 um plankton net,0
+,,,candacia armata,,Present,Human observation,,,64um plankton net,16
+,,,candacia armata,,Absent,Human observation,,,200 um plankton net,0
+,,,candacia armata,,Absent,Human observation,,,500 um plankton net,0
+,,,hyperiid amphipod,,Absent,Human observation,,,64um plankton net,0
+,,,hyperiid amphipod,,Absent,Human observation,,,200 um plankton net,0
+,,,hyperiid amphipod,,Present,Human observation,,,500 um plankton net,2
+,,,hyperiid amphipod,,Absent,Human observation,,,64um plankton net,0
+,,,hyperiid amphipod,,Present,Human observation,,,200 um plankton net,64
+,,,hyperiid amphipod,,Absent,Human observation,,,500 um plankton net,0
+,,,hyperiid amphipod,,Absent,Human observation,,,64um plankton net,0
+,,,hyperiid amphipod,,Absent,Human observation,,,200 um plankton net,0
+,,,hyperiid amphipod,,Present,Human observation,,,500 um plankton net,12
+,,,petrolisthes armatus zoea,,Absent,Human observation,,,64um plankton net,0
+,,,petrolisthes armatus zoea,,Absent,Human observation,,,200 um plankton net,0
+,,,petrolisthes armatus zoea,,Present,Human observation,,,500 um plankton net,2
+,,,petrolisthes armatus zoea,,Absent,Human observation,,,64um plankton net,0
+,,,petrolisthes armatus zoea,,Present,Human observation,,,200 um plankton net,64
+,,,petrolisthes armatus zoea,,Absent,Human observation,,,500 um plankton net,0
+,,,petrolisthes armatus zoea,,Absent,Human observation,,,64um plankton net,0
+,,,petrolisthes armatus zoea,,Absent,Human observation,,,200 um plankton net,0
+,,,petrolisthes armatus zoea,,Present,Human observation,,,500 um plankton net,12
+,,,eurytemora,,Absent,Human observation,,,64um plankton net,0
+,,,eurytemora,,Absent,Human observation,,,200 um plankton net,0
+,,,eurytemora,,Present,Human observation,,,500 um plankton net,2
+,,,eurytemora,,Present,Human observation,,,64um plankton net,20
+,,,eurytemora,,Present,Human observation,,,200 um plankton net,128
+,,,eurytemora,,Present,Human observation,,,500 um plankton net,10
+,,,eurytemora,,Present,Human observation,,,64um plankton net,24
+,,,eurytemora,,Present,Human observation,,,200 um plankton net,48
+,,,eurytemora,,Present,Human observation,,,500 um plankton net,60
+,,,doliolid,,Absent,Human observation,,,64um plankton net,0
+,,,doliolid,,Absent,Human observation,,,200 um plankton net,0
+,,,doliolid,,Present,Human observation,,,500 um plankton net,3
+,,,doliolid,,Absent,Human observation,,,64um plankton net,0
+,,,doliolid,,Present,Human observation,,,200 um plankton net,96
+,,,doliolid,,Present,Human observation,,,500 um plankton net,1
+,,,doliolid,,Absent,Human observation,,,64um plankton net,0
+,,,doliolid,,Absent,Human observation,,,200 um plankton net,0
+,,,doliolid,,Absent,Human observation,,,500 um plankton net,0
+,,,lucifer faxoni,,Absent,Human observation,,,64um plankton net,0
+,,,lucifer faxoni,,Absent,Human observation,,,200 um plankton net,0
+,,,lucifer faxoni,,Present,Human observation,,,500 um plankton net,1
+,,,lucifer faxoni,,Absent,Human observation,,,64um plankton net,0
+,,,lucifer faxoni,,Absent,Human observation,,,200 um plankton net,0
+,,,lucifer faxoni,,Absent,Human observation,,,500 um plankton net,0
+,,,lucifer faxoni,,Absent,Human observation,,,64um plankton net,0
+,,,lucifer faxoni,,Absent,Human observation,,,200 um plankton net,0
+,,,lucifer faxoni,,Absent,Human observation,,,500 um plankton net,0
+,,,unknown copepod,,Absent,Human observation,,,64um plankton net,0
+,,,unknown copepod,,Absent,Human observation,,,200 um plankton net,0
+,,,unknown copepod,,Present,Human observation,,,500 um plankton net,1
+,,,unknown copepod,,Absent,Human observation,,,64um plankton net,0
+,,,unknown copepod,,Absent,Human observation,,,200 um plankton net,0
+,,,unknown copepod,,Absent,Human observation,,,500 um plankton net,0
+,,,unknown copepod,,Present,Human observation,,,64um plankton net,8
+,,,unknown copepod,,Absent,Human observation,,,200 um plankton net,0
+,,,unknown copepod,,Absent,Human observation,,,500 um plankton net,0
+,,,percomorph eggs,,Present,Human observation,,,64um plankton net,32
+,,,percomorph eggs,,Absent,Human observation,,,200 um plankton net,0
+,,,percomorph eggs,,Absent,Human observation,,,500 um plankton net,0
+,,,percomorph eggs,,Present,Human observation,,,64um plankton net,132
+,,,percomorph eggs,,Absent,Human observation,,,200 um plankton net,0
+,,,percomorph eggs,,Present,Human observation,,,500 um plankton net,231
+,,,percomorph eggs,,Absent,Human observation,,,64um plankton net,0
+,,,percomorph eggs,,Absent,Human observation,,,200 um plankton net,0
+,,,percomorph eggs,,Present,Human observation,,,500 um plankton net,24
+,,,ostracoda,,Absent,Human observation,,,64um plankton net,0
+,,,ostracoda,,Absent,Human observation,,,200 um plankton net,0
+,,,ostracoda,,Absent,Human observation,,,500 um plankton net,0
+,,,ostracoda,,Present,Human observation,,,64um plankton net,288
+,,,ostracoda,,Present,Human observation,,,200 um plankton net,1536
+,,,ostracoda,,Present,Human observation,,,500 um plankton net,40
+,,,ostracoda,,Present,Human observation,,,64um plankton net,8
+,,,ostracoda,,Absent,Human observation,,,200 um plankton net,0
+,,,ostracoda,,Present,Human observation,,,500 um plankton net,4
+,,,unknown cyclopoid,,Present,Human observation,,,64um plankton net,128
+,,,unknown cyclopoid,,Absent,Human observation,,,200 um plankton net,0
+,,,unknown cyclopoid,,Absent,Human observation,,,500 um plankton net,0
+,,,unknown cyclopoid,,Absent,Human observation,,,64um plankton net,0
+,,,unknown cyclopoid,,Absent,Human observation,,,200 um plankton net,0
+,,,unknown cyclopoid,,Absent,Human observation,,,500 um plankton net,0
+,,,unknown cyclopoid,,Present,Human observation,,,64um plankton net,1600
+,,,unknown cyclopoid,,Absent,Human observation,,,200 um plankton net,0
+,,,unknown cyclopoid,,Absent,Human observation,,,500 um plankton net,0
+,,,mysidaea,,Present,Human observation,,,64um plankton net,4
+,,,mysidaea,,Absent,Human observation,,,200 um plankton net,0
+,,,mysidaea,,Absent,Human observation,,,500 um plankton net,0
+,,,mysidaea,,Present,Human observation,,,64um plankton net,28
+,,,mysidaea,,Present,Human observation,,,200 um plankton net,96
+,,,mysidaea,,Absent,Human observation,,,500 um plankton net,0
+,,,mysidaea,,Present,Human observation,,,64um plankton net,16
+,,,mysidaea,,Present,Human observation,,,200 um plankton net,96
+,,,mysidaea,,Present,Human observation,,,500 um plankton net,224
+,,,larval fish,,Present,Human observation,,,64um plankton net,4
+,,,larval fish,,Absent,Human observation,,,200 um plankton net,0
+,,,larval fish,,Absent,Human observation,,,500 um plankton net,0
+,,,larval fish,,Absent,Human observation,,,64um plankton net,0
+,,,larval fish,,Present,Human observation,,,200 um plankton net,32
+,,,larval fish,,Absent,Human observation,,,500 um plankton net,0
+,,,larval fish,,Present,Human observation,,,64um plankton net,8
+,,,larval fish,,Absent,Human observation,,,200 um plankton net,0
+,,,larval fish,,Absent,Human observation,,,500 um plankton net,0
+,,,temora,,Absent,Human observation,,,64um plankton net,0
+,,,temora,,Absent,Human observation,,,200 um plankton net,0
+,,,temora,,Absent,Human observation,,,500 um plankton net,0
+,,,temora,,Present,Human observation,,,64um plankton net,140
+,,,temora,,Present,Human observation,,,200 um plankton net,512
+,,,temora,,Present,Human observation,,,500 um plankton net,6
+,,,temora,,Absent,Human observation,,,64um plankton net,0
+,,,temora,,Present,Human observation,,,200 um plankton net,224
+,,,temora,,Absent,Human observation,,,500 um plankton net,0
+,,,juvenile mysid,,Absent,Human observation,,,64um plankton net,0
+,,,juvenile mysid,,Absent,Human observation,,,200 um plankton net,0
+,,,juvenile mysid,,Absent,Human observation,,,500 um plankton net,0
+,,,juvenile mysid,,Absent,Human observation,,,64um plankton net,0
+,,,juvenile mysid,,Absent,Human observation,,,200 um plankton net,0
+,,,juvenile mysid,,Present,Human observation,,,500 um plankton net,10
+,,,juvenile mysid,,Absent,Human observation,,,64um plankton net,0
+,,,juvenile mysid,,Absent,Human observation,,,200 um plankton net,0
+,,,juvenile mysid,,Absent,Human observation,,,500 um plankton net,0
+,,,cephalopod,,Absent,Human observation,,,64um plankton net,0
+,,,cephalopod,,Absent,Human observation,,,200 um plankton net,0
+,,,cephalopod,,Absent,Human observation,,,500 um plankton net,0
+,,,cephalopod,,Absent,Human observation,,,64um plankton net,0
+,,,cephalopod,,Absent,Human observation,,,200 um plankton net,0
+,,,cephalopod,,Present,Human observation,,,500 um plankton net,1
+,,,cephalopod,,Absent,Human observation,,,64um plankton net,0
+,,,cephalopod,,Absent,Human observation,,,200 um plankton net,0
+,,,cephalopod,,Absent,Human observation,,,500 um plankton net,0
+,,,cumacean,,Absent,Human observation,,,64um plankton net,0
+,,,cumacean,,Absent,Human observation,,,200 um plankton net,0
+,,,cumacean,,Absent,Human observation,,,500 um plankton net,0
+,,,cumacean,,Absent,Human observation,,,64um plankton net,0
+,,,cumacean,,Absent,Human observation,,,200 um plankton net,0
+,,,cumacean,,Present,Human observation,,,500 um plankton net,1
+,,,cumacean,,Absent,Human observation,,,64um plankton net,0
+,,,cumacean,,Absent,Human observation,,,200 um plankton net,0
+,,,cumacean,,Absent,Human observation,,,500 um plankton net,0
+,,,mesocyclops,,Absent,Human observation,,,64um plankton net,0
+,,,mesocyclops,,Absent,Human observation,,,200 um plankton net,0
+,,,mesocyclops,,Absent,Human observation,,,500 um plankton net,0
+,,,mesocyclops,,Present,Human observation,,,64um plankton net,8
+,,,mesocyclops,,Absent,Human observation,,,200 um plankton net,0
+,,,mesocyclops,,Absent,Human observation,,,500 um plankton net,0
+,,,mesocyclops,,Absent,Human observation,,,64um plankton net,0
+,,,mesocyclops,,Absent,Human observation,,,200 um plankton net,0
+,,,mesocyclops,,Present,Human observation,,,500 um plankton net,16
+,,,crab megalopa,,Absent,Human observation,,,64um plankton net,0
+,,,crab megalopa,,Absent,Human observation,,,200 um plankton net,0
+,,,crab megalopa,,Absent,Human observation,,,500 um plankton net,0
+,,,crab megalopa,,Present,Human observation,,,64um plankton net,4
+,,,crab megalopa,,Absent,Human observation,,,200 um plankton net,0
+,,,crab megalopa,,Absent,Human observation,,,500 um plankton net,0
+,,,crab megalopa,,Absent,Human observation,,,64um plankton net,0
+,,,crab megalopa,,Absent,Human observation,,,200 um plankton net,0
+,,,crab megalopa,,Absent,Human observation,,,500 um plankton net,0
+,,,shrimp juvenile,,Absent,Human observation,,,64um plankton net,0
+,,,shrimp juvenile,,Absent,Human observation,,,200 um plankton net,0
+,,,shrimp juvenile,,Absent,Human observation,,,500 um plankton net,0
+,,,shrimp juvenile,,Present,Human observation,,,64um plankton net,4
+,,,shrimp juvenile,,Present,Human observation,,,200 um plankton net,32
+,,,shrimp juvenile,,Absent,Human observation,,,500 um plankton net,0
+,,,shrimp juvenile,,Present,Human observation,,,64um plankton net,24
+,,,shrimp juvenile,,Absent,Human observation,,,200 um plankton net,0
+,,,shrimp juvenile,,Present,Human observation,,,500 um plankton net,30
+,,,amphipoda,,Absent,Human observation,,,64um plankton net,0
+,,,amphipoda,,Absent,Human observation,,,200 um plankton net,0
+,,,amphipoda,,Absent,Human observation,,,500 um plankton net,0
+,,,amphipoda,,Present,Human observation,,,64um plankton net,8
+,,,amphipoda,,Absent,Human observation,,,200 um plankton net,0
+,,,amphipoda,,Absent,Human observation,,,500 um plankton net,0
+,,,amphipoda,,Absent,Human observation,,,64um plankton net,0
+,,,amphipoda,,Absent,Human observation,,,200 um plankton net,0
+,,,amphipoda,,Absent,Human observation,,,500 um plankton net,0
+,,,isopoda,,Absent,Human observation,,,64um plankton net,0
+,,,isopoda,,Absent,Human observation,,,200 um plankton net,0
+,,,isopoda,,Absent,Human observation,,,500 um plankton net,0
+,,,isopoda,,Absent,Human observation,,,64um plankton net,0
+,,,isopoda,,Present,Human observation,,,200 um plankton net,32
+,,,isopoda,,Absent,Human observation,,,500 um plankton net,0
+,,,isopoda,,Present,Human observation,,,64um plankton net,16
+,,,isopoda,,Absent,Human observation,,,200 um plankton net,0
+,,,isopoda,,Present,Human observation,,,500 um plankton net,2
+,,,shrimp,,Absent,Human observation,,,64um plankton net,0
+,,,shrimp,,Absent,Human observation,,,200 um plankton net,0
+,,,shrimp,,Absent,Human observation,,,500 um plankton net,0
+,,,shrimp,,Absent,Human observation,,,64um plankton net,0
+,,,shrimp,,Present,Human observation,,,200 um plankton net,32
+,,,shrimp,,Absent,Human observation,,,500 um plankton net,0
+,,,shrimp,,Present,Human observation,,,64um plankton net,8
+,,,shrimp,,Absent,Human observation,,,200 um plankton net,0
+,,,shrimp,,Absent,Human observation,,,500 um plankton net,0
+,,,parvocalanus,,Absent,Human observation,,,64um plankton net,0
+,,,parvocalanus,,Absent,Human observation,,,200 um plankton net,0
+,,,parvocalanus,,Absent,Human observation,,,500 um plankton net,0
+,,,parvocalanus,,Absent,Human observation,,,64um plankton net,0
+,,,parvocalanus,,Absent,Human observation,,,200 um plankton net,0
+,,,parvocalanus,,Absent,Human observation,,,500 um plankton net,0
+,,,parvocalanus,,Present,Human observation,,,64um plankton net,144
+,,,parvocalanus,,Absent,Human observation,,,200 um plankton net,0
+,,,parvocalanus,,Absent,Human observation,,,500 um plankton net,0
+,,,cyprid,,Absent,Human observation,,,64um plankton net,0
+,,,cyprid,,Absent,Human observation,,,200 um plankton net,0
+,,,cyprid,,Absent,Human observation,,,500 um plankton net,0
+,,,cyprid,,Absent,Human observation,,,64um plankton net,0
+,,,cyprid,,Absent,Human observation,,,200 um plankton net,0
+,,,cyprid,,Absent,Human observation,,,500 um plankton net,0
+,,,cyprid,,Present,Human observation,,,64um plankton net,16
+,,,cyprid,,Absent,Human observation,,,200 um plankton net,0
+,,,cyprid,,Absent,Human observation,,,500 um plankton net,0
+,,,foraminifera,,Absent,Human observation,,,64um plankton net,0
+,,,foraminifera,,Absent,Human observation,,,200 um plankton net,0
+,,,foraminifera,,Absent,Human observation,,,500 um plankton net,0
+,,,foraminifera,,Absent,Human observation,,,64um plankton net,0
+,,,foraminifera,,Absent,Human observation,,,200 um plankton net,0
+,,,foraminifera,,Absent,Human observation,,,500 um plankton net,0
+,,,foraminifera,,Present,Human observation,,,64um plankton net,8
+,,,foraminifera,,Absent,Human observation,,,200 um plankton net,0
+,,,foraminifera,,Absent,Human observation,,,500 um plankton net,0
+,,,callinectes sapidus zoea,,Absent,Human observation,,,64um plankton net,0
+,,,callinectes sapidus zoea,,Absent,Human observation,,,200 um plankton net,0
+,,,callinectes sapidus zoea,,Absent,Human observation,,,500 um plankton net,0
+,,,callinectes sapidus zoea,,Absent,Human observation,,,64um plankton net,0
+,,,callinectes sapidus zoea,,Absent,Human observation,,,200 um plankton net,0
+,,,callinectes sapidus zoea,,Absent,Human observation,,,500 um plankton net,0
+,,,callinectes sapidus zoea,,Present,Human observation,,,64um plankton net,8
+,,,callinectes sapidus zoea,,Absent,Human observation,,,200 um plankton net,0
+,,,callinectes sapidus zoea,,Absent,Human observation,,,500 um plankton net,0
+,,,oikopleura,,Absent,Human observation,,,64um plankton net,0
+,,,oikopleura,,Absent,Human observation,,,200 um plankton net,0
+,,,oikopleura,,Absent,Human observation,,,500 um plankton net,0
+,,,oikopleura,,Absent,Human observation,,,64um plankton net,0
+,,,oikopleura,,Absent,Human observation,,,200 um plankton net,0
+,,,oikopleura,,Absent,Human observation,,,500 um plankton net,0
+,,,oikopleura,,Absent,Human observation,,,64um plankton net,0
+,,,oikopleura,,Present,Human observation,,,200 um plankton net,400
+,,,oikopleura,,Present,Human observation,,,500 um plankton net,2
+,,,anomalocera patersoni,,Absent,Human observation,,,64um plankton net,0
+,,,anomalocera patersoni,,Absent,Human observation,,,200 um plankton net,0
+,,,anomalocera patersoni,,Absent,Human observation,,,500 um plankton net,0
+,,,anomalocera patersoni,,Absent,Human observation,,,64um plankton net,0
+,,,anomalocera patersoni,,Absent,Human observation,,,200 um plankton net,0
+,,,anomalocera patersoni,,Absent,Human observation,,,500 um plankton net,0
+,,,anomalocera patersoni,,Absent,Human observation,,,64um plankton net,0
+,,,anomalocera patersoni,,Absent,Human observation,,,200 um plankton net,0
+,,,anomalocera patersoni,,Present,Human observation,,,500 um plankton net,70
+,,,decapod zoea,,Absent,Human observation,,,64um plankton net,0
+,,,decapod zoea,,Absent,Human observation,,,200 um plankton net,0
+,,,decapod zoea,,Absent,Human observation,,,500 um plankton net,0
+,,,decapod zoea,,Absent,Human observation,,,64um plankton net,0
+,,,decapod zoea,,Absent,Human observation,,,200 um plankton net,0
+,,,decapod zoea,,Absent,Human observation,,,500 um plankton net,0
+,,,decapod zoea,,Absent,Human observation,,,64um plankton net,0
+,,,decapod zoea,,Absent,Human observation,,,200 um plankton net,0
+,,,decapod zoea,,Present,Human observation,,,500 um plankton net,8
+,,,porcelin crab zoea,,Absent,Human observation,,,64um plankton net,0
+,,,porcelin crab zoea,,Absent,Human observation,,,200 um plankton net,0
+,,,porcelin crab zoea,,Absent,Human observation,,,500 um plankton net,0
+,,,porcelin crab zoea,,Absent,Human observation,,,64um plankton net,0
+,,,porcelin crab zoea,,Absent,Human observation,,,200 um plankton net,0
+,,,porcelin crab zoea,,Absent,Human observation,,,500 um plankton net,0
+,,,porcelin crab zoea,,Absent,Human observation,,,64um plankton net,0
+,,,porcelin crab zoea,,Absent,Human observation,,,200 um plankton net,0
+,,,porcelin crab zoea,,Present,Human observation,,,500 um plankton net,4
+,,,cylindrical gelatinous,,Absent,Human observation,,,64um plankton net,0
+,,,cylindrical gelatinous,,Absent,Human observation,,,200 um plankton net,0
+,,,cylindrical gelatinous,,Absent,Human observation,,,500 um plankton net,0
+,,,cylindrical gelatinous,,Absent,Human observation,,,64um plankton net,0
+,,,cylindrical gelatinous,,Absent,Human observation,,,200 um plankton net,0
+,,,cylindrical gelatinous,,Absent,Human observation,,,500 um plankton net,0
+,,,cylindrical gelatinous,,Absent,Human observation,,,64um plankton net,0
+,,,cylindrical gelatinous,,Absent,Human observation,,,200 um plankton net,0
+,,,cylindrical gelatinous,,Present,Human observation,,,500 um plankton net,2
+,,,gammarid amphipod,,Absent,Human observation,,,64um plankton net,0
+,,,gammarid amphipod,,Absent,Human observation,,,200 um plankton net,0
+,,,gammarid amphipod,,Absent,Human observation,,,500 um plankton net,0
+,,,gammarid amphipod,,Absent,Human observation,,,64um plankton net,0
+,,,gammarid amphipod,,Absent,Human observation,,,200 um plankton net,0
+,,,gammarid amphipod,,Absent,Human observation,,,500 um plankton net,0
+,,,gammarid amphipod,,Absent,Human observation,,,64um plankton net,0
+,,,gammarid amphipod,,Absent,Human observation,,,200 um plankton net,0
+,,,gammarid amphipod,,Present,Human observation,,,500 um plankton net,2
