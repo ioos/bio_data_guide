@@ -8,9 +8,9 @@ but instead it supplements those resources with examples of real world applicati
 In this book we cover:
 
 * [Applications](https://ioos.github.io/bio_data_guide/applications.html) - These are the real world examples of aligning data to Darwin Core.
-* [Using GitHub to work through errors](https://ioos.github.io/bio_data_guide/dealing-with-errors.html) - A brief walkthrough of using GitHub to resolve dataset errors.
 * [Frequently Asked Questions](https://ioos.github.io/bio_data_guide/frequently-asked-questions.html) - A collection of Frequently Asked Questions.
 * [Tools](https://ioos.github.io/bio_data_guide/tools.html) - A collection of useful tools, packages, and programs for working with marine biological data.
+* [Extras](https://ioos.github.io/bio_data_guide/extras.html) - Some useful extra tidbits about metadata and using GitHub to debug data issues.
 
 If you would like to learn more about standardizing biological data (not only marine), the
 [Earth Science Information Partners (ESIP) Biological Data Standards Cluster](https://wiki.esipfed.org/Biological_Data_Standards_Cluster) developed
