@@ -16,12 +16,12 @@ description: "Scaling multiple dimensions of diversity in biological data"
 
 # Preface {-}
 
-Biological data structures, definitions, measurements, and linkages are neccessarily as diverse as the systems they represent. This presents a real challenge when integrating data across biological research domains such as ecology, oceanography, fisheries, and climate sciences. 
+This book contains a collection of examples and resources related to mobilizing marine biological data to the
+[Darwin Core standard](https://dwc.tdwg.org/) for sharing though [OBIS](https://obis.org/). This book has been developed
+by the Standardizing Marine Biological Data Working Group (SMBD). The working group is an open community of practitioners,
+experts, and scientists looking to learn and educate the community on standardizing and sharing marine biological data.
 
-Lots of standards exist for use with biological data but navigating them can be difficult for data managers who are new to them. The Earth Science Information Partners (ESIP) Biological Data Standards Cluster developed [this primer](https://doi.org/10.6084/m9.figshare.16806712.v1) for managers of biological data to provide a quick, easy resource for navigating a selection of the standards that exist. The goal of the primer is to spread awareness about existing standards and is intended to be shared online and at conferences to increase the adoption of standards for biological data and make them FAIR.
-
-Benson, Abigail; LaScala-Gruenewald, Diana; McGuinn, Robert; Satterthwaite, Erin; Beaulieu, Stace; Biddle, Mathew; et al. (2021): Biological Observation Data Standardization - A Primer for Data Managers. ESIP. Online resource. https://doi.org/10.6084/m9.figshare.16806712.v1
-
+If you would like to join the SMBD or learn more, checkout this [README](https://github.com/ioos/bio_data_guide/blob/main/README.md).
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages
