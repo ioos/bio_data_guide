@@ -1,5 +1,20 @@
 # Introduction {#intro}
-The world of standardizing marine biological data can seem complex for the naive oceanographer, biologist, scientist, or programmer. 
-Transforming and integrating data is about combining the right standards for your desired interoperability with other data types. 
-For example, interoperating fish biology measurements with climate level variables. 
-There are a few concepts necessary to make this possible such as standard data structures, controlled vocabularies and knowledge representations, along with metadata standards to facilitate data discovery. This will permit the inclusion of more data and broader access to better ecosystem based models. Many scientific domains data handling practices are currently being reshaped in light of recent advances in computing power, technology, and data science.
+The world of standardizing marine biological data can seem complex for the naive oceanographer, biologist, scientist, or
+programmer. This book intends to ease the burden of learning about the [Darwin Core standard](https://dwc.tdwg.org/) by
+compiling a list of example applications and tools for translating source data into Darwin Core. This collection of
+resources does not replace the Darwin Core standards documentation (https://dwc.tdwg.org/) or the OBIS Manual (https://manual.obis.org/),
+but instead it supplements those resources with examples of real world applications.
+
+In this book we cover:
+
+* [Applications](https://ioos.github.io/bio_data_guide/applications.html) - These are the real world examples of aligning data to Darwin Core.
+* [Using GitHub to work through errors](https://ioos.github.io/bio_data_guide/dealing-with-errors.html) - A brief walkthrough of using GitHub to resolve dataset errors.
+* [Frequently Asked Questions](https://ioos.github.io/bio_data_guide/frequently-asked-questions.html) - A collection of Frequently Asked Questions.
+* [Tools](https://ioos.github.io/bio_data_guide/tools.html) - A collection of useful tools, packages, and programs for working with marine biological data.
+
+If you would like to learn more about standardizing biological data (not only marine), the
+[Earth Science Information Partners (ESIP) Biological Data Standards Cluster](https://wiki.esipfed.org/Biological_Data_Standards_Cluster) developed
+[this primer](https://doi.org/10.6084/m9.figshare.16806712.v1) for managers of biological data to provide a quick, easy
+resource for navigating a selection of the standards that exist. The goal of the primer is to spread awareness about
+existing standards and is intended to be shared online and at conferences to increase the adoption of standards for
+biological data and make them [FAIR](https://www.go-fair.org/fair-principles/).
