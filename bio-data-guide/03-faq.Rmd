@@ -1,0 +1,46 @@
+# (APPENDIX) Appendix {-}
+
+# Frequently Asked Questions
+
+1. **Q.** What data structure does OBIS recommend?
+
+   **A.** The OBIS-ENV Darwin Core Archive Data Structure. [OBIS manual](https://obis.org/manual/dataformat/#envdata)
+ 
+2. **Q.** What is a controlled vocabulary, why use them?
+
+   **A.** There are a number of controlled vocabularies that are used to describe parameters commonly used in specific research domains. Using terms defined in a controlled vocabulary allows for greater interoperability of data sets within the domain, and ideally between domains by ensuring that variables that are the same can be identified.
+
+3. **Q.** What controlled vocabularies does OBIS rely on?
+
+   **A.** [WoRMS](https://www.marinespecies.org/), [NERC Vocabulary Server](http://vocab.nerc.ac.uk/) inlcuding:
+     * [Device categories](http://vocab.nerc.ac.uk/collection/L05/current/) using the SeaDataNet device categories
+     * [Device make/model using the SeaVoX Device Catalogue](http://vocab.nerc.ac.uk/collection/L22/current/)
+     * [Platform categories using SeaVoX Platform Categories](http://vocab.nerc.ac.uk/collection/L06/current/)
+     * [Platform instances using the ICES Platform Codes](http://vocab.nerc.ac.uk/collection/C17/current/)
+     * [Unit of measure](http://vocab.nerc.ac.uk/collection/P06/current/)
+
+4. **Q.** How can I find out which common measurementTypes are used in measurement or facts tables in existing OBIS datasets?
+
+   **A.** See [Measurement Types in OBIS](https://mof.obis.org/)
+
+5. **Q.** What is an ontology?
+
+   **A.** An ontology is a classification system for establishing a hierarchically related set of concepts. Concepts are often terms from controlled vocabularies. Ontologies can include all of the following, but are not required to include them.
+
+    - Classes (general things, types of things)
+    - Instances (individual things)
+    - Relationships among things
+    - Properties of things
+    - Functions, processes, constraints, and rules relating to things
+      
+7. **Q.** What is ERDDAP?
+
+   **A.** [ERDDAP](https://coastwatch.pfeg.noaa.gov/erddap/index.html) is a data server. It provides 'easier access to scientific data' by providing a consistent interface that aggregates many disparate data sources. It does this by providing translation services between many common file types for gridded arrarys ('net CDF' files) and tabular data (spreadsheets). Data access is also made easier because it unifies different types of data servers and access protocols.
+
+8. **Q.** What metadata profile does OBIS use?
+
+   **A.** OBIS uses the [GBIF EML profile](http://rs.gbif.org/schema/eml-gbif-profile/1.1/eml-gbif-profile.xsd) (version 1.1)
+  
+9. **Q.** Can Darwin Core be used in the Semantic Web/Resrouce Description Framework?
+
+   **A.** See [Darwin Core Resource Description Framework Guide](https://dwc.tdwg.org/rdf/) and [Lessons learned from adapting the Darwin Core vocabulary standard for use in RDF](http://www.semantic-web-journal.net/system/files/swj1093.pdf)
