@@ -1,7 +1,7 @@
 --- 
 title: "Darwin Core Guide"
-author: "[Standardizing Marine Biological Data Working Group](https://github.com/ioos/bio_data_guide/graphs/contributors)"
-date: "`r Sys.Date()`"
+author: "By: [Standardizing Marine Biological Data Working Group](https://github.com/ioos/bio_data_guide/graphs/contributors) ![](https://contrib.rocks/image?repo=ioos/bio_data_guide)"
+date: "Updated: `r Sys.Date()`"
 url: https://ioos.github.io/bio_data_guide/
 github-repo: ioos/bio_data_guide
 site: bookdown::bookdown_site

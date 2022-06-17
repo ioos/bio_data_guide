@@ -1,6 +1,9 @@
 # Applications
 
-Some applications are demonstrated in this chapter.
+This chapter contains a series of example applications to convert source data to the Darwin Core standard. You can find
+these examples (and more!) in the GitHub repository under the [`datasets/`](https://github.com/ioos/bio_data_guide/tree/main/datasets)
+directory.
+
 
 ```{r, child=c("../datasets/TPWD_HARC_BagSeine/TPWD_HARC_BagSeine_OBISENV.md", "../datasets/hakai_salmon_data/salmon-darwin-core-remap.Rmd", "../datasets/hakai_seagrass_data/hakaiSeagrassToDWC.Rmd", "../datasets/trawl_catch_data/trawl-catch-data.Rmd", "../datasets/dataset-edna/README.md"),echo=TRUE,eval=TRUE}
 ```
