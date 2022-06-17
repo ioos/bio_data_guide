@@ -52,7 +52,8 @@ jobs:
 
       - name: remove binder image line from edna example for pdf
         run: |
-          sed -i'' -e '/Binder/d' datasets/dataset-edna/README.md
+          sed -i'' -e '/Binder/d' datasets/dataset-edna/README.md;
+          sed -i'' -e 's,!\[\](https://contrib.rocks/image?repo=ioos/bio_data_guide),,g' bio-data-guide/index.Rmd
 
       - name: Render pdf book
         run: Rscript -e '
