@@ -1,0 +1,53 @@
+name: Dataset Review Request
+description: Request Reviews & Comments on Your Dataset
+title: "[dataset]: "
+labels: ["data help"]
+assignees:
+  - albenson-usgs
+  - 7yl4r
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to solicit feedback on your work aligning data to Darwin Core.
+  - type: input
+    id: dataset_name
+    attributes:
+      label: Datset Name
+      description: A short name used to refer to your dataset.
+      placeholder: e.g. fl_keys_mbon_zooplankton_2018
+    validations:
+      required: true
+  - type: input
+    id: link_to_dwc_files
+    attributes:
+      label: Link to DwC Data Files
+      description: A publicly-accessible link to your DwC files.
+      placeholder: e.g. https://drive.google.com/drive/folders/1FcyUnXjqIeh2XF7uhuuvKL8eYGSaJVvZ
+    validations:
+      required: false
+  - type: input
+    id: code_link
+    attributes:
+      label: Scripts Link
+      description: A link to any code used to work with this data.
+      placeholder: e.g. fl_keys_mbon_zooplankton_2018
+    validations:
+      required: false
+  - type: input
+    id: link_to_raw_files
+    attributes:
+      label: Link to "raw" Data Files
+      description: A link to publicly-accessible "raw" data files before conversion to DwC.
+      placeholder: e.g. https://drive.google.com/drive/folders/1FcyUnXjqIeh2XF7uhuuvKL8eYGSaJVvZ
+    validations:
+      required: false
+  - type: textarea
+    id: descrip
+    attributes:
+      label: Describe your dataset and any specific requests.
+      description: Describe your dataset and any specific requests.
+      placeholder: I did.. and want help with..
+      value: "I tried but DwC is hard!"
+    validations:
+      required: true
