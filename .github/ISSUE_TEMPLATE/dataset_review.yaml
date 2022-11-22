@@ -1,15 +1,15 @@
 name: Dataset Review Request
 description: Request Reviews & Comments on Your Dataset
-title: "[datset]: "
+title: "[dataset]: "
 labels: ["data help"]
 assignees:
-  - abenson
+  - albenson-usgs
+  - 7yl4r
 body:
   - type: markdown
     attributes:
       value: |
-        Use this form to request comments from the community on your DwC-formmatting attempt.
-        Do this when you are *almost* ready to submit your DwC .csv files.
+        Use this form to solicit feedback on your work aligning data to Darwin Core.
   - type: input
     id: dataset_name
     attributes:
