@@ -13,7 +13,7 @@ body:
   - type: input
     id: dataset_name
     attributes:
-      label: Datset Name
+      label: Dataset Name
       description: A short name used to refer to your dataset.
       placeholder: e.g. fl_keys_mbon_zooplankton_2018
     validations:
