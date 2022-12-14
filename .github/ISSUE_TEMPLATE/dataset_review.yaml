@@ -29,7 +29,7 @@ body:
   - type: input
     id: code_link
     attributes:
-      label: Scripts Link
+      label: Link to Scripts
       description: A link to any code used to work with this data.
       placeholder: e.g. fl_keys_mbon_zooplankton_2018
     validations:
