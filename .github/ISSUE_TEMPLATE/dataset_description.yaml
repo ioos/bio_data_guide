@@ -9,7 +9,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Use this form to provide a title and description of the dataset you will be aligning to Darwin Core during the 2023 Biological Data Mobilization Workshop.
+        Use this form to provide a title, description and any (anticipated) blockers of the dataset you will be aligning to Darwin Core during the 2023 Biological Data Mobilization Workshop.
   - type: input
     id: primary_contact
     attributes:
@@ -30,9 +30,8 @@ body:
     id: descrip
     attributes:
       label: Describe your dataset and any specific requests.
-      description: Describe your dataset and any specific requests.
+      description: Describe your dataset and any specific data formatting challenges you have or anticipate.
       placeholder: I did.. and want help with..
-      value: "I tried but DwC is hard!"
     validations:
       required: true
   - type: input
