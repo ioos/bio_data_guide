@@ -1,0 +1,45 @@
+name: Dataset Description
+description: Provide Dataset Title and Description 
+title: "[dataset]: "
+labels: ["data help"]
+assignees:
+  - albenson-usgs
+  - timvdstap
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to provide a title and description of the dataset you will be aligning to Darwin Core during the 2023 Biological Data Mobilization Workshop.
+  - type: input
+    id: primary_contact
+    attributes:
+      label: Contact details
+      description: Your contact email address.
+      placeholder: e.g. tim.vanderstap@hakai.org
+    validations:
+      required: true
+  - type: input
+    id: dataset_title
+    attributes:
+      label: Dataset Title
+      description: A short title used to refer to your dataset.
+      placeholder: e.g. fl_keys_mbon_zooplankton_2018
+    validations:
+      required: true
+  - type: textarea
+    id: descrip
+    attributes:
+      label: Describe your dataset and any specific requests.
+      description: Describe your dataset and any specific requests.
+      placeholder: I did.. and want help with..
+      value: "I tried but DwC is hard!"
+    validations:
+      required: true
+  - type: input
+    id: link_to_raw_files
+    attributes:
+      label: Optional: Link to "raw" Data Files.
+      description: A link to publicly-accessible "raw" data files before conversion to DwC.
+      placeholder: e.g. https://drive.google.com/drive/folders/1FcyUnXjqIeh2XF7uhuuvKL8eYGSaJVvZ
+    validations:
+      required: false
