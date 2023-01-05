@@ -29,9 +29,9 @@ body:
   - type: textarea
     id: descrip
     attributes:
-      label: Describe your dataset and any specific requests.
-      description: Describe your dataset and any specific data formatting challenges you have or anticipate.
-      placeholder: I did.. and want help with..
+      label: Describe your dataset and any specific challenges or blockers you have or anticipate.
+      description: Dataset description and any specific data formatting challenges you have or anticipate.
+      placeholder: I am working with data on.. and want help with..
     validations:
       required: true
   - type: input
