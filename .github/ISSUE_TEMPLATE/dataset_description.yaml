@@ -1,5 +1,5 @@
 name: Dataset Description
-description: Provide Dataset Title and Description 
+description: Provide Dataset Title and Description. Use this issue to log datasets you intend to mobilize to Darwin Core. 
 title: "[dataset]: "
 labels: ["data help"]
 assignees:
@@ -30,7 +30,7 @@ body:
     id: descrip
     attributes:
       label: Describe your dataset and any specific challenges or blockers you have or anticipate.
-      description: Dataset description and any specific data formatting challenges you have or anticipate.
+      description: Dataset description and any specific dataset formatting challenges you have or anticipate.
       placeholder: I am working with data on.. and want help with..
     validations:
       required: true
