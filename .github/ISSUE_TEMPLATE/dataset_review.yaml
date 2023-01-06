@@ -1,5 +1,5 @@
 name: Dataset Review Request
-description: Request Reviews & Comments on Your Dataset
+description: Request a review or comments on a dataset you've have already aligned to Darwin Core.
 title: "[dataset]: "
 labels: ["data help"]
 assignees:
