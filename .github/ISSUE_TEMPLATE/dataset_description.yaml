@@ -1,4 +1,4 @@
-name: Dataset Description
+name: Marine Biological Observation Dataset Registration
 description: Provide Dataset Title and Description. Use this issue to log datasets you intend to mobilize to Darwin Core. 
 title: "[dataset]: "
 labels: ["data help"]
@@ -9,7 +9,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Use this form to provide a title, description and any (anticipated) blockers of the dataset you will be aligning to Darwin Core during the 2023 Biological Data Mobilization Workshop.
+        Use this form to provide a title, description and any (anticipated) blockers for the dataset you will be aligning to Darwin Core. For example, during the 2023 Biological Data Mobilization Workshop.
   - type: input
     id: primary_contact
     attributes:
@@ -23,7 +23,7 @@ body:
     attributes:
       label: Dataset Title
       description: A short title used to refer to your dataset.
-      placeholder: e.g. fl_keys_mbon_zooplankton_2018
+      placeholder: e.g. Florida Keys Zooplankton 2018 Dataset
     validations:
       required: true
   - type: textarea
