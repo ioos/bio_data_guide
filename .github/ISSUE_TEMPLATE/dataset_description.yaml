@@ -1,7 +1,7 @@
 name: Marine Biological Observation Dataset Registration
 description: Provide Dataset Title and Description. Use this issue to log datasets you intend to mobilize to Darwin Core. 
 title: "[dataset]: "
-labels: ["data help"]["2023 Workshop"]
+labels: ["data help","2023 Workshop"]
 assignees:
   - albenson-usgs
   - timvdstap
