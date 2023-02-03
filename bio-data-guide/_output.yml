@@ -3,7 +3,7 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <li><a href="./">Darwin Core Guide</a></li>
+        <li><a href="./">Darwin Core Marine Example Compendium</a></li>
     download: ["pdf", "epub"]
     view: https://github.com/ioos/bio_data_guide/blob/main/bio-data-guide/%s
     edit: https://github.com/ioos/bio_data_guide/edit/main/bio-data-guide/%s
