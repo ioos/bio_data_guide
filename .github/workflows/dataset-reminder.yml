@@ -5,7 +5,7 @@ name: Dataset reminder comment
 # this currently runs once a day - the label can be manually removed when comments are added (no longer stale) and this action will run again on an issue which has gone stale.
 on:
   schedule:
-  - cron: '0 0-23 * * *'
+  - cron: '0 12 * * *'
 jobs:
   stale:
     runs-on: ubuntu-latest
