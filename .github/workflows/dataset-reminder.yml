@@ -19,5 +19,5 @@ jobs:
         days-before-issue-stale: 90   # 3 months
         days-before-issue-close: -1   # disabled - do not close tickets
         only-issue-labels: "data help"
-        stale-issue-message: 'This issue has had no activity in the last 90 days. This is a reminder to please comment on the status of the dataset and add any questions/blockers here. OBIS-USA node manager is also reminded to review @albenson-usgs @sformel-usgs '
+        stale-issue-message: 'Thank you for identifying this dataset for mobilization. We wanted to check in. Is there anything you need help with in order to mobilize this dataset to OBIS? If you would like assistance from an OBIS node you can find node contacts listed [here](https://obis.org/contact/).'
         debug-only: true # testing
