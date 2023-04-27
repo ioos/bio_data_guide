@@ -18,5 +18,5 @@ jobs:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         days-before-issue-stale: 90   # 3 months
         days-before-issue-close: -1   # disabled - do not close tickets
-        only-issue-labels: data help
+        only-issue-labels: "data help"
         stale-issue-message: 'Thank you for identifying this dataset for mobilization. The workshop hosts wanted to check in. Is there anything you need help with in order to mobilize this dataset to OBIS? If you would like assistance from an OBIS node you can find node contacts listed [here](https://obis.org/contact/).'
