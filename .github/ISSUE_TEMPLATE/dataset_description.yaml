@@ -37,8 +37,8 @@ body:
   - type: input
     id: link_to_raw_files
     attributes:
-      label: Link to "raw" Data Files.
-      description: A link to publicly-accessible "raw" data files before conversion to DwC.
-      placeholder: e.g. https://drive.google.com/drive/folders/1FcyUnXjqIeh2XF7uhuuvKL8eYGSaJVvZ
+      label: Info about "raw" Data Files.
+      description: Description (and|or) link to the "raw" data files. 
+      placeholder: The "raw" data is in one big really big excel file with no headers; the raw data can be downloaded from the following link: https://drive.google.com/drive/folders/1FcyUnXjqIeh2XF7uhuuvKL8eYGSaJVvZ
     validations:
       required: false
