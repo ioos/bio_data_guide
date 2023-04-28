@@ -70,7 +70,7 @@ There are multiple resources in this GitHub repository, including:
 Also, check out [CONTRIBUTING.md](CONTRIBUTING.md)
 
 # Our training & workshops
-* [2022 BioData Mobilization Workshop](https://ioos.github.io/bio_mobilization_workshop/)
+* [Annual BioData Mobilization Workshop](https://ioos.github.io/bio_mobilization_workshop/)
 * [2019 IOOS Code Sprint in Ann Arbor](https://github.com/marinebon/bio_data_scripts_ioos_workshop_2019)
 * [2018 IOOS BioData Training in Seattle](https://ioos.github.io/BioData-Training-Workshop)
 
