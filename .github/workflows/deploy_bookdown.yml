@@ -5,7 +5,7 @@ on:
      branches: 
        - main
      paths:
-       - '.github/workflows/**'
+       - '.github/workflows/deploy_bookdown.yml'
        - 'bio-data-guide/**'
 
 jobs:

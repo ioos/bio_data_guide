@@ -1,0 +1,22 @@
+# This workflow comments on issues that have had no activity for a specified amount of time. This is a reminder for the community to comment and for standard name moderators to comment.
+
+name: Dataset reminder comment
+
+# this currently runs once a day - the label can be manually removed when comments are added (no longer stale) and this action will run again on an issue which has gone stale.
+on:
+  schedule:
+  - cron: '0 12 * * *'
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+
+    steps:
+    - uses: actions/stale@v8
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        days-before-issue-stale: 90   # 3 months
+        days-before-issue-close: -1   # disabled - do not close tickets
+        only-issue-labels: data help
+        stale-issue-message: 'Thank you for identifying this dataset for mobilization. The workshop hosts wanted to check in. Is there anything you need help with in order to mobilize this dataset to OBIS? If you would like assistance from an OBIS node you can find node contacts listed [here](https://obis.org/contact/).'
