@@ -39,6 +39,6 @@ body:
     attributes:
       label: Info about "raw" Data Files.
       description: Description (and|or) link to the "raw" data files. 
-      placeholder: The "raw" data is in one big really big excel file with no headers; the raw data can be downloaded from the following link: [google drive link]
+      placeholder: The "raw" data is in one big really big excel file with no headers; the raw data can be downloaded from the following link [google drive link]
     validations:
       required: false
