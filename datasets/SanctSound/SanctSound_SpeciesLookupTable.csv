@@ -1,15 +1,15 @@
-vernacularName,scientificName,scientificNameID,taxonRank,kingdom
-dolphin,Cetacea,urn:lsid:marinespecies.org:taxname:2688,Infraorder,Animalia
-blue whale,Balaenoptera musculus,urn:lsid:marinespecies.org:taxname:137090,Species,Animalia
-bocaccio,Sebastes paucispinis,urn:lsid:marinespecies.org:taxname:274833,Species,Animalia
-fin whale,Balaenoptera physalus,urn:lsid:marinespecies.org:taxname:137091,Species,Animalia
-pinniped,Pinnipedia,urn:lsid:marinespecies.org:taxname:148736),Infraorder,Animalia
-red grouper,Epinephelus morio,urn:lsid:marinespecies.org:taxname:159354,Species,Animalia
-sei whale,Balaenoptera borealis,urn:lsid:marinespecies.org:taxname:137088,Species,Animalia
-atlantic cod,Gadus morhua,urn:lsid:marinespecies.org:taxname:126436,Species,Animalia
-black grouper,Mycteroperca bonaci,urn:lsid:marinespecies.org:taxname:159231,Species,Animalia
-humpback whale,Megaptera novaeangliae,urn:lsid:marinespecies.org:taxname:137092,Species,Animalia
-killer whale,Orcinus orca,urn:lsid:marinespecies.org:taxname:137102,Species,Animalia
-minke whale,Balaenoptera acutorostrata,urn:lsid:marinespecies.org:taxname:137087,Species,Animalia
-plainfin midshipman,Porichthys notatus,urn:lsid:marinespecies.org:taxname:275658,Species,Animalia
-north atlantic right whale,Eubalaena glacialis,urn:lsid:marinespecies.org:taxname:159023,Species,Animalia
+﻿vernacularName,scientificName,scientificNameID,taxonRank,kingdom,propagationFrequency
+dolphin,Cetacea,urn:lsid:marinespecies.org:taxname:2688,Infraorder,Animalia,5000
+blue whale,Balaenoptera musculus,urn:lsid:marinespecies.org:taxname:137090,Species,Animalia,63
+bocaccio,Sebastes paucispinis,urn:lsid:marinespecies.org:taxname:274833,Species,Animalia,300
+fin whale,Balaenoptera physalus,urn:lsid:marinespecies.org:taxname:137091,Species,Animalia,20
+pinniped,Pinnipedia,urn:lsid:marinespecies.org:taxname:148736),Infraorder,Animalia,1000
+red grouper,Epinephelus morio,urn:lsid:marinespecies.org:taxname:159354,Species,Animalia,125
+sei whale,Balaenoptera borealis,urn:lsid:marinespecies.org:taxname:137088,Species,Animalia,63
+black grouper,Mycteroperca bonaci,urn:lsid:marinespecies.org:taxname:159231,Species,Animalia,125
+humpback whale,Megaptera novaeangliae,urn:lsid:marinespecies.org:taxname:137092,Species,Animalia,300
+killer whale,Orcinus orca,urn:lsid:marinespecies.org:taxname:137102,Species,Animalia,1000
+minke whale,Balaenoptera acutorostrata,urn:lsid:marinespecies.org:taxname:137087,Species,Animalia,20
+plainfin midshipman,Porichthys notatus,urn:lsid:marinespecies.org:taxname:275658,Species,Animalia,300
+north atlantic right whale,Eubalaena glacialis,urn:lsid:marinespecies.org:taxname:159023,Species,Animalia,63
+atlantic cod,Gadus morhua,urn:lsid:marinespecies.org:taxname:126436,Species,Animalia,63
