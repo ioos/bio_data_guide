@@ -2,9 +2,11 @@ This directory contains file to translate [SanctSound](https://www.ncei.noaa.gov
 Darwin Core.
 
 Included in this directory are the following files:
-* **sound_production_to_occurrence.ipynb** - Notebook to convert the presence records on [Coastwatch ERDDAP](https://coastwatch.pfeg.noaa.gov/erddap/index.html) to Darwin Core compliant occurrence records.
-* **sound_propagation_processing.ipynb** - Notebook to gather [sound propagation modeling](https://sanctsound.portal.axds.co/#sanctsound/compare/prop-model) data and add it to the occurrence table from above.
-* **SanctSound_SpeciesLookupTable.csv** - Species lookup table for occurrence records.
+1. **sound_production_to_presence.ipynb** - Notebook to combine the acoustically present records on [Coastwatch ERDDAP](https://coastwatch.pfeg.noaa.gov/erddap/index.html).
+1. **presence_to_occurrence.ipynb** - Notebook to convert the presence file to an occurrence file (with some additional columns).
+1. **sound_propagation_processing.ipynb** - Notebook to gather [sound propagation modeling](https://sanctsound.portal.axds.co/#sanctsound/compare/prop-model) data and add it to the occurrence table from above.
+
+* **SanctSound_SpeciesLookupTable.csv** - Species and frequency lookup table for occurrence records.
 * **/data**
   * zip file which contains data that:
     1. has a functioning ERDDAP endpoint 
@@ -38,3 +40,9 @@ Included in this directory are the following files:
     `kingdom` | The identified Kingdom to which the species belongs to, extracted from the **Sansound_SpeciesLookupTable.csv**.
     `eventDate` | Date of presence record in ERDDAP presence datasets. (`presence == 1`).
     `occurrenceID` | A combination of the ERDDAP dataset ID and date/time of presence, concatenated together with `_`. For example, `noaaSanctSound_GR01_01_dolphins_1h_2018-12-15T04:00:00.000000Z`.
+
+  * **occurrence_w_coordinateUncertainty.zip** final DarwinCore aligned dataset.
+    
+    column | description
+    -------|------------
+    
