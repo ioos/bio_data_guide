@@ -4,7 +4,7 @@
 
 1. **Q.** What data structure does OBIS recommend?
 
-   **A.** The OBIS-ENV Darwin Core Archive Data Structure. [OBIS manual](https://obis.org/manual/dataformat/#envdata)
+   **A.** The OBIS-ENV Darwin Core Archive Data Structure. [OBIS manual](https://manual.obis.org/data_format.html#obis-holds-more-than-just-species-occurrences-the-env-data-approach)
  
 2. **Q.** What is a controlled vocabulary, why use them?
 
