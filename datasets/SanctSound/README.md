@@ -3,6 +3,7 @@ This directory contains the processes in which the [SanctSound](https://www.ncei
 # Mobilized data endpoints
 * GBIF - https://www.gbif.org/dataset/b3fc1d76-a50d-4a57-a2f3-425adfc59f9f
 * OBIS - https://obis.org/dataset/7a4427f6-67ee-4cc1-b95f-3045523420a1
+* OBIS-USA IPT - https://ipt-obis.gbif.us/resource?r=noaa_sanctsound_daily_species
 
 ## Definitions
 
