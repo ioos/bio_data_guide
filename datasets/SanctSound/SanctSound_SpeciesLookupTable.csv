@@ -3,7 +3,7 @@ dolphin,Cetacea,urn:lsid:marinespecies.org:taxname:2688,Infraorder,Animalia,5000
 blue whale,Balaenoptera musculus,urn:lsid:marinespecies.org:taxname:137090,Species,Animalia,63
 bocaccio,Sebastes paucispinis,urn:lsid:marinespecies.org:taxname:274833,Species,Animalia,300
 fin whale,Balaenoptera physalus,urn:lsid:marinespecies.org:taxname:137091,Species,Animalia,20
-pinniped,Pinnipedia,urn:lsid:marinespecies.org:taxname:148736),Infraorder,Animalia,1000
+pinniped,Pinnipedia,urn:lsid:marinespecies.org:taxname:148736,Infraorder,Animalia,1000
 red grouper,Epinephelus morio,urn:lsid:marinespecies.org:taxname:159354,Species,Animalia,125
 sei whale,Balaenoptera borealis,urn:lsid:marinespecies.org:taxname:137088,Species,Animalia,63
 black grouper,Mycteroperca bonaci,urn:lsid:marinespecies.org:taxname:159231,Species,Animalia,125
