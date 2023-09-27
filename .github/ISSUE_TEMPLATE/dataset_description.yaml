@@ -3,7 +3,7 @@ description: Provide Dataset Title and Description. Use this issue to log datase
 title: "[dataset]: "
 labels: ["data help","2023 Workshop"]
 assignees:
-  - albenson-usgs
+  - sformel-usgs
   - timvdstap
 body:
   - type: markdown
