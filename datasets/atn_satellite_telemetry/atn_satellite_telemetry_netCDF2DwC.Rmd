@@ -3,15 +3,16 @@ title: An R Markdown document converted from "atn_satellite_telemetry_netCDF2DwC
 output: html_document
 ---
 
-# Converting ATN netCDF file to Dawrin Core
+## Converting ATN netCDF file to Dawrin Core
 
 Created: 2022-03-23
+Updated: 2023-11-16
 
-This notebook walks through downloading an example netCDF file from the ATN GitHub repository and translating it to a Darwin Core Archive compliant package for easy loading and publishing via the Integrated Publishing Toolkit (IPT). The example file follows a specific specification for ATN satellite trajectory observations as documented [here](https://github.com/ioos/ioos-atn-data/blob/main/templates/atn_trajectory_template.cdl). More information about the ATN netCDF specification can be found in the repository https://github.com/ioos/ioos-atn-data.
+Credit: Stephen Formel, Mathew Biddle
 
-Since most of the examples in the IOOS Code Lab are in the python programming language, we wanted to show an example of working with a netCDF file in the R programming language to be inclusive of those users. 
+This notebook walks through downloading an example netCDF file from the an Archive package at NCEI and translating it to a Darwin Core Archive compliant package for easy loading and publishing via the Integrated Publishing Toolkit (IPT). The example file follows a specific specification for ATN satellite trajectory observations as documented [here](https://github.com/ioos/ioos-atn-data/blob/main/templates/atn_trajectory_template.cdl). More information about the ATN netCDF specification can be found in the repository https://github.com/ioos/ioos-atn-data.
 
-For more information on the tidync package, see this R blog: [https://ropensci.org/blog/2019/11/05/tidync/](https://ropensci.org/blog/2019/11/05/tidync/)
+This example uses the [tidync](https://ropensci.org/blog/2019/11/05/tidync/) package to work with netCDF data.
 
 Data used in this notebook are available from NCEI at the following link https://www.ncei.noaa.gov/archive/accession/0282699.
 
@@ -26,12 +27,7 @@ library(lubridate)
 library(maps)
 library(mapdata)
 ```
-
-```{r}
-sessionInfo()
-```
-
-## Download the netCDF file from the NCEI Archive
+### Downloading and preprocessing the source data
 
 See https://www.ncei.noaa.gov/archive/accession/0282699
 
@@ -44,7 +40,7 @@ fname = paste('data/src/',basename(url))
 download.file(url, fname, mode = "wb")
 ```
 
-## Open the netCDF file
+#### Open the netCDF file
 Once the file is opened, we print out the details of what the netCDF file contains.
 
 ```{r}
@@ -52,7 +48,7 @@ atn <- nc_open(fname)
 atn
 ```
 
-## Collect all the metadata from the netCDF file.
+#### Collect all the metadata from the netCDF file.
 
 This gathers not only the global attributes, but the variable level attributes as well. As you can see in the **variable** column the term `NC_GLOBAL` refers to global attributes.
 
@@ -61,20 +57,10 @@ metadata <- ncmeta::nc_atts(fname)
 metadata
 ```
 
-## Example extracting `long_name` attributes
-
-To give you an idea of what observations are in this file, we can print out the human readable `long_name` attribute from all the variables.
-
-```{r}
-metadata %>% dplyr::filter(name == "long_name")
-```
-
-## Store the data as a tibble in a variable
+#### Store the data as a tibble
 Collect the data dimensioned by `time` from the netCDF file as a tibble. Then, print the first ten rows.
 
 ```{r}
-options(repr.matrix.max.cols=35)
-
 atn <- tidync(fname)
 
 atn_tbl <- atn %>% hyper_tibble(force=TRUE)
@@ -82,7 +68,7 @@ atn_tbl <- atn %>% hyper_tibble(force=TRUE)
 head(atn_tbl, n=4)
 ```
 
-## Dealing with time
+#### Dealing with time
 
 Notice the data in the **time** column aren't formatted as times. We need to read the metadata associated with the time variable to understand what the units are. Below, we print a tibble of all the attributes from the **time** variable.
 
@@ -102,63 +88,14 @@ tunit <- time_attrs %>% dplyr::filter(name == "units")
 lunit <- str_split(tunit$value,' ')[[1]]
 atn_tbl$time <- as.POSIXct(atn_tbl$time, origin=lunit[3], tz="GMT")
 
-head(atn_tbl, n=2)
+str(atn_tbl)
 ```
-
-## Plotting the raw data
-
-Now lets make some plots just to take a look at what data we're working with. Here we make a plot of time vs longitude.
-
-```{r}
-#library(ggplot2) - loaded with tidyverse
-
-options(repr.plot.width = 14, repr.plot.height = 14)
-
-ggplot(atn_tbl, aes(x=as.Date(time), y=lon)) + 
-    geom_line() + 
-    scale_x_date(date_labels = "%Y %b %d")
-```
-
-## Making a map
-
-Next, let's make a map of the locations of this animal with the colors dependent on time.
-
-Use the global attribute `title` as the title of the plot.
-
-```{r}
-# library('maps') - moved to top so it's clear they should be installed from the beginning
-# library('mapdata')
-
-# collect title from global attributes
-title <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "title")
-
-
-# Map limits.
-ylim <- c( min(atn_tbl$lat)-2, max(atn_tbl$lat)+2 )
-xlim <- c( min(atn_tbl$lon)-2, max(atn_tbl$lon)+2 )
-
-# Get outline data for map.
-w <- map_data( 'worldHires', ylim = ylim, xlim = xlim )
-
-z <- ggplot(atn_tbl, aes( x = lon, y = lat )) +
-     geom_point( aes(colour = time), size = 2.0) +
-     scale_shape_manual( values = c(19, 1) )
-
-z + geom_polygon(data = w, aes(x = long, y = lat, group = group), fill = 'grey80') + 
-    theme_bw() +
-    coord_fixed(1.3, xlim = xlim, ylim = ylim) + 
-    #ggtitle( paste( strwrap(title$value, width = 150), collapse = "\n") ) - labs is a more mature and flexible function
-    labs(title = paste( strwrap(title$value, width = 150), collapse = "\n"))
-```
-
 ---
-# Converting to Darwin Core
+### Converting to Darwin Core
 
 Now let's work through converting this netCDF file to Darwin Core. Following the guidance published at https://github.com/tdwg/dwc-for-biologging/wiki/Data-guidelines and https://github.com/ocean-tracking-network/biologging_standardization/tree/master/examples/braun-blueshark/darwincore-example
 
-Luckily we've already done the mappings in [this spreadsheet](https://docs.google.com/spreadsheets/d/12pP4IY2oXFhkXvOePtizHnShhlmO0r7QOTxu5ETvNOA/edit#gid=0).
-
-## Occurrence Core
+#### Occurrence Core
 
 Below is the mapping table from DarwinCore to the netCDF file. 
 
@@ -172,7 +109,7 @@ eventDate | Required | data contained in `time` variable. Converted to ISO8601.
 decimalLatitude & decimalLongitude | Required | data in `lat` and `lon` variable, respectively.
 geodeticDatum | Required | attribute `epsg_code` in the `crs` variable.
 scientificName | Required | data from the variable `taxon_name`.
-scientificNameID | data from the variable `taxon_lsid`.
+scientificNameID |  | data from the variable `taxon_lsid`.
 eventID | Strongly recommended | `animal_common_name` global attribute plus the `eventDate`.
 samplingProtocol | Strongly recommended | 
 kingdom | Strongly recommended | `kingdom` attribute in the `animal` variable.
@@ -180,22 +117,6 @@ taxonRank | Strongly recommended | `rank` attribute in the `animal` variable.
 coordinateUncertaintyInMeters | Share if available | maximum value of the data from the variables `error_radius`, `semi_major_axis`, and `offset`.
 lifeStage | Share if available | data from the variable `animal_life_stage`.
 sex | Share if available | data from the variable `animal_sex`.
-
-Collect the global attributes from the metadata to use in populating some of these fields.
-
-```{r}
-options(repr.matrix.max.rows=91)
-
-globals <- metadata %>% dplyr::filter(variable == "NC_GLOBAL")
-
-str(globals)
-```
-
-## Look at the raw data table
-
-```{r}
-atn_tbl
-```
 
 Now start working through the crosswalk. A few thoughts about some of the functions we use:
 
@@ -276,15 +197,13 @@ occurrencedf$geodeticDatum <- paste(gd_tbl$value)
 #eventID - {common_name}_{dateTime}
 cname = metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "animal_common_name")
 occurrencedf$eventID <- sub(" ", "_", paste0(cname$value, "_", occurrencedf$eventDate))
-
-head(occurrencedf, n=2)
 ```
 
 ```{r}
 str(occurrencedf)
 ```
 
-## Add coordinateUncertaintyInMeters AND filter by location_class
+##### Add coordinateUncertaintyInMeters AND filter by location_class
 
 When we add `coordinateUncertaintyInMeters` we are also filtering out where `location_class` == `A`,`B`,or `Z`.
 
@@ -334,7 +253,7 @@ occurrencedf
 
 Notice how we went from 29 rows down to 19 rows by only selecting specific the location_class.
 
-## Create a dataGeneralizations column to describe how many duplicates were found for each deprecation series
+##### Create a dataGeneralizations column to describe how many duplicates were found for each deprecation series
 
 Add a `dataGeneralizations` column containing a string like 'first of # records' to indicate there are more records in the raw dataset to be discovered by the super-curious.
 
@@ -343,27 +262,8 @@ The dataGeneralizations string is compiled by counting the number of consecutive
 The next step below this, we filter out only the first observation of the hour.
 
 ```{r}
-# library(lubridate) - loaded above
-
 # sort by date
 occurrencedf <- occurrencedf %>% arrange(eventDate)
-
-# create column of date to the hour which will be our decimation strategy
-# occurrencedf$eventDateHrs <- format(as.POSIXct(occurrencedf$eventDate, format="%Y-%m-%dT%H:%M:%SZ"),"%Y-%m-%dT%H")
-
-#occurrencedf <- occurrencedf %>%
-#    add_count(eventDateHrs)
-
-# create dataGeneralizations string
-# occurrencedf$dataGeneralizations <-  paste("first of ", occurrencedf$n ,"records")
-
-# occurrencedf["dataGeneralizations"][occurrencedf["n"] == 1] <- ""
-
-# remove n column
-
-# occurrencedf$n <- NULL
-
-# I think using tidy syntax here makes it a little more readable
 
 occurrencedf <- occurrencedf %>%
     mutate(eventDateHrs = format(as.POSIXct(eventDate, format="%Y-%m-%dT%H:%M:%SZ"),"%Y-%m-%dT%H")
@@ -375,12 +275,10 @@ occurrencedf <- occurrencedf %>%
            ) %>%
     select(-n)
 
-
-
 occurrencedf
 ```
 
-## Decimate occurrences down to the first detection/location per hour
+##### Decimate occurrences down to the first detection/location per hour
 
 Here we've done the decimation in Python: https://gist.github.com/MathewBiddle/d434ac2b538b2728aa80c6a7945f94be
 
@@ -389,28 +287,19 @@ Essentially we build a new colum that is the date plus the two digit hour. Then 
 In R, we do something slightly different as we only keep the distinct (ie. unique) rows and if there are duplicates, pick the first row of the duplicate.
 
 ```{r}
-# library(lubridate) - loaded above
-
 # sort by date
 occurrencedf_dec <- occurrencedf %>% arrange(eventDate)
-
-# create column of date to the hour which will be our decimation strategy
-# occurrencedf_dec$eventDateHrs <- format(as.POSIXct(occurrencedf_dec$eventDate, format="%Y-%m-%dT%H:%M:%SZ"),"%Y-%m-%dT%H")
-
-# occurrencedf %>% duplicated(occurrencedf$eventDateHrs)
 
 # filter table to only unique date + hour and pick the first row.
 occurrencedf_dec <- distinct(occurrencedf_dec,eventDateHrs,.keep_all = TRUE) %>%
     select(-eventDateHrs)
-
-# occurrencedf_dec$eventDateHrs <- NULL - added as pipe above
 
 occurrencedf_dec
 ```
 
 Notice that we have gone from 19 rows to 17 rows. Removing rows observed on `2009-09-25T11:11:00Z` and `2009-10-27T16:22:00Z` as they were the second points within that specifc hour.
 
-## Filter on QARTOD flags?
+##### Filter on QARTOD flags?
 
 We also have QARTOD flags and they are as follows:
 
@@ -436,49 +325,11 @@ I'm not sure what to do here. My preference would be to include all rows where `
 ```{r}
 # perform filter but don't save it.
 filter(occurrencedf_dec, qartod_rollup_flag == 1)
-
-#occurrencedf_dec <- filter(occurrencedf_dec, atn_tbl.qartod_rollup_flag == 1)
-
-#occurrencedf_dec
-```
-
-# Create an updated map to see what's changed.
-
-```{r}
-# library('maps') - loaded up top
-# library('mapdata')
-
-# collect title from global attributes
-title <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "title")
-
-
-# Map limits.
-ylim <- c( min(occurrencedf_dec$decimalLatitude)-1, max(occurrencedf_dec$decimalLatitude)+1 )
-xlim <- c( min(occurrencedf_dec$decimalLongitude)-1, max(occurrencedf_dec$decimalLongitude)+1 )
-
-# Get outline data for map.
-w <- map_data( 'worldHires', ylim = ylim, xlim = xlim )
-
-z <- ggplot(occurrencedf_dec, aes( x = decimalLongitude, y = decimalLatitude )) +
-     geom_point( aes(colour = eventDate), size = 2.0) +  #SF: because of the changes I made above, eventDate is being seen as continuous here. Not sure if that's a problem.
-     scale_shape_manual( values = c(19, 1) )
-
-z + geom_polygon(data = w, aes(x = long, y = lat, group = group), fill = 'grey80') + 
-    theme_bw() +
-    coord_fixed(1.3, xlim = xlim, ylim = ylim) + 
-    #ggtitle( paste( strwrap(title$value, width = 150), collapse = "\n") ) - labs is a more mature and flexible function
-    labs(title = paste( strwrap(title$value, width = 150), collapse = "\n"))
 ```
 
 Drop the quality flag columns to align with DarwinCore standard.
 
 ```{r}
-#occurrencedf_dec$atn_tbl.location_class <- NULL
-#occurrencedf_dec$atn_tbl.qartod_time_flag <- NULL
-#occurrencedf_dec$atn_tbl.qartod_speed_flag <- NULL
-#occurrencedf_dec$atn_tbl.qartod_location_flag <- NULL
-#occurrencedf_dec$atn_tbl.qartod_rollup_flag <- NULL
-
 occurrencedf_dec <- occurrencedf_dec %>%
     select(
         -c(location_class,
@@ -491,7 +342,7 @@ occurrencedf_dec <- occurrencedf_dec %>%
 names(occurrencedf_dec)
 ```
 
-### Write decimated occurrence file as csv
+##### Write decimated occurrence file as csv
 
 ```{r}
 tag_id <- metadata %>% dplyr::filter(variable == "NC_GLOBAL" & name == "ptt_id")
@@ -501,7 +352,7 @@ file_name_occur <- paste('data/dwc/atn_',tag_id$value,'_occurrence.csv', sep = "
 write.csv(occurrencedf_dec, file=file_name_occur, row.names=FALSE, fileEncoding="UTF-8", quote=TRUE, na="")
 ```
 
-## Measurement or Fact
+#### Measurement or Fact
 
 Since we do have any additional observations, we can create a measurement or fact file to include those data. Might be worthwhile to include tag/device metadata, some of the animal measurements, and the detachment information. Each term should have a definition URI.
 
@@ -525,7 +376,7 @@ measurementDeterminedBy | Share if available |
 measurementRemarks | Share if available |
 measurementValueID | Share if available |
 
-#### Extracting variables for Extended Measurement Or Fact (eMOF)
+##### Extracting variables for Extended Measurement Or Fact (eMOF)
 
 Here there are two approaches to transforming a variable to the eMOF Darwin Core extension.  The goal is to collapse the measurement name, value, unit, related identifiers and remarks into a generalized long format that can be linked to occurrences and events.  For more info see:
 
@@ -542,7 +393,7 @@ c("animal_length",
 
       # Create a named list of the variable attributes and convert it into a data frame, for each name in the above vector.
       purrr::map_df(function(x) {
-        list(measurementValue = ncvar_get( nc, x),
+        0list(measurementValue = ncvar_get( nc, x),
              measurementType = ncatt_get( nc, x)$long_name,
              measurementUnit = ncatt_get( nc, x)$units,
              measurementMethod = ncatt_get( nc, x)[[paste0(x,'_type')]])
@@ -552,9 +403,6 @@ c("animal_length",
 ```{r}
 # # Measurement or Fact extension
 # # Need to find the occurrence where basisOfRecord == HumanObservation, then pull the organism.
-
-#### The above works fine. Here is a slightly more succint way, where you could also make more efficient by parsing patterns if they exist. 
-# In this case it's overkill, but it's a good chance to demonstrate it.
 
 emof_data <- #var_names %>%
     #filter(str_starts(name, pattern = "animal_[lw]e")) %>% #example using regex to parse names
@@ -579,10 +427,10 @@ emofdf <- occurrencedf %>%
     select(organismID, eventID, occurrenceID) %>%
     cbind(emof_data)
 
-emofdf
+str(emofdf)
 ```
 
-### Write emof file as csv
+##### Write emof file as csv
 
 ```{r}
 tag_id <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "ptt_id")
@@ -592,382 +440,586 @@ file_name_emof <- paste('data/dwc/atn_',tag_id$value,'_emof.csv', sep = "")
 write.csv(emofdf, file=file_name_emof, row.names=FALSE, fileEncoding="UTF-8", quote=TRUE, na="")
 ```
 
-# Initial checks
 
-Now that we have our data frames organized as we think they should be for loading into the IPT and publishing, let's do some initial checks on the data to make sure we pass the sniff test.
+#### Metadata creation
 
-Here we use two packages to check out the data:
-1. [obistools](https://iobis.github.io/obistools/index.html)
-1. [Hmisc](https://cran.r-project.org/web/packages/Hmisc/index.html)
-
-```{r}
-library(obistools)
-```
-
-```{r}
-check_fields(occurrencedf_dec)
-```
-
-```{r}
-check_eventdate(occurrencedf_dec)
-```
-
-```{r}
-check_onland(occurrencedf_dec, report = TRUE)
-```
-
-```{r}
-check_depth(occurrencedf_dec, report = TRUE)
-```
-
-```{r}
-check_outliers_dataset(occurrencedf_dec, report = TRUE) 
-```
-
-```{r}
-#check_outliers_species(occurrencedf_dec, report = FALSE)
-```
-
-First, we will use `obistools::report` to create a report for the occurrence data frame.
-
-```{r}
-# report <- obistools::report(occurrencedf_dec)
-# report
-```
-
-Next, we will create a report for the event data frame.
-
-```{r}
-# event_report <- obistools::report(eventdf)
-# event_report
-```
-
-Finally, we will use `hmisc::describe` to inspect the data frames for any potential issues.
-
-```{r}
-# library(hmisc)
-
-# Hmisc::describe(occurrencedf_dec)
-```
-
-```{r}
-# Hmisc::describe(eventdf)
-```
-
-# Metadata creation
 
 Now that we know our data are aligned to Darwin Core, we can start collecting metadata. Using the R package [EML](https://docs.ropensci.org/EML/) we can create the EML metadata to associate with the data above.
 
+
 Some good sources to help identify what requirements we need in the EML metadata can be found at:
+
 * https://github.com/gbif/ipt/wiki/GMPHowToGuide
+
 * https://github.com/gbif/ipt/wiki/GMPHowToGuide#dataset-resource
 
+
 ```{r}
+
 # library(EML)
+
 ```
+
 
 The first thing we need to do is collect all of the relevant pieces of metadata for our EML record.
 
-```{r}
-# me <- list(individualName = list(givenName = "Matt", surName = "Biddle"))
-# my_eml <- list(dataset = list(
-#                           title = "A Minimal Valid EML Dataset",
-#                           creator = me,
-#                           contact = me
-#                             )
-#                 )
-```
 
 ```{r}
+
+# me <- list(individualName = list(givenName = "Matt", surName = "Biddle"))
+
+# my_eml <- list(dataset = list(
+
+#                           title = "A Minimal Valid EML Dataset",
+
+#                           creator = me,
+
+#                           contact = me
+
+#                             )
+
+#                 )
+
+```
+
+
+```{r}
+
 # geographicDescription <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "sea_name")
+
 # west <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "geospatial_lon_min")
+
 # east <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "geospatial_lon_max")
+
 # north <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "geospatial_lat_max")
+
 # south <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "geospatial_lat_min")
+
 # altitudeMin <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "geospatial_vertical_min")
+
 # altitudeMax <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "geospatial_vertical_max")
+
 # altitudeUnits <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "geospatial_vertical_units")
 
-# coverage <- 
+
+# coverage <-
+
 #   set_coverage(begin = format(min(atn_tbl$time),'%Y-%m-%d'), end = format(max(atn_tbl$time), '%Y-%m-%d'),
+
 #                sci_names = RNetCDF::var.get.nc(RNetCDF::open.nc("atn_trajectory_template.nc"), "taxon_name"),
+
 #                geographicDescription = paste(geographicDescription$value),
-#                west = paste(west$value), 
-#                east = paste(east$value) , 
-#                north = paste(north$value) , 
+
+#                west = paste(west$value),
+
+#                east = paste(east$value) ,
+
+#                north = paste(north$value) ,
+
 #                south = paste(south$value) ,
-#                altitudeMin = paste(altitudeMin$value), 
+
+#                altitudeMin = paste(altitudeMin$value),
+
 #                altitudeMaximum = paste(altitudeMax$value),
+
 #                altitudeUnits = ifelse (paste(altitudeUnits$value) == 'm', "meter", "?"))
+
 ```
 
+
 ```{r}
+
 # creator_name <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "creator_name")
+
 # creator_email <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "creator_email")
+
 # creator_sector <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "creator_sector")
+
 # creator <- eml$creator(
+
 #             eml$individualName(
+
 #                 givenName = paste(creator_name$value),
+
 #                 surName = paste(creator_name$value)
+
 #                 ),
+
 #             position = paste(creator_sector$value),
+
 #             electronicMailAddress = paste(creator_email$value)
+
 #             )
+
 ```
 
+
 ```{r}
+
 # #contact_name = metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "contact_name")
+
 # contact <- eml$contact(
+
 #             eml$individualName(
+
 #             givenName = paste(creator_name$value),
+
 #             surName = paste(creator_name$value)),
+
 #             position = paste(creator_sector$value),
+
 #             electronicMailAddress = paste(creator_email$value)
+
 #             )
+
 ```
 
+
 ```{r}
+
 # #metadata_name
+
 # metadataProvider <- eml$metadataProvider(
+
 #             eml$individualName(
+
 #                 givenName = paste(creator_name$value),
+
 #                 surName = paste(creator_name$value)),
+
 #             position = paste(creator_sector$value),
+
 #             electronicMailAddress = paste(creator_email$value)
+
 #             )
 
+
 ```
 
+
 ```{r}
+
 # ## these are the entries in contributor, need to iterate since comma separated list.
+
 # contrib_name <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "contributor_name")
+
 # contrib_position <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "contributor_role")
+
 # contrib_email <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "contributor_email")
+
 ```
 
+
 ```{r}
+
 # associatedParty <- eml$associatedParty(
+
 #                     eml$individualName(
+
 #                     givenName = paste(contrib_name$value),
+
 #                     surName = paste(contrib_name$value)),
+
 #                     position = paste(contrib_position$value),
+
 #                     electronicMailAddress = paste(contrib_email$value)
+
 #                     )
+
 ```
 
+
 ```{r}
+
 # abstract <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "summary")
+
 ```
 
+
 ```{r}
+
 # # keywords
+
 # keywords <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "keywords")
+
 # kw_vocab <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "keywords_vocabulary")
+
 # keywordSet <- list(
+
 #     list(
+
 #         keywordThesaurus = kw_vocab$value$keywords_vocabulary,
+
 #         keyword = as.list(strsplit(keywords$value$keywords, ", "))
+
 #         ))
+
 ```
 
+
 ```{r}
+
 # title <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "title")
+
 ```
 
+
 ```{r}
+
 # methods <- "NEED TO MAP FROM NCFILE"
+
 ```
 
+
 ```{r}
+
 # license <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "license")
+
 ```
+
 
 Now build the eml file.
 
+
 ```{r}
+
 # library(uuid)
+
 
 # physical <- set_physical(file_name_occur)
 
-# # attributeList <- 
-# #   set_attributes(attributes, 
-# #                  factors, 
-# #                  col_classes = c("character", 
+
+# # attributeList <-
+
+# #   set_attributes(attributes,
+
+# #                  factors,
+
+# #                  col_classes = c("character",
+
 # #                                  "Date",
+
 # #                                  "Date",
+
 # #                                  "Date",
+
 # #                                  "factor",
+
 # #                                  "factor",
+
 # #                                  "factor",
+
 # #                                  "numeric"))
 
+
 # my_eml <- eml$eml(
-#            packageId = paste(uuid_tbl$value),  
+
+#            packageId = paste(uuid_tbl$value),
+
 #            system = "uuid",
+
 #            dataset = eml$dataset(
+
 #                alternateIdentifier = UUIDgenerate(use.time = TRUE),
+
 #                title = title$value,
+
 #                creator = creator,
+
 #                metadataProvider = metadataProvider,
+
 #                #associatedParty = associatedParty,
+
 #                contact = contact,
+
 #                pubDate = format(Sys.time(),'%Y-%m-%d'),
+
 #                language = "English",
+
 #                intellectualRights = eml$intellectualRights(
+
 #                                     para = "To the extent possible under law, the publisher has waived all rights to these data and has dedicated them to the <ulink url=\"http://creativecommons.org/publicdomain/zero/1.0/legalcode\"><citetitle>Public Domain (CC0 1.0)</citetitle></ulink>. Users may copy, modify, distribute and use the work, including for commercial purposes, without restriction."
+
 #                                     #para = paste(license$value),
+
 #                                                            ),
+
 #                abstract = eml$abstract(
+
 #                                para = abstract$value$summary,
+
 #                                        ),
+
 #                keywordSet = keywordSet,
+
 #                coverage = coverage,
+
 # #                license = eml$license(
+
 # #                            licenseName = "CC0 1.0",
+
 # #                            #licenseName = paste(license$value),
+
 # #                            ),
+
 #                #dataTable = eml$dataTable(
+
 #                #  entityName = file_name_occur,
+
 #                #  entityDescription = "Occurrences",
+
 #                #  physical = physical)
+
 #                ))
+
 ```
+
 
 Validate EML
 
+
 ```{r}
+
 # val <- eml_validate(my_eml)
+
 # attr(val,"errors")
+
 ```
+
 
 Write eml to file.
 
+
 ```{r}
+
 # file_name_eml <- 'eml.xml'
+
 # write_eml(my_eml, file_name_eml)
+
 ```
+
 
 Raw EML
 
+
 ```{r}
+
 # my_eml
+
 ```
 
-## Create meta.xml
+
+##### Create meta.xml
+
 
 Below is an example of the contents of meta.xml:
 
+
 ```
+
 <archive xmlns="http://rs.tdwg.org/dwc/text/" metadata="eml.xml">
+
   <core encoding="UTF-8" fieldsTerminatedBy="\t" linesTerminatedBy="\n" fieldsEnclosedBy="" ignoreHeaderLines="1" rowType="http://rs.tdwg.org/dwc/terms/Occurrence">
+
     <files>
+
       <location>occurrence.txt</location>
+
     </files>
+
     <id index="0" />
+
     <field index="1" term="http://rs.tdwg.org/dwc/terms/datasetID"/>
+
     <field index="2" term="http://rs.tdwg.org/dwc/terms/institutionCode"/>
+
     <field index="3" term="http://rs.tdwg.org/dwc/terms/collectionCode"/>
+
     <field index="4" term="http://rs.tdwg.org/dwc/terms/basisOfRecord"/>
+
     <field index="5" term="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
+
     <field index="6" term="http://rs.tdwg.org/dwc/terms/catalogNumber"/>
+
     <field index="7" term="http://rs.tdwg.org/dwc/terms/occurrenceRemarks"/>
+
     <field index="8" term="http://rs.tdwg.org/dwc/terms/individualCount"/>
+
     <field index="9" term="http://rs.tdwg.org/dwc/terms/sex"/>
+
     <field index="10" term="http://rs.tdwg.org/dwc/terms/occurrenceStatus"/>
+
     <field index="11" term="http://rs.tdwg.org/dwc/terms/eventDate"/>
+
     <field index="12" term="http://rs.tdwg.org/dwc/terms/year"/>
+
     <field index="13" term="http://rs.tdwg.org/dwc/terms/decimalLatitude"/>
+
     <field index="14" term="http://rs.tdwg.org/dwc/terms/decimalLongitude"/>
+
     <field index="15" term="http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters"/>
+
     <field index="16" term="http://rs.tdwg.org/dwc/terms/scientificNameID"/>
+
     <field index="17" term="http://rs.tdwg.org/dwc/terms/scientificName"/>
+
   </core>
+
   <extension encoding="UTF-8" fieldsTerminatedBy="\t" linesTerminatedBy="\n" fieldsEnclosedBy="" ignoreHeaderLines="1" rowType="http://rs.iobis.org/obis/terms/ExtendedMeasurementOrFact">
+
     <files>
+
       <location>extendedmeasurementorfact.txt</location>
+
     </files>
+
     <coreid index="0" />
+
     <field index="1" term="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
+
     <field index="2" term="http://rs.tdwg.org/dwc/terms/measurementType"/>
+
     <field index="3" term="http://rs.tdwg.org/dwc/terms/measurementValue"/>
+
     <field index="4" term="http://rs.tdwg.org/dwc/terms/measurementUnit"/>
+
     <field index="5" term="http://rs.iobis.org/obis/terms/measurementUnitID"/>
+
     <field index="6" term="http://rs.tdwg.org/dwc/terms/measurementDeterminedDate"/>
+
   </extension>
+
 </archive>
+
 ```
+
 
 Checkout [XML package for R](https://cran.r-project.org/web/packages/XML/index.html).
 
+
 `conda install -c conda-forge r-xml`
+
 
 Another example in this [github repository](https://github.com/EDIorg/ecocomDP/blob/372c293c9e597c64db22c027debe18528d44f53b/inst/extdata/dwca_event_core/meta.xml).
 
+
 Or use the [gui here](http://tools.gbif.org/dwca-assistant/) to create meta.xml.
 
+
 ```{r}
+
 # library(XML)
 
+
 # doc = newXMLDoc()
+
 # archiveNode = newXMLNode("archive", attrs = c(metadata=file_name_eml), namespaceDefinitions=c("http://rs.tdwg.org/dwc/text/"), doc=doc )
 
+
 # ## For the core occurrence
+
 # coreNode = newXMLNode("core", attrs = c(encoding="UTF-8", linesTerminatedBy="\\r\\n", fieldsTerminatedBy=",", fieldsEnclosedBy='\"', ignoreHeaderLines="1", rowType="http://rs.tdwg.org/dwc/terms/Occurrence"), parent = archiveNode)
+
 # filesNode = newXMLNode("files", parent = coreNode)
+
 # locationNode = newXMLNode("location", file_name_occur, parent = filesNode)
+
 # idnode = newXMLNode("id", attrs = c(index="9"), parent = coreNode)
 
+
 # # iterate over the columns in occurrence file to create field elements
+
 # i=0
+
 # for (col in colnames(occurrencedf))
+
 #     {
+
 #     termstr = paste("http://rs.tdwg.org/dwc/terms/",col, sep="")
+
 #     i=i+1
+
 #     fieldnode = newXMLNode("field", attrs = c(index=i, term=termstr), parent=coreNode)
+
 # }
+
 
 
 # ## for the extensions
+
 # extensionNode = newXMLNode("extension", attrs = c(encoding="UTF-8", linesTerminatedBy="\\r\\n", fieldsTerminatedBy=",", fieldsEnclosedBy='\"', ignoreHeaderLines="1", rowType="http://rs.tdwg.org/dwc/terms/Event"), parent = archiveNode)
+
 # filesNode = newXMLNode("files", parent = extensionNode)
+
 # locationNode = newXMLNode("location", file_name_event, parent = filesNode)
+
 # idnode = newXMLNode("id", attrs = c(index="0"), parent = extensionNode)
 
+
 # # iterate over the columns in occurrence file to create field elements
+
 # i=0
+
 # for (col in colnames(eventdf))
+
 #     {
+
 #     if (col == 'modified'){
+
 #         termstr = paste("http://purl.org/dc/terms/", col, sep="")
+
 #     } else {
+
 #         termstr = paste("http://rs.tdwg.org/dwc/terms/",col, sep="")
+
 #         }
-    
+
+
 #     i=i+1
-    
+
+
 #     fieldnode = newXMLNode("field", attrs = c(index=i, term=termstr), parent=extensionNode)
+
 # }
+
 
 
 # print(doc)
 
 
+
 # saveXML(doc, file="meta.xml")
+
 ```
 
-# Build the DarwinCore-Archive zip package
+
+#### Build the DarwinCore-Archive zip package
+
 
 ```{r}
+
 # library(zip)
 
+
 # files = c(file_name_occur, file_name_event, file_name_eml, "meta.xml")
+
 # zip::zip(
+
 #     "atn.zip",
+
 #     files,
+
 #     root = ".",
+
 #     mode = "mirror",
+
 # )
 
-# zip_list("atn.zip")
-```
 
+# zip_list("atn.zip")
+
+```
+### sessionInfo()
+```{r}
+sessionInfo()
+```
