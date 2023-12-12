@@ -8,6 +8,8 @@ on:
        - '.github/workflows/deploy_bookdown.yml'
        - 'bio-data-guide/**'
 
+  workflow_dispatch:
+
 jobs:
   bookdown:
     name: Render-Book
