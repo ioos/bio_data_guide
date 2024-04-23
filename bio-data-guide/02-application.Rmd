@@ -5,6 +5,7 @@ these examples (and more!) in the GitHub repository under the [`datasets/`](http
 directory.
 
 
+
 ```{r, child=c("../datasets/TPWD_HARC_BagSeine/TPWD_HARC_BagSeine_OBISENV.md", "../datasets/hakai_salmon_data/salmon-darwin-core-remap.Rmd", "../datasets/hakai_seagrass_data/hakaiSeagrassToDWC.Rmd", "../datasets/trawl_catch_data/trawl-catch-data.Rmd", "../datasets/dataset-edna/README.md", "../datasets/atn_satellite_telemetry/atn_satellite_telemetry_netCDF2DwC.Rmd"),echo=TRUE,eval=TRUE}
 ```
 
