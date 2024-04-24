@@ -34,7 +34,13 @@ jobs:
       #   with:
       #     extra-packages: any::bookdown
       #     needs: book
-          
+
+      - name: Install packages
+        run: Rscript -e '
+          install.packages("bookdown");
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      
       # - name: Install packages
       #   run: Rscript -e '
       #     install.packages(c("librarian", "rgdal", "rmarkdown", "vroom", "xfun", "tidync"), type = "binary");
