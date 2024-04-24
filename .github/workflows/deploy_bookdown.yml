@@ -30,8 +30,7 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
-            rgdal
-          needs: book
+            any::rgdal
           
       # - name: Install packages
       #   run: Rscript -e '
