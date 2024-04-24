@@ -29,8 +29,8 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: 
-            pak::pkg_install("rgdal")
+          extra-packages: |
+            rgdal
           needs: book
           
       # - name: Install packages
