@@ -37,7 +37,7 @@ jobs:
 
       - name: Install packages
         run: Rscript -e '
-          install.packages("bookdown");
+          install.packages("bookdown");'
         env:
           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       
