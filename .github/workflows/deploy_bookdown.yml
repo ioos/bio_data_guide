@@ -35,13 +35,13 @@ jobs:
       #     extra-packages: any::bookdown
       #     needs: book
           
-      - name: Install packages
-        run: Rscript -e '
-          install.packages(c("librarian", "rgdal", "rmarkdown", "vroom", "xfun", "tidync"), type = "binary");
-          librarian::shelf(bookdown, dm, here, lubridate, , rmarkdown, tidyverse, worms);
-          remotes::install_github("iobis/obistools", upgrade="never");
-        env:
-          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Install packages
+      #   run: Rscript -e '
+      #     install.packages(c("librarian", "rgdal", "rmarkdown", "vroom", "xfun", "tidync"), type = "binary");
+      #     librarian::shelf(bookdown, dm, here, lubridate, , rmarkdown, tidyverse, worms);
+      #     remotes::install_github("iobis/obistools", upgrade="never");
+      #   env:
+      #     GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Move headers one level down in edna example
         run: |
