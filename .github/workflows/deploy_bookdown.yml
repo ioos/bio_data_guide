@@ -30,19 +30,18 @@ jobs:
       - name: Install TinyTeX
         uses: r-lib/actions/setup-tinytex@v2
         
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: local::.
-          needs: book
+      # - uses: r-lib/actions/setup-r-dependencies@v2
+      #   with:
+      #     extra-packages: any::bookdown
+      #     needs: book
           
-      # - name: Install packages
-      #   run: Rscript -e '
-      #     install.packages(c("librarian", "rgdal", "rmarkdown", "vroom", "xfun", "tinytex", "tidync"), type = "binary");
-      #     librarian::shelf(bookdown, dm, here, lubridate, , rmarkdown, tidyverse, worms);
-      #     remotes::install_github("iobis/obistools", upgrade="never");
-      #     tinytex::install_tinytex()'
-      #   env:
-      #     GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install packages
+        run: Rscript -e '
+          install.packages(c("librarian", "rgdal", "rmarkdown", "vroom", "xfun", "tidync"), type = "binary");
+          librarian::shelf(bookdown, dm, here, lubridate, , rmarkdown, tidyverse, worms);
+          remotes::install_github("iobis/obistools", upgrade="never");
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Move headers one level down in edna example
         run: |
