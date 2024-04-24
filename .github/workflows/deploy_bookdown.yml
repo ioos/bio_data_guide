@@ -28,9 +28,9 @@ jobs:
           pandoc-version: '2.14.1'
 
       - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: local::.
-          needs: book
+        # with:
+        #   extra-packages: local::.
+        #   needs: book
           
       # - name: Install packages
       #   run: Rscript -e '
