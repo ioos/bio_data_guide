@@ -30,7 +30,7 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: 
-            install.packages(c("librarian", "rgdal", "rmarkdown", "vroom", "xfun", "tinytex", "tidync"), type = "binary")
+            pak::pkg_install(c("librarian", "rgdal", "rmarkdown", "vroom", "xfun", "tinytex", "tidync"))
           needs: book
           
       # - name: Install packages
