@@ -341,7 +341,15 @@ occurrencedf_dec <- occurrencedf_dec %>%
         
 names(occurrencedf_dec)
 ```
+#### Add NCEI URL to references
 
+For full transparency, we will add the Darwin Core term references to provide the URL to the NCEI landing page, where the full dataset can be accessed by curious users.
+
+```{r}
+occurrencedf_dec$references <- "https://www.ncei.noaa.gov/archive/accession/0282699"
+
+occurrencedf_dec
+```
 ##### Write decimated occurrence file as csv
 
 ```{r}
