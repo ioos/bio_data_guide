@@ -63,7 +63,7 @@ jobs:
           options(knitr.duplicate.label = "allow");
           bookdown::render_book("index.Rmd", "bookdown::pdf_book")'
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: _book
           path: 'bio-data-guide/docs' # see _bookdown.yml: output_dir
