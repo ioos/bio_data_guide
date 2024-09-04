@@ -121,10 +121,10 @@ jobs:
           # Destination path
           path: 'bio-data-guide/docs' # see _bookdown.yml: output_dir
 
-     - name: Deploy to GitHub Pages
-       uses: actions/deploy-pages@v4
-       with:
-         build_dir: 'bio-data-guide/docs' # see _bookdown.yml: output_dir
-       env:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+        with:
+          build_dir: 'bio-data-guide/docs' # see _bookdown.yml: output_dir
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
