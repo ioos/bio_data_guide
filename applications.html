@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Applications | Darwin Core Marine Example Compendium</title>
   <meta name="description" content="Scaling multiple dimensions of diversity in biological data" />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Applications | Darwin Core Marine Example Compendium" />
   <meta property="og:type" content="book" />
@@ -197,14 +197,11 @@ div.csl-indent {
 <li class="chapter" data-level="2.5.2" data-path="applications.html"><a href="applications.html#published-data"><i class="fa fa-check"></i><b>2.5.2</b> Published data</a></li>
 <li class="chapter" data-level="2.5.3" data-path="applications.html"><a href="applications.html#repo-structure"><i class="fa fa-check"></i><b>2.5.3</b> Repo structure</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="applications.html"><a href="applications.html#passive-acoustic-monitoring"><i class="fa fa-check"></i><b>2.6</b> Passive Acoustic Monitoring</a>
+<li class="chapter" data-level="2.6" data-path="applications.html"><a href="applications.html#converting-atn-netcdf-file-to-dawrin-core"><i class="fa fa-check"></i><b>2.6</b> Converting ATN netCDF file to Dawrin Core</a>
 <ul>
-<li class="chapter" data-level="2.6.1" data-path="applications.html"><a href="applications.html#background"><i class="fa fa-check"></i><b>2.6.1</b> Background</a></li>
-<li class="chapter" data-level="2.6.2" data-path="applications.html"><a href="applications.html#source-datasets"><i class="fa fa-check"></i><b>2.6.2</b> Source datasets</a></li>
-<li class="chapter" data-level="2.6.3" data-path="applications.html"><a href="applications.html#definitions"><i class="fa fa-check"></i><b>2.6.3</b> Definitions</a></li>
-<li class="chapter" data-level="2.6.4" data-path="applications.html"><a href="applications.html#file-descriptions"><i class="fa fa-check"></i><b>2.6.4</b> File descriptions</a></li>
-<li class="chapter" data-level="2.6.5" data-path="applications.html"><a href="applications.html#mobilized-data-endpoints"><i class="fa fa-check"></i><b>2.6.5</b> Mobilized data endpoints</a></li>
-<li class="chapter" data-level="2.6.6" data-path="applications.html"><a href="applications.html#key-takeaways"><i class="fa fa-check"></i><b>2.6.6</b> Key takeaways</a></li>
+<li class="chapter" data-level="2.6.1" data-path="applications.html"><a href="applications.html#downloading-and-preprocessing-the-source-data"><i class="fa fa-check"></i><b>2.6.1</b> Downloading and preprocessing the source data</a></li>
+<li class="chapter" data-level="2.6.2" data-path="applications.html"><a href="applications.html#converting-to-darwin-core"><i class="fa fa-check"></i><b>2.6.2</b> Converting to Darwin Core</a></li>
+<li class="chapter" data-level="2.6.3" data-path="applications.html"><a href="applications.html#sessioninfo"><i class="fa fa-check"></i><b>2.6.3</b> sessionInfo()</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -1096,7 +1093,7 @@ compliant datasets</p>
 ## $ order             &lt;chr&gt; &quot;Alismatales&quot;, &quot;Alismatales&quot;, &quot;Alismatales&quot;, &quot;Alisma…
 ## $ family            &lt;chr&gt; &quot;Zosteraceae&quot;, &quot;Zosteraceae&quot;, &quot;Zosteraceae&quot;, &quot;Zoster…
 ## $ genus             &lt;chr&gt; &quot;Zostera&quot;, &quot;Zostera&quot;, &quot;Zostera&quot;, &quot;Zostera&quot;, &quot;Zostera…
-## $ citation          &lt;chr&gt; &quot;WoRMS (2023). Zostera subg. Zostera marina Linnaeus…
+## $ citation          &lt;chr&gt; &quot;WoRMS (2024). Zostera subg. Zostera marina Linnaeus…
 ## $ lsid              &lt;chr&gt; &quot;urn:lsid:marinespecies.org:taxname:145795&quot;, &quot;urn:ls…
 ## $ isMarine          &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
 ## $ match_type        &lt;chr&gt; &quot;exact&quot;, &quot;exact&quot;, &quot;exact&quot;, &quot;exact&quot;, &quot;exact&quot;, &quot;exact&quot;…
@@ -1201,24 +1198,24 @@ compliant datasets</p>
 ## 
 ## other attached packages:
 ##  [1] worrms_0.4.3    magrittr_2.0.3  knitr_1.42      here_1.0.1     
-##  [5] lubridate_1.9.3 forcats_1.0.0   stringr_1.5.0   dplyr_1.1.4    
-##  [9] purrr_1.0.2     readr_2.1.4     tidyr_1.3.0     tibble_3.2.1   
-## [13] ggplot2_3.4.4   tidyverse_2.0.0
+##  [5] lubridate_1.9.3 forcats_1.0.0   stringr_1.5.0   dplyr_1.1.2    
+##  [9] purrr_1.0.1     readr_2.1.5     tidyr_1.3.0     tibble_3.2.1   
+## [13] ggplot2_3.4.2   tidyverse_2.0.0
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] tidyselect_1.2.0  xfun_0.39         bslib_0.4.2       colorspace_2.1-0 
-##  [5] vctrs_0.6.5       generics_0.1.3    htmltools_0.5.7   yaml_2.3.7       
+##  [1] tidyselect_1.2.1  xfun_0.39         bslib_0.4.2       colorspace_2.1-0 
+##  [5] vctrs_0.6.5       generics_0.1.3    htmltools_0.5.5   yaml_2.3.7       
 ##  [9] utf8_1.2.3        rlang_1.1.1       jquerylib_0.1.4   pillar_1.9.0     
 ## [13] httpcode_0.3.0    glue_1.6.2        withr_2.5.0       bit64_4.0.5      
-## [17] readxl_1.4.3      lifecycle_1.0.3   munsell_0.5.0     gtable_0.3.4     
+## [17] readxl_1.4.3      lifecycle_1.0.3   munsell_0.5.0     gtable_0.3.3     
 ## [21] cellranger_1.1.0  evaluate_0.21     tzdb_0.3.0        fastmap_1.1.1    
-## [25] curl_5.2.0        parallel_4.1.1    fansi_1.0.4       triebeard_0.4.1  
-## [29] urltools_1.7.3    Rcpp_1.0.11       scales_1.3.0      cachem_1.0.8     
+## [25] curl_5.0.0        parallel_4.1.1    fansi_1.0.4       triebeard_0.4.1  
+## [29] urltools_1.7.3    Rcpp_1.0.10       scales_1.2.1      cachem_1.0.8     
 ## [33] vroom_1.6.3       jsonlite_1.8.4    bit_4.0.5         hms_1.1.3        
-## [37] digest_0.6.31     stringi_1.7.12    bookdown_0.37     grid_4.1.1       
+## [37] digest_0.6.31     stringi_1.7.12    bookdown_0.40     grid_4.1.1       
 ## [41] rprojroot_2.0.4   cli_3.6.1         tools_4.1.1       sass_0.4.6       
-## [45] crul_1.4.0        crayon_1.5.2      pkgconfig_2.0.3   timechange_0.2.0 
-## [49] rmarkdown_2.21    rstudioapi_0.15.0 R6_2.5.1          compiler_4.1.1</code></pre>
+## [45] crul_1.5.0        crayon_1.5.2      pkgconfig_2.0.3   timechange_0.3.0 
+## [49] rmarkdown_2.21    rstudioapi_0.16.0 R6_2.5.1          compiler_4.1.1</code></pre>
 </div>
 </div>
 <div id="trawl-data" class="section level2 hasAnchor" number="2.4">
@@ -1474,128 +1471,1789 @@ which was published with open access in <em>Nature Communications</em> in 2020.<
 </code></pre>
 </div>
 </div>
-<div id="passive-acoustic-monitoring" class="section level2 hasAnchor" number="2.6">
-<h2><span class="header-section-number">2.6</span> Passive Acoustic Monitoring<a href="applications.html#passive-acoustic-monitoring" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>This is the processes by which the <a href="https://sanctsound.ioos.us/">SanctSound</a> passive acoustic monitoring data are translated to Darwin Core.</p>
-<div id="background" class="section level3 hasAnchor" number="2.6.1">
-<h3><span class="header-section-number">2.6.1</span> Background<a href="applications.html#background" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The information contained here describes the process by which the passive acoustic monitoring data, collected by the
-National Marine Sanctuaries <a href="https://sanctsound.ioos.us/">Sanctuary Soundscape Monitoring Project (SanctSound)</a>, was
-mobilized to OBIS-USA for standardization and sharing to the global repositories OBIS and GBIF. Below we set the stage
-by clearly defining what an occurrence is in this specific case, then we perform the data translation to DarwinCore,
-including some data QC, for submission to OBIS-USA. Finally, we provide links to the data once they have been mobilized
-to OBIS-USA, OBIS, and GBIF.</p>
+<div id="converting-atn-netcdf-file-to-dawrin-core" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> Converting ATN netCDF file to Dawrin Core<a href="applications.html#converting-atn-netcdf-file-to-dawrin-core" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Created: 2022-03-23
+Updated: 2023-11-16</p>
+<p>Credit: Stephen Formel, Mathew Biddle</p>
+<p>This notebook walks through downloading an example netCDF file from the an Archive package at NCEI and translating it to a Darwin Core Archive compliant package for easy loading and publishing via the Integrated Publishing Toolkit (IPT). The example file follows a specific specification for ATN satellite trajectory observations as documented <a href="https://github.com/ioos/ioos-atn-data/blob/main/templates/atn_trajectory_template.cdl">here</a>. More information about the ATN netCDF specification can be found in the repository <a href="https://github.com/ioos/ioos-atn-data" class="uri">https://github.com/ioos/ioos-atn-data</a>.</p>
+<p>This example uses the <a href="https://ropensci.org/blog/2019/11/05/tidync/">tidync</a> package to work with netCDF data.</p>
+<p>Data used in this notebook are available from NCEI at the following link <a href="https://www.ncei.noaa.gov/archive/accession/0282699" class="uri">https://www.ncei.noaa.gov/archive/accession/0282699</a>.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="applications.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Load libraries</span></span>
+<span id="cb48-2"><a href="applications.html#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="applications.html#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidync)</span>
+<span id="cb48-4"><a href="applications.html#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(obistools)</span>
+<span id="cb48-5"><a href="applications.html#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ncdf4)</span>
+<span id="cb48-6"><a href="applications.html#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co">#includes stringr</span></span>
+<span id="cb48-7"><a href="applications.html#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb48-8"><a href="applications.html#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maps)</span>
+<span id="cb48-9"><a href="applications.html#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapdata)</span></code></pre></div>
+<div id="downloading-and-preprocessing-the-source-data" class="section level3 hasAnchor" number="2.6.1">
+<h3><span class="header-section-number">2.6.1</span> Downloading and preprocessing the source data<a href="applications.html#downloading-and-preprocessing-the-source-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>See <a href="https://www.ncei.noaa.gov/archive/accession/0282699" class="uri">https://www.ncei.noaa.gov/archive/accession/0282699</a></p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="applications.html#cb49-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">=</span> <span class="st">&#39;https://www.nodc.noaa.gov/archive/arc0217/0282699/1.1/data/0-data/atn_45866_great-white-shark_trajectory_20090923-20091123.nc&#39;</span></span>
+<span id="cb49-2"><a href="applications.html#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="applications.html#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="co">#fname = str_split_i(url, &quot;/&quot;, i=-1)</span></span>
+<span id="cb49-4"><a href="applications.html#cb49-4" aria-hidden="true" tabindex="-1"></a>fname <span class="ot">=</span> <span class="fu">paste</span>(<span class="st">&#39;data/src/&#39;</span>,<span class="fu">basename</span>(url))</span>
+<span id="cb49-5"><a href="applications.html#cb49-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-6"><a href="applications.html#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(url, fname, <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span></code></pre></div>
+<div id="open-the-netcdf-file" class="section level4 hasAnchor" number="2.6.1.1">
+<h4><span class="header-section-number">2.6.1.1</span> Open the netCDF file<a href="applications.html#open-the-netcdf-file" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Once the file is opened, we print out the details of what the netCDF file contains.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="applications.html#cb50-1" aria-hidden="true" tabindex="-1"></a>atn <span class="ot">&lt;-</span> <span class="fu">nc_open</span>(fname)</span>
+<span id="cb50-2"><a href="applications.html#cb50-2" aria-hidden="true" tabindex="-1"></a>atn</span></code></pre></div>
+<pre><code>## File data/src/ atn_45866_great-white-shark_trajectory_20090923-20091123.nc (NC_FORMAT_NETCDF4):
+## 
+##      36 variables (excluding dimension variables):
+##         string deploy_id[]   (Contiguous storage)  
+##             long_name: id for this deployment. This is typically the tag ptt
+##             comment: Friendly name given to the tag by the user. If no specific friendly name is given, this is the PTT id.
+##             coordinates: time z lon lat
+##             instrument: instrument_location
+##             platform: animal
+##             coverage_content_type: referenceInformation
+##             _FillValue: -9999
+##         double time[obs]   (Contiguous storage)  
+##             units: seconds since 1990-01-01 00:00:00Z
+##             standard_name: time
+##             axis: T
+##             _CoordinateAxisType: Time
+##             calendar: standard
+##             long_name: Time of the measurement, in seconds since 1990-01-01
+##             actual_min: 2009-09-23T00:00:00Z
+##             actual_max: 2009-11-23T05:12:00Z
+##             ancillary_variables: qartod_time_flag qartod_rollup_flag qartod_speed_flag
+##             instrument: instrument_location
+##             platform: animal
+##             coverage_content_type: coordinate
+##             _FillValue: NaN
+##         int z[obs]   (Contiguous storage)  
+##             _FillValue: -9999
+##             axis: Z
+##             long_name: depth of measurement
+##             positive: down
+##             standard_name: depth
+##             units: m
+##             actual_min: 0
+##             actual_max: 0
+##             instrument: 
+##             platform: animal
+##             comment: This variable is synthetically generated to represent the depth of observations
+##             coverage_content_type: coordinate
+##         double lat[obs]   (Contiguous storage)  
+##             axis: Y
+##             _CoordinateAxisType: Lat
+##             long_name: Latitude portion of location in decimal degrees North
+##             standard_name: latitude
+##             units: degrees_north
+##             valid_max: 90
+##             valid_min: -90
+##             actual_min: 23.59
+##             actual_max: 34.045
+##             ancillary_variables: qartod_location_flag qartod_rollup_flag qartod_speed_flag error_radius semi_major_axis semi_minor_axis ellipse_orientation offset offset_orientation
+##             instrument: instrument_location
+##             platform: animal
+##             coverage_content_type: coordinate
+##             _FillValue: NaN
+##         double lon[obs]   (Contiguous storage)  
+##             axis: X
+##             _CoordinateAxisType: Lon
+##             long_name: Longitude portion of location in decimal degrees East
+##             standard_name: longitude
+##             units: degrees_east
+##             valid_max: 180
+##             valid_min: -180
+##             actual_min: -166.18
+##             actual_max: -118.504
+##             ancillary_variables: qartod_location_flag qartod_rollup_flag qartod_speed_flag error_radius semi_major_axis semi_minor_axis ellipse_orientation offset offset_orientation
+##             instrument: instrument_location
+##             platform: animal
+##             coverage_content_type: coordinate
+##             _FillValue: NaN
+##         int ptt[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+##             _FillValue: -9999
+##             coordinates: time z lon lat
+##             long_name: Platform Transmitter Terminal (PTT) id used for Argos transmissions
+##             comment: PTT id for this deployment. PTT ids may be used on multiple deployments, but not concurrently. When combined with deployment dates, PTTs can uniquely identify a deployment.
+##             coverage_content_type: referenceInformation
+##             instrument: instrument_location
+##             platform: animal
+##         string instrument[obs]   (Contiguous storage)  
+##             coordinates: time z lon lat
+##             comment: Wildlife Computers instrument family. Variable may report manufacturer default values (e.g., Mk10) and may not match correctly defined instrument_location or instrument_tag variables and attributes.
+##             long_name: Instrument family
+##             instrument: instrument_location
+##             platform: animal
+##             coverage_content_type: referenceInformation
+##         string type[obs]   (Contiguous storage)  
+##             coordinates: time z lon lat
+##             comment: Type of location: Argos, FastGPS or User
+##             long_name: Type of location information - Argos, GPS satellite or user provided location
+##             instrument: instrument_location
+##             platform: animal
+##             coverage_content_type: referenceInformation
+##         string location_class[obs]   (Contiguous storage)  
+##             coordinates: time z lon lat
+##             standard_name: quality_flag
+##             comment: Quality codes from the ARGOS satellite (in meters): G,3,2,1,0,A,B,Z. See http://www.argos-system.org/manual/3-location/34_location_classes.htm
+##             long_name: Location Quality Code from ARGOS satellite system
+##             code_values: G,3,2,1,0,A,B,Z
+##             code_meanings: estimated error less than 100m and 1+ messages received per satellite pass, estimated error less than 250m and 4+ messages received per satellite pass, estimated error between 250m and 500m and 4+ messages per satellite pass, estimated error between 500m and 1500m and 4+ messages per satellite pass, estimated error greater than 1500m and 4+ messages received per satellite pass, no least squares estimated error or unbounded kalman filter estimated error and 3 messages received per satellite pass, no least squares estimated error or unbounded kalman filter estimated error and 1 or 2 messages received per satellite pass, invalid location (available for Service Plus or Auxilliary Location Processing)
+##             instrument: instrument_location
+##             platform: animal
+##             ancillary_variables: lat lon
+##             coverage_content_type: qualityInformation
+##         int error_radius[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+##             _FillValue: -9999
+##             coordinates: time z lon lat
+##             long_name: Error radius
+##             units: m
+##             comment: If the position is best represented as a circle, this field gives the radius of that circle in meters.
+##             instrument: instrument_location
+##             platform: animal
+##             ancillary_variables: lat lon offset offset_orientation
+##             coverage_content_type: qualityInformation
+##         int semi_major_axis[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+##             _FillValue: -9999
+##             coordinates: time z lon lat
+##             long_name: Error - ellipse semi-major axis
+##             units: m
+##             comment: If the estimated position error is best expressed as an ellipse, this field gives the length in meters of the semi-major elliptical axis (one half of the major axis).
+##             instrument: instrument_location
+##             platform: animal
+##             ancillary_variables: lat lon ellipse_orientation offset offset_orientation
+##             coverage_content_type: qualityInformation
+##         int semi_minor_axis[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+##             _FillValue: -9999
+##             coordinates: time z lon lat
+##             long_name: Error - ellipse semi-minor axis
+##             units: m
+##             comment: If the estimated position error is best expressed as an ellipse, this field gives the length in meters of the semi-minor elliptical axis (one half of the minor axis).
+##             instrument: instrument_location
+##             platform: animal
+##             ancillary_variables: lat lon ellipse_orientation offset offset_orientation
+##             coverage_content_type: qualityInformation
+##         int ellipse_orientation[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+##             _FillValue: -9999
+##             coordinates: time z lon lat
+##             long_name: Error - ellipse orientation in degrees clockwise from true north
+##             units: degrees
+##             comment: The angle in degrees of the ellipse from true north, proceeding clockwise (0 to 360). A blank field represents 0 degrees.
+##             instrument: instrument_location
+##             platform: animal
+##             ancillary_variables: lat lon semi_major_axis semi_minor_axis offset offset_orientation
+##             coverage_content_type: qualityInformation
+##         int offset[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+##             _FillValue: -9999
+##             coordinates: time z lon lat
+##             long_name: Error - offset in meters to center of error ellipse or circle
+##             units: m
+##             comment: This field is non-zero if the circle or ellipse are not centered on the (Latitude, Longitude) values on this row. &quot;Offset&quot; gives the distance in meters from (Latitude, Longitude) to the center of the ellipse.
+##             instrument: instrument_location
+##             platform: animal
+##             ancillary_variables: lat lon error_radius semi_major_axis semi_minor_axis offset_orientation
+##             coverage_content_type: qualityInformation
+##         int offset_orientation[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+##             _FillValue: -9999
+##             coordinates: time z lon lat
+##             long_name: Error - offset orientation angle to ellipse center
+##             units: degrees
+##             comment: If the &quot;Offset&quot; field is non-zero, this field is the angle in degrees from (Latitude, Longitude) to the center of the ellipse. Zero degrees is true north; a blank field represents 0 degrees.
+##             instrument: instrument_location
+##             platform: animal
+##             ancillary_variables: lat lon error_radius semi_major_axis semi_minor_axis offset
+##             coverage_content_type: qualityInformation
+##         double gpe_msd[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+##             coordinates: time z lon lat
+##             comment: Historical. No longer applicable.
+##             long_name: 
+##             units: 
+##             instrument: instrument_location
+##             platform: animal
+##             coverage_content_type: auxillaryInformation
+##             _FillValue: NaN
+##         double gpe_u[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+##             coordinates: time z lon lat
+##             comment: Historical. No longer applicable.
+##             long_name: 
+##             units: 
+##             instrument: instrument_location
+##             platform: animal
+##             coverage_content_type: auxillaryInformation
+##             _FillValue: NaN
+##         int count[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+##             _FillValue: -9999
+##             coordinates: time z lon lat
+##             comment: Total number of times a particular data item was received, verified, and successfully decoded.
+##             long_name: Count
+##             units: count
+##             instrument: instrument_location
+##             platform: animal
+##             coverage_content_type: auxillaryInformation
+##         unsigned byte qartod_time_flag[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+##             _FillValue: 241
+##             coordinates: time z lon lat
+##             standard_name: gross_range_test_quality_flag
+##             long_name: Time QC test - gross range test
+##             implementation: https://github.com/ioos/ioos_qc/
+##             flag_meanings: PASS NOT_EVALUATED SUSPECT FAIL MISSING
+##             flag_values: 1
+##              flag_values: 2
+##              flag_values: 3
+##              flag_values: 4
+##              flag_values: 9
+##             references: https://cdn.ioos.noaa.gov/media/2020/03/QARTOD_TS_Manual_Update2_200324_final.pdf
+##             coverage_content_type: qualityInformation
+##         unsigned byte qartod_speed_flag[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+##             _FillValue: 241
+##             coordinates: time z lon lat
+##             standard_name: gross_range_test_quality_flag
+##             long_name: Speed QC test - gross range test
+##             references: https://cdn.ioos.noaa.gov/media/2020/03/QARTOD_TS_Manual_Update2_200324_final.pdf
+##             implementation: https://github.com/ioos/ioos_qc/
+##             flag_meanings: PASS NOT_EVALUATED SUSPECT FAIL MISSING
+##             flag_values: 1
+##              flag_values: 2
+##              flag_values: 3
+##              flag_values: 4
+##              flag_values: 9
+##             coverage_content_type: qualityInformation
+##         unsigned byte qartod_location_flag[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+##             _FillValue: 241
+##             coordinates: time z lon lat
+##             standard_name: location_test_quality_flag
+##             long_name: Location QC test - Location test
+##             implementation: https://github.com/ioos/ioos_qc/
+##             flag_meanings: PASS NOT_EVALUATED SUSPECT FAIL MISSING
+##             flag_values: 1
+##              flag_values: 2
+##              flag_values: 3
+##              flag_values: 4
+##              flag_values: 9
+##             references: https://cdn.ioos.noaa.gov/media/2020/03/QARTOD_TS_Manual_Update2_200324_final.pdf
+##             coverage_content_type: qualityInformation
+##         unsigned byte qartod_rollup_flag[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+##             _FillValue: 241
+##             coordinates: time z lon lat
+##             standard_name: aggregate_quality_flag
+##             long_name: Aggregate QC value
+##             implementation: https://github.com/ioos/ioos_qc/
+##             flag_meanings: PASS NOT_EVALUATED SUSPECT FAIL MISSING
+##             flag_values: 1
+##              flag_values: 2
+##              flag_values: 3
+##              flag_values: 4
+##              flag_values: 9
+##             references: https://cdn.ioos.noaa.gov/media/2020/03/QARTOD_TS_Manual_Update2_200324_final.pdf
+##             coverage_content_type: qualityInformation
+##         int crs[]   (Contiguous storage)  
+##             epsg_code: EPSG:4326
+##             grid_mapping_name: latitude_longitude
+##             inverse_flattening: 298.257223563
+##             long_name: Coordinate Reference System - http://www.opengis.net/def/crs/EPSG/0/4326
+##             semi_major_axis: 6378137
+##             coverage_content_type: referenceInformation
+##         string trajectory[]   (Contiguous storage)  
+##             cf_role: trajectory_id
+##             long_name: trajectory identifier
+##         int animal_age[]   (Contiguous storage)  
+##             _FillValue: -9999
+##             units: 
+##             long_name: age of the animal as measured or estimated at deployment
+##             coverage_content_type: referenceInformation
+##             animal_age: Not provided
+##         string animal_life_stage[]   (Contiguous storage)  
+##             animal_life_stage: juvenile
+##             long_name: Lifestage of the animal at time of deployment 
+##             coverage_content_type: referenceInformation
+##         string animal_sex[]   (Contiguous storage)  
+##             animal_sex: male
+##             long_name: sex of the animal at time of tag deployment
+##             coverage_content_type: referenceInformation
+##         float animal_weight[]   (Contiguous storage)  
+##             _FillValue: NaN
+##             units: kg
+##             long_name: mass of the animal as measured or estimated at deployment
+##             animal_weight: Not provided
+##             coverage_content_type: referenceInformation
+##         float animal_length[]   (Contiguous storage)  
+##             _FillValue: NaN
+##             animal_length_type: total length
+##             units: cm
+##             animal_length: 213.0 (cm) total length
+##             long_name: length of the animal as measured or estimated at deployment
+##             coverage_content_type: referenceInformation
+##         float animal_length_2[]   (Contiguous storage)  
+##             _FillValue: NaN
+##             animal_length_2_type: Not provided
+##             units: 
+##             animal_length_2: Not provided
+##             long_name: length of the animal as measured or estimated at deployment
+##             coverage_content_type: referenceInformation
+##         string animal[]   (Contiguous storage)  
+##             rank: Species
+##             infraorder: 
+##             scientificname: Carcharodon carcharias
+##             long_name: tagged animal id
+##             superdomain: Biota
+##             order: Lamniformes
+##             authority: (Linnaeus, 1758)
+##             kingdom: Animalia
+##             species: Carcharodon carcharias
+##             genus: Carcharodon
+##             megaclass: 
+##             family: Lamnidae
+##             taxonRankID: 220
+##             class: Elasmobranchii
+##             cf_role: trajectory_id
+##             coverage_content_type: referenceInformation
+##             subphylum: Vertebrata
+##             phylum: Chordata
+##             AphiaID: 105838
+##             valid_name: Carcharodon carcharias
+##             infraphylum: Gnathostomata
+##             subclass: Neoselachii
+##             suborder: 
+##         string instrument_tag[]   (Contiguous storage)  
+##             manufacturer: Wildlife Computers
+##             make_model: SPOT5
+##             serial_number: 07S0230
+##             long_name: telemetry tag applied to animal
+##             coverage_content_type: referenceInformation
+##             calibration_date: Not Provided
+##         string instrument_location[]   (Contiguous storage)  
+##             manufacturer: Wildlife Computers
+##             make_model: SPOT5
+##             serial_number: 07S0230
+##             long_name: Wildlife Computers SPOT5
+##             location_type: argos / modeled
+##             comment: Location
+##             coverage_content_type: referenceInformation
+##             calibration_date: Not Provided
+##         string taxon_name[]   (Contiguous storage)  
+##             standard_name: biological_taxon_name
+##             long_name: most precise taxonomic classification for the tagged animal
+##             coverage_content_type: referenceInformation
+##             source: Froese, R. and D. Pauly. Editors. (2023). FishBase. Carcharodon carcharias (Linnaeus, 1758). Accessed through: World Register of Marine Species at: https://www.marinespecies.org/aphia.php?p=taxdetails&amp;id=105838 on 2023-08-16
+##             url: https://www.marinespecies.org/aphia.php?p=taxdetails&amp;id=105838
+##         string taxon_lsid[]   (Contiguous storage)  
+##             standard_name: biological_taxon_lsid
+##             long_name: Namespaced Taxon Identifier for the tagged animal
+##             coverage_content_type: referenceInformation
+##             source: Froese, R. and D. Pauly. Editors. (2023). FishBase. Carcharodon carcharias (Linnaeus, 1758). Accessed through: World Register of Marine Species at: https://www.marinespecies.org/aphia.php?p=taxdetails&amp;id=105838 on 2023-08-16
+##             url: https://www.marinespecies.org/aphia.php?p=taxdetails&amp;id=105838
+##         string comment[obs]   (Contiguous storage)  
+##             long_name: Comment
+##             comment: Optional text field
+##             coordinates: time z lon lat
+##             instrument: instrument_location
+##             platform: animal
+##             coverage_content_type: auxillaryInformation
+## 
+##      1 dimensions:
+##         obs  Size:29 (no dimvar)
+## 
+##     89 global attributes:
+##         date_created: 2023-08-16T20:00:00Z
+##         featureType: trajectory
+##         cdm_data_type: Trajectory
+##         Conventions: CF-1.10, ACDD-1.3, IOOS-1.2
+##         argos_program_number: 2414
+##         creator_email: chris.lowe@csulb.edu
+##         id: 5f0668a86321be13bc7ef628
+##         tag_type: SPOT5
+##         source: Service Argos
+##         acknowledgement: NOAA IOOS, Axiom Data Science, Navy ONR, NOAA NMFS, Wildlife Computers, Argos, IOOS ATN
+##         creator_name: Chris G. Lowe
+##         creator_url: 
+##         geospatial_lat_units: degrees_north
+##         geospatial_lon_units: degrees_east
+##         infoUrl: https://portal.atn.ioos.us/#metadata/6e2ba85c-2f61-4bc5-8c2b-34d6734155ed/project
+##         institution: California State University Long Beach
+##         keywords: EARTH SCIENCE &gt; AGRICULTURE &gt; ANIMAL SCIENCE &gt; ANIMAL ECOLOGY AND BEHAVIOR, EARTH SCIENCE &gt; BIOSPHERE &gt; ECOLOGICAL DYNAMICS &gt; SPECIES/POPULATION INTERACTIONS &gt; MIGRATORY RATES/ROUTES, EARTH SCIENCE &gt; OCEANS, EARTH SCIENCE &gt; CLIMATE INDICATORS &gt; BIOSPHERIC INDICATORS &gt; SPECIES MIGRATION, EARTH SCIENCE &gt; OCEANS, EARTH SCIENCE &gt; BIOLOGICAL CLASSIFICATION &gt; ANIMALS/VERTEBRATES, EARTH SCIENCE &gt; BIOSPHERE &gt; ECOSYSTEMS &gt; MARINE ECOSYSTEMS, PROVIDERS &gt; GOVERNMENT AGENCIES-U.S. FEDERAL AGENCIES &gt; DOC &gt; NOAA &gt; IOOS, PROVIDERS &gt; COMMERCIAL &gt; Axiom Data Science
+##         license: These data may be used and redistributed for free, but are not intended for legal use, since they may contain inaccuracies. No person or group associated with these data makes any warranty, expressed or implied, including warranties of merchantability and fitness for a particular purpose, or assumes any legal liability for the accuracy, completeness or usefulness of this information. This disclaimer applies to both individual use of these data and aggregate use with other data. It is strongly recommended that users read and fully comprehend associated metadata prior to use. Please acknowledge the U.S. Animal Telemetry Network (ATN) or the specified citation as the source from which these data were obtained in any publications and/or representations of these data. Communication and collaboration with dataset authors are strongly encouraged.
+##         metadata_link: 
+##         naming_authority: com.wildlifecomputers
+##         platform_category: animal
+##         platform: fish
+##         platform_vocabulary: https://vocab.nerc.ac.uk/collection/L06/current/
+##         processing_level: NetCDF file created from position data obtained from Wildlife Computers API.
+##         project: Project White Shark: Juvenile Satellite Biotelemetry, 2001-2020
+##         publisher_email: atndata@ioos.us
+##         publisher_institution: US Integrated Ocean Observing System Office
+##         publisher_name: US Integrated Ocean Observing System (IOOS) Animal Telemetry Network (ATN)
+##         publisher_url: https://atn.ioos.us
+##         publisher_country: USA
+##         standard_name_vocabulary: CF-v78
+##         vendor: Wildlife Computers
+##         geospatial_lat_min: 23.59
+##         geospatial_lat_max: 34.045
+##         geospatial_lon_min: -166.18
+##         geospatial_lon_max: -118.504
+##         geospatial_bbox: POLYGON ((-118.504 23.59, -118.504 34.045, -166.18 34.045, -166.18 23.59, -118.504 23.59))
+##         geospatial_bounds: POLYGON ((-166.18 23.59, -118.581 34.038, -118.53 34.045, -118.504 33.989, -118.534 33.972, -119.75 33.517, -166.18 23.59))
+##         geospatial_bounds_crs: EPSG:4326
+##         time_coverage_start: 2009-09-23T00:00:00Z
+##         time_coverage_end: 2009-11-23T05:12:00Z
+##         time_coverage_duration: P61DT5H12M0S
+##         time_coverage_resolution: P2DT2H39M43S
+##         date_issued: 2023-08-16T20:00:00Z
+##         date_modified: 2023-08-16T20:00:00Z
+##         history: 2023-08-07T20:24:04Z - Created by the IOOS ATN DAC from the Wildlife Computers API
+##         summary: Wildlife Computers SPOT5 tag (ptt id 45866) deployed on a great white shark (Carcharodon carcharias) by Chris G. Lowe in the North Pacific Ocean from 2009-09-23 to 2009-11-23
+##         title: Great white shark (Carcharodon carcharias) location data from a satellite telemetry tag (ptt id 45866) deployed in the North Pacific Ocean from 2009-09-23 to 2009-11-23, deployment id 5f0668a86321be13bc7ef628
+##         uuid: ff554ebf-bf4b-5a82-8a90-9c0ceb799d96
+##         platform_name: Carcharodon carcharias
+##         platform_id: 105838
+##         vendor_id: 5f0668a86321be13bc7ef628
+##         sea_name: North Pacific Ocean
+##         arbitrary_keywords: ATN, Animal Telemetry Network, IOOS, Integrated Ocean Observing System, trajectory, satellite telemetry tag
+##         contributor_role_vocabulary: https://vocab.nerc.ac.uk/collection/G04/current/
+##         creator_role_vocabulary: https://vocab.nerc.ac.uk/collection/G04/current/
+##         creator_sector_vocabulary: https://mmisw.org/ont/ioos/sector
+##         creator_type: person
+##         date_metadata_modified: 20230816
+##         instrument: Satellite telemetry tag
+##         instrument_vocabulary: 
+##         keywords_vocabulary: GCMD Science Keywords v15.1
+##         ncei_template_version: NCEI_NetCDF_Trajectory_Template_v2.0
+##         product_version: 
+##         program: IOOS Animal Telemetry Network
+##         publisher_type: institution
+##         references: 
+##         animal_common_name: great white shark
+##         animal_id: 09_13
+##         animal_scientific_name: Carcharodon carcharias
+##         deployment_id: 5f0668a86321be13bc7ef628
+##         deployment_start_datetime: 2009-09-23T00:00:00Z
+##         deployment_end_datetime: 2009-11-23T00:00:00Z
+##         wmo_platform_code: 
+##         comment: 09_13-45866
+##         ptt_id: 45866
+##         deployment_start_lat: 34.03
+##         deployment_start_lon: -118.56
+##         contributor_name: Thomas Farrugia
+##         contributor_email: tjfarrugia@alaska.edu
+##         contributor_role: collaborator
+##         contributor_institution: California State University Long Beach
+##         contributor_url: 
+##         creator_role: principalInvestigator
+##         creator_sector: academic
+##         creator_country: USA
+##         creator_institution: California State University Long Beach
+##         creator_institution_url: https://www.csulb.edu/shark-lab
+##         citation: Lowe, Chris G.; Farrugia, Thomas. (2023) great white shark (Carcharodon carcharias) location data from a satellite telemetry tag (ptt id 45866) deployed in the North Pacific Ocean from 2009-09-23 to 2009-11-23, deployment id 5f0668a86321be13bc7ef628. [Dataset]. US Integrated Ocean Observing System Office.</code></pre>
 </div>
-<div id="source-datasets" class="section level3 hasAnchor" number="2.6.2">
-<h3><span class="header-section-number">2.6.2</span> Source datasets<a href="applications.html#source-datasets" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The data used in this process were sourced from the following locations:</p>
+<div id="collect-all-the-metadata-from-the-netcdf-file." class="section level4 hasAnchor" number="2.6.1.2">
+<h4><span class="header-section-number">2.6.1.2</span> Collect all the metadata from the netCDF file.<a href="applications.html#collect-all-the-metadata-from-the-netcdf-file." class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>This gathers not only the global attributes, but the variable level attributes as well. As you can see in the <strong>variable</strong> column the term <code>NC_GLOBAL</code> refers to global attributes.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="applications.html#cb52-1" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> ncmeta<span class="sc">::</span><span class="fu">nc_atts</span>(fname)</span>
+<span id="cb52-2"><a href="applications.html#cb52-2" aria-hidden="true" tabindex="-1"></a>metadata</span></code></pre></div>
+<pre><code>## # A tibble: 381 × 4
+##       id name                  variable  value       
+##    &lt;int&gt; &lt;chr&gt;                 &lt;chr&gt;     &lt;named list&gt;
+##  1     0 long_name             deploy_id &lt;chr [1]&gt;   
+##  2     1 comment               deploy_id &lt;chr [1]&gt;   
+##  3     2 coordinates           deploy_id &lt;chr [1]&gt;   
+##  4     3 instrument            deploy_id &lt;chr [1]&gt;   
+##  5     4 platform              deploy_id &lt;chr [1]&gt;   
+##  6     5 coverage_content_type deploy_id &lt;chr [1]&gt;   
+##  7     6 _FillValue            deploy_id &lt;dbl [1]&gt;   
+##  8     0 units                 time      &lt;chr [1]&gt;   
+##  9     1 standard_name         time      &lt;chr [1]&gt;   
+## 10     2 axis                  time      &lt;chr [1]&gt;   
+## # ℹ 371 more rows</code></pre>
+</div>
+<div id="store-the-data-as-a-tibble" class="section level4 hasAnchor" number="2.6.1.3">
+<h4><span class="header-section-number">2.6.1.3</span> Store the data as a tibble<a href="applications.html#store-the-data-as-a-tibble" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Collect the data dimensioned by <code>time</code> from the netCDF file as a tibble. Then, print the first ten rows.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="applications.html#cb54-1" aria-hidden="true" tabindex="-1"></a>atn <span class="ot">&lt;-</span> <span class="fu">tidync</span>(fname)</span>
+<span id="cb54-2"><a href="applications.html#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="applications.html#cb54-3" aria-hidden="true" tabindex="-1"></a>atn_tbl <span class="ot">&lt;-</span> atn <span class="sc">%&gt;%</span> <span class="fu">hyper_tibble</span>(<span class="at">force=</span><span class="cn">TRUE</span>)</span>
+<span id="cb54-4"><a href="applications.html#cb54-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-5"><a href="applications.html#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(atn_tbl, <span class="at">n=</span><span class="dv">4</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 4 × 23
+##        time     z   lat   lon   ptt instrument type  location_class error_radius
+##       &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;                 &lt;int&gt;
+## 1 622512000     0  34.0 -119. 45866 SPOT       User  nan                      NA
+## 2 622708920     0  23.6 -166. 45866 SPOT       Argos A                        NA
+## 3 622724940     0  34.0 -119. 45866 SPOT       Argos 1                        NA
+## 4 622725060     0  34.0 -119. 45866 SPOT       Argos 0                        NA
+## # ℹ 14 more variables: semi_major_axis &lt;int&gt;, semi_minor_axis &lt;int&gt;,
+## #   ellipse_orientation &lt;int&gt;, offset &lt;int&gt;, offset_orientation &lt;int&gt;,
+## #   gpe_msd &lt;dbl&gt;, gpe_u &lt;dbl&gt;, count &lt;int&gt;, qartod_time_flag &lt;int&gt;,
+## #   qartod_speed_flag &lt;int&gt;, qartod_location_flag &lt;int&gt;,
+## #   qartod_rollup_flag &lt;int&gt;, comment &lt;chr&gt;, obs &lt;int&gt;</code></pre>
+</div>
+<div id="dealing-with-time" class="section level4 hasAnchor" number="2.6.1.4">
+<h4><span class="header-section-number">2.6.1.4</span> Dealing with time<a href="applications.html#dealing-with-time" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Notice the data in the <strong>time</strong> column aren’t formatted as times. We need to read the metadata associated with the time variable to understand what the units are. Below, we print a tibble of all the attributes from the <strong>time</strong> variable.</p>
+<p>Notice the <em>units</em> attribute and it’s value of <code>seconds since 1990-01-01 00:00:00Z</code>. We need to use that information to convert the time variable to something useful that <code>ggplot</code> can handle.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="applications.html#cb56-1" aria-hidden="true" tabindex="-1"></a>time_attrs <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">&quot;time&quot;</span>)</span>
+<span id="cb56-2"><a href="applications.html#cb56-2" aria-hidden="true" tabindex="-1"></a>time_attrs</span></code></pre></div>
+<pre><code>## # A tibble: 13 × 4
+##       id name                  variable value       
+##    &lt;int&gt; &lt;chr&gt;                 &lt;chr&gt;    &lt;named list&gt;
+##  1     0 units                 time     &lt;chr [1]&gt;   
+##  2     1 standard_name         time     &lt;chr [1]&gt;   
+##  3     2 axis                  time     &lt;chr [1]&gt;   
+##  4     3 _CoordinateAxisType   time     &lt;chr [1]&gt;   
+##  5     4 calendar              time     &lt;chr [1]&gt;   
+##  6     5 long_name             time     &lt;chr [1]&gt;   
+##  7     6 actual_min            time     &lt;chr [1]&gt;   
+##  8     7 actual_max            time     &lt;chr [1]&gt;   
+##  9     8 ancillary_variables   time     &lt;chr [1]&gt;   
+## 10     9 instrument            time     &lt;chr [1]&gt;   
+## 11    10 platform              time     &lt;chr [1]&gt;   
+## 12    11 coverage_content_type time     &lt;chr [1]&gt;   
+## 13    12 _FillValue            time     &lt;dbl [1]&gt;</code></pre>
+<p>So, we grab the value from the <code>units</code> attribute, split the string to collect the date information, and apply that to a time conversion function <code>as.POSIXct</code>.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="applications.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co">#library(stringr) - loaded with tidyverse</span></span>
+<span id="cb58-2"><a href="applications.html#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="co"># grab origin date from time variable units attribute</span></span>
+<span id="cb58-3"><a href="applications.html#cb58-3" aria-hidden="true" tabindex="-1"></a>tunit <span class="ot">&lt;-</span> time_attrs <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">&quot;units&quot;</span>)</span>
+<span id="cb58-4"><a href="applications.html#cb58-4" aria-hidden="true" tabindex="-1"></a>lunit <span class="ot">&lt;-</span> <span class="fu">str_split</span>(tunit<span class="sc">$</span>value,<span class="st">&#39; &#39;</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb58-5"><a href="applications.html#cb58-5" aria-hidden="true" tabindex="-1"></a>atn_tbl<span class="sc">$</span>time <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(atn_tbl<span class="sc">$</span>time, <span class="at">origin=</span>lunit[<span class="dv">3</span>], <span class="at">tz=</span><span class="st">&quot;GMT&quot;</span>)</span>
+<span id="cb58-6"><a href="applications.html#cb58-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-7"><a href="applications.html#cb58-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(atn_tbl)</span></code></pre></div>
+<pre><code>## tibble [29 × 23] (S3: tbl_df/tbl/data.frame)
+##  $ time                : POSIXct[1:29], format: &quot;2009-09-23 00:00:00&quot; &quot;2009-09-25 06:42:00&quot; ...
+##  $ z                   : int [1:29] 0 0 0 0 0 0 0 0 0 0 ...
+##  $ lat                 : num [1:29] 34 23.6 34 34 34 ...
+##  $ lon                 : num [1:29] -119 -166 -119 -119 -119 ...
+##  $ ptt                 : int [1:29] 45866 45866 45866 45866 45866 45866 45866 45866 45866 45866 ...
+##  $ instrument          : chr [1:29] &quot;SPOT&quot; &quot;SPOT&quot; &quot;SPOT&quot; &quot;SPOT&quot; ...
+##  $ type                : chr [1:29] &quot;User&quot; &quot;Argos&quot; &quot;Argos&quot; &quot;Argos&quot; ...
+##  $ location_class      : chr [1:29] &quot;nan&quot; &quot;A&quot; &quot;1&quot; &quot;0&quot; ...
+##  $ error_radius        : int [1:29] NA NA NA NA NA NA NA NA NA NA ...
+##  $ semi_major_axis     : int [1:29] NA NA NA NA NA NA NA NA NA NA ...
+##  $ semi_minor_axis     : int [1:29] NA NA NA NA NA NA NA NA NA NA ...
+##  $ ellipse_orientation : int [1:29] NA NA NA NA NA NA NA NA NA NA ...
+##  $ offset              : int [1:29] NA NA NA NA NA NA NA NA NA NA ...
+##  $ offset_orientation  : int [1:29] NA NA NA NA NA NA NA NA NA NA ...
+##  $ gpe_msd             : num [1:29] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN ...
+##  $ gpe_u               : num [1:29] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN ...
+##  $ count               : int [1:29] NA NA NA NA NA NA NA NA NA NA ...
+##  $ qartod_time_flag    : int [1:29] 1 1 1 1 1 1 1 1 1 1 ...
+##  $ qartod_speed_flag   : int [1:29] 2 4 4 4 1 1 1 1 1 1 ...
+##  $ qartod_location_flag: int [1:29] 1 1 1 1 1 1 1 1 1 1 ...
+##  $ qartod_rollup_flag  : int [1:29] 1 4 4 4 1 1 1 1 1 1 ...
+##  $ comment             : chr [1:29] &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
+##  $ obs                 : int [1:29] 1 2 3 4 5 6 7 8 9 10 ...</code></pre>
+<hr />
+</div>
+</div>
+<div id="converting-to-darwin-core" class="section level3 hasAnchor" number="2.6.2">
+<h3><span class="header-section-number">2.6.2</span> Converting to Darwin Core<a href="applications.html#converting-to-darwin-core" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Now let’s work through converting this netCDF file to Darwin Core. Following the guidance published at <a href="https://github.com/tdwg/dwc-for-biologging/wiki/Data-guidelines" class="uri">https://github.com/tdwg/dwc-for-biologging/wiki/Data-guidelines</a> and <a href="https://github.com/ocean-tracking-network/biologging_standardization/tree/master/examples/braun-blueshark/darwincore-example" class="uri">https://github.com/ocean-tracking-network/biologging_standardization/tree/master/examples/braun-blueshark/darwincore-example</a></p>
+<div id="occurrence-core" class="section level4 hasAnchor" number="2.6.2.1">
+<h4><span class="header-section-number">2.6.2.1</span> Occurrence Core<a href="applications.html#occurrence-core" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Below is the mapping table from DarwinCore to the netCDF file.</p>
 <table>
 <colgroup>
-<col width="29%" />
-<col width="47%" />
-<col width="23%" />
+<col width="42%" />
+<col width="21%" />
+<col width="36%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th>data</th>
-<th>source</th>
-<th>url</th>
+<th>DarwinCore Term</th>
+<th>Status</th>
+<th>netCDF source</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>sound production</td>
-<td>ERDDAP</td>
-<td><a href="https://coastwatch.pfeg.noaa.gov/erddap/search/index.html?page=1&amp;itemsPerPage=1000&amp;searchFor=sanctsound+%22Sound+Production%22" class="uri">https://coastwatch.pfeg.noaa.gov/erddap/search/index.html?page=1&amp;itemsPerPage=1000&amp;searchFor=sanctsound+%22Sound+Production%22</a></td>
+<td>occurrenceStatus</td>
+<td>Required</td>
+<td>hardcoded to <code>present</code>.</td>
 </tr>
 <tr class="even">
-<td>sound propagation</td>
-<td>Google Cloud Storage</td>
-<td><a href="https://console.cloud.google.com/storage/browser/noaa-passive-bioacoustic/sanctsound/products/sound_propagation_models;tab=objects" class="uri">https://console.cloud.google.com/storage/browser/noaa-passive-bioacoustic/sanctsound/products/sound_propagation_models;tab=objects</a></td>
+<td>basisOfRecord</td>
+<td>Required</td>
+<td>data contained in the <code>type</code> variable where <code>type</code> of <code>User</code> = <code>HumanObservation</code> and <code>Argos</code> = <code>MachineObservation</code>.</td>
+</tr>
+<tr class="odd">
+<td>occurrenceID</td>
+<td>Required</td>
+<td><code>eventDate</code>, plus data contained in <code>z</code> variable, plus <code>animal_common_name</code> global attribute.</td>
+</tr>
+<tr class="even">
+<td>organismID</td>
+<td>Required</td>
+<td><code>platform_id</code> global attribute plus the <code>animal_common_name</code> global attribute.</td>
+</tr>
+<tr class="odd">
+<td>eventDate</td>
+<td>Required</td>
+<td>data contained in <code>time</code> variable. Converted to ISO8601.</td>
+</tr>
+<tr class="even">
+<td>decimalLatitude &amp; decimalLongitude</td>
+<td>Required</td>
+<td>data in <code>lat</code> and <code>lon</code> variable, respectively.</td>
+</tr>
+<tr class="odd">
+<td>geodeticDatum</td>
+<td>Required</td>
+<td>attribute <code>epsg_code</code> in the <code>crs</code> variable.</td>
+</tr>
+<tr class="even">
+<td>scientificName</td>
+<td>Required</td>
+<td>data from the variable <code>taxon_name</code>.</td>
+</tr>
+<tr class="odd">
+<td>scientificNameID</td>
+<td></td>
+<td>data from the variable <code>taxon_lsid</code>.</td>
+</tr>
+<tr class="even">
+<td>eventID</td>
+<td>Strongly recommended</td>
+<td><code>animal_common_name</code> global attribute plus the <code>eventDate</code>.</td>
+</tr>
+<tr class="odd">
+<td>samplingProtocol</td>
+<td>Strongly recommended</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>kingdom</td>
+<td>Strongly recommended</td>
+<td><code>kingdom</code> attribute in the <code>animal</code> variable.</td>
+</tr>
+<tr class="odd">
+<td>taxonRank</td>
+<td>Strongly recommended</td>
+<td><code>rank</code> attribute in the <code>animal</code> variable.</td>
+</tr>
+<tr class="even">
+<td>coordinateUncertaintyInMeters</td>
+<td>Share if available</td>
+<td>maximum value of the data from the variables <code>error_radius</code>, <code>semi_major_axis</code>, and <code>offset</code>.</td>
+</tr>
+<tr class="odd">
+<td>lifeStage</td>
+<td>Share if available</td>
+<td>data from the variable <code>animal_life_stage</code>.</td>
+</tr>
+<tr class="even">
+<td>sex</td>
+<td>Share if available</td>
+<td>data from the variable <code>animal_sex</code>.</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div id="definitions" class="section level3 hasAnchor" number="2.6.3">
-<h3><span class="header-section-number">2.6.3</span> Definitions<a href="applications.html#definitions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Now start working through the crosswalk. A few thoughts about some of the functions we use:</p>
+<ol style="list-style-type: decimal">
+<li><code>case_when</code> is a <a href="https://dplyr.tidyverse.org/reference/case_when.html">function from dplyr</a> that is essentially a ‘vectorized’ ifelse function. The take-home is that it plays nice with other <code>tidyverse</code> functions, like <code>mutate</code> and IMO is a bit more readable than a complex ifelse statement.</li>
+<li><code>rename</code> is another nice dplyr function for renaming columns. It workes well following <code>mutate</code> because you can see the mutation applied to a column and then the column renamed, rather than a complex creation of a new column and dropping of the old column.</li>
+</ol>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="applications.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Defined to grab attributes in subsequent code</span></span>
+<span id="cb60-2"><a href="applications.html#cb60-2" aria-hidden="true" tabindex="-1"></a>nc <span class="ot">&lt;-</span> <span class="fu">nc_open</span>(fname)</span>
+<span id="cb60-3"><a href="applications.html#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-4"><a href="applications.html#cb60-4" aria-hidden="true" tabindex="-1"></a>occurrencedf <span class="ot">&lt;-</span> atn_tbl <span class="sc">%&gt;%</span>  </span>
+<span id="cb60-5"><a href="applications.html#cb60-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>( <span class="co"># Select desired columns</span></span>
+<span id="cb60-6"><a href="applications.html#cb60-6" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb60-7"><a href="applications.html#cb60-7" aria-hidden="true" tabindex="-1"></a>        time, </span>
+<span id="cb60-8"><a href="applications.html#cb60-8" aria-hidden="true" tabindex="-1"></a>        lat,</span>
+<span id="cb60-9"><a href="applications.html#cb60-9" aria-hidden="true" tabindex="-1"></a>        lon,</span>
+<span id="cb60-10"><a href="applications.html#cb60-10" aria-hidden="true" tabindex="-1"></a>        type,</span>
+<span id="cb60-11"><a href="applications.html#cb60-11" aria-hidden="true" tabindex="-1"></a>        location_class,</span>
+<span id="cb60-12"><a href="applications.html#cb60-12" aria-hidden="true" tabindex="-1"></a>        qartod_time_flag,</span>
+<span id="cb60-13"><a href="applications.html#cb60-13" aria-hidden="true" tabindex="-1"></a>        qartod_speed_flag,</span>
+<span id="cb60-14"><a href="applications.html#cb60-14" aria-hidden="true" tabindex="-1"></a>        qartod_location_flag,</span>
+<span id="cb60-15"><a href="applications.html#cb60-15" aria-hidden="true" tabindex="-1"></a>        qartod_rollup_flag</span>
+<span id="cb60-16"><a href="applications.html#cb60-16" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb60-17"><a href="applications.html#cb60-17" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">%&gt;%</span></span>
+<span id="cb60-18"><a href="applications.html#cb60-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>( <span class="co"># add and mutate columns.</span></span>
+<span id="cb60-19"><a href="applications.html#cb60-19" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb60-20"><a href="applications.html#cb60-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> <span class="fu">case_when</span>(type <span class="sc">==</span> <span class="st">&#39;User&#39;</span> <span class="sc">~</span> <span class="st">&#39;HumanObservation&#39;</span>,</span>
+<span id="cb60-21"><a href="applications.html#cb60-21" aria-hidden="true" tabindex="-1"></a>                         type <span class="sc">==</span> <span class="st">&#39;Argos&#39;</span> <span class="sc">~</span> <span class="st">&#39;MachineObservation&#39;</span>),</span>
+<span id="cb60-22"><a href="applications.html#cb60-22" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb60-23"><a href="applications.html#cb60-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">time =</span> <span class="fu">format</span>(time, <span class="st">&#39;%Y-%m-%dT%H:%M:%SZ&#39;</span>),</span>
+<span id="cb60-24"><a href="applications.html#cb60-24" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb60-25"><a href="applications.html#cb60-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">kingdom =</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">&quot;animal&quot;</span> <span class="sc">&amp;</span> name <span class="sc">==</span> <span class="st">&quot;kingdom&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(value) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(<span class="at">use.names =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb60-26"><a href="applications.html#cb60-26" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb60-27"><a href="applications.html#cb60-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">taxonRank =</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">&quot;animal&quot;</span> <span class="sc">&amp;</span> name <span class="sc">==</span> <span class="st">&quot;rank&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(value) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(<span class="at">use.names =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb60-28"><a href="applications.html#cb60-28" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb60-29"><a href="applications.html#cb60-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">occurrenceStatus =</span> <span class="st">&quot;present&quot;</span>,</span>
+<span id="cb60-30"><a href="applications.html#cb60-30" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb60-31"><a href="applications.html#cb60-31" aria-hidden="true" tabindex="-1"></a>        <span class="at">sex =</span> <span class="fu">ncvar_get</span>( nc, <span class="st">&#39;animal_sex&#39;</span>),</span>
+<span id="cb60-32"><a href="applications.html#cb60-32" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb60-33"><a href="applications.html#cb60-33" aria-hidden="true" tabindex="-1"></a>        <span class="at">lifeStage =</span> <span class="fu">ncvar_get</span>( nc, <span class="st">&#39;animal_life_stage&#39;</span>),</span>
+<span id="cb60-34"><a href="applications.html#cb60-34" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb60-35"><a href="applications.html#cb60-35" aria-hidden="true" tabindex="-1"></a>        <span class="at">scientificName =</span> <span class="fu">ncvar_get</span>( nc, <span class="st">&#39;taxon_name&#39;</span>),</span>
+<span id="cb60-36"><a href="applications.html#cb60-36" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb60-37"><a href="applications.html#cb60-37" aria-hidden="true" tabindex="-1"></a>        <span class="at">scientificNameID =</span> <span class="fu">ncvar_get</span>( nc, <span class="st">&quot;taxon_lsid&quot;</span>)</span>
+<span id="cb60-38"><a href="applications.html#cb60-38" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb60-39"><a href="applications.html#cb60-39" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">%&gt;%</span></span>
+<span id="cb60-40"><a href="applications.html#cb60-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-41"><a href="applications.html#cb60-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(  <span class="co"># rename columns to Darwin Core terms</span></span>
+<span id="cb60-42"><a href="applications.html#cb60-42" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb60-43"><a href="applications.html#cb60-43" aria-hidden="true" tabindex="-1"></a>        <span class="at">basisOfRecord =</span> type,</span>
+<span id="cb60-44"><a href="applications.html#cb60-44" aria-hidden="true" tabindex="-1"></a>        <span class="at">eventDate =</span> time,</span>
+<span id="cb60-45"><a href="applications.html#cb60-45" aria-hidden="true" tabindex="-1"></a>        <span class="at">decimalLatitude =</span> lat,</span>
+<span id="cb60-46"><a href="applications.html#cb60-46" aria-hidden="true" tabindex="-1"></a>        <span class="at">decimalLongitude =</span> lon) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-47"><a href="applications.html#cb60-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-48"><a href="applications.html#cb60-48" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(eventDate) <span class="co">#arrange by increasing date</span></span>
+<span id="cb60-49"><a href="applications.html#cb60-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-50"><a href="applications.html#cb60-50" aria-hidden="true" tabindex="-1"></a><span class="co"># minimumDepthInMeters = z,</span></span>
+<span id="cb60-51"><a href="applications.html#cb60-51" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>minimumDepthInMeters <span class="ot">=</span> atn_tbl<span class="sc">$</span>z</span>
+<span id="cb60-52"><a href="applications.html#cb60-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-53"><a href="applications.html#cb60-53" aria-hidden="true" tabindex="-1"></a><span class="co"># maximumDepthInMeters = z,</span></span>
+<span id="cb60-54"><a href="applications.html#cb60-54" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>maximumDepthInMeters <span class="ot">=</span> atn_tbl<span class="sc">$</span>z</span>
+<span id="cb60-55"><a href="applications.html#cb60-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-56"><a href="applications.html#cb60-56" aria-hidden="true" tabindex="-1"></a><span class="co"># organismID - {platformID}_{common_name}</span></span>
+<span id="cb60-57"><a href="applications.html#cb60-57" aria-hidden="true" tabindex="-1"></a>common_name_tbl <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">&quot;NC_GLOBAL&quot;</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">&quot;animal_common_name&quot;</span>)</span>
+<span id="cb60-58"><a href="applications.html#cb60-58" aria-hidden="true" tabindex="-1"></a>common_name <span class="ot">&lt;-</span> <span class="fu">chartr</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>, common_name_tbl<span class="sc">$</span>value)</span>
+<span id="cb60-59"><a href="applications.html#cb60-59" aria-hidden="true" tabindex="-1"></a>platform_id_tbl <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">&quot;NC_GLOBAL&quot;</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">&quot;platform_id&quot;</span>)</span>
+<span id="cb60-60"><a href="applications.html#cb60-60" aria-hidden="true" tabindex="-1"></a>platform_id <span class="ot">&lt;-</span> <span class="fu">chartr</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>, platform_id_tbl<span class="sc">$</span>value)</span>
+<span id="cb60-61"><a href="applications.html#cb60-61" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>organismID <span class="ot">&lt;-</span> <span class="fu">paste</span>(platform_id , common_name, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>) </span>
+<span id="cb60-62"><a href="applications.html#cb60-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-63"><a href="applications.html#cb60-63" aria-hidden="true" tabindex="-1"></a><span class="co"># occurrenceID - {eventDate}_{depth}_{common_name}</span></span>
+<span id="cb60-64"><a href="applications.html#cb60-64" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>occurrenceID <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>, <span class="fu">paste</span>(occurrencedf<span class="sc">$</span>eventDate, atn_tbl<span class="sc">$</span>z, common_name, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>))</span>
+<span id="cb60-65"><a href="applications.html#cb60-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-66"><a href="applications.html#cb60-66" aria-hidden="true" tabindex="-1"></a><span class="co"># geodeticDatum</span></span>
+<span id="cb60-67"><a href="applications.html#cb60-67" aria-hidden="true" tabindex="-1"></a>gd_tbl <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">&quot;crs&quot;</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">&quot;epsg_code&quot;</span>)</span>
+<span id="cb60-68"><a href="applications.html#cb60-68" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>geodeticDatum <span class="ot">&lt;-</span> <span class="fu">paste</span>(gd_tbl<span class="sc">$</span>value)</span>
+<span id="cb60-69"><a href="applications.html#cb60-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-70"><a href="applications.html#cb60-70" aria-hidden="true" tabindex="-1"></a><span class="co"># eventID</span></span>
+<span id="cb60-71"><a href="applications.html#cb60-71" aria-hidden="true" tabindex="-1"></a><span class="co">#eventID - {common_name}_{dateTime}</span></span>
+<span id="cb60-72"><a href="applications.html#cb60-72" aria-hidden="true" tabindex="-1"></a>cname <span class="ot">=</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">&quot;NC_GLOBAL&quot;</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">&quot;animal_common_name&quot;</span>)</span>
+<span id="cb60-73"><a href="applications.html#cb60-73" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>eventID <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>, <span class="fu">paste0</span>(cname<span class="sc">$</span>value, <span class="st">&quot;_&quot;</span>, occurrencedf<span class="sc">$</span>eventDate))</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="applications.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(occurrencedf)</span></code></pre></div>
+<pre><code>## tibble [29 × 22] (S3: tbl_df/tbl/data.frame)
+##  $ eventDate           : chr [1:29] &quot;2009-09-23T00:00:00Z&quot; &quot;2009-09-25T06:42:00Z&quot; &quot;2009-09-25T11:09:00Z&quot; &quot;2009-09-25T11:11:00Z&quot; ...
+##  $ decimalLatitude     : num [1:29] 34 23.6 34 34 34 ...
+##  $ decimalLongitude    : num [1:29] -119 -166 -119 -119 -119 ...
+##  $ basisOfRecord       : chr [1:29] &quot;HumanObservation&quot; &quot;MachineObservation&quot; &quot;MachineObservation&quot; &quot;MachineObservation&quot; ...
+##  $ location_class      : chr [1:29] &quot;nan&quot; &quot;A&quot; &quot;1&quot; &quot;0&quot; ...
+##  $ qartod_time_flag    : int [1:29] 1 1 1 1 1 1 1 1 1 1 ...
+##  $ qartod_speed_flag   : int [1:29] 2 4 4 4 1 1 1 1 1 1 ...
+##  $ qartod_location_flag: int [1:29] 1 1 1 1 1 1 1 1 1 1 ...
+##  $ qartod_rollup_flag  : int [1:29] 1 4 4 4 1 1 1 1 1 1 ...
+##  $ kingdom             : chr [1:29] &quot;Animalia&quot; &quot;Animalia&quot; &quot;Animalia&quot; &quot;Animalia&quot; ...
+##  $ taxonRank           : chr [1:29] &quot;Species&quot; &quot;Species&quot; &quot;Species&quot; &quot;Species&quot; ...
+##  $ occurrenceStatus    : chr [1:29] &quot;present&quot; &quot;present&quot; &quot;present&quot; &quot;present&quot; ...
+##  $ sex                 : chr [1:29] &quot;male&quot; &quot;male&quot; &quot;male&quot; &quot;male&quot; ...
+##  $ lifeStage           : chr [1:29] &quot;juvenile&quot; &quot;juvenile&quot; &quot;juvenile&quot; &quot;juvenile&quot; ...
+##  $ scientificName      : chr [1:29] &quot;Carcharodon carcharias&quot; &quot;Carcharodon carcharias&quot; &quot;Carcharodon carcharias&quot; &quot;Carcharodon carcharias&quot; ...
+##  $ scientificNameID    : chr [1:29] &quot;urn:lsid:marinespecies.org:taxname:105838&quot; &quot;urn:lsid:marinespecies.org:taxname:105838&quot; &quot;urn:lsid:marinespecies.org:taxname:105838&quot; &quot;urn:lsid:marinespecies.org:taxname:105838&quot; ...
+##  $ minimumDepthInMeters: int [1:29] 0 0 0 0 0 0 0 0 0 0 ...
+##  $ maximumDepthInMeters: int [1:29] 0 0 0 0 0 0 0 0 0 0 ...
+##  $ organismID          : chr [1:29] &quot;105838_great_white_shark&quot; &quot;105838_great_white_shark&quot; &quot;105838_great_white_shark&quot; &quot;105838_great_white_shark&quot; ...
+##  $ occurrenceID        : chr [1:29] &quot;2009-09-23T00:00:00Z_0_great_white_shark&quot; &quot;2009-09-25T06:42:00Z_0_great_white_shark&quot; &quot;2009-09-25T11:09:00Z_0_great_white_shark&quot; &quot;2009-09-25T11:11:00Z_0_great_white_shark&quot; ...
+##  $ geodeticDatum       : chr [1:29] &quot;EPSG:4326&quot; &quot;EPSG:4326&quot; &quot;EPSG:4326&quot; &quot;EPSG:4326&quot; ...
+##  $ eventID             : chr [1:29] &quot;great_white shark_2009-09-23T00:00:00Z&quot; &quot;great_white shark_2009-09-25T06:42:00Z&quot; &quot;great_white shark_2009-09-25T11:09:00Z&quot; &quot;great_white shark_2009-09-25T11:11:00Z&quot; ...</code></pre>
+<div id="add-coordinateuncertaintyinmeters-and-filter-by-location_class" class="section level5 hasAnchor" number="2.6.2.1.1">
+<h5><span class="header-section-number">2.6.2.1.1</span> Add coordinateUncertaintyInMeters AND filter by location_class<a href="applications.html#add-coordinateuncertaintyinmeters-and-filter-by-location_class" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>When we add <code>coordinateUncertaintyInMeters</code> we are also filtering out where <code>location_class</code> == <code>A</code>,<code>B</code>,or <code>Z</code>.</p>
+<p>In these data we also have additional information about the Location Quality Code from ARGOS satellite system. Below are the codes and those meanings.</p>
 <table>
 <colgroup>
-<col width="31%" />
-<col width="68%" />
+<col width="46%" />
+<col width="53%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th>term</th>
-<th>definition</th>
+<th>code_values</th>
+<th>code meanings</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>occurrence</td>
-<td>Species <code>x</code> made an acoustic sound at <code>y</code> location on <code>z</code> day. We have binned all presence detections to daily occurrences. So, if an animal made multiple sounds during one day, it would be recorded as 1 occurrence.</td>
+<td>G</td>
+<td>estimated error less than 100m and 1+ messages received per satellite pass</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>estimated error less than 250m and 4+ messages received per satellite pass</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>estimated error between 250m and 500m and 4+ messages per satellite pass</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>estimated error between 500m and 1500m and 4+ messages per satellite pass</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td>estimated error greater than 1500m and 4+ messages received per satellite pass</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>no least squares estimated error or unbounded kalman filter estimated error and 3 messages received per satellite pass</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>no least squares estimated error or unbounded kalman filter estimated error and 1 or 2 messages received per satellite pass</td>
+</tr>
+<tr class="even">
+<td>Z</td>
+<td>invalid location (available for Service Plus or Auxilliary Location Processing)</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div id="file-descriptions" class="section level3 hasAnchor" number="2.6.4">
-<h3><span class="header-section-number">2.6.4</span> File descriptions<a href="applications.html#file-descriptions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Since codes <code>A</code>, <code>B</code>, and <code>Z</code> are essentially bad values, I propose that we filter those out.</p>
+<p>Also, create a mapping table for <code>coordinateUncertaintyInMeters</code> that corresponds to the ARGOS code maximum error as shown in the table below:</p>
 <table>
-<colgroup>
-<col width="29%" />
-<col width="70%" />
-</colgroup>
 <thead>
 <tr class="header">
-<th>file</th>
-<th>description</th>
+<th>code</th>
+<th>coordinateUncertaintyInMeters</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="https://github.com/ioos/bio_data_guide/blob/main/datasets/SanctSound/01_sound_production_to_presence.ipynb"><strong>01_sound_production_to_presence.ipynb</strong></a></td>
-<td>Notebook to collect and combine the acoustically present records on <a href="https://coastwatch.pfeg.noaa.gov/erddap/index.html">Coastwatch ERDDAP</a>. Merges in WoRMS mapping table, and creates an <code>eventDate</code> column. Writes out <code>data/sanctsound_presence.zip</code>.</td>
+<td>G</td>
+<td>100</td>
 </tr>
 <tr class="even">
-<td><a href="https://github.com/ioos/bio_data_guide/blob/main/datasets/SanctSound/02_presence_to_occurrence.ipynb"><strong>02_presence_to_occurrence.ipynb</strong></a></td>
-<td>Notebook to convert the presence file to an occurrence file. Creates <code>occurrenceID</code>. Reads in <code>data/sanctsound_presence.zip</code>. Writes out <code>data/occurrence.zip</code>.</td>
+<td>3</td>
+<td>250</td>
 </tr>
 <tr class="odd">
-<td><a href="https://github.com/ioos/bio_data_guide/blob/main/datasets/SanctSound/03_occurrence_coordinateUncertainty.ipynb"><strong>03_occurrence_coordinateUncertainty.ipynb</strong></a></td>
-<td>Notebook that gathers <a href="https://sanctsound.portal.axds.co/#sanctsound/compare/prop-model">sound propagation modeling</a> data from Google Cloud Storage and adds them to the occurrence table. This also does some initial QA/QC and creates an emof table. Reads in <code>data/occurrence.zip</code> and <a href="https://console.cloud.google.com/storage/browser/noaa-passive-bioacoustic/sanctsound/products/sound_propagation_models;tab=objects">sound propagation model data</a>. Writes out <code>data/emof.zip</code> and <code>data/occurrence_w_coordinateUncertainty.zip</code>.</td>
+<td>2</td>
+<td>500</td>
 </tr>
 <tr class="even">
-<td><a href="https://github.com/ioos/bio_data_guide/blob/main/datasets/SanctSound/04_data_fixes.ipynb"><strong>04_data_fixes.ipynb</strong></a></td>
-<td>This notebook fixes some errors that were found once the data were loaded to GBIF. Reads in <code>data/occurrence_w_coordinateUncertainty.zip</code>. Writes out <code>data/occurrence_w_coordinateUncertainty.zip</code>.</td>
+<td>1</td>
+<td>1500</td>
 </tr>
 <tr class="odd">
-<td><a href="https://github.com/ioos/bio_data_guide/blob/main/datasets/SanctSound/SanctSound_SpeciesLookupTable.csv"><strong>SanctSound_SpeciesLookupTable.csv</strong></a></td>
-<td>Species and frequency lookup table for occurrence records.</td>
-</tr>
-<tr class="even">
-<td><a href="https://github.com/ioos/bio_data_guide/blob/main/datasets/SanctSound/data"><strong>data/</strong></a></td>
-<td>Intermediary and final data files sent to OBIS-USA.</td>
+<td>0</td>
+<td>10000 (<a href="https://github.com/ioos/bio_data_guide/issues/145#issuecomment-1805739244">ref</a>)</td>
 </tr>
 </tbody>
 </table>
+<p>Below we create a lookup table for the <code>location_class</code> values we agree are good, which contains the <code>coordinateUncertaintyInMeters</code> for the appropriate location class. When we merge that table with our raw data, the observations that don’t match the location_classes in our lookup table will not be transfered over (ie. they will be filtered out).</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="applications.html#cb63-1" aria-hidden="true" tabindex="-1"></a>occurrencedf <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span></span>
+<span id="cb63-2"><a href="applications.html#cb63-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(location_class <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;nan&#39;</span>,<span class="st">&#39;G&#39;</span>,<span class="st">&#39;3&#39;</span>,<span class="st">&#39;2&#39;</span>,<span class="st">&#39;1&#39;</span>,<span class="st">&#39;0&#39;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb63-3"><a href="applications.html#cb63-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(  <span class="co"># This returns NA for any other values than those defined below</span></span>
+<span id="cb63-4"><a href="applications.html#cb63-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">coordinateUncertaintyInMeters =</span> <span class="fu">case_when</span>(location_class <span class="sc">==</span> <span class="st">&#39;nan&#39;</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
+<span id="cb63-5"><a href="applications.html#cb63-5" aria-hidden="true" tabindex="-1"></a>                                                     location_class <span class="sc">==</span> <span class="st">&#39;G&#39;</span> <span class="sc">~</span> <span class="dv">200</span>,</span>
+<span id="cb63-6"><a href="applications.html#cb63-6" aria-hidden="true" tabindex="-1"></a>                                                     location_class <span class="sc">==</span> <span class="st">&#39;3&#39;</span> <span class="sc">~</span> <span class="dv">250</span>,</span>
+<span id="cb63-7"><a href="applications.html#cb63-7" aria-hidden="true" tabindex="-1"></a>                                                     location_class <span class="sc">==</span> <span class="st">&#39;2&#39;</span> <span class="sc">~</span> <span class="dv">500</span>,</span>
+<span id="cb63-8"><a href="applications.html#cb63-8" aria-hidden="true" tabindex="-1"></a>                                                     location_class <span class="sc">==</span> <span class="st">&#39;1&#39;</span> <span class="sc">~</span> <span class="dv">1500</span>,</span>
+<span id="cb63-9"><a href="applications.html#cb63-9" aria-hidden="true" tabindex="-1"></a>                                                     location_class <span class="sc">==</span> <span class="st">&#39;0&#39;</span> <span class="sc">~</span> <span class="dv">10000</span>) <span class="co"># https://github.com/ioos/bio_data_guide/issues/145#issuecomment-1805739244</span></span>
+<span id="cb63-10"><a href="applications.html#cb63-10" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">%&gt;%</span> </span>
+<span id="cb63-11"><a href="applications.html#cb63-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(eventDate) <span class="co"># arrange by increasing date</span></span>
+<span id="cb63-12"><a href="applications.html#cb63-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-13"><a href="applications.html#cb63-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-14"><a href="applications.html#cb63-14" aria-hidden="true" tabindex="-1"></a>occurrencedf</span></code></pre></div>
+<pre><code>## # A tibble: 19 × 23
+##    eventDate       decimalLatitude decimalLongitude basisOfRecord location_class
+##    &lt;chr&gt;                     &lt;dbl&gt;            &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;         
+##  1 2009-09-23T00:…            34.0            -119. HumanObserva… nan           
+##  2 2009-09-25T11:…            34.0            -119. MachineObser… 1             
+##  3 2009-09-25T11:…            34.0            -119. MachineObser… 0             
+##  4 2009-09-27T17:…            34.0            -119. MachineObser… 1             
+##  5 2009-10-08T20:…            34.0            -119. MachineObser… 2             
+##  6 2009-10-15T11:…            34.0            -119. MachineObser… 0             
+##  7 2009-10-17T06:…            34.0            -119. MachineObser… 0             
+##  8 2009-10-17T09:…            34.0            -119. MachineObser… 2             
+##  9 2009-10-17T10:…            34.0            -119. MachineObser… 3             
+## 10 2009-10-18T08:…            34.0            -119. MachineObser… 1             
+## 11 2009-10-18T10:…            34.0            -119. MachineObser… 2             
+## 12 2009-10-18T11:…            34.0            -119. MachineObser… 0             
+## 13 2009-10-23T23:…            34.0            -119. MachineObser… 2             
+## 14 2009-10-24T00:…            34.0            -119. MachineObser… 0             
+## 15 2009-10-26T10:…            34.0            -119. MachineObser… 3             
+## 16 2009-10-27T16:…            34.0            -119. MachineObser… 1             
+## 17 2009-10-27T16:…            34.0            -119. MachineObser… 2             
+## 18 2009-10-29T11:…            34.0            -119. MachineObser… 2             
+## 19 2009-10-31T21:…            34.0            -119. MachineObser… 0             
+## # ℹ 18 more variables: qartod_time_flag &lt;int&gt;, qartod_speed_flag &lt;int&gt;,
+## #   qartod_location_flag &lt;int&gt;, qartod_rollup_flag &lt;int&gt;, kingdom &lt;chr&gt;,
+## #   taxonRank &lt;chr&gt;, occurrenceStatus &lt;chr&gt;, sex &lt;chr&gt;, lifeStage &lt;chr&gt;,
+## #   scientificName &lt;chr&gt;, scientificNameID &lt;chr&gt;, minimumDepthInMeters &lt;int&gt;,
+## #   maximumDepthInMeters &lt;int&gt;, organismID &lt;chr&gt;, occurrenceID &lt;chr&gt;,
+## #   geodeticDatum &lt;chr&gt;, eventID &lt;chr&gt;, coordinateUncertaintyInMeters &lt;dbl&gt;</code></pre>
+<p>Notice how we went from 29 rows down to 19 rows by only selecting specific the location_class.</p>
 </div>
-<div id="mobilized-data-endpoints" class="section level3 hasAnchor" number="2.6.5">
-<h3><span class="header-section-number">2.6.5</span> Mobilized data endpoints<a href="applications.html#mobilized-data-endpoints" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="create-a-datageneralizations-column-to-describe-how-many-duplicates-were-found-for-each-deprecation-series" class="section level5 hasAnchor" number="2.6.2.1.2">
+<h5><span class="header-section-number">2.6.2.1.2</span> Create a dataGeneralizations column to describe how many duplicates were found for each deprecation series<a href="applications.html#create-a-datageneralizations-column-to-describe-how-many-duplicates-were-found-for-each-deprecation-series" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>Add a <code>dataGeneralizations</code> column containing a string like ‘first of # records’ to indicate there are more records in the raw dataset to be discovered by the super-curious.</p>
+<p>The dataGeneralizations string is compiled by counting the number of consecutive duplicates and inserting that into a standard string. That string is “first of [n] records” which will make more sense once we’ve filtered down to keep the first occurrence of the hour.</p>
+<p>The next step below this, we filter out only the first observation of the hour.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="applications.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sort by date</span></span>
+<span id="cb65-2"><a href="applications.html#cb65-2" aria-hidden="true" tabindex="-1"></a>occurrencedf <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(eventDate)</span>
+<span id="cb65-3"><a href="applications.html#cb65-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-4"><a href="applications.html#cb65-4" aria-hidden="true" tabindex="-1"></a>occurrencedf <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span></span>
+<span id="cb65-5"><a href="applications.html#cb65-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">eventDateHrs =</span> <span class="fu">format</span>(<span class="fu">as.POSIXct</span>(eventDate, <span class="at">format=</span><span class="st">&quot;%Y-%m-%dT%H:%M:%SZ&quot;</span>),<span class="st">&quot;%Y-%m-%dT%H&quot;</span>)</span>
+<span id="cb65-6"><a href="applications.html#cb65-6" aria-hidden="true" tabindex="-1"></a>           ) <span class="sc">%&gt;%</span></span>
+<span id="cb65-7"><a href="applications.html#cb65-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_count</span>(eventDateHrs) <span class="sc">%&gt;%</span></span>
+<span id="cb65-8"><a href="applications.html#cb65-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">dataGeneralizations =</span> <span class="fu">case_when</span>(n <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb65-9"><a href="applications.html#cb65-9" aria-hidden="true" tabindex="-1"></a>                                           <span class="cn">TRUE</span> <span class="sc">~</span> <span class="fu">paste</span>(<span class="st">&quot;first of &quot;</span>, n ,<span class="st">&quot;records&quot;</span>)</span>
+<span id="cb65-10"><a href="applications.html#cb65-10" aria-hidden="true" tabindex="-1"></a>                                           )</span>
+<span id="cb65-11"><a href="applications.html#cb65-11" aria-hidden="true" tabindex="-1"></a>           ) <span class="sc">%&gt;%</span></span>
+<span id="cb65-12"><a href="applications.html#cb65-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>n)</span>
+<span id="cb65-13"><a href="applications.html#cb65-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-14"><a href="applications.html#cb65-14" aria-hidden="true" tabindex="-1"></a>occurrencedf</span></code></pre></div>
+<pre><code>## # A tibble: 19 × 25
+##    eventDate       decimalLatitude decimalLongitude basisOfRecord location_class
+##    &lt;chr&gt;                     &lt;dbl&gt;            &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;         
+##  1 2009-09-23T00:…            34.0            -119. HumanObserva… nan           
+##  2 2009-09-25T11:…            34.0            -119. MachineObser… 1             
+##  3 2009-09-25T11:…            34.0            -119. MachineObser… 0             
+##  4 2009-09-27T17:…            34.0            -119. MachineObser… 1             
+##  5 2009-10-08T20:…            34.0            -119. MachineObser… 2             
+##  6 2009-10-15T11:…            34.0            -119. MachineObser… 0             
+##  7 2009-10-17T06:…            34.0            -119. MachineObser… 0             
+##  8 2009-10-17T09:…            34.0            -119. MachineObser… 2             
+##  9 2009-10-17T10:…            34.0            -119. MachineObser… 3             
+## 10 2009-10-18T08:…            34.0            -119. MachineObser… 1             
+## 11 2009-10-18T10:…            34.0            -119. MachineObser… 2             
+## 12 2009-10-18T11:…            34.0            -119. MachineObser… 0             
+## 13 2009-10-23T23:…            34.0            -119. MachineObser… 2             
+## 14 2009-10-24T00:…            34.0            -119. MachineObser… 0             
+## 15 2009-10-26T10:…            34.0            -119. MachineObser… 3             
+## 16 2009-10-27T16:…            34.0            -119. MachineObser… 1             
+## 17 2009-10-27T16:…            34.0            -119. MachineObser… 2             
+## 18 2009-10-29T11:…            34.0            -119. MachineObser… 2             
+## 19 2009-10-31T21:…            34.0            -119. MachineObser… 0             
+## # ℹ 20 more variables: qartod_time_flag &lt;int&gt;, qartod_speed_flag &lt;int&gt;,
+## #   qartod_location_flag &lt;int&gt;, qartod_rollup_flag &lt;int&gt;, kingdom &lt;chr&gt;,
+## #   taxonRank &lt;chr&gt;, occurrenceStatus &lt;chr&gt;, sex &lt;chr&gt;, lifeStage &lt;chr&gt;,
+## #   scientificName &lt;chr&gt;, scientificNameID &lt;chr&gt;, minimumDepthInMeters &lt;int&gt;,
+## #   maximumDepthInMeters &lt;int&gt;, organismID &lt;chr&gt;, occurrenceID &lt;chr&gt;,
+## #   geodeticDatum &lt;chr&gt;, eventID &lt;chr&gt;, coordinateUncertaintyInMeters &lt;dbl&gt;,
+## #   eventDateHrs &lt;chr&gt;, dataGeneralizations &lt;chr&gt;</code></pre>
+</div>
+<div id="decimate-occurrences-down-to-the-first-detectionlocation-per-hour" class="section level5 hasAnchor" number="2.6.2.1.3">
+<h5><span class="header-section-number">2.6.2.1.3</span> Decimate occurrences down to the first detection/location per hour<a href="applications.html#decimate-occurrences-down-to-the-first-detectionlocation-per-hour" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>Here we’ve done the decimation in Python: <a href="https://gist.github.com/MathewBiddle/d434ac2b538b2728aa80c6a7945f94be" class="uri">https://gist.github.com/MathewBiddle/d434ac2b538b2728aa80c6a7945f94be</a></p>
+<p>Essentially we build a new colum that is the date plus the two digit hour. Then we find where that column has duplicates and keep the first entry.</p>
+<p>In R, we do something slightly different as we only keep the distinct (ie. unique) rows and if there are duplicates, pick the first row of the duplicate.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="applications.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sort by date</span></span>
+<span id="cb67-2"><a href="applications.html#cb67-2" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(eventDate)</span>
+<span id="cb67-3"><a href="applications.html#cb67-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-4"><a href="applications.html#cb67-4" aria-hidden="true" tabindex="-1"></a><span class="co"># filter table to only unique date + hour and pick the first row.</span></span>
+<span id="cb67-5"><a href="applications.html#cb67-5" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec <span class="ot">&lt;-</span> <span class="fu">distinct</span>(occurrencedf_dec,eventDateHrs,<span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb67-6"><a href="applications.html#cb67-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>eventDateHrs)</span>
+<span id="cb67-7"><a href="applications.html#cb67-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-8"><a href="applications.html#cb67-8" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec</span></code></pre></div>
+<pre><code>## # A tibble: 17 × 24
+##    eventDate       decimalLatitude decimalLongitude basisOfRecord location_class
+##    &lt;chr&gt;                     &lt;dbl&gt;            &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;         
+##  1 2009-09-23T00:…            34.0            -119. HumanObserva… nan           
+##  2 2009-09-25T11:…            34.0            -119. MachineObser… 1             
+##  3 2009-09-27T17:…            34.0            -119. MachineObser… 1             
+##  4 2009-10-08T20:…            34.0            -119. MachineObser… 2             
+##  5 2009-10-15T11:…            34.0            -119. MachineObser… 0             
+##  6 2009-10-17T06:…            34.0            -119. MachineObser… 0             
+##  7 2009-10-17T09:…            34.0            -119. MachineObser… 2             
+##  8 2009-10-17T10:…            34.0            -119. MachineObser… 3             
+##  9 2009-10-18T08:…            34.0            -119. MachineObser… 1             
+## 10 2009-10-18T10:…            34.0            -119. MachineObser… 2             
+## 11 2009-10-18T11:…            34.0            -119. MachineObser… 0             
+## 12 2009-10-23T23:…            34.0            -119. MachineObser… 2             
+## 13 2009-10-24T00:…            34.0            -119. MachineObser… 0             
+## 14 2009-10-26T10:…            34.0            -119. MachineObser… 3             
+## 15 2009-10-27T16:…            34.0            -119. MachineObser… 1             
+## 16 2009-10-29T11:…            34.0            -119. MachineObser… 2             
+## 17 2009-10-31T21:…            34.0            -119. MachineObser… 0             
+## # ℹ 19 more variables: qartod_time_flag &lt;int&gt;, qartod_speed_flag &lt;int&gt;,
+## #   qartod_location_flag &lt;int&gt;, qartod_rollup_flag &lt;int&gt;, kingdom &lt;chr&gt;,
+## #   taxonRank &lt;chr&gt;, occurrenceStatus &lt;chr&gt;, sex &lt;chr&gt;, lifeStage &lt;chr&gt;,
+## #   scientificName &lt;chr&gt;, scientificNameID &lt;chr&gt;, minimumDepthInMeters &lt;int&gt;,
+## #   maximumDepthInMeters &lt;int&gt;, organismID &lt;chr&gt;, occurrenceID &lt;chr&gt;,
+## #   geodeticDatum &lt;chr&gt;, eventID &lt;chr&gt;, coordinateUncertaintyInMeters &lt;dbl&gt;,
+## #   dataGeneralizations &lt;chr&gt;</code></pre>
+<p>Notice that we have gone from 19 rows to 17 rows. Removing rows observed on <code>2009-09-25T11:11:00Z</code> and <code>2009-10-27T16:22:00Z</code> as they were the second points within that specifc hour.</p>
+</div>
+<div id="filter-on-qartod-flags" class="section level5 hasAnchor" number="2.6.2.1.4">
+<h5><span class="header-section-number">2.6.2.1.4</span> Filter on QARTOD flags?<a href="applications.html#filter-on-qartod-flags" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>We also have QARTOD flags and they are as follows:</p>
+<table>
+<thead>
+<tr class="header">
+<th>value</th>
+<th>meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>PASS</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>NOT_EVALUATED</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>SUSPECT</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>FAIL</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>MISSING</td>
+</tr>
+</tbody>
+</table>
+<p>The QARTOD tests are:</p>
+<table>
+<thead>
+<tr class="header">
+<th>variable</th>
+<th>long_name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>qartod_time_flag</td>
+<td>Time QC test - gross range test</td>
+</tr>
+<tr class="even">
+<td>qartod_speed_flag</td>
+<td>Speed QC test - gross range test</td>
+</tr>
+<tr class="odd">
+<td>qartod_location_flag</td>
+<td>Location QC test - Location test</td>
+</tr>
+<tr class="even">
+<td>qartod_rollup_flag</td>
+<td>Aggregate QC value</td>
+</tr>
+</tbody>
+</table>
+<p>I’m not sure what to do here. My preference would be to include all rows where <code>qartod_rollup_flag</code> == 1 and drop the rest. But I’m open to suggestions.</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="applications.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># perform filter but don&#39;t save it.</span></span>
+<span id="cb69-2"><a href="applications.html#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(occurrencedf_dec, qartod_rollup_flag <span class="sc">==</span> <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 16 × 24
+##    eventDate       decimalLatitude decimalLongitude basisOfRecord location_class
+##    &lt;chr&gt;                     &lt;dbl&gt;            &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;         
+##  1 2009-09-23T00:…            34.0            -119. HumanObserva… nan           
+##  2 2009-09-27T17:…            34.0            -119. MachineObser… 1             
+##  3 2009-10-08T20:…            34.0            -119. MachineObser… 2             
+##  4 2009-10-15T11:…            34.0            -119. MachineObser… 0             
+##  5 2009-10-17T06:…            34.0            -119. MachineObser… 0             
+##  6 2009-10-17T09:…            34.0            -119. MachineObser… 2             
+##  7 2009-10-17T10:…            34.0            -119. MachineObser… 3             
+##  8 2009-10-18T08:…            34.0            -119. MachineObser… 1             
+##  9 2009-10-18T10:…            34.0            -119. MachineObser… 2             
+## 10 2009-10-18T11:…            34.0            -119. MachineObser… 0             
+## 11 2009-10-23T23:…            34.0            -119. MachineObser… 2             
+## 12 2009-10-24T00:…            34.0            -119. MachineObser… 0             
+## 13 2009-10-26T10:…            34.0            -119. MachineObser… 3             
+## 14 2009-10-27T16:…            34.0            -119. MachineObser… 1             
+## 15 2009-10-29T11:…            34.0            -119. MachineObser… 2             
+## 16 2009-10-31T21:…            34.0            -119. MachineObser… 0             
+## # ℹ 19 more variables: qartod_time_flag &lt;int&gt;, qartod_speed_flag &lt;int&gt;,
+## #   qartod_location_flag &lt;int&gt;, qartod_rollup_flag &lt;int&gt;, kingdom &lt;chr&gt;,
+## #   taxonRank &lt;chr&gt;, occurrenceStatus &lt;chr&gt;, sex &lt;chr&gt;, lifeStage &lt;chr&gt;,
+## #   scientificName &lt;chr&gt;, scientificNameID &lt;chr&gt;, minimumDepthInMeters &lt;int&gt;,
+## #   maximumDepthInMeters &lt;int&gt;, organismID &lt;chr&gt;, occurrenceID &lt;chr&gt;,
+## #   geodeticDatum &lt;chr&gt;, eventID &lt;chr&gt;, coordinateUncertaintyInMeters &lt;dbl&gt;,
+## #   dataGeneralizations &lt;chr&gt;</code></pre>
+<p>Drop the quality flag columns to align with DarwinCore standard.</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="applications.html#cb71-1" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec <span class="ot">&lt;-</span> occurrencedf_dec <span class="sc">%&gt;%</span></span>
+<span id="cb71-2"><a href="applications.html#cb71-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(</span>
+<span id="cb71-3"><a href="applications.html#cb71-3" aria-hidden="true" tabindex="-1"></a>        <span class="sc">-</span><span class="fu">c</span>(location_class,</span>
+<span id="cb71-4"><a href="applications.html#cb71-4" aria-hidden="true" tabindex="-1"></a>           qartod_time_flag,</span>
+<span id="cb71-5"><a href="applications.html#cb71-5" aria-hidden="true" tabindex="-1"></a>           qartod_speed_flag,</span>
+<span id="cb71-6"><a href="applications.html#cb71-6" aria-hidden="true" tabindex="-1"></a>           qartod_location_flag,</span>
+<span id="cb71-7"><a href="applications.html#cb71-7" aria-hidden="true" tabindex="-1"></a>           qartod_rollup_flag</span>
+<span id="cb71-8"><a href="applications.html#cb71-8" aria-hidden="true" tabindex="-1"></a>           ))</span>
+<span id="cb71-9"><a href="applications.html#cb71-9" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb71-10"><a href="applications.html#cb71-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(occurrencedf_dec)</span></code></pre></div>
+<pre><code>##  [1] &quot;eventDate&quot;                     &quot;decimalLatitude&quot;              
+##  [3] &quot;decimalLongitude&quot;              &quot;basisOfRecord&quot;                
+##  [5] &quot;kingdom&quot;                       &quot;taxonRank&quot;                    
+##  [7] &quot;occurrenceStatus&quot;              &quot;sex&quot;                          
+##  [9] &quot;lifeStage&quot;                     &quot;scientificName&quot;               
+## [11] &quot;scientificNameID&quot;              &quot;minimumDepthInMeters&quot;         
+## [13] &quot;maximumDepthInMeters&quot;          &quot;organismID&quot;                   
+## [15] &quot;occurrenceID&quot;                  &quot;geodeticDatum&quot;                
+## [17] &quot;eventID&quot;                       &quot;coordinateUncertaintyInMeters&quot;
+## [19] &quot;dataGeneralizations&quot;</code></pre>
+</div>
+</div>
+<div id="add-ncei-url-to-references" class="section level4 hasAnchor" number="2.6.2.2">
+<h4><span class="header-section-number">2.6.2.2</span> Add NCEI URL to references<a href="applications.html#add-ncei-url-to-references" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>For full transparency, we will add the Darwin Core term references to provide the URL to the NCEI landing page, where the full dataset can be accessed by curious users.</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="applications.html#cb73-1" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec<span class="sc">$</span>references <span class="ot">&lt;-</span> <span class="st">&quot;https://www.ncei.noaa.gov/archive/accession/0282699&quot;</span></span>
+<span id="cb73-2"><a href="applications.html#cb73-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-3"><a href="applications.html#cb73-3" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec</span></code></pre></div>
+<pre><code>## # A tibble: 17 × 20
+##    eventDate    decimalLatitude decimalLongitude basisOfRecord kingdom taxonRank
+##    &lt;chr&gt;                  &lt;dbl&gt;            &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;   &lt;chr&gt;    
+##  1 2009-09-23T…            34.0            -119. HumanObserva… Animal… Species  
+##  2 2009-09-25T…            34.0            -119. MachineObser… Animal… Species  
+##  3 2009-09-27T…            34.0            -119. MachineObser… Animal… Species  
+##  4 2009-10-08T…            34.0            -119. MachineObser… Animal… Species  
+##  5 2009-10-15T…            34.0            -119. MachineObser… Animal… Species  
+##  6 2009-10-17T…            34.0            -119. MachineObser… Animal… Species  
+##  7 2009-10-17T…            34.0            -119. MachineObser… Animal… Species  
+##  8 2009-10-17T…            34.0            -119. MachineObser… Animal… Species  
+##  9 2009-10-18T…            34.0            -119. MachineObser… Animal… Species  
+## 10 2009-10-18T…            34.0            -119. MachineObser… Animal… Species  
+## 11 2009-10-18T…            34.0            -119. MachineObser… Animal… Species  
+## 12 2009-10-23T…            34.0            -119. MachineObser… Animal… Species  
+## 13 2009-10-24T…            34.0            -119. MachineObser… Animal… Species  
+## 14 2009-10-26T…            34.0            -119. MachineObser… Animal… Species  
+## 15 2009-10-27T…            34.0            -119. MachineObser… Animal… Species  
+## 16 2009-10-29T…            34.0            -119. MachineObser… Animal… Species  
+## 17 2009-10-31T…            34.0            -119. MachineObser… Animal… Species  
+## # ℹ 14 more variables: occurrenceStatus &lt;chr&gt;, sex &lt;chr&gt;, lifeStage &lt;chr&gt;,
+## #   scientificName &lt;chr&gt;, scientificNameID &lt;chr&gt;, minimumDepthInMeters &lt;int&gt;,
+## #   maximumDepthInMeters &lt;int&gt;, organismID &lt;chr&gt;, occurrenceID &lt;chr&gt;,
+## #   geodeticDatum &lt;chr&gt;, eventID &lt;chr&gt;, coordinateUncertaintyInMeters &lt;dbl&gt;,
+## #   dataGeneralizations &lt;chr&gt;, references &lt;chr&gt;</code></pre>
+<div id="write-decimated-occurrence-file-as-csv" class="section level5 hasAnchor" number="2.6.2.2.1">
+<h5><span class="header-section-number">2.6.2.2.1</span> Write decimated occurrence file as csv<a href="applications.html#write-decimated-occurrence-file-as-csv" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="applications.html#cb75-1" aria-hidden="true" tabindex="-1"></a>tag_id <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">&quot;NC_GLOBAL&quot;</span> <span class="sc">&amp;</span> name <span class="sc">==</span> <span class="st">&quot;ptt_id&quot;</span>)</span>
+<span id="cb75-2"><a href="applications.html#cb75-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-3"><a href="applications.html#cb75-3" aria-hidden="true" tabindex="-1"></a>file_name_occur <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&#39;data/dwc/atn_&#39;</span>,tag_id<span class="sc">$</span>value,<span class="st">&#39;_occurrence.csv&#39;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb75-4"><a href="applications.html#cb75-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-5"><a href="applications.html#cb75-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(occurrencedf_dec, <span class="at">file=</span>file_name_occur, <span class="at">row.names=</span><span class="cn">FALSE</span>, <span class="at">fileEncoding=</span><span class="st">&quot;UTF-8&quot;</span>, <span class="at">quote=</span><span class="cn">TRUE</span>, <span class="at">na=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="measurement-or-fact" class="section level4 hasAnchor" number="2.6.2.3">
+<h4><span class="header-section-number">2.6.2.3</span> Measurement or Fact<a href="applications.html#measurement-or-fact" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Since we do have any additional observations, we can create a measurement or fact file to include those data. Might be worthwhile to include tag/device metadata, some of the animal measurements, and the detachment information. Each term should have a definition URI.</p>
+<p>The measurementOrFact file will only contain information referencing the <code>basisOfRecord</code> = <code>HumanObservation</code> as these observations were made when the animal was directly tagged, in person (ie. when <code>basisOfRecord</code> == <code>HumanObservation</code>).</p>
+<table>
+<colgroup>
+<col width="51%" />
+<col width="25%" />
+<col width="22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>DarwinCore Term</th>
+<th>Status</th>
+<th>netCDF</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>organismID</td>
+<td></td>
+<td>The <code>platform_id</code> global attribute plus the <code>animal_common_name</code> global attribute.</td>
+</tr>
+<tr class="even">
+<td>occurrenceID</td>
+<td>Required</td>
+<td><code>eventDate</code>, plus data contained in <code>z</code> variable, plus <code>animal_common_name</code> global attribute.</td>
+</tr>
+<tr class="odd">
+<td>measurementType</td>
+<td>Required</td>
+<td><code>long_name</code> attribute of the <code>animal_weight</code>, <code>animal_length</code>, <code>animal_length_2</code> variables.</td>
+</tr>
+<tr class="even">
+<td>measurementValue</td>
+<td>Required</td>
+<td>The data from the <code>animal_weight</code>, <code>animal_length</code>, <code>animal_length_2</code> variables.</td>
+</tr>
+<tr class="odd">
+<td>eventID</td>
+<td>Strongly Recommended</td>
+<td><code>animal_common_name</code> global attribute plus the <code>eventDate</code>.</td>
+</tr>
+<tr class="even">
+<td>measurementUnit</td>
+<td>Strongly Recommended</td>
+<td><code>unit</code> attribute of the <code>animal_weight</code>, <code>animal_length</code>, <code>animal_length_2</code> variables.</td>
+</tr>
+<tr class="odd">
+<td>measurementMethod</td>
+<td>Strongly Recommended</td>
+<td><code>animal_weight</code>, <code>animal_length</code>, <code>animal_length_2</code> attributes of their respective variables.</td>
+</tr>
+<tr class="even">
+<td>measurementTypeID</td>
+<td>Strongly Recommended</td>
+<td>mapping table somewhere?</td>
+</tr>
+<tr class="odd">
+<td>measurementMethodID</td>
+<td>Strongly Recommended</td>
+<td>mapping table somewhere?</td>
+</tr>
+<tr class="even">
+<td>measurementUnitID</td>
+<td>Strongly Recommended</td>
+<td>mapping table somewhere?</td>
+</tr>
+<tr class="odd">
+<td>measurementAccuracy</td>
+<td>Share if available</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>measurementDeterminedDate</td>
+<td>Share if available</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>measurementDeterminedBy</td>
+<td>Share if available</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>measurementRemarks</td>
+<td>Share if available</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>measurementValueID</td>
+<td>Share if available</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div id="extracting-variables-for-extended-measurement-or-fact-emof" class="section level5 hasAnchor" number="2.6.2.3.1">
+<h5><span class="header-section-number">2.6.2.3.1</span> Extracting variables for Extended Measurement Or Fact (eMOF)<a href="applications.html#extracting-variables-for-extended-measurement-or-fact-emof" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>Here there are two approaches to transforming a variable to the eMOF Darwin Core extension. The goal is to collapse the measurement name, value, unit, related identifiers and remarks into a generalized long format that can be linked to occurrences and events. For more info see:</p>
+<ol style="list-style-type: decimal">
+<li><a href="https://manual.obis.org/format_emof.html">The OBIS manual</a></li>
+<li>The <a href="https://ioos.github.io/bio_mobilization_workshop/04-create-schema/index.html">Marine Biological Data Mobilization Workshop 2023</a> (SF:Not sure if it’s cool to reference the workshop like this)</li>
+</ol>
+<p>The first several lines of the below code show an example of pulling out the variable attributes and individually mapping them to the eMOF terms. However, this can be done more efficiently (although less readable) via this chunk of code:</p>
+<pre><code># Supply vector of variable names
+c(&quot;animal_length&quot;,
+  &quot;animal_length_2&quot;,
+  &quot;animal_weight&quot;) %&gt;%
+
+      # Create a named list of the variable attributes and convert it into a data frame, for each name in the above vector.
+      purrr::map_df(function(x) {
+        0list(measurementValue = ncvar_get( nc, x),
+             measurementType = ncatt_get( nc, x)$long_name,
+             measurementUnit = ncatt_get( nc, x)$units,
+             measurementMethod = ncatt_get( nc, x)[[paste0(x,&#39;_type&#39;)]])
+        })</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="applications.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Measurement or Fact extension</span></span>
+<span id="cb77-2"><a href="applications.html#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="co"># # Need to find the occurrence where basisOfRecord == HumanObservation, then pull the organism.</span></span>
+<span id="cb77-3"><a href="applications.html#cb77-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-4"><a href="applications.html#cb77-4" aria-hidden="true" tabindex="-1"></a>emof_data <span class="ot">&lt;-</span> <span class="co">#var_names %&gt;%</span></span>
+<span id="cb77-5"><a href="applications.html#cb77-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#filter(str_starts(name, pattern = &quot;animal_[lw]e&quot;)) %&gt;% #example using regex to parse names</span></span>
+<span id="cb77-6"><a href="applications.html#cb77-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#    pull(name) %&gt;%</span></span>
+<span id="cb77-7"><a href="applications.html#cb77-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-8"><a href="applications.html#cb77-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Example using vector of variables</span></span>
+<span id="cb77-9"><a href="applications.html#cb77-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">&quot;animal_length&quot;</span>,</span>
+<span id="cb77-10"><a href="applications.html#cb77-10" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;animal_length_2&quot;</span>,</span>
+<span id="cb77-11"><a href="applications.html#cb77-11" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;animal_weight&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb77-12"><a href="applications.html#cb77-12" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">map_df</span>(<span class="cf">function</span>(x) {</span>
+<span id="cb77-13"><a href="applications.html#cb77-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">list</span>(<span class="at">measurementValue =</span> <span class="fu">ncvar_get</span>( nc, x),</span>
+<span id="cb77-14"><a href="applications.html#cb77-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">measurementType =</span> <span class="fu">ncatt_get</span>( nc, x)<span class="sc">$</span>long_name,</span>
+<span id="cb77-15"><a href="applications.html#cb77-15" aria-hidden="true" tabindex="-1"></a>             <span class="at">measurementUnit =</span> <span class="fu">ncatt_get</span>( nc, x)<span class="sc">$</span>units,</span>
+<span id="cb77-16"><a href="applications.html#cb77-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">measurementMethod =</span> <span class="fu">ncatt_get</span>( nc, x)[[<span class="fu">paste0</span>(x,<span class="st">&#39;_type&#39;</span>)]])</span>
+<span id="cb77-17"><a href="applications.html#cb77-17" aria-hidden="true" tabindex="-1"></a>    }) <span class="sc">%&gt;%</span></span>
+<span id="cb77-18"><a href="applications.html#cb77-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb77-19"><a href="applications.html#cb77-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(measurementValue <span class="sc">!=</span> <span class="st">&quot;NaN&quot;</span>)</span>
+<span id="cb77-20"><a href="applications.html#cb77-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-21"><a href="applications.html#cb77-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-22"><a href="applications.html#cb77-22" aria-hidden="true" tabindex="-1"></a>emofdf <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span></span>
+<span id="cb77-23"><a href="applications.html#cb77-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(basisOfRecord <span class="sc">==</span> <span class="st">&#39;HumanObservation&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb77-24"><a href="applications.html#cb77-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(organismID, eventID, occurrenceID) <span class="sc">%&gt;%</span></span>
+<span id="cb77-25"><a href="applications.html#cb77-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cbind</span>(emof_data)</span>
+<span id="cb77-26"><a href="applications.html#cb77-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-27"><a href="applications.html#cb77-27" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(emofdf)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    1 obs. of  7 variables:
+##  $ organismID       : chr &quot;105838_great_white_shark&quot;
+##  $ eventID          : chr &quot;great_white shark_2009-09-23T00:00:00Z&quot;
+##  $ occurrenceID     : chr &quot;2009-09-23T00:00:00Z_0_great_white_shark&quot;
+##  $ measurementValue : num 213
+##  $ measurementType  : chr &quot;length of the animal as measured or estimated at deployment&quot;
+##  $ measurementUnit  : chr &quot;cm&quot;
+##  $ measurementMethod: chr &quot;total length&quot;</code></pre>
+</div>
+<div id="write-emof-file-as-csv" class="section level5 hasAnchor" number="2.6.2.3.2">
+<h5><span class="header-section-number">2.6.2.3.2</span> Write emof file as csv<a href="applications.html#write-emof-file-as-csv" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="applications.html#cb79-1" aria-hidden="true" tabindex="-1"></a>tag_id <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">&quot;NC_GLOBAL&quot;</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">&quot;ptt_id&quot;</span>)</span>
+<span id="cb79-2"><a href="applications.html#cb79-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-3"><a href="applications.html#cb79-3" aria-hidden="true" tabindex="-1"></a>file_name_emof <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&#39;data/dwc/atn_&#39;</span>,tag_id<span class="sc">$</span>value,<span class="st">&#39;_emof.csv&#39;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb79-4"><a href="applications.html#cb79-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-5"><a href="applications.html#cb79-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(emofdf, <span class="at">file=</span>file_name_emof, <span class="at">row.names=</span><span class="cn">FALSE</span>, <span class="at">fileEncoding=</span><span class="st">&quot;UTF-8&quot;</span>, <span class="at">quote=</span><span class="cn">TRUE</span>, <span class="at">na=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="metadata-creation" class="section level4 hasAnchor" number="2.6.2.4">
+<h4><span class="header-section-number">2.6.2.4</span> Metadata creation<a href="applications.html#metadata-creation" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Now that we know our data are aligned to Darwin Core, we can start collecting metadata. Using the R package <a href="https://docs.ropensci.org/EML/">EML</a> we can create the EML metadata to associate with the data above.</p>
+<p>Some good sources to help identify what requirements we need in the EML metadata can be found at:</p>
 <ul>
-<li>GBIF - <a href="https://www.gbif.org/dataset/b3fc1d76-a50d-4a57-a2f3-425adfc59f9f" class="uri">https://www.gbif.org/dataset/b3fc1d76-a50d-4a57-a2f3-425adfc59f9f</a></li>
-<li>OBIS - <a href="https://obis.org/dataset/7a4427f6-67ee-4cc1-b95f-3045523420a1" class="uri">https://obis.org/dataset/7a4427f6-67ee-4cc1-b95f-3045523420a1</a></li>
-<li>OBIS-USA IPT - <a href="https://ipt-obis.gbif.us/resource?r=noaa_sanctsound_daily_species" class="uri">https://ipt-obis.gbif.us/resource?r=noaa_sanctsound_daily_species</a></li>
+<li><p><a href="https://github.com/gbif/ipt/wiki/GMPHowToGuide" class="uri">https://github.com/gbif/ipt/wiki/GMPHowToGuide</a></p></li>
+<li><p><a href="https://github.com/gbif/ipt/wiki/GMPHowToGuide#dataset-resource" class="uri">https://github.com/gbif/ipt/wiki/GMPHowToGuide#dataset-resource</a></p></li>
 </ul>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="applications.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(EML)</span></span></code></pre></div>
+<p>The first thing we need to do is collect all of the relevant pieces of metadata for our EML record.</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="applications.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># me &lt;- list(individualName = list(givenName = &quot;Matt&quot;, surName = &quot;Biddle&quot;))</span></span>
+<span id="cb81-2"><a href="applications.html#cb81-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-3"><a href="applications.html#cb81-3" aria-hidden="true" tabindex="-1"></a><span class="co"># my_eml &lt;- list(dataset = list(</span></span>
+<span id="cb81-4"><a href="applications.html#cb81-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-5"><a href="applications.html#cb81-5" aria-hidden="true" tabindex="-1"></a><span class="co">#                           title = &quot;A Minimal Valid EML Dataset&quot;,</span></span>
+<span id="cb81-6"><a href="applications.html#cb81-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-7"><a href="applications.html#cb81-7" aria-hidden="true" tabindex="-1"></a><span class="co">#                           creator = me,</span></span>
+<span id="cb81-8"><a href="applications.html#cb81-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-9"><a href="applications.html#cb81-9" aria-hidden="true" tabindex="-1"></a><span class="co">#                           contact = me</span></span>
+<span id="cb81-10"><a href="applications.html#cb81-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-11"><a href="applications.html#cb81-11" aria-hidden="true" tabindex="-1"></a><span class="co">#                             )</span></span>
+<span id="cb81-12"><a href="applications.html#cb81-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-13"><a href="applications.html#cb81-13" aria-hidden="true" tabindex="-1"></a><span class="co">#                 )</span></span></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="applications.html#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co"># geographicDescription &lt;- metadata %&gt;% dplyr::filter(variable == &quot;NC_GLOBAL&quot;) %&gt;% dplyr::filter(name == &quot;sea_name&quot;)</span></span>
+<span id="cb82-2"><a href="applications.html#cb82-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-3"><a href="applications.html#cb82-3" aria-hidden="true" tabindex="-1"></a><span class="co"># west &lt;- metadata %&gt;% dplyr::filter(variable == &quot;NC_GLOBAL&quot;) %&gt;% dplyr::filter(name == &quot;geospatial_lon_min&quot;)</span></span>
+<span id="cb82-4"><a href="applications.html#cb82-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-5"><a href="applications.html#cb82-5" aria-hidden="true" tabindex="-1"></a><span class="co"># east &lt;- metadata %&gt;% dplyr::filter(variable == &quot;NC_GLOBAL&quot;) %&gt;% dplyr::filter(name == &quot;geospatial_lon_max&quot;)</span></span>
+<span id="cb82-6"><a href="applications.html#cb82-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-7"><a href="applications.html#cb82-7" aria-hidden="true" tabindex="-1"></a><span class="co"># north &lt;- metadata %&gt;% dplyr::filter(variable == &quot;NC_GLOBAL&quot;) %&gt;% dplyr::filter(name == &quot;geospatial_lat_max&quot;)</span></span>
+<span id="cb82-8"><a href="applications.html#cb82-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-9"><a href="applications.html#cb82-9" aria-hidden="true" tabindex="-1"></a><span class="co"># south &lt;- metadata %&gt;% dplyr::filter(variable == &quot;NC_GLOBAL&quot;) %&gt;% dplyr::filter(name == &quot;geospatial_lat_min&quot;)</span></span>
+<span id="cb82-10"><a href="applications.html#cb82-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-11"><a href="applications.html#cb82-11" aria-hidden="true" tabindex="-1"></a><span class="co"># altitudeMin &lt;- metadata %&gt;% dplyr::filter(variable == &quot;NC_GLOBAL&quot;) %&gt;% dplyr::filter(name == &quot;geospatial_vertical_min&quot;)</span></span>
+<span id="cb82-12"><a href="applications.html#cb82-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-13"><a href="applications.html#cb82-13" aria-hidden="true" tabindex="-1"></a><span class="co"># altitudeMax &lt;- metadata %&gt;% dplyr::filter(variable == &quot;NC_GLOBAL&quot;) %&gt;% dplyr::filter(name == &quot;geospatial_vertical_max&quot;)</span></span>
+<span id="cb82-14"><a href="applications.html#cb82-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-15"><a href="applications.html#cb82-15" aria-hidden="true" tabindex="-1"></a><span class="co"># altitudeUnits &lt;- metadata %&gt;% dplyr::filter(variable == &quot;NC_GLOBAL&quot;) %&gt;% dplyr::filter(name == &quot;geospatial_vertical_units&quot;)</span></span>
+<span id="cb82-16"><a href="applications.html#cb82-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-17"><a href="applications.html#cb82-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-18"><a href="applications.html#cb82-18" aria-hidden="true" tabindex="-1"></a><span class="co"># coverage &lt;-</span></span>
+<span id="cb82-19"><a href="applications.html#cb82-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-20"><a href="applications.html#cb82-20" aria-hidden="true" tabindex="-1"></a><span class="co">#   set_coverage(begin = format(min(atn_tbl$time),&#39;%Y-%m-%d&#39;), end = format(max(atn_tbl$time), &#39;%Y-%m-%d&#39;),</span></span>
+<span id="cb82-21"><a href="applications.html#cb82-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-22"><a href="applications.html#cb82-22" aria-hidden="true" tabindex="-1"></a><span class="co">#                sci_names = RNetCDF::var.get.nc(RNetCDF::open.nc(&quot;atn_trajectory_template.nc&quot;), &quot;taxon_name&quot;),</span></span>
+<span id="cb82-23"><a href="applications.html#cb82-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-24"><a href="applications.html#cb82-24" aria-hidden="true" tabindex="-1"></a><span class="co">#                geographicDescription = paste(geographicDescription$value),</span></span>
+<span id="cb82-25"><a href="applications.html#cb82-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-26"><a href="applications.html#cb82-26" aria-hidden="true" tabindex="-1"></a><span class="co">#                west = paste(west$value),</span></span>
+<span id="cb82-27"><a href="applications.html#cb82-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-28"><a href="applications.html#cb82-28" aria-hidden="true" tabindex="-1"></a><span class="co">#                east = paste(east$value) ,</span></span>
+<span id="cb82-29"><a href="applications.html#cb82-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-30"><a href="applications.html#cb82-30" aria-hidden="true" tabindex="-1"></a><span class="co">#                north = paste(north$value) ,</span></span>
+<span id="cb82-31"><a href="applications.html#cb82-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-32"><a href="applications.html#cb82-32" aria-hidden="true" tabindex="-1"></a><span class="co">#                south = paste(south$value) ,</span></span>
+<span id="cb82-33"><a href="applications.html#cb82-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-34"><a href="applications.html#cb82-34" aria-hidden="true" tabindex="-1"></a><span class="co">#                altitudeMin = paste(altitudeMin$value),</span></span>
+<span id="cb82-35"><a href="applications.html#cb82-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-36"><a href="applications.html#cb82-36" aria-hidden="true" tabindex="-1"></a><span class="co">#                altitudeMaximum = paste(altitudeMax$value),</span></span>
+<span id="cb82-37"><a href="applications.html#cb82-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-38"><a href="applications.html#cb82-38" aria-hidden="true" tabindex="-1"></a><span class="co">#                altitudeUnits = ifelse (paste(altitudeUnits$value) == &#39;m&#39;, &quot;meter&quot;, &quot;?&quot;))</span></span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="applications.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creator_name &lt;- metadata %&gt;% dplyr::filter(variable == &quot;NC_GLOBAL&quot;) %&gt;% dplyr::filter(name == &quot;creator_name&quot;)</span></span>
+<span id="cb83-2"><a href="applications.html#cb83-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-3"><a href="applications.html#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="co"># creator_email &lt;- metadata %&gt;% dplyr::filter(variable == &quot;NC_GLOBAL&quot;) %&gt;% dplyr::filter(name == &quot;creator_email&quot;)</span></span>
+<span id="cb83-4"><a href="applications.html#cb83-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-5"><a href="applications.html#cb83-5" aria-hidden="true" tabindex="-1"></a><span class="co"># creator_sector &lt;- metadata %&gt;% dplyr::filter(variable == &quot;NC_GLOBAL&quot;) %&gt;% dplyr::filter(name == &quot;creator_sector&quot;)</span></span>
+<span id="cb83-6"><a href="applications.html#cb83-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-7"><a href="applications.html#cb83-7" aria-hidden="true" tabindex="-1"></a><span class="co"># creator &lt;- eml$creator(</span></span>
+<span id="cb83-8"><a href="applications.html#cb83-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-9"><a href="applications.html#cb83-9" aria-hidden="true" tabindex="-1"></a><span class="co">#             eml$individualName(</span></span>
+<span id="cb83-10"><a href="applications.html#cb83-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-11"><a href="applications.html#cb83-11" aria-hidden="true" tabindex="-1"></a><span class="co">#                 givenName = paste(creator_name$value),</span></span>
+<span id="cb83-12"><a href="applications.html#cb83-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-13"><a href="applications.html#cb83-13" aria-hidden="true" tabindex="-1"></a><span class="co">#                 surName = paste(creator_name$value)</span></span>
+<span id="cb83-14"><a href="applications.html#cb83-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-15"><a href="applications.html#cb83-15" aria-hidden="true" tabindex="-1"></a><span class="co">#                 ),</span></span>
+<span id="cb83-16"><a href="applications.html#cb83-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-17"><a href="applications.html#cb83-17" aria-hidden="true" tabindex="-1"></a><span class="co">#             position = paste(creator_sector$value),</span></span>
+<span id="cb83-18"><a href="applications.html#cb83-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-19"><a href="applications.html#cb83-19" aria-hidden="true" tabindex="-1"></a><span class="co">#             electronicMailAddress = paste(creator_email$value)</span></span>
+<span id="cb83-20"><a href="applications.html#cb83-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-21"><a href="applications.html#cb83-21" aria-hidden="true" tabindex="-1"></a><span class="co">#             )</span></span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="applications.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #contact_name = metadata %&gt;% dplyr::filter(variable == &quot;NC_GLOBAL&quot;) %&gt;% dplyr::filter(name == &quot;contact_name&quot;)</span></span>
+<span id="cb84-2"><a href="applications.html#cb84-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-3"><a href="applications.html#cb84-3" aria-hidden="true" tabindex="-1"></a><span class="co"># contact &lt;- eml$contact(</span></span>
+<span id="cb84-4"><a href="applications.html#cb84-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-5"><a href="applications.html#cb84-5" aria-hidden="true" tabindex="-1"></a><span class="co">#             eml$individualName(</span></span>
+<span id="cb84-6"><a href="applications.html#cb84-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-7"><a href="applications.html#cb84-7" aria-hidden="true" tabindex="-1"></a><span class="co">#             givenName = paste(creator_name$value),</span></span>
+<span id="cb84-8"><a href="applications.html#cb84-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-9"><a href="applications.html#cb84-9" aria-hidden="true" tabindex="-1"></a><span class="co">#             surName = paste(creator_name$value)),</span></span>
+<span id="cb84-10"><a href="applications.html#cb84-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-11"><a href="applications.html#cb84-11" aria-hidden="true" tabindex="-1"></a><span class="co">#             position = paste(creator_sector$value),</span></span>
+<span id="cb84-12"><a href="applications.html#cb84-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-13"><a href="applications.html#cb84-13" aria-hidden="true" tabindex="-1"></a><span class="co">#             electronicMailAddress = paste(creator_email$value)</span></span>
+<span id="cb84-14"><a href="applications.html#cb84-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-15"><a href="applications.html#cb84-15" aria-hidden="true" tabindex="-1"></a><span class="co">#             )</span></span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="applications.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #metadata_name</span></span>
+<span id="cb85-2"><a href="applications.html#cb85-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-3"><a href="applications.html#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="co"># metadataProvider &lt;- eml$metadataProvider(</span></span>
+<span id="cb85-4"><a href="applications.html#cb85-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-5"><a href="applications.html#cb85-5" aria-hidden="true" tabindex="-1"></a><span class="co">#             eml$individualName(</span></span>
+<span id="cb85-6"><a href="applications.html#cb85-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-7"><a href="applications.html#cb85-7" aria-hidden="true" tabindex="-1"></a><span class="co">#                 givenName = paste(creator_name$value),</span></span>
+<span id="cb85-8"><a href="applications.html#cb85-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-9"><a href="applications.html#cb85-9" aria-hidden="true" tabindex="-1"></a><span class="co">#                 surName = paste(creator_name$value)),</span></span>
+<span id="cb85-10"><a href="applications.html#cb85-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-11"><a href="applications.html#cb85-11" aria-hidden="true" tabindex="-1"></a><span class="co">#             position = paste(creator_sector$value),</span></span>
+<span id="cb85-12"><a href="applications.html#cb85-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-13"><a href="applications.html#cb85-13" aria-hidden="true" tabindex="-1"></a><span class="co">#             electronicMailAddress = paste(creator_email$value)</span></span>
+<span id="cb85-14"><a href="applications.html#cb85-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-15"><a href="applications.html#cb85-15" aria-hidden="true" tabindex="-1"></a><span class="co">#             )</span></span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="applications.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ## these are the entries in contributor, need to iterate since comma separated list.</span></span>
+<span id="cb86-2"><a href="applications.html#cb86-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-3"><a href="applications.html#cb86-3" aria-hidden="true" tabindex="-1"></a><span class="co"># contrib_name &lt;- metadata %&gt;% dplyr::filter(variable == &quot;NC_GLOBAL&quot;) %&gt;% dplyr::filter(name == &quot;contributor_name&quot;)</span></span>
+<span id="cb86-4"><a href="applications.html#cb86-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-5"><a href="applications.html#cb86-5" aria-hidden="true" tabindex="-1"></a><span class="co"># contrib_position &lt;- metadata %&gt;% dplyr::filter(variable == &quot;NC_GLOBAL&quot;) %&gt;% dplyr::filter(name == &quot;contributor_role&quot;)</span></span>
+<span id="cb86-6"><a href="applications.html#cb86-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-7"><a href="applications.html#cb86-7" aria-hidden="true" tabindex="-1"></a><span class="co"># contrib_email &lt;- metadata %&gt;% dplyr::filter(variable == &quot;NC_GLOBAL&quot;) %&gt;% dplyr::filter(name == &quot;contributor_email&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="applications.html#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># associatedParty &lt;- eml$associatedParty(</span></span>
+<span id="cb87-2"><a href="applications.html#cb87-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-3"><a href="applications.html#cb87-3" aria-hidden="true" tabindex="-1"></a><span class="co">#                     eml$individualName(</span></span>
+<span id="cb87-4"><a href="applications.html#cb87-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-5"><a href="applications.html#cb87-5" aria-hidden="true" tabindex="-1"></a><span class="co">#                     givenName = paste(contrib_name$value),</span></span>
+<span id="cb87-6"><a href="applications.html#cb87-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-7"><a href="applications.html#cb87-7" aria-hidden="true" tabindex="-1"></a><span class="co">#                     surName = paste(contrib_name$value)),</span></span>
+<span id="cb87-8"><a href="applications.html#cb87-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-9"><a href="applications.html#cb87-9" aria-hidden="true" tabindex="-1"></a><span class="co">#                     position = paste(contrib_position$value),</span></span>
+<span id="cb87-10"><a href="applications.html#cb87-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-11"><a href="applications.html#cb87-11" aria-hidden="true" tabindex="-1"></a><span class="co">#                     electronicMailAddress = paste(contrib_email$value)</span></span>
+<span id="cb87-12"><a href="applications.html#cb87-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-13"><a href="applications.html#cb87-13" aria-hidden="true" tabindex="-1"></a><span class="co">#                     )</span></span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="applications.html#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co"># abstract &lt;- metadata %&gt;% dplyr::filter(variable == &quot;NC_GLOBAL&quot;) %&gt;% dplyr::filter(name == &quot;summary&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="applications.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # keywords</span></span>
+<span id="cb89-2"><a href="applications.html#cb89-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-3"><a href="applications.html#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="co"># keywords &lt;- metadata %&gt;% dplyr::filter(variable == &quot;NC_GLOBAL&quot;) %&gt;% dplyr::filter(name == &quot;keywords&quot;)</span></span>
+<span id="cb89-4"><a href="applications.html#cb89-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-5"><a href="applications.html#cb89-5" aria-hidden="true" tabindex="-1"></a><span class="co"># kw_vocab &lt;- metadata %&gt;% dplyr::filter(variable == &quot;NC_GLOBAL&quot;) %&gt;% dplyr::filter(name == &quot;keywords_vocabulary&quot;)</span></span>
+<span id="cb89-6"><a href="applications.html#cb89-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-7"><a href="applications.html#cb89-7" aria-hidden="true" tabindex="-1"></a><span class="co"># keywordSet &lt;- list(</span></span>
+<span id="cb89-8"><a href="applications.html#cb89-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-9"><a href="applications.html#cb89-9" aria-hidden="true" tabindex="-1"></a><span class="co">#     list(</span></span>
+<span id="cb89-10"><a href="applications.html#cb89-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-11"><a href="applications.html#cb89-11" aria-hidden="true" tabindex="-1"></a><span class="co">#         keywordThesaurus = kw_vocab$value$keywords_vocabulary,</span></span>
+<span id="cb89-12"><a href="applications.html#cb89-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-13"><a href="applications.html#cb89-13" aria-hidden="true" tabindex="-1"></a><span class="co">#         keyword = as.list(strsplit(keywords$value$keywords, &quot;, &quot;))</span></span>
+<span id="cb89-14"><a href="applications.html#cb89-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-15"><a href="applications.html#cb89-15" aria-hidden="true" tabindex="-1"></a><span class="co">#         ))</span></span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="applications.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="co"># title &lt;- metadata %&gt;% dplyr::filter(variable == &quot;NC_GLOBAL&quot;) %&gt;% dplyr::filter(name == &quot;title&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="applications.html#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># methods &lt;- &quot;NEED TO MAP FROM NCFILE&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="applications.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="co"># license &lt;- metadata %&gt;% dplyr::filter(variable == &quot;NC_GLOBAL&quot;) %&gt;% dplyr::filter(name == &quot;license&quot;)</span></span></code></pre></div>
+<p>Now build the eml file.</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="applications.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(uuid)</span></span>
+<span id="cb93-2"><a href="applications.html#cb93-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-3"><a href="applications.html#cb93-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-4"><a href="applications.html#cb93-4" aria-hidden="true" tabindex="-1"></a><span class="co"># physical &lt;- set_physical(file_name_occur)</span></span>
+<span id="cb93-5"><a href="applications.html#cb93-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-6"><a href="applications.html#cb93-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-7"><a href="applications.html#cb93-7" aria-hidden="true" tabindex="-1"></a><span class="co"># # attributeList &lt;-</span></span>
+<span id="cb93-8"><a href="applications.html#cb93-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-9"><a href="applications.html#cb93-9" aria-hidden="true" tabindex="-1"></a><span class="co"># #   set_attributes(attributes,</span></span>
+<span id="cb93-10"><a href="applications.html#cb93-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-11"><a href="applications.html#cb93-11" aria-hidden="true" tabindex="-1"></a><span class="co"># #                  factors,</span></span>
+<span id="cb93-12"><a href="applications.html#cb93-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-13"><a href="applications.html#cb93-13" aria-hidden="true" tabindex="-1"></a><span class="co"># #                  col_classes = c(&quot;character&quot;,</span></span>
+<span id="cb93-14"><a href="applications.html#cb93-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-15"><a href="applications.html#cb93-15" aria-hidden="true" tabindex="-1"></a><span class="co"># #                                  &quot;Date&quot;,</span></span>
+<span id="cb93-16"><a href="applications.html#cb93-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-17"><a href="applications.html#cb93-17" aria-hidden="true" tabindex="-1"></a><span class="co"># #                                  &quot;Date&quot;,</span></span>
+<span id="cb93-18"><a href="applications.html#cb93-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-19"><a href="applications.html#cb93-19" aria-hidden="true" tabindex="-1"></a><span class="co"># #                                  &quot;Date&quot;,</span></span>
+<span id="cb93-20"><a href="applications.html#cb93-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-21"><a href="applications.html#cb93-21" aria-hidden="true" tabindex="-1"></a><span class="co"># #                                  &quot;factor&quot;,</span></span>
+<span id="cb93-22"><a href="applications.html#cb93-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-23"><a href="applications.html#cb93-23" aria-hidden="true" tabindex="-1"></a><span class="co"># #                                  &quot;factor&quot;,</span></span>
+<span id="cb93-24"><a href="applications.html#cb93-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-25"><a href="applications.html#cb93-25" aria-hidden="true" tabindex="-1"></a><span class="co"># #                                  &quot;factor&quot;,</span></span>
+<span id="cb93-26"><a href="applications.html#cb93-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-27"><a href="applications.html#cb93-27" aria-hidden="true" tabindex="-1"></a><span class="co"># #                                  &quot;numeric&quot;))</span></span>
+<span id="cb93-28"><a href="applications.html#cb93-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-29"><a href="applications.html#cb93-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-30"><a href="applications.html#cb93-30" aria-hidden="true" tabindex="-1"></a><span class="co"># my_eml &lt;- eml$eml(</span></span>
+<span id="cb93-31"><a href="applications.html#cb93-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-32"><a href="applications.html#cb93-32" aria-hidden="true" tabindex="-1"></a><span class="co">#            packageId = paste(uuid_tbl$value),</span></span>
+<span id="cb93-33"><a href="applications.html#cb93-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-34"><a href="applications.html#cb93-34" aria-hidden="true" tabindex="-1"></a><span class="co">#            system = &quot;uuid&quot;,</span></span>
+<span id="cb93-35"><a href="applications.html#cb93-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-36"><a href="applications.html#cb93-36" aria-hidden="true" tabindex="-1"></a><span class="co">#            dataset = eml$dataset(</span></span>
+<span id="cb93-37"><a href="applications.html#cb93-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-38"><a href="applications.html#cb93-38" aria-hidden="true" tabindex="-1"></a><span class="co">#                alternateIdentifier = UUIDgenerate(use.time = TRUE),</span></span>
+<span id="cb93-39"><a href="applications.html#cb93-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-40"><a href="applications.html#cb93-40" aria-hidden="true" tabindex="-1"></a><span class="co">#                title = title$value,</span></span>
+<span id="cb93-41"><a href="applications.html#cb93-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-42"><a href="applications.html#cb93-42" aria-hidden="true" tabindex="-1"></a><span class="co">#                creator = creator,</span></span>
+<span id="cb93-43"><a href="applications.html#cb93-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-44"><a href="applications.html#cb93-44" aria-hidden="true" tabindex="-1"></a><span class="co">#                metadataProvider = metadataProvider,</span></span>
+<span id="cb93-45"><a href="applications.html#cb93-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-46"><a href="applications.html#cb93-46" aria-hidden="true" tabindex="-1"></a><span class="co">#                #associatedParty = associatedParty,</span></span>
+<span id="cb93-47"><a href="applications.html#cb93-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-48"><a href="applications.html#cb93-48" aria-hidden="true" tabindex="-1"></a><span class="co">#                contact = contact,</span></span>
+<span id="cb93-49"><a href="applications.html#cb93-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-50"><a href="applications.html#cb93-50" aria-hidden="true" tabindex="-1"></a><span class="co">#                pubDate = format(Sys.time(),&#39;%Y-%m-%d&#39;),</span></span>
+<span id="cb93-51"><a href="applications.html#cb93-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-52"><a href="applications.html#cb93-52" aria-hidden="true" tabindex="-1"></a><span class="co">#                language = &quot;English&quot;,</span></span>
+<span id="cb93-53"><a href="applications.html#cb93-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-54"><a href="applications.html#cb93-54" aria-hidden="true" tabindex="-1"></a><span class="co">#                intellectualRights = eml$intellectualRights(</span></span>
+<span id="cb93-55"><a href="applications.html#cb93-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-56"><a href="applications.html#cb93-56" aria-hidden="true" tabindex="-1"></a><span class="co">#                                     para = &quot;To the extent possible under law, the publisher has waived all rights to these data and has dedicated them to the &lt;ulink url=\&quot;http://creativecommons.org/publicdomain/zero/1.0/legalcode\&quot;&gt;&lt;citetitle&gt;Public Domain (CC0 1.0)&lt;/citetitle&gt;&lt;/ulink&gt;. Users may copy, modify, distribute and use the work, including for commercial purposes, without restriction.&quot;</span></span>
+<span id="cb93-57"><a href="applications.html#cb93-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-58"><a href="applications.html#cb93-58" aria-hidden="true" tabindex="-1"></a><span class="co">#                                     #para = paste(license$value),</span></span>
+<span id="cb93-59"><a href="applications.html#cb93-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-60"><a href="applications.html#cb93-60" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                            ),</span></span>
+<span id="cb93-61"><a href="applications.html#cb93-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-62"><a href="applications.html#cb93-62" aria-hidden="true" tabindex="-1"></a><span class="co">#                abstract = eml$abstract(</span></span>
+<span id="cb93-63"><a href="applications.html#cb93-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-64"><a href="applications.html#cb93-64" aria-hidden="true" tabindex="-1"></a><span class="co">#                                para = abstract$value$summary,</span></span>
+<span id="cb93-65"><a href="applications.html#cb93-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-66"><a href="applications.html#cb93-66" aria-hidden="true" tabindex="-1"></a><span class="co">#                                        ),</span></span>
+<span id="cb93-67"><a href="applications.html#cb93-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-68"><a href="applications.html#cb93-68" aria-hidden="true" tabindex="-1"></a><span class="co">#                keywordSet = keywordSet,</span></span>
+<span id="cb93-69"><a href="applications.html#cb93-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-70"><a href="applications.html#cb93-70" aria-hidden="true" tabindex="-1"></a><span class="co">#                coverage = coverage,</span></span>
+<span id="cb93-71"><a href="applications.html#cb93-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-72"><a href="applications.html#cb93-72" aria-hidden="true" tabindex="-1"></a><span class="co"># #                license = eml$license(</span></span>
+<span id="cb93-73"><a href="applications.html#cb93-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-74"><a href="applications.html#cb93-74" aria-hidden="true" tabindex="-1"></a><span class="co"># #                            licenseName = &quot;CC0 1.0&quot;,</span></span>
+<span id="cb93-75"><a href="applications.html#cb93-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-76"><a href="applications.html#cb93-76" aria-hidden="true" tabindex="-1"></a><span class="co"># #                            #licenseName = paste(license$value),</span></span>
+<span id="cb93-77"><a href="applications.html#cb93-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-78"><a href="applications.html#cb93-78" aria-hidden="true" tabindex="-1"></a><span class="co"># #                            ),</span></span>
+<span id="cb93-79"><a href="applications.html#cb93-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-80"><a href="applications.html#cb93-80" aria-hidden="true" tabindex="-1"></a><span class="co">#                #dataTable = eml$dataTable(</span></span>
+<span id="cb93-81"><a href="applications.html#cb93-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-82"><a href="applications.html#cb93-82" aria-hidden="true" tabindex="-1"></a><span class="co">#                #  entityName = file_name_occur,</span></span>
+<span id="cb93-83"><a href="applications.html#cb93-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-84"><a href="applications.html#cb93-84" aria-hidden="true" tabindex="-1"></a><span class="co">#                #  entityDescription = &quot;Occurrences&quot;,</span></span>
+<span id="cb93-85"><a href="applications.html#cb93-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-86"><a href="applications.html#cb93-86" aria-hidden="true" tabindex="-1"></a><span class="co">#                #  physical = physical)</span></span>
+<span id="cb93-87"><a href="applications.html#cb93-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-88"><a href="applications.html#cb93-88" aria-hidden="true" tabindex="-1"></a><span class="co">#                ))</span></span></code></pre></div>
+<p>Validate EML</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="applications.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="co"># val &lt;- eml_validate(my_eml)</span></span>
+<span id="cb94-2"><a href="applications.html#cb94-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-3"><a href="applications.html#cb94-3" aria-hidden="true" tabindex="-1"></a><span class="co"># attr(val,&quot;errors&quot;)</span></span></code></pre></div>
+<p>Write eml to file.</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="applications.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file_name_eml &lt;- &#39;eml.xml&#39;</span></span>
+<span id="cb95-2"><a href="applications.html#cb95-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-3"><a href="applications.html#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="co"># write_eml(my_eml, file_name_eml)</span></span></code></pre></div>
+<p>Raw EML</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="applications.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="co"># my_eml</span></span></code></pre></div>
+<div id="create-meta.xml" class="section level5 hasAnchor" number="2.6.2.4.1">
+<h5><span class="header-section-number">2.6.2.4.1</span> Create meta.xml<a href="applications.html#create-meta.xml" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>Below is an example of the contents of meta.xml:</p>
+<pre><code>
+&lt;archive xmlns=&quot;http://rs.tdwg.org/dwc/text/&quot; metadata=&quot;eml.xml&quot;&gt;
+
+  &lt;core encoding=&quot;UTF-8&quot; fieldsTerminatedBy=&quot;\t&quot; linesTerminatedBy=&quot;\n&quot; fieldsEnclosedBy=&quot;&quot; ignoreHeaderLines=&quot;1&quot; rowType=&quot;http://rs.tdwg.org/dwc/terms/Occurrence&quot;&gt;
+
+    &lt;files&gt;
+
+      &lt;location&gt;occurrence.txt&lt;/location&gt;
+
+    &lt;/files&gt;
+
+    &lt;id index=&quot;0&quot; /&gt;
+
+    &lt;field index=&quot;1&quot; term=&quot;http://rs.tdwg.org/dwc/terms/datasetID&quot;/&gt;
+
+    &lt;field index=&quot;2&quot; term=&quot;http://rs.tdwg.org/dwc/terms/institutionCode&quot;/&gt;
+
+    &lt;field index=&quot;3&quot; term=&quot;http://rs.tdwg.org/dwc/terms/collectionCode&quot;/&gt;
+
+    &lt;field index=&quot;4&quot; term=&quot;http://rs.tdwg.org/dwc/terms/basisOfRecord&quot;/&gt;
+
+    &lt;field index=&quot;5&quot; term=&quot;http://rs.tdwg.org/dwc/terms/occurrenceID&quot;/&gt;
+
+    &lt;field index=&quot;6&quot; term=&quot;http://rs.tdwg.org/dwc/terms/catalogNumber&quot;/&gt;
+
+    &lt;field index=&quot;7&quot; term=&quot;http://rs.tdwg.org/dwc/terms/occurrenceRemarks&quot;/&gt;
+
+    &lt;field index=&quot;8&quot; term=&quot;http://rs.tdwg.org/dwc/terms/individualCount&quot;/&gt;
+
+    &lt;field index=&quot;9&quot; term=&quot;http://rs.tdwg.org/dwc/terms/sex&quot;/&gt;
+
+    &lt;field index=&quot;10&quot; term=&quot;http://rs.tdwg.org/dwc/terms/occurrenceStatus&quot;/&gt;
+
+    &lt;field index=&quot;11&quot; term=&quot;http://rs.tdwg.org/dwc/terms/eventDate&quot;/&gt;
+
+    &lt;field index=&quot;12&quot; term=&quot;http://rs.tdwg.org/dwc/terms/year&quot;/&gt;
+
+    &lt;field index=&quot;13&quot; term=&quot;http://rs.tdwg.org/dwc/terms/decimalLatitude&quot;/&gt;
+
+    &lt;field index=&quot;14&quot; term=&quot;http://rs.tdwg.org/dwc/terms/decimalLongitude&quot;/&gt;
+
+    &lt;field index=&quot;15&quot; term=&quot;http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters&quot;/&gt;
+
+    &lt;field index=&quot;16&quot; term=&quot;http://rs.tdwg.org/dwc/terms/scientificNameID&quot;/&gt;
+
+    &lt;field index=&quot;17&quot; term=&quot;http://rs.tdwg.org/dwc/terms/scientificName&quot;/&gt;
+
+  &lt;/core&gt;
+
+  &lt;extension encoding=&quot;UTF-8&quot; fieldsTerminatedBy=&quot;\t&quot; linesTerminatedBy=&quot;\n&quot; fieldsEnclosedBy=&quot;&quot; ignoreHeaderLines=&quot;1&quot; rowType=&quot;http://rs.iobis.org/obis/terms/ExtendedMeasurementOrFact&quot;&gt;
+
+    &lt;files&gt;
+
+      &lt;location&gt;extendedmeasurementorfact.txt&lt;/location&gt;
+
+    &lt;/files&gt;
+
+    &lt;coreid index=&quot;0&quot; /&gt;
+
+    &lt;field index=&quot;1&quot; term=&quot;http://rs.tdwg.org/dwc/terms/occurrenceID&quot;/&gt;
+
+    &lt;field index=&quot;2&quot; term=&quot;http://rs.tdwg.org/dwc/terms/measurementType&quot;/&gt;
+
+    &lt;field index=&quot;3&quot; term=&quot;http://rs.tdwg.org/dwc/terms/measurementValue&quot;/&gt;
+
+    &lt;field index=&quot;4&quot; term=&quot;http://rs.tdwg.org/dwc/terms/measurementUnit&quot;/&gt;
+
+    &lt;field index=&quot;5&quot; term=&quot;http://rs.iobis.org/obis/terms/measurementUnitID&quot;/&gt;
+
+    &lt;field index=&quot;6&quot; term=&quot;http://rs.tdwg.org/dwc/terms/measurementDeterminedDate&quot;/&gt;
+
+  &lt;/extension&gt;
+
+&lt;/archive&gt;
+</code></pre>
+<p>Checkout <a href="https://cran.r-project.org/web/packages/XML/index.html">XML package for R</a>.</p>
+<p><code>conda install -c conda-forge r-xml</code></p>
+<p>Another example in this <a href="https://github.com/EDIorg/ecocomDP/blob/372c293c9e597c64db22c027debe18528d44f53b/inst/extdata/dwca_event_core/meta.xml">github repository</a>.</p>
+<p>Or use the <a href="http://tools.gbif.org/dwca-assistant/">gui here</a> to create meta.xml.</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="applications.html#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(XML)</span></span>
+<span id="cb98-2"><a href="applications.html#cb98-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-3"><a href="applications.html#cb98-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-4"><a href="applications.html#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="co"># doc = newXMLDoc()</span></span>
+<span id="cb98-5"><a href="applications.html#cb98-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-6"><a href="applications.html#cb98-6" aria-hidden="true" tabindex="-1"></a><span class="co"># archiveNode = newXMLNode(&quot;archive&quot;, attrs = c(metadata=file_name_eml), namespaceDefinitions=c(&quot;http://rs.tdwg.org/dwc/text/&quot;), doc=doc )</span></span>
+<span id="cb98-7"><a href="applications.html#cb98-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-8"><a href="applications.html#cb98-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-9"><a href="applications.html#cb98-9" aria-hidden="true" tabindex="-1"></a><span class="co"># ## For the core occurrence</span></span>
+<span id="cb98-10"><a href="applications.html#cb98-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-11"><a href="applications.html#cb98-11" aria-hidden="true" tabindex="-1"></a><span class="co"># coreNode = newXMLNode(&quot;core&quot;, attrs = c(encoding=&quot;UTF-8&quot;, linesTerminatedBy=&quot;\\r\\n&quot;, fieldsTerminatedBy=&quot;,&quot;, fieldsEnclosedBy=&#39;\&quot;&#39;, ignoreHeaderLines=&quot;1&quot;, rowType=&quot;http://rs.tdwg.org/dwc/terms/Occurrence&quot;), parent = archiveNode)</span></span>
+<span id="cb98-12"><a href="applications.html#cb98-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-13"><a href="applications.html#cb98-13" aria-hidden="true" tabindex="-1"></a><span class="co"># filesNode = newXMLNode(&quot;files&quot;, parent = coreNode)</span></span>
+<span id="cb98-14"><a href="applications.html#cb98-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-15"><a href="applications.html#cb98-15" aria-hidden="true" tabindex="-1"></a><span class="co"># locationNode = newXMLNode(&quot;location&quot;, file_name_occur, parent = filesNode)</span></span>
+<span id="cb98-16"><a href="applications.html#cb98-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-17"><a href="applications.html#cb98-17" aria-hidden="true" tabindex="-1"></a><span class="co"># idnode = newXMLNode(&quot;id&quot;, attrs = c(index=&quot;9&quot;), parent = coreNode)</span></span>
+<span id="cb98-18"><a href="applications.html#cb98-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-19"><a href="applications.html#cb98-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-20"><a href="applications.html#cb98-20" aria-hidden="true" tabindex="-1"></a><span class="co"># # iterate over the columns in occurrence file to create field elements</span></span>
+<span id="cb98-21"><a href="applications.html#cb98-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-22"><a href="applications.html#cb98-22" aria-hidden="true" tabindex="-1"></a><span class="co"># i=0</span></span>
+<span id="cb98-23"><a href="applications.html#cb98-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-24"><a href="applications.html#cb98-24" aria-hidden="true" tabindex="-1"></a><span class="co"># for (col in colnames(occurrencedf))</span></span>
+<span id="cb98-25"><a href="applications.html#cb98-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-26"><a href="applications.html#cb98-26" aria-hidden="true" tabindex="-1"></a><span class="co">#     {</span></span>
+<span id="cb98-27"><a href="applications.html#cb98-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-28"><a href="applications.html#cb98-28" aria-hidden="true" tabindex="-1"></a><span class="co">#     termstr = paste(&quot;http://rs.tdwg.org/dwc/terms/&quot;,col, sep=&quot;&quot;)</span></span>
+<span id="cb98-29"><a href="applications.html#cb98-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-30"><a href="applications.html#cb98-30" aria-hidden="true" tabindex="-1"></a><span class="co">#     i=i+1</span></span>
+<span id="cb98-31"><a href="applications.html#cb98-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-32"><a href="applications.html#cb98-32" aria-hidden="true" tabindex="-1"></a><span class="co">#     fieldnode = newXMLNode(&quot;field&quot;, attrs = c(index=i, term=termstr), parent=coreNode)</span></span>
+<span id="cb98-33"><a href="applications.html#cb98-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-34"><a href="applications.html#cb98-34" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb98-35"><a href="applications.html#cb98-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-36"><a href="applications.html#cb98-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-37"><a href="applications.html#cb98-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-38"><a href="applications.html#cb98-38" aria-hidden="true" tabindex="-1"></a><span class="co"># ## for the extensions</span></span>
+<span id="cb98-39"><a href="applications.html#cb98-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-40"><a href="applications.html#cb98-40" aria-hidden="true" tabindex="-1"></a><span class="co"># extensionNode = newXMLNode(&quot;extension&quot;, attrs = c(encoding=&quot;UTF-8&quot;, linesTerminatedBy=&quot;\\r\\n&quot;, fieldsTerminatedBy=&quot;,&quot;, fieldsEnclosedBy=&#39;\&quot;&#39;, ignoreHeaderLines=&quot;1&quot;, rowType=&quot;http://rs.tdwg.org/dwc/terms/Event&quot;), parent = archiveNode)</span></span>
+<span id="cb98-41"><a href="applications.html#cb98-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-42"><a href="applications.html#cb98-42" aria-hidden="true" tabindex="-1"></a><span class="co"># filesNode = newXMLNode(&quot;files&quot;, parent = extensionNode)</span></span>
+<span id="cb98-43"><a href="applications.html#cb98-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-44"><a href="applications.html#cb98-44" aria-hidden="true" tabindex="-1"></a><span class="co"># locationNode = newXMLNode(&quot;location&quot;, file_name_event, parent = filesNode)</span></span>
+<span id="cb98-45"><a href="applications.html#cb98-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-46"><a href="applications.html#cb98-46" aria-hidden="true" tabindex="-1"></a><span class="co"># idnode = newXMLNode(&quot;id&quot;, attrs = c(index=&quot;0&quot;), parent = extensionNode)</span></span>
+<span id="cb98-47"><a href="applications.html#cb98-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-48"><a href="applications.html#cb98-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-49"><a href="applications.html#cb98-49" aria-hidden="true" tabindex="-1"></a><span class="co"># # iterate over the columns in occurrence file to create field elements</span></span>
+<span id="cb98-50"><a href="applications.html#cb98-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-51"><a href="applications.html#cb98-51" aria-hidden="true" tabindex="-1"></a><span class="co"># i=0</span></span>
+<span id="cb98-52"><a href="applications.html#cb98-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-53"><a href="applications.html#cb98-53" aria-hidden="true" tabindex="-1"></a><span class="co"># for (col in colnames(eventdf))</span></span>
+<span id="cb98-54"><a href="applications.html#cb98-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-55"><a href="applications.html#cb98-55" aria-hidden="true" tabindex="-1"></a><span class="co">#     {</span></span>
+<span id="cb98-56"><a href="applications.html#cb98-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-57"><a href="applications.html#cb98-57" aria-hidden="true" tabindex="-1"></a><span class="co">#     if (col == &#39;modified&#39;){</span></span>
+<span id="cb98-58"><a href="applications.html#cb98-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-59"><a href="applications.html#cb98-59" aria-hidden="true" tabindex="-1"></a><span class="co">#         termstr = paste(&quot;http://purl.org/dc/terms/&quot;, col, sep=&quot;&quot;)</span></span>
+<span id="cb98-60"><a href="applications.html#cb98-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-61"><a href="applications.html#cb98-61" aria-hidden="true" tabindex="-1"></a><span class="co">#     } else {</span></span>
+<span id="cb98-62"><a href="applications.html#cb98-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-63"><a href="applications.html#cb98-63" aria-hidden="true" tabindex="-1"></a><span class="co">#         termstr = paste(&quot;http://rs.tdwg.org/dwc/terms/&quot;,col, sep=&quot;&quot;)</span></span>
+<span id="cb98-64"><a href="applications.html#cb98-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-65"><a href="applications.html#cb98-65" aria-hidden="true" tabindex="-1"></a><span class="co">#         }</span></span>
+<span id="cb98-66"><a href="applications.html#cb98-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-67"><a href="applications.html#cb98-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-68"><a href="applications.html#cb98-68" aria-hidden="true" tabindex="-1"></a><span class="co">#     i=i+1</span></span>
+<span id="cb98-69"><a href="applications.html#cb98-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-70"><a href="applications.html#cb98-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-71"><a href="applications.html#cb98-71" aria-hidden="true" tabindex="-1"></a><span class="co">#     fieldnode = newXMLNode(&quot;field&quot;, attrs = c(index=i, term=termstr), parent=extensionNode)</span></span>
+<span id="cb98-72"><a href="applications.html#cb98-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-73"><a href="applications.html#cb98-73" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb98-74"><a href="applications.html#cb98-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-75"><a href="applications.html#cb98-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-76"><a href="applications.html#cb98-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-77"><a href="applications.html#cb98-77" aria-hidden="true" tabindex="-1"></a><span class="co"># print(doc)</span></span>
+<span id="cb98-78"><a href="applications.html#cb98-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-79"><a href="applications.html#cb98-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-80"><a href="applications.html#cb98-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-81"><a href="applications.html#cb98-81" aria-hidden="true" tabindex="-1"></a><span class="co"># saveXML(doc, file=&quot;meta.xml&quot;)</span></span></code></pre></div>
 </div>
-<div id="key-takeaways" class="section level3 hasAnchor" number="2.6.6">
-<h3><span class="header-section-number">2.6.6</span> Key takeaways<a href="applications.html#key-takeaways" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ul>
-<li>For passive acoustic monitoring data, it is really important to define a coordinateUncertaintyInMeters. We defined this by using the sound propagation modeling data, matching on frequency, site, and season.</li>
-<li>The sound propagation data were massive and hard to work with on Google Cloud Storage. But, <code>gsutil</code> made it easy to download all of the necessary files.</li>
-<li>The metadata available from the ERDDAP source and the netCDF sound propagation data were immensly helpful for mapping to Darwin Core.</li>
-<li>Extracting information from file names is a relatively easy process and can be beneficial when aligning to Darwin Core.</li>
-<li>Performing Darwin Core checks before sending data to OBIS-USA helps reduce the amount of iteration with the node manager.</li>
-<li>You can see the entire conversation for mobilizing these data at <a href="https://github.com/ioos/bio_data_guide/issues/147" class="uri">https://github.com/ioos/bio_data_guide/issues/147</a>.</li>
-</ul>
+</div>
+<div id="build-the-darwincore-archive-zip-package" class="section level4 hasAnchor" number="2.6.2.5">
+<h4><span class="header-section-number">2.6.2.5</span> Build the DarwinCore-Archive zip package<a href="applications.html#build-the-darwincore-archive-zip-package" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="applications.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(zip)</span></span>
+<span id="cb99-2"><a href="applications.html#cb99-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-3"><a href="applications.html#cb99-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-4"><a href="applications.html#cb99-4" aria-hidden="true" tabindex="-1"></a><span class="co"># files = c(file_name_occur, file_name_event, file_name_eml, &quot;meta.xml&quot;)</span></span>
+<span id="cb99-5"><a href="applications.html#cb99-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-6"><a href="applications.html#cb99-6" aria-hidden="true" tabindex="-1"></a><span class="co"># zip::zip(</span></span>
+<span id="cb99-7"><a href="applications.html#cb99-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-8"><a href="applications.html#cb99-8" aria-hidden="true" tabindex="-1"></a><span class="co">#     &quot;atn.zip&quot;,</span></span>
+<span id="cb99-9"><a href="applications.html#cb99-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-10"><a href="applications.html#cb99-10" aria-hidden="true" tabindex="-1"></a><span class="co">#     files,</span></span>
+<span id="cb99-11"><a href="applications.html#cb99-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-12"><a href="applications.html#cb99-12" aria-hidden="true" tabindex="-1"></a><span class="co">#     root = &quot;.&quot;,</span></span>
+<span id="cb99-13"><a href="applications.html#cb99-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-14"><a href="applications.html#cb99-14" aria-hidden="true" tabindex="-1"></a><span class="co">#     mode = &quot;mirror&quot;,</span></span>
+<span id="cb99-15"><a href="applications.html#cb99-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-16"><a href="applications.html#cb99-16" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span>
+<span id="cb99-17"><a href="applications.html#cb99-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-18"><a href="applications.html#cb99-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-19"><a href="applications.html#cb99-19" aria-hidden="true" tabindex="-1"></a><span class="co"># zip_list(&quot;atn.zip&quot;)</span></span></code></pre></div>
+</div>
+</div>
+<div id="sessioninfo" class="section level3 hasAnchor" number="2.6.3">
+<h3><span class="header-section-number">2.6.3</span> sessionInfo()<a href="applications.html#sessioninfo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="applications.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
+<pre><code>## R version 4.1.1 (2021-08-10)
+## Platform: x86_64-apple-darwin17.0 (64-bit)
+## Running under: macOS Big Sur 10.16
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] mapdata_2.3.1   maps_3.4.1      ncdf4_1.21      obistools_0.1.0
+##  [5] tidync_0.3.0    worrms_0.4.3    magrittr_2.0.3  knitr_1.42     
+##  [9] here_1.0.1      lubridate_1.9.3 forcats_1.0.0   stringr_1.5.0  
+## [13] dplyr_1.1.2     purrr_1.0.1     readr_2.1.5     tidyr_1.3.0    
+## [17] tibble_3.2.1    ggplot2_3.4.2   tidyverse_2.0.0
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_1.0.10       rprojroot_2.0.4   digest_0.6.31     utf8_1.2.3       
+##  [5] R6_2.5.1          cellranger_1.1.0  evaluate_0.21     pillar_1.9.0     
+##  [9] rlang_1.1.1       curl_5.0.0        readxl_1.4.3      ncmeta_0.3.5     
+## [13] rstudioapi_0.16.0 jquerylib_0.1.4   rmarkdown_2.21    urltools_1.7.3   
+## [17] htmlwidgets_1.6.2 bit_4.0.5         triebeard_0.4.1   munsell_0.5.0    
+## [21] compiler_4.1.1    xfun_0.39         pkgconfig_2.0.3   htmltools_0.5.5  
+## [25] tidyselect_1.2.1  httpcode_0.3.0    bookdown_0.40     fansi_1.0.4      
+## [29] crayon_1.5.2      tzdb_0.3.0        withr_2.5.0       rappdirs_0.3.3   
+## [33] crul_1.5.0        grid_4.1.1        jsonlite_1.8.4    gtable_0.3.3     
+## [37] lifecycle_1.0.3   scales_1.2.1      cli_3.6.1         stringi_1.7.12   
+## [41] vroom_1.6.3       cachem_1.0.8      leaflet_2.1.2     xml2_1.3.6       
+## [45] bslib_0.4.2       generics_0.1.3    vctrs_0.6.5       data.tree_1.1.0  
+## [49] tools_4.1.1       bit64_4.0.5       glue_1.6.2        RNetCDF_2.6-2    
+## [53] crosstalk_1.2.0   hms_1.1.3         parallel_4.1.1    fastmap_1.1.1    
+## [57] yaml_2.3.7        timechange_0.3.0  colorspace_2.1-0  sass_0.4.6</code></pre>
 
 </div>
 </div>
