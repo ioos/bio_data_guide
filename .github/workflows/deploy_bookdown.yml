@@ -29,7 +29,7 @@ jobs:
 
       - name: Install packages
         run: Rscript -e '
-          install.packages(c("librarian", "rgdal", "rmarkdown", "vroom", "xfun", "tinytex", "tidync"), type = "binary");
+          install.packages(c("librarian", "rgdal", "rmarkdown", "vroom", "xfun", "tinytex", "tidync", "httr", "leaflet", "sf", "terra"), type = "binary");
           librarian::shelf(bookdown, dm, here, lubridate, rmarkdown, tidyverse, worms);
           remotes::install_github("iobis/obistools", upgrade="never");
           tinytex::install_tinytex()'
