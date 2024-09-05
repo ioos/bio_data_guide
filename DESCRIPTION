@@ -29,7 +29,6 @@ Imports:
     terra,
     tidync,
     vroom,
-    worms,
     worrms,
     xfun
 Remotes: 
