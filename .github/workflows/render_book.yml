@@ -18,8 +18,11 @@ jobs:
 
       - name: Install Quarto
         uses: quarto-dev/quarto-actions/setup@v2
-        with:
-          tinytex: true  # for pdf
+        # with:
+        #   tinytex: true  # for pdf
+          
+      - name: Install TinyTeX
+        uses: r-lib/actions/setup-tinytex@v2          
       
       - name: Install librsvg (svg for pdf)
         run: brew install librsvg
