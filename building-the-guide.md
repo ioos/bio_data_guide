@@ -29,17 +29,10 @@ remotes::install_github("iobis/obistools", upgrade="never");
 tinytex::install_tinytex()
 ```
 * To build the book:
-``` r
-setwd("bio-data-guide/")
-options(knitr.duplicate.label = "allow")
-bookdown::render_book("index.Rmd")
+```bash
+quarto render
 ```
-* OR, make a PDF of the book:
-``` r
-options(knitr.duplicate.label = "allow")
-bookdown::render_book("index.Rmd", "bookdown::pdf_book")
-```
-* The markdown and pdf will be saved in the local `bio-data-guide/docs` directory.
+* The markdown and pdf will be saved in the local `_book` directory.
   * Reminder: `bio-data-guide/docs` is [ignored by git](https://github.com/ioos/bio_data_guide/blob/main/.gitignore).
           
 ## Building and publishing the book through GitHub on your fork

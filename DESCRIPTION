@@ -23,6 +23,7 @@ Imports:
     obistools (>= 0.1.0),
     rmarkdown,
     rnoaa (>= 1.4.0),
+    rsvg,
     sf,
     stringr,
     terra,
