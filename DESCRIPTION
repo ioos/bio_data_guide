@@ -34,3 +34,5 @@ Imports:
 Remotes: 
     ropensci/rnoaa,
     iobis/obistools
+Depends: 
+    tidyverse
