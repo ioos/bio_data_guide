@@ -11,5 +11,5 @@ If you would like to join the SMBD or learn more, checkout this [README](https:/
 # automatically create a bib database for R packages
 knitr::write_bib(c(
   .packages(), 'bookdown', 'knitr', 'rmarkdown'), 
-  'lib/packages.bib')
+  'refs/packages.bib')
 ```
