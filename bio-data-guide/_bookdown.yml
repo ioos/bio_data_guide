@@ -1,7 +1,0 @@
-book_filename: "darwin-core-guide"
-delete_merged_file: true
-language:
-  ui:
-    chapter_name: "Chapter "
-output_dir: "docs"
-# new_session: yes # allows duplicate chunks

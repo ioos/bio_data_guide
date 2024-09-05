@@ -3,6 +3,10 @@
 
 ### To build the book using Rstudio: 
 
+* Update the git submodule(s) in the repository (e.g., `datasets/dataset-edna` -> [iobis/dataset-edna](https://github.com/iobis/dataset-edna))
+  ```bash
+  git submodule update --init --recursive
+  ```
 * Make sure you have the most recent version of R and R Studio
   * Check that [pandoc](https://pandoc.org/installing.html) is installed and functioning on your machine 
 (`library(rmarkdown); pandoc_available()` should return `TRUE`)

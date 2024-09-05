@@ -1,19 +1,3 @@
---- 
-title: "Darwin Core Marine Example Compendium"
-author: "By: [Standardizing Marine Biological Data Working Group](https://github.com/ioos/bio_data_guide/graphs/contributors) ![](https://contrib.rocks/image?repo=ioos/bio_data_guide)"
-date: "Updated: `r Sys.Date()`"
-url: https://ioos.github.io/bio_data_guide/
-github-repo: ioos/bio_data_guide
-site: bookdown::bookdown_site
-documentclass: book
-bibliography: ["book.bib", "packages.bib", "OBIS_data_examples.bib"]
-biblio-style: apa
-link-citations: yes
-nocite: |
-  @*
-description: "Scaling multiple dimensions of diversity in biological data"
----
-
 # Preface {-}
 
 This book contains a collection of examples and resources related to mobilizing marine biological data to the
@@ -26,6 +10,6 @@ If you would like to join the SMBD or learn more, checkout this [README](https:/
 ```{r include=FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(c(
-  .packages(), 'bookdown', 'knitr', 'rmarkdown'
-), 'packages.bib')
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'), 
+  'lib/packages.bib')
 ```

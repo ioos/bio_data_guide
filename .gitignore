@@ -1,3 +1,5 @@
-/bio-data-guide/docs
-/bio-data-guide/bio-data-guide.rds
+/_book
 .Rproj.user
+/.quarto/
+.DS_Store
+.Rhistory

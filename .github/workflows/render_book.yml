@@ -1,0 +1,73 @@
+name: Render Quarto book
+
+on:
+  push:
+     branches: 
+       - main
+  workflow_dispatch:
+
+jobs:
+  bookdown:
+    name: Render & publish Quarto book
+    runs-on: macOS-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+
+      - name: Install Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          tinytex: true  # for pdf
+      
+      - name: Install librsvg (svg for pdf)
+        run: brew install librsvg
+        
+      - name: Install R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.4.1'     # 2024-09-04
+
+      - name: Install R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          cache-version: 2
+
+      - name: Render and Publish
+        # TODO: `quarto publish gh-pages` https://quarto.org/docs/publishing/github-pages.html#publishing
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+  
+# Need to first create an empty gh-pages branch
+# see https://pkgdown.r-lib.org/reference/deploy_site_github.html
+# and also add secrets for a GH_PAT and EMAIL to the repository
+# gh-action from Cecilapp/GitHub-Pages-deploy
+
+  checkout-and-deploy:
+    runs-on: ubuntu-latest
+    needs: bookdown
+    
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          # Artifact name
+          name: _book # optional
+          # Destination path
+          path: 'bio-data-guide/docs' # see _bookdown.yml: output_dir
+
+

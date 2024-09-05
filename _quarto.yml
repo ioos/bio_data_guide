@@ -1,0 +1,65 @@
+project:
+  type: book
+  pre-render: lib/pre-render.R
+  output-dir: _book
+  resources:
+  - "/.nojekyll"
+
+book:
+  title: "BioDataGuide"
+  subtitle: "Darwin Core Marine Example Compendium"
+  description: "Scaling multiple dimensions of diversity in biological data"
+  author: 
+    - "By: [Standardizing Marine Biological Data Working Group](https://github.com/ioos/bio_data_guide/graphs/contributors)"
+    - "![](figs/contrib.rocks.svg)"
+  date: today
+  date-format: "YYYY-MM-DD"
+  site-url: https://ioos.github.io/bio_data_guide/
+  repo-url: https://github.com/ioos/bio_data_guide/
+  repo-actions: [edit]
+  downloads: [pdf, docx, epub]
+  sharing: [twitter, facebook, linkedin]
+  # google-analytics: "G-V3HZN14Z8G" # TODO: add Google Analytics
+  search: true
+  page-navigation: true
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - part: apps.qmd
+      chapters:
+        - datasets/TPWD_HARC_BagSeine/TPWD_HARC_BagSeine_OBISENV.qmd
+        - datasets/hakai_salmon_data/salmon-darwin-core-remap.qmd
+        - datasets/hakai_seagrass_data/hakaiSeagrassToDWC.qmd
+        - datasets/trawl_catch_data/trawl-catch-data.qmd
+        - datasets/dataset-edna/README.md
+        - datasets/atn_satellite_telemetry/atn_satellite_telemetry_netCDF2DwC.qmd
+  appendices:
+    - faq.qmd
+    - tools.qmd
+    - extras.qmd
+    - references.qmd
+
+bibliography: ["lib/book.bib", "lib/packages.bib", "lib/OBIS_data_examples.bib"]
+bibliographystyle: apa
+link-citations: true
+
+format:
+  html:
+    theme: cosmo
+    css: lib/style.css
+    toc: true
+    number-sections: true
+  pdf:
+    documentclass: scrreprt
+    # keep-tex: true  # for debugging
+    include-in-header: lib/preamble.tex
+    nocite: |
+      @*
+  docx:
+    toc: true
+    number-sections: true
+    highlight-style: github
+  epub: default
+
+
+
