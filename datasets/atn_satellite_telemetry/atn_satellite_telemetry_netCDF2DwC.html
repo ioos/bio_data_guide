@@ -1,0 +1,2640 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Scaling multiple dimensions of diversity in biological data">
+
+<title>7&nbsp; Converting ATN netCDF file to Darwin Core – BioDataGuide</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../faq.html" rel="next">
+<link href="../../datasets/dataset-edna/README.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../lib/style.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../apps.html">Applications</a></li><li class="breadcrumb-item"><a href="../../datasets/atn_satellite_telemetry/atn_satellite_telemetry_netCDF2DwC.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Converting ATN netCDF file to Darwin Core</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">BioDataGuide</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/ioos/bio_data_guide/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="../../BioDataGuide.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="../../BioDataGuide.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../apps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Applications</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../datasets/TPWD_HARC_BagSeine/TPWD_HARC_BagSeine_OBISENV.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aligning Data to Darwin Core - Event Core with Extended Measurement or Fact</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../datasets/hakai_salmon_data/salmon-darwin-core-remap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Darwin Core Salmon Data Remap</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../datasets/hakai_seagrass_data/hakaiSeagrassToDWC.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Seagrass Density to DWC eMoF format</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../datasets/trawl_catch_data/trawl-catch-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">trawl_catch_data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../datasets/dataset-edna/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">dataset-edna</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../datasets/atn_satellite_telemetry/atn_satellite_telemetry_netCDF2DwC.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Converting ATN netCDF file to Darwin Core</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../faq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">FAQ</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tools.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../extras.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Extras</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#downloading-and-preprocessing-the-source-data" id="toc-downloading-and-preprocessing-the-source-data" class="nav-link active" data-scroll-target="#downloading-and-preprocessing-the-source-data"><span class="header-section-number">7.1</span> Downloading and preprocessing the source data</a>
+  <ul class="collapse">
+  <li><a href="#open-the-netcdf-file" id="toc-open-the-netcdf-file" class="nav-link" data-scroll-target="#open-the-netcdf-file"><span class="header-section-number">7.1.1</span> Open the netCDF file</a></li>
+  <li><a href="#collect-all-the-metadata-from-the-netcdf-file." id="toc-collect-all-the-metadata-from-the-netcdf-file." class="nav-link" data-scroll-target="#collect-all-the-metadata-from-the-netcdf-file."><span class="header-section-number">7.1.2</span> Collect all the metadata from the netCDF file.</a></li>
+  <li><a href="#store-the-data-as-a-tibble" id="toc-store-the-data-as-a-tibble" class="nav-link" data-scroll-target="#store-the-data-as-a-tibble"><span class="header-section-number">7.1.3</span> Store the data as a tibble</a></li>
+  <li><a href="#dealing-with-time" id="toc-dealing-with-time" class="nav-link" data-scroll-target="#dealing-with-time"><span class="header-section-number">7.1.4</span> Dealing with time</a></li>
+  </ul></li>
+  <li><a href="#converting-to-darwin-core" id="toc-converting-to-darwin-core" class="nav-link" data-scroll-target="#converting-to-darwin-core"><span class="header-section-number">7.2</span> Converting to Darwin Core</a>
+  <ul class="collapse">
+  <li><a href="#occurrence-core" id="toc-occurrence-core" class="nav-link" data-scroll-target="#occurrence-core"><span class="header-section-number">7.2.1</span> Occurrence Core</a></li>
+  <li><a href="#create-a-datageneralizations-column-to-describe-how-many-duplicates-were-found-for-each-deprecation-series" id="toc-create-a-datageneralizations-column-to-describe-how-many-duplicates-were-found-for-each-deprecation-series" class="nav-link" data-scroll-target="#create-a-datageneralizations-column-to-describe-how-many-duplicates-were-found-for-each-deprecation-series"><span class="header-section-number">7.2.2</span> Create a dataGeneralizations column to describe how many duplicates were found for each deprecation series</a></li>
+  <li><a href="#sessioninfo" id="toc-sessioninfo" class="nav-link" data-scroll-target="#sessioninfo"><span class="header-section-number">7.2.3</span> sessionInfo()</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/ioos/bio_data_guide/edit/main/datasets/atn_satellite_telemetry/atn_satellite_telemetry_netCDF2DwC.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../apps.html">Applications</a></li><li class="breadcrumb-item"><a href="../../datasets/atn_satellite_telemetry/atn_satellite_telemetry_netCDF2DwC.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Converting ATN netCDF file to Darwin Core</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Converting ATN netCDF file to Darwin Core</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>An R Markdown document converted from “atn_satellite_telemetry_netCDF2DwC.ipynb”</p>
+<p>Created: 2022-03-23 Updated: 2023-11-16</p>
+<p>Credit: Stephen Formel, Mathew Biddle</p>
+<p>This notebook walks through downloading an example netCDF file from the an Archive package at NCEI and translating it to a Darwin Core Archive compliant package for easy loading and publishing via the Integrated Publishing Toolkit (IPT). The example file follows a specific specification for ATN satellite trajectory observations as documented <a href="https://github.com/ioos/ioos-atn-data/blob/main/templates/atn_trajectory_template.cdl">here</a>. More information about the ATN netCDF specification can be found in the repository https://github.com/ioos/ioos-atn-data.</p>
+<p>This example uses the <a href="https://ropensci.org/blog/2019/11/05/tidync/">tidync</a> package to work with netCDF data.</p>
+<p>Data used in this notebook are available from NCEI at the following link https://www.ncei.noaa.gov/archive/accession/0282699.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Load libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidync)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(obistools)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ncdf4)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co">#includes stringr</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'maps'
+
+The following object is masked from 'package:purrr':
+
+    map</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="downloading-and-preprocessing-the-source-data" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="downloading-and-preprocessing-the-source-data"><span class="header-section-number">7.1</span> Downloading and preprocessing the source data</h2>
+<p>See https://www.ncei.noaa.gov/archive/accession/0282699</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># paths ----</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>url_nc <span class="ot">=</span> <span class="st">'https://www.nodc.noaa.gov/archive/arc0217/0282699/1.1/data/0-data/atn_45866_great-white-shark_trajectory_20090923-20091123.nc'</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>dir_data <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"datasets/atn_satellite_telemetry/data"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>file_nc <span class="ot">&lt;-</span> <span class="fu">file.path</span>(dir_data, <span class="st">"src"</span>, <span class="fu">basename</span>(url_nc))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">dir.exists</span>(dir_data))</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(file_nc))</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(url_nc, file_nc, <span class="at">mode =</span> <span class="st">"wb"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="open-the-netcdf-file" class="level3" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="open-the-netcdf-file"><span class="header-section-number">7.1.1</span> Open the netCDF file</h3>
+<p>Once the file is opened, we print out the details of what the netCDF file contains.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>atn <span class="ot">&lt;-</span> <span class="fu">nc_open</span>(file_nc)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>atn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>File /Users/runner/work/bio_data_guide/bio_data_guide/datasets/atn_satellite_telemetry/data/src/atn_45866_great-white-shark_trajectory_20090923-20091123.nc (NC_FORMAT_NETCDF4):
+
+     36 variables (excluding dimension variables):
+        string deploy_id[]   (Contiguous storage)  
+            long_name: id for this deployment. This is typically the tag ptt
+            comment: Friendly name given to the tag by the user. If no specific friendly name is given, this is the PTT id.
+            coordinates: time z lon lat
+            instrument: instrument_location
+            platform: animal
+            coverage_content_type: referenceInformation
+            _FillValue: -9999
+        double time[obs]   (Contiguous storage)  
+            units: seconds since 1990-01-01 00:00:00Z
+            standard_name: time
+            axis: T
+            _CoordinateAxisType: Time
+            calendar: standard
+            long_name: Time of the measurement, in seconds since 1990-01-01
+            actual_min: 2009-09-23T00:00:00Z
+            actual_max: 2009-11-23T05:12:00Z
+            ancillary_variables: qartod_time_flag qartod_rollup_flag qartod_speed_flag
+            instrument: instrument_location
+            platform: animal
+            coverage_content_type: coordinate
+            _FillValue: NaN
+        int z[obs]   (Contiguous storage)  
+            _FillValue: -9999
+            axis: Z
+            long_name: depth of measurement
+            positive: down
+            standard_name: depth
+            units: m
+            actual_min: 0
+            actual_max: 0
+            instrument: 
+            platform: animal
+            comment: This variable is synthetically generated to represent the depth of observations
+            coverage_content_type: coordinate
+        double lat[obs]   (Contiguous storage)  
+            axis: Y
+            _CoordinateAxisType: Lat
+            long_name: Latitude portion of location in decimal degrees North
+            standard_name: latitude
+            units: degrees_north
+            valid_max: 90
+            valid_min: -90
+            actual_min: 23.59
+            actual_max: 34.045
+            ancillary_variables: qartod_location_flag qartod_rollup_flag qartod_speed_flag error_radius semi_major_axis semi_minor_axis ellipse_orientation offset offset_orientation
+            instrument: instrument_location
+            platform: animal
+            coverage_content_type: coordinate
+            _FillValue: NaN
+        double lon[obs]   (Contiguous storage)  
+            axis: X
+            _CoordinateAxisType: Lon
+            long_name: Longitude portion of location in decimal degrees East
+            standard_name: longitude
+            units: degrees_east
+            valid_max: 180
+            valid_min: -180
+            actual_min: -166.18
+            actual_max: -118.504
+            ancillary_variables: qartod_location_flag qartod_rollup_flag qartod_speed_flag error_radius semi_major_axis semi_minor_axis ellipse_orientation offset offset_orientation
+            instrument: instrument_location
+            platform: animal
+            coverage_content_type: coordinate
+            _FillValue: NaN
+        int ptt[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+            _FillValue: -9999
+            coordinates: time z lon lat
+            long_name: Platform Transmitter Terminal (PTT) id used for Argos transmissions
+            comment: PTT id for this deployment. PTT ids may be used on multiple deployments, but not concurrently. When combined with deployment dates, PTTs can uniquely identify a deployment.
+            coverage_content_type: referenceInformation
+            instrument: instrument_location
+            platform: animal
+        string instrument[obs]   (Contiguous storage)  
+            coordinates: time z lon lat
+            comment: Wildlife Computers instrument family. Variable may report manufacturer default values (e.g., Mk10) and may not match correctly defined instrument_location or instrument_tag variables and attributes.
+            long_name: Instrument family
+            instrument: instrument_location
+            platform: animal
+            coverage_content_type: referenceInformation
+        string type[obs]   (Contiguous storage)  
+            coordinates: time z lon lat
+            comment: Type of location: Argos, FastGPS or User
+            long_name: Type of location information - Argos, GPS satellite or user provided location
+            instrument: instrument_location
+            platform: animal
+            coverage_content_type: referenceInformation
+        string location_class[obs]   (Contiguous storage)  
+            coordinates: time z lon lat
+            standard_name: quality_flag
+            comment: Quality codes from the ARGOS satellite (in meters): G,3,2,1,0,A,B,Z. See http://www.argos-system.org/manual/3-location/34_location_classes.htm
+            long_name: Location Quality Code from ARGOS satellite system
+            code_values: G,3,2,1,0,A,B,Z
+            code_meanings: estimated error less than 100m and 1+ messages received per satellite pass, estimated error less than 250m and 4+ messages received per satellite pass, estimated error between 250m and 500m and 4+ messages per satellite pass, estimated error between 500m and 1500m and 4+ messages per satellite pass, estimated error greater than 1500m and 4+ messages received per satellite pass, no least squares estimated error or unbounded kalman filter estimated error and 3 messages received per satellite pass, no least squares estimated error or unbounded kalman filter estimated error and 1 or 2 messages received per satellite pass, invalid location (available for Service Plus or Auxilliary Location Processing)
+            instrument: instrument_location
+            platform: animal
+            ancillary_variables: lat lon
+            coverage_content_type: qualityInformation
+        int error_radius[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+            _FillValue: -9999
+            coordinates: time z lon lat
+            long_name: Error radius
+            units: m
+            comment: If the position is best represented as a circle, this field gives the radius of that circle in meters.
+            instrument: instrument_location
+            platform: animal
+            ancillary_variables: lat lon offset offset_orientation
+            coverage_content_type: qualityInformation
+        int semi_major_axis[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+            _FillValue: -9999
+            coordinates: time z lon lat
+            long_name: Error - ellipse semi-major axis
+            units: m
+            comment: If the estimated position error is best expressed as an ellipse, this field gives the length in meters of the semi-major elliptical axis (one half of the major axis).
+            instrument: instrument_location
+            platform: animal
+            ancillary_variables: lat lon ellipse_orientation offset offset_orientation
+            coverage_content_type: qualityInformation
+        int semi_minor_axis[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+            _FillValue: -9999
+            coordinates: time z lon lat
+            long_name: Error - ellipse semi-minor axis
+            units: m
+            comment: If the estimated position error is best expressed as an ellipse, this field gives the length in meters of the semi-minor elliptical axis (one half of the minor axis).
+            instrument: instrument_location
+            platform: animal
+            ancillary_variables: lat lon ellipse_orientation offset offset_orientation
+            coverage_content_type: qualityInformation
+        int ellipse_orientation[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+            _FillValue: -9999
+            coordinates: time z lon lat
+            long_name: Error - ellipse orientation in degrees clockwise from true north
+            units: degrees
+            comment: The angle in degrees of the ellipse from true north, proceeding clockwise (0 to 360). A blank field represents 0 degrees.
+            instrument: instrument_location
+            platform: animal
+            ancillary_variables: lat lon semi_major_axis semi_minor_axis offset offset_orientation
+            coverage_content_type: qualityInformation
+        int offset[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+            _FillValue: -9999
+            coordinates: time z lon lat
+            long_name: Error - offset in meters to center of error ellipse or circle
+            units: m
+            comment: This field is non-zero if the circle or ellipse are not centered on the (Latitude, Longitude) values on this row. "Offset" gives the distance in meters from (Latitude, Longitude) to the center of the ellipse.
+            instrument: instrument_location
+            platform: animal
+            ancillary_variables: lat lon error_radius semi_major_axis semi_minor_axis offset_orientation
+            coverage_content_type: qualityInformation
+        int offset_orientation[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+            _FillValue: -9999
+            coordinates: time z lon lat
+            long_name: Error - offset orientation angle to ellipse center
+            units: degrees
+            comment: If the "Offset" field is non-zero, this field is the angle in degrees from (Latitude, Longitude) to the center of the ellipse. Zero degrees is true north; a blank field represents 0 degrees.
+            instrument: instrument_location
+            platform: animal
+            ancillary_variables: lat lon error_radius semi_major_axis semi_minor_axis offset
+            coverage_content_type: qualityInformation
+        double gpe_msd[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+            coordinates: time z lon lat
+            comment: Historical. No longer applicable.
+            long_name: 
+            units: 
+            instrument: instrument_location
+            platform: animal
+            coverage_content_type: auxillaryInformation
+            _FillValue: NaN
+        double gpe_u[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+            coordinates: time z lon lat
+            comment: Historical. No longer applicable.
+            long_name: 
+            units: 
+            instrument: instrument_location
+            platform: animal
+            coverage_content_type: auxillaryInformation
+            _FillValue: NaN
+        int count[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+            _FillValue: -9999
+            coordinates: time z lon lat
+            comment: Total number of times a particular data item was received, verified, and successfully decoded.
+            long_name: Count
+            units: count
+            instrument: instrument_location
+            platform: animal
+            coverage_content_type: auxillaryInformation
+        unsigned byte qartod_time_flag[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+            _FillValue: 241
+            coordinates: time z lon lat
+            standard_name: gross_range_test_quality_flag
+            long_name: Time QC test - gross range test
+            implementation: https://github.com/ioos/ioos_qc/
+            flag_meanings: PASS NOT_EVALUATED SUSPECT FAIL MISSING
+            flag_values: 1
+             flag_values: 2
+             flag_values: 3
+             flag_values: 4
+             flag_values: 9
+            references: https://cdn.ioos.noaa.gov/media/2020/03/QARTOD_TS_Manual_Update2_200324_final.pdf
+            coverage_content_type: qualityInformation
+        unsigned byte qartod_speed_flag[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+            _FillValue: 241
+            coordinates: time z lon lat
+            standard_name: gross_range_test_quality_flag
+            long_name: Speed QC test - gross range test
+            references: https://cdn.ioos.noaa.gov/media/2020/03/QARTOD_TS_Manual_Update2_200324_final.pdf
+            implementation: https://github.com/ioos/ioos_qc/
+            flag_meanings: PASS NOT_EVALUATED SUSPECT FAIL MISSING
+            flag_values: 1
+             flag_values: 2
+             flag_values: 3
+             flag_values: 4
+             flag_values: 9
+            coverage_content_type: qualityInformation
+        unsigned byte qartod_location_flag[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+            _FillValue: 241
+            coordinates: time z lon lat
+            standard_name: location_test_quality_flag
+            long_name: Location QC test - Location test
+            implementation: https://github.com/ioos/ioos_qc/
+            flag_meanings: PASS NOT_EVALUATED SUSPECT FAIL MISSING
+            flag_values: 1
+             flag_values: 2
+             flag_values: 3
+             flag_values: 4
+             flag_values: 9
+            references: https://cdn.ioos.noaa.gov/media/2020/03/QARTOD_TS_Manual_Update2_200324_final.pdf
+            coverage_content_type: qualityInformation
+        unsigned byte qartod_rollup_flag[obs]   (Chunking: [29])  (Compression: shuffle,level 1)
+            _FillValue: 241
+            coordinates: time z lon lat
+            standard_name: aggregate_quality_flag
+            long_name: Aggregate QC value
+            implementation: https://github.com/ioos/ioos_qc/
+            flag_meanings: PASS NOT_EVALUATED SUSPECT FAIL MISSING
+            flag_values: 1
+             flag_values: 2
+             flag_values: 3
+             flag_values: 4
+             flag_values: 9
+            references: https://cdn.ioos.noaa.gov/media/2020/03/QARTOD_TS_Manual_Update2_200324_final.pdf
+            coverage_content_type: qualityInformation
+        int crs[]   (Contiguous storage)  
+            epsg_code: EPSG:4326
+            grid_mapping_name: latitude_longitude
+            inverse_flattening: 298.257223563
+            long_name: Coordinate Reference System - http://www.opengis.net/def/crs/EPSG/0/4326
+            semi_major_axis: 6378137
+            coverage_content_type: referenceInformation
+        string trajectory[]   (Contiguous storage)  
+            cf_role: trajectory_id
+            long_name: trajectory identifier
+        int animal_age[]   (Contiguous storage)  
+            _FillValue: -9999
+            units: 
+            long_name: age of the animal as measured or estimated at deployment
+            coverage_content_type: referenceInformation
+            animal_age: Not provided
+        string animal_life_stage[]   (Contiguous storage)  
+            animal_life_stage: juvenile
+            long_name: Lifestage of the animal at time of deployment 
+            coverage_content_type: referenceInformation
+        string animal_sex[]   (Contiguous storage)  
+            animal_sex: male
+            long_name: sex of the animal at time of tag deployment
+            coverage_content_type: referenceInformation
+        float animal_weight[]   (Contiguous storage)  
+            _FillValue: NaN
+            units: kg
+            long_name: mass of the animal as measured or estimated at deployment
+            animal_weight: Not provided
+            coverage_content_type: referenceInformation
+        float animal_length[]   (Contiguous storage)  
+            _FillValue: NaN
+            animal_length_type: total length
+            units: cm
+            animal_length: 213.0 (cm) total length
+            long_name: length of the animal as measured or estimated at deployment
+            coverage_content_type: referenceInformation
+        float animal_length_2[]   (Contiguous storage)  
+            _FillValue: NaN
+            animal_length_2_type: Not provided
+            units: 
+            animal_length_2: Not provided
+            long_name: length of the animal as measured or estimated at deployment
+            coverage_content_type: referenceInformation
+        string animal[]   (Contiguous storage)  
+            rank: Species
+            infraorder: 
+            scientificname: Carcharodon carcharias
+            long_name: tagged animal id
+            superdomain: Biota
+            order: Lamniformes
+            authority: (Linnaeus, 1758)
+            kingdom: Animalia
+            species: Carcharodon carcharias
+            genus: Carcharodon
+            megaclass: 
+            family: Lamnidae
+            taxonRankID: 220
+            class: Elasmobranchii
+            cf_role: trajectory_id
+            coverage_content_type: referenceInformation
+            subphylum: Vertebrata
+            phylum: Chordata
+            AphiaID: 105838
+            valid_name: Carcharodon carcharias
+            infraphylum: Gnathostomata
+            subclass: Neoselachii
+            suborder: 
+        string instrument_tag[]   (Contiguous storage)  
+            manufacturer: Wildlife Computers
+            make_model: SPOT5
+            serial_number: 07S0230
+            long_name: telemetry tag applied to animal
+            coverage_content_type: referenceInformation
+            calibration_date: Not Provided
+        string instrument_location[]   (Contiguous storage)  
+            manufacturer: Wildlife Computers
+            make_model: SPOT5
+            serial_number: 07S0230
+            long_name: Wildlife Computers SPOT5
+            location_type: argos / modeled
+            comment: Location
+            coverage_content_type: referenceInformation
+            calibration_date: Not Provided
+        string taxon_name[]   (Contiguous storage)  
+            standard_name: biological_taxon_name
+            long_name: most precise taxonomic classification for the tagged animal
+            coverage_content_type: referenceInformation
+            source: Froese, R. and D. Pauly. Editors. (2023). FishBase. Carcharodon carcharias (Linnaeus, 1758). Accessed through: World Register of Marine Species at: https://www.marinespecies.org/aphia.php?p=taxdetails&amp;id=105838 on 2023-08-16
+            url: https://www.marinespecies.org/aphia.php?p=taxdetails&amp;id=105838
+        string taxon_lsid[]   (Contiguous storage)  
+            standard_name: biological_taxon_lsid
+            long_name: Namespaced Taxon Identifier for the tagged animal
+            coverage_content_type: referenceInformation
+            source: Froese, R. and D. Pauly. Editors. (2023). FishBase. Carcharodon carcharias (Linnaeus, 1758). Accessed through: World Register of Marine Species at: https://www.marinespecies.org/aphia.php?p=taxdetails&amp;id=105838 on 2023-08-16
+            url: https://www.marinespecies.org/aphia.php?p=taxdetails&amp;id=105838
+        string comment[obs]   (Contiguous storage)  
+            long_name: Comment
+            comment: Optional text field
+            coordinates: time z lon lat
+            instrument: instrument_location
+            platform: animal
+            coverage_content_type: auxillaryInformation
+
+     1 dimensions:
+        obs  Size:29 (no dimvar)
+
+    89 global attributes:
+        date_created: 2023-08-16T20:00:00Z
+        featureType: trajectory
+        cdm_data_type: Trajectory
+        Conventions: CF-1.10, ACDD-1.3, IOOS-1.2
+        argos_program_number: 2414
+        creator_email: chris.lowe@csulb.edu
+        id: 5f0668a86321be13bc7ef628
+        tag_type: SPOT5
+        source: Service Argos
+        acknowledgement: NOAA IOOS, Axiom Data Science, Navy ONR, NOAA NMFS, Wildlife Computers, Argos, IOOS ATN
+        creator_name: Chris G. Lowe
+        creator_url: 
+        geospatial_lat_units: degrees_north
+        geospatial_lon_units: degrees_east
+        infoUrl: https://portal.atn.ioos.us/#metadata/6e2ba85c-2f61-4bc5-8c2b-34d6734155ed/project
+        institution: California State University Long Beach
+        keywords: EARTH SCIENCE &gt; AGRICULTURE &gt; ANIMAL SCIENCE &gt; ANIMAL ECOLOGY AND BEHAVIOR, EARTH SCIENCE &gt; BIOSPHERE &gt; ECOLOGICAL DYNAMICS &gt; SPECIES/POPULATION INTERACTIONS &gt; MIGRATORY RATES/ROUTES, EARTH SCIENCE &gt; OCEANS, EARTH SCIENCE &gt; CLIMATE INDICATORS &gt; BIOSPHERIC INDICATORS &gt; SPECIES MIGRATION, EARTH SCIENCE &gt; OCEANS, EARTH SCIENCE &gt; BIOLOGICAL CLASSIFICATION &gt; ANIMALS/VERTEBRATES, EARTH SCIENCE &gt; BIOSPHERE &gt; ECOSYSTEMS &gt; MARINE ECOSYSTEMS, PROVIDERS &gt; GOVERNMENT AGENCIES-U.S. FEDERAL AGENCIES &gt; DOC &gt; NOAA &gt; IOOS, PROVIDERS &gt; COMMERCIAL &gt; Axiom Data Science
+        license: These data may be used and redistributed for free, but are not intended for legal use, since they may contain inaccuracies. No person or group associated with these data makes any warranty, expressed or implied, including warranties of merchantability and fitness for a particular purpose, or assumes any legal liability for the accuracy, completeness or usefulness of this information. This disclaimer applies to both individual use of these data and aggregate use with other data. It is strongly recommended that users read and fully comprehend associated metadata prior to use. Please acknowledge the U.S. Animal Telemetry Network (ATN) or the specified citation as the source from which these data were obtained in any publications and/or representations of these data. Communication and collaboration with dataset authors are strongly encouraged.
+        metadata_link: 
+        naming_authority: com.wildlifecomputers
+        platform_category: animal
+        platform: fish
+        platform_vocabulary: https://vocab.nerc.ac.uk/collection/L06/current/
+        processing_level: NetCDF file created from position data obtained from Wildlife Computers API.
+        project: Project White Shark: Juvenile Satellite Biotelemetry, 2001-2020
+        publisher_email: atndata@ioos.us
+        publisher_institution: US Integrated Ocean Observing System Office
+        publisher_name: US Integrated Ocean Observing System (IOOS) Animal Telemetry Network (ATN)
+        publisher_url: https://atn.ioos.us
+        publisher_country: USA
+        standard_name_vocabulary: CF-v78
+        vendor: Wildlife Computers
+        geospatial_lat_min: 23.59
+        geospatial_lat_max: 34.045
+        geospatial_lon_min: -166.18
+        geospatial_lon_max: -118.504
+        geospatial_bbox: POLYGON ((-118.504 23.59, -118.504 34.045, -166.18 34.045, -166.18 23.59, -118.504 23.59))
+        geospatial_bounds: POLYGON ((-166.18 23.59, -118.581 34.038, -118.53 34.045, -118.504 33.989, -118.534 33.972, -119.75 33.517, -166.18 23.59))
+        geospatial_bounds_crs: EPSG:4326
+        time_coverage_start: 2009-09-23T00:00:00Z
+        time_coverage_end: 2009-11-23T05:12:00Z
+        time_coverage_duration: P61DT5H12M0S
+        time_coverage_resolution: P2DT2H39M43S
+        date_issued: 2023-08-16T20:00:00Z
+        date_modified: 2023-08-16T20:00:00Z
+        history: 2023-08-07T20:24:04Z - Created by the IOOS ATN DAC from the Wildlife Computers API
+        summary: Wildlife Computers SPOT5 tag (ptt id 45866) deployed on a great white shark (Carcharodon carcharias) by Chris G. Lowe in the North Pacific Ocean from 2009-09-23 to 2009-11-23
+        title: Great white shark (Carcharodon carcharias) location data from a satellite telemetry tag (ptt id 45866) deployed in the North Pacific Ocean from 2009-09-23 to 2009-11-23, deployment id 5f0668a86321be13bc7ef628
+        uuid: ff554ebf-bf4b-5a82-8a90-9c0ceb799d96
+        platform_name: Carcharodon carcharias
+        platform_id: 105838
+        vendor_id: 5f0668a86321be13bc7ef628
+        sea_name: North Pacific Ocean
+        arbitrary_keywords: ATN, Animal Telemetry Network, IOOS, Integrated Ocean Observing System, trajectory, satellite telemetry tag
+        contributor_role_vocabulary: https://vocab.nerc.ac.uk/collection/G04/current/
+        creator_role_vocabulary: https://vocab.nerc.ac.uk/collection/G04/current/
+        creator_sector_vocabulary: https://mmisw.org/ont/ioos/sector
+        creator_type: person
+        date_metadata_modified: 20230816
+        instrument: Satellite telemetry tag
+        instrument_vocabulary: 
+        keywords_vocabulary: GCMD Science Keywords v15.1
+        ncei_template_version: NCEI_NetCDF_Trajectory_Template_v2.0
+        product_version: 
+        program: IOOS Animal Telemetry Network
+        publisher_type: institution
+        references: 
+        animal_common_name: great white shark
+        animal_id: 09_13
+        animal_scientific_name: Carcharodon carcharias
+        deployment_id: 5f0668a86321be13bc7ef628
+        deployment_start_datetime: 2009-09-23T00:00:00Z
+        deployment_end_datetime: 2009-11-23T00:00:00Z
+        wmo_platform_code: 
+        comment: 09_13-45866
+        ptt_id: 45866
+        deployment_start_lat: 34.03
+        deployment_start_lon: -118.56
+        contributor_name: Thomas Farrugia
+        contributor_email: tjfarrugia@alaska.edu
+        contributor_role: collaborator
+        contributor_institution: California State University Long Beach
+        contributor_url: 
+        creator_role: principalInvestigator
+        creator_sector: academic
+        creator_country: USA
+        creator_institution: California State University Long Beach
+        creator_institution_url: https://www.csulb.edu/shark-lab
+        citation: Lowe, Chris G.; Farrugia, Thomas. (2023) great white shark (Carcharodon carcharias) location data from a satellite telemetry tag (ptt id 45866) deployed in the North Pacific Ocean from 2009-09-23 to 2009-11-23, deployment id 5f0668a86321be13bc7ef628. [Dataset]. US Integrated Ocean Observing System Office.</code></pre>
+</div>
+</div>
+</section>
+<section id="collect-all-the-metadata-from-the-netcdf-file." class="level3" data-number="7.1.2">
+<h3 data-number="7.1.2" class="anchored" data-anchor-id="collect-all-the-metadata-from-the-netcdf-file."><span class="header-section-number">7.1.2</span> Collect all the metadata from the netCDF file.</h3>
+<p>This gathers not only the global attributes, but the variable level attributes as well. As you can see in the <strong>variable</strong> column the term <code>NC_GLOBAL</code> refers to global attributes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> ncmeta<span class="sc">::</span><span class="fu">nc_atts</span>(file_nc)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>metadata</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 381 × 4
+      id name                  variable  value       
+   &lt;int&gt; &lt;chr&gt;                 &lt;chr&gt;     &lt;named list&gt;
+ 1     0 long_name             deploy_id &lt;chr [1]&gt;   
+ 2     1 comment               deploy_id &lt;chr [1]&gt;   
+ 3     2 coordinates           deploy_id &lt;chr [1]&gt;   
+ 4     3 instrument            deploy_id &lt;chr [1]&gt;   
+ 5     4 platform              deploy_id &lt;chr [1]&gt;   
+ 6     5 coverage_content_type deploy_id &lt;chr [1]&gt;   
+ 7     6 _FillValue            deploy_id &lt;dbl [1]&gt;   
+ 8     0 units                 time      &lt;chr [1]&gt;   
+ 9     1 standard_name         time      &lt;chr [1]&gt;   
+10     2 axis                  time      &lt;chr [1]&gt;   
+# ℹ 371 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="store-the-data-as-a-tibble" class="level3" data-number="7.1.3">
+<h3 data-number="7.1.3" class="anchored" data-anchor-id="store-the-data-as-a-tibble"><span class="header-section-number">7.1.3</span> Store the data as a tibble</h3>
+<p>Collect the data dimensioned by <code>time</code> from the netCDF file as a tibble. Then, print the first ten rows.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>atn <span class="ot">&lt;-</span> <span class="fu">tidync</span>(file_nc)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>atn_tbl <span class="ot">&lt;-</span> atn <span class="sc">%&gt;%</span> <span class="fu">hyper_tibble</span>(<span class="at">force=</span><span class="cn">TRUE</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(atn_tbl, <span class="at">n=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 23
+       time     z   lat   lon   ptt instrument type  location_class error_radius
+      &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;                 &lt;int&gt;
+1 622512000     0  34.0 -119. 45866 SPOT       User  nan                      NA
+2 622708920     0  23.6 -166. 45866 SPOT       Argos A                        NA
+3 622724940     0  34.0 -119. 45866 SPOT       Argos 1                        NA
+4 622725060     0  34.0 -119. 45866 SPOT       Argos 0                        NA
+# ℹ 14 more variables: semi_major_axis &lt;int&gt;, semi_minor_axis &lt;int&gt;,
+#   ellipse_orientation &lt;int&gt;, offset &lt;int&gt;, offset_orientation &lt;int&gt;,
+#   gpe_msd &lt;dbl&gt;, gpe_u &lt;dbl&gt;, count &lt;int&gt;, qartod_time_flag &lt;int&gt;,
+#   qartod_speed_flag &lt;int&gt;, qartod_location_flag &lt;int&gt;,
+#   qartod_rollup_flag &lt;int&gt;, comment &lt;chr&gt;, obs &lt;chr&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="dealing-with-time" class="level3" data-number="7.1.4">
+<h3 data-number="7.1.4" class="anchored" data-anchor-id="dealing-with-time"><span class="header-section-number">7.1.4</span> Dealing with time</h3>
+<p>Notice the data in the <strong>time</strong> column aren’t formatted as times. We need to read the metadata associated with the time variable to understand what the units are. Below, we print a tibble of all the attributes from the <strong>time</strong> variable.</p>
+<p>Notice the <em>units</em> attribute and it’s value of <code>seconds since 1990-01-01 00:00:00Z</code>. We need to use that information to convert the time variable to something useful that <code>ggplot</code> can handle.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>time_attrs <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"time"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>time_attrs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13 × 4
+      id name                  variable value       
+   &lt;int&gt; &lt;chr&gt;                 &lt;chr&gt;    &lt;named list&gt;
+ 1     0 units                 time     &lt;chr [1]&gt;   
+ 2     1 standard_name         time     &lt;chr [1]&gt;   
+ 3     2 axis                  time     &lt;chr [1]&gt;   
+ 4     3 _CoordinateAxisType   time     &lt;chr [1]&gt;   
+ 5     4 calendar              time     &lt;chr [1]&gt;   
+ 6     5 long_name             time     &lt;chr [1]&gt;   
+ 7     6 actual_min            time     &lt;chr [1]&gt;   
+ 8     7 actual_max            time     &lt;chr [1]&gt;   
+ 9     8 ancillary_variables   time     &lt;chr [1]&gt;   
+10     9 instrument            time     &lt;chr [1]&gt;   
+11    10 platform              time     &lt;chr [1]&gt;   
+12    11 coverage_content_type time     &lt;chr [1]&gt;   
+13    12 _FillValue            time     &lt;dbl [1]&gt;   </code></pre>
+</div>
+</div>
+<p>So, we grab the value from the <code>units</code> attribute, split the string to collect the date information, and apply that to a time conversion function <code>as.POSIXct</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#library(stringr) - loaded with tidyverse</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># grab origin date from time variable units attribute</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>tunit <span class="ot">&lt;-</span> time_attrs <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"units"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>lunit <span class="ot">&lt;-</span> <span class="fu">str_split</span>(tunit<span class="sc">$</span>value,<span class="st">' '</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>atn_tbl<span class="sc">$</span>time <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(atn_tbl<span class="sc">$</span>time, <span class="at">origin=</span>lunit[<span class="dv">3</span>], <span class="at">tz=</span><span class="st">"GMT"</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(atn_tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [29 × 23] (S3: tbl_df/tbl/data.frame)
+ $ time                : POSIXct[1:29], format: "2009-09-23 00:00:00" "2009-09-25 06:42:00" ...
+ $ z                   : int [1:29] 0 0 0 0 0 0 0 0 0 0 ...
+ $ lat                 : num [1:29] 34 23.6 34 34 34 ...
+ $ lon                 : num [1:29] -119 -166 -119 -119 -119 ...
+ $ ptt                 : int [1:29] 45866 45866 45866 45866 45866 45866 45866 45866 45866 45866 ...
+ $ instrument          : chr [1:29] "SPOT" "SPOT" "SPOT" "SPOT" ...
+ $ type                : chr [1:29] "User" "Argos" "Argos" "Argos" ...
+ $ location_class      : chr [1:29] "nan" "A" "1" "0" ...
+ $ error_radius        : int [1:29] NA NA NA NA NA NA NA NA NA NA ...
+ $ semi_major_axis     : int [1:29] NA NA NA NA NA NA NA NA NA NA ...
+ $ semi_minor_axis     : int [1:29] NA NA NA NA NA NA NA NA NA NA ...
+ $ ellipse_orientation : int [1:29] NA NA NA NA NA NA NA NA NA NA ...
+ $ offset              : int [1:29] NA NA NA NA NA NA NA NA NA NA ...
+ $ offset_orientation  : int [1:29] NA NA NA NA NA NA NA NA NA NA ...
+ $ gpe_msd             : num [1:29] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN ...
+ $ gpe_u               : num [1:29] NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN ...
+ $ count               : int [1:29] NA NA NA NA NA NA NA NA NA NA ...
+ $ qartod_time_flag    : int [1:29] 1 1 1 1 1 1 1 1 1 1 ...
+ $ qartod_speed_flag   : int [1:29] 2 4 4 4 1 1 1 1 1 1 ...
+ $ qartod_location_flag: int [1:29] 1 1 1 1 1 1 1 1 1 1 ...
+ $ qartod_rollup_flag  : int [1:29] 1 4 4 4 1 1 1 1 1 1 ...
+ $ comment             : chr [1:29] "" "" "" "" ...
+ $ obs                 : chr [1:29] "1" "2" "3" "4" ...</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="converting-to-darwin-core" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="converting-to-darwin-core"><span class="header-section-number">7.2</span> Converting to Darwin Core</h2>
+<p>Now let’s work through converting this netCDF file to Darwin Core. Following the guidance published at https://github.com/tdwg/dwc-for-biologging/wiki/Data-guidelines and https://github.com/ocean-tracking-network/biologging_standardization/tree/master/examples/braun-blueshark/darwincore-example</p>
+<section id="occurrence-core" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="occurrence-core"><span class="header-section-number">7.2.1</span> Occurrence Core</h3>
+<p>Below is the mapping table from DarwinCore to the netCDF file.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 21%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>DarwinCore Term</th>
+<th>Status</th>
+<th>netCDF source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>occurrenceStatus</td>
+<td>Required</td>
+<td>hardcoded to <code>present</code>.</td>
+</tr>
+<tr class="even">
+<td>basisOfRecord</td>
+<td>Required</td>
+<td>data contained in the <code>type</code> variable where <code>type</code> of <code>User</code> = <code>HumanObservation</code> and <code>Argos</code> = <code>MachineObservation</code>.</td>
+</tr>
+<tr class="odd">
+<td>occurrenceID</td>
+<td>Required</td>
+<td><code>eventDate</code>, plus data contained in <code>z</code> variable, plus <code>animal_common_name</code> global attribute.</td>
+</tr>
+<tr class="even">
+<td>organismID</td>
+<td>Required</td>
+<td><code>platform_id</code> global attribute plus the <code>animal_common_name</code> global attribute.</td>
+</tr>
+<tr class="odd">
+<td>eventDate</td>
+<td>Required</td>
+<td>data contained in <code>time</code> variable. Converted to ISO8601.</td>
+</tr>
+<tr class="even">
+<td>decimalLatitude &amp; decimalLongitude</td>
+<td>Required</td>
+<td>data in <code>lat</code> and <code>lon</code> variable, respectively.</td>
+</tr>
+<tr class="odd">
+<td>geodeticDatum</td>
+<td>Required</td>
+<td>attribute <code>epsg_code</code> in the <code>crs</code> variable.</td>
+</tr>
+<tr class="even">
+<td>scientificName</td>
+<td>Required</td>
+<td>data from the variable <code>taxon_name</code>.</td>
+</tr>
+<tr class="odd">
+<td>scientificNameID</td>
+<td></td>
+<td>data from the variable <code>taxon_lsid</code>.</td>
+</tr>
+<tr class="even">
+<td>eventID</td>
+<td>Strongly recommended</td>
+<td><code>animal_common_name</code> global attribute plus the <code>eventDate</code>.</td>
+</tr>
+<tr class="odd">
+<td>samplingProtocol</td>
+<td>Strongly recommended</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>kingdom</td>
+<td>Strongly recommended</td>
+<td><code>kingdom</code> attribute in the <code>animal</code> variable.</td>
+</tr>
+<tr class="odd">
+<td>taxonRank</td>
+<td>Strongly recommended</td>
+<td><code>rank</code> attribute in the <code>animal</code> variable.</td>
+</tr>
+<tr class="even">
+<td>coordinateUncertaintyInMeters</td>
+<td>Share if available</td>
+<td>maximum value of the data from the variables <code>error_radius</code>, <code>semi_major_axis</code>, and <code>offset</code>.</td>
+</tr>
+<tr class="odd">
+<td>lifeStage</td>
+<td>Share if available</td>
+<td>data from the variable <code>animal_life_stage</code>.</td>
+</tr>
+<tr class="even">
+<td>sex</td>
+<td>Share if available</td>
+<td>data from the variable <code>animal_sex</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>Now start working through the crosswalk. A few thoughts about some of the functions we use:</p>
+<ol type="1">
+<li><code>case_when</code> is a <a href="https://dplyr.tidyverse.org/reference/case_when.html">function from dplyr</a> that is essentially a ‘vectorized’ ifelse function. The take-home is that it plays nice with other <code>tidyverse</code> functions, like <code>mutate</code> and IMO is a bit more readable than a complex ifelse statement.</li>
+<li><code>rename</code> is another nice dplyr function for renaming columns. It workes well following <code>mutate</code> because you can see the mutation applied to a column and then the column renamed, rather than a complex creation of a new column and dropping of the old column.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Defined to grab attributes in subsequent code</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>nc <span class="ot">&lt;-</span> <span class="fu">nc_open</span>(file_nc)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>occurrencedf <span class="ot">&lt;-</span> atn_tbl <span class="sc">%&gt;%</span>  </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>( <span class="co"># Select desired columns</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>        time, </span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>        lat,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>        lon,</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>        type,</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>        location_class,</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        qartod_time_flag,</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>        qartod_speed_flag,</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>        qartod_location_flag,</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>        qartod_rollup_flag</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">%&gt;%</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>( <span class="co"># add and mutate columns.</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> <span class="fu">case_when</span>(type <span class="sc">==</span> <span class="st">'User'</span> <span class="sc">~</span> <span class="st">'HumanObservation'</span>,</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>                         type <span class="sc">==</span> <span class="st">'Argos'</span> <span class="sc">~</span> <span class="st">'MachineObservation'</span>),</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">time =</span> <span class="fu">format</span>(time, <span class="st">'%Y-%m-%dT%H:%M:%SZ'</span>),</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">kingdom =</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"animal"</span> <span class="sc">&amp;</span> name <span class="sc">==</span> <span class="st">"kingdom"</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(value) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(<span class="at">use.names =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">taxonRank =</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"animal"</span> <span class="sc">&amp;</span> name <span class="sc">==</span> <span class="st">"rank"</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(value) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(<span class="at">use.names =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">occurrenceStatus =</span> <span class="st">"present"</span>,</span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>        <span class="at">sex =</span> <span class="fu">ncvar_get</span>( nc, <span class="st">'animal_sex'</span>),</span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>        <span class="at">lifeStage =</span> <span class="fu">ncvar_get</span>( nc, <span class="st">'animal_life_stage'</span>),</span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>        <span class="at">scientificName =</span> <span class="fu">ncvar_get</span>( nc, <span class="st">'taxon_name'</span>),</span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>        <span class="at">scientificNameID =</span> <span class="fu">ncvar_get</span>( nc, <span class="st">"taxon_lsid"</span>)</span>
+<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">%&gt;%</span></span>
+<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(  <span class="co"># rename columns to Darwin Core terms</span></span>
+<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a>        <span class="at">basisOfRecord =</span> type,</span>
+<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a>        <span class="at">eventDate =</span> time,</span>
+<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a>        <span class="at">decimalLatitude =</span> lat,</span>
+<span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a>        <span class="at">decimalLongitude =</span> lon) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-48"><a href="#cb17-48" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(eventDate) <span class="co">#arrange by increasing date</span></span>
+<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-50"><a href="#cb17-50" aria-hidden="true" tabindex="-1"></a><span class="co"># minimumDepthInMeters = z,</span></span>
+<span id="cb17-51"><a href="#cb17-51" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>minimumDepthInMeters <span class="ot">=</span> atn_tbl<span class="sc">$</span>z</span>
+<span id="cb17-52"><a href="#cb17-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-53"><a href="#cb17-53" aria-hidden="true" tabindex="-1"></a><span class="co"># maximumDepthInMeters = z,</span></span>
+<span id="cb17-54"><a href="#cb17-54" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>maximumDepthInMeters <span class="ot">=</span> atn_tbl<span class="sc">$</span>z</span>
+<span id="cb17-55"><a href="#cb17-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-56"><a href="#cb17-56" aria-hidden="true" tabindex="-1"></a><span class="co"># organismID - {platformID}_{common_name}</span></span>
+<span id="cb17-57"><a href="#cb17-57" aria-hidden="true" tabindex="-1"></a>common_name_tbl <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"NC_GLOBAL"</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"animal_common_name"</span>)</span>
+<span id="cb17-58"><a href="#cb17-58" aria-hidden="true" tabindex="-1"></a>common_name <span class="ot">&lt;-</span> <span class="fu">chartr</span>(<span class="st">" "</span>, <span class="st">"_"</span>, common_name_tbl<span class="sc">$</span>value)</span>
+<span id="cb17-59"><a href="#cb17-59" aria-hidden="true" tabindex="-1"></a>platform_id_tbl <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"NC_GLOBAL"</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"platform_id"</span>)</span>
+<span id="cb17-60"><a href="#cb17-60" aria-hidden="true" tabindex="-1"></a>platform_id <span class="ot">&lt;-</span> <span class="fu">chartr</span>(<span class="st">" "</span>, <span class="st">"_"</span>, platform_id_tbl<span class="sc">$</span>value)</span>
+<span id="cb17-61"><a href="#cb17-61" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>organismID <span class="ot">&lt;-</span> <span class="fu">paste</span>(platform_id , common_name, <span class="at">sep =</span> <span class="st">"_"</span>) </span>
+<span id="cb17-62"><a href="#cb17-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-63"><a href="#cb17-63" aria-hidden="true" tabindex="-1"></a><span class="co"># occurrenceID - {eventDate}_{depth}_{common_name}</span></span>
+<span id="cb17-64"><a href="#cb17-64" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>occurrenceID <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">" "</span>, <span class="st">"_"</span>, <span class="fu">paste</span>(occurrencedf<span class="sc">$</span>eventDate, atn_tbl<span class="sc">$</span>z, common_name, <span class="at">sep =</span> <span class="st">"_"</span>))</span>
+<span id="cb17-65"><a href="#cb17-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-66"><a href="#cb17-66" aria-hidden="true" tabindex="-1"></a><span class="co"># geodeticDatum</span></span>
+<span id="cb17-67"><a href="#cb17-67" aria-hidden="true" tabindex="-1"></a>gd_tbl <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"crs"</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"epsg_code"</span>)</span>
+<span id="cb17-68"><a href="#cb17-68" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>geodeticDatum <span class="ot">&lt;-</span> <span class="fu">paste</span>(gd_tbl<span class="sc">$</span>value)</span>
+<span id="cb17-69"><a href="#cb17-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-70"><a href="#cb17-70" aria-hidden="true" tabindex="-1"></a><span class="co"># eventID</span></span>
+<span id="cb17-71"><a href="#cb17-71" aria-hidden="true" tabindex="-1"></a><span class="co">#eventID - {common_name}_{dateTime}</span></span>
+<span id="cb17-72"><a href="#cb17-72" aria-hidden="true" tabindex="-1"></a>cname <span class="ot">=</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"NC_GLOBAL"</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"animal_common_name"</span>)</span>
+<span id="cb17-73"><a href="#cb17-73" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>eventID <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">" "</span>, <span class="st">"_"</span>, <span class="fu">paste0</span>(cname<span class="sc">$</span>value, <span class="st">"_"</span>, occurrencedf<span class="sc">$</span>eventDate))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(occurrencedf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [29 × 22] (S3: tbl_df/tbl/data.frame)
+ $ eventDate           : chr [1:29] "2009-09-23T00:00:00Z" "2009-09-25T06:42:00Z" "2009-09-25T11:09:00Z" "2009-09-25T11:11:00Z" ...
+ $ decimalLatitude     : num [1:29] 34 23.6 34 34 34 ...
+ $ decimalLongitude    : num [1:29] -119 -166 -119 -119 -119 ...
+ $ basisOfRecord       : chr [1:29] "HumanObservation" "MachineObservation" "MachineObservation" "MachineObservation" ...
+ $ location_class      : chr [1:29] "nan" "A" "1" "0" ...
+ $ qartod_time_flag    : int [1:29] 1 1 1 1 1 1 1 1 1 1 ...
+ $ qartod_speed_flag   : int [1:29] 2 4 4 4 1 1 1 1 1 1 ...
+ $ qartod_location_flag: int [1:29] 1 1 1 1 1 1 1 1 1 1 ...
+ $ qartod_rollup_flag  : int [1:29] 1 4 4 4 1 1 1 1 1 1 ...
+ $ kingdom             : chr [1:29] "Animalia" "Animalia" "Animalia" "Animalia" ...
+ $ taxonRank           : chr [1:29] "Species" "Species" "Species" "Species" ...
+ $ occurrenceStatus    : chr [1:29] "present" "present" "present" "present" ...
+ $ sex                 : chr [1:29] "male" "male" "male" "male" ...
+ $ lifeStage           : chr [1:29] "juvenile" "juvenile" "juvenile" "juvenile" ...
+ $ scientificName      : chr [1:29] "Carcharodon carcharias" "Carcharodon carcharias" "Carcharodon carcharias" "Carcharodon carcharias" ...
+ $ scientificNameID    : chr [1:29] "urn:lsid:marinespecies.org:taxname:105838" "urn:lsid:marinespecies.org:taxname:105838" "urn:lsid:marinespecies.org:taxname:105838" "urn:lsid:marinespecies.org:taxname:105838" ...
+ $ minimumDepthInMeters: int [1:29] 0 0 0 0 0 0 0 0 0 0 ...
+ $ maximumDepthInMeters: int [1:29] 0 0 0 0 0 0 0 0 0 0 ...
+ $ organismID          : chr [1:29] "105838_great_white_shark" "105838_great_white_shark" "105838_great_white_shark" "105838_great_white_shark" ...
+ $ occurrenceID        : chr [1:29] "2009-09-23T00:00:00Z_0_great_white_shark" "2009-09-25T06:42:00Z_0_great_white_shark" "2009-09-25T11:09:00Z_0_great_white_shark" "2009-09-25T11:11:00Z_0_great_white_shark" ...
+ $ geodeticDatum       : chr [1:29] "EPSG:4326" "EPSG:4326" "EPSG:4326" "EPSG:4326" ...
+ $ eventID             : chr [1:29] "great_white shark_2009-09-23T00:00:00Z" "great_white shark_2009-09-25T06:42:00Z" "great_white shark_2009-09-25T11:09:00Z" "great_white shark_2009-09-25T11:11:00Z" ...</code></pre>
+</div>
+</div>
+<section id="add-coordinateuncertaintyinmeters-and-filter-by-location_class" class="level4" data-number="7.2.1.1">
+<h4 data-number="7.2.1.1" class="anchored" data-anchor-id="add-coordinateuncertaintyinmeters-and-filter-by-location_class"><span class="header-section-number">7.2.1.1</span> Add coordinateUncertaintyInMeters AND filter by location_class</h4>
+<p>When we add <code>coordinateUncertaintyInMeters</code> we are also filtering out where <code>location_class</code> == <code>A</code>,<code>B</code>,or <code>Z</code>.</p>
+<p>In these data we also have additional information about the Location Quality Code from ARGOS satellite system. Below are the codes and those meanings.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 46%">
+<col style="width: 53%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>code_values</th>
+<th>code meanings</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>G</td>
+<td>estimated error less than 100m and 1+ messages received per satellite pass</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>estimated error less than 250m and 4+ messages received per satellite pass</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>estimated error between 250m and 500m and 4+ messages per satellite pass</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>estimated error between 500m and 1500m and 4+ messages per satellite pass</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td>estimated error greater than 1500m and 4+ messages received per satellite pass</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>no least squares estimated error or unbounded kalman filter estimated error and 3 messages received per satellite pass</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>no least squares estimated error or unbounded kalman filter estimated error and 1 or 2 messages received per satellite pass</td>
+</tr>
+<tr class="even">
+<td>Z</td>
+<td>invalid location (available for Service Plus or Auxilliary Location Processing)</td>
+</tr>
+</tbody>
+</table>
+<p>Since codes <code>A</code>, <code>B</code>, and <code>Z</code> are essentially bad values, I propose that we filter those out.</p>
+<p>Also, create a mapping table for <code>coordinateUncertaintyInMeters</code> that corresponds to the ARGOS code maximum error as shown in the table below:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>code</th>
+<th>coordinateUncertaintyInMeters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>G</td>
+<td>100</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>250</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>500</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1500</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td>10000 (<a href="https://github.com/ioos/bio_data_guide/issues/145#issuecomment-1805739244">ref</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>Below we create a lookup table for the <code>location_class</code> values we agree are good, which contains the <code>coordinateUncertaintyInMeters</code> for the appropriate location class. When we merge that table with our raw data, the observations that don’t match the location_classes in our lookup table will not be transfered over (ie. they will be filtered out).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>occurrencedf <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(location_class <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'nan'</span>,<span class="st">'G'</span>,<span class="st">'3'</span>,<span class="st">'2'</span>,<span class="st">'1'</span>,<span class="st">'0'</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(  <span class="co"># This returns NA for any other values than those defined below</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">coordinateUncertaintyInMeters =</span> <span class="fu">case_when</span>(location_class <span class="sc">==</span> <span class="st">'nan'</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>                                                     location_class <span class="sc">==</span> <span class="st">'G'</span> <span class="sc">~</span> <span class="dv">200</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>                                                     location_class <span class="sc">==</span> <span class="st">'3'</span> <span class="sc">~</span> <span class="dv">250</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>                                                     location_class <span class="sc">==</span> <span class="st">'2'</span> <span class="sc">~</span> <span class="dv">500</span>,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>                                                     location_class <span class="sc">==</span> <span class="st">'1'</span> <span class="sc">~</span> <span class="dv">1500</span>,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>                                                     location_class <span class="sc">==</span> <span class="st">'0'</span> <span class="sc">~</span> <span class="dv">10000</span>) <span class="co"># https://github.com/ioos/bio_data_guide/issues/145#issuecomment-1805739244</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(eventDate) <span class="co"># arrange by increasing date</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>occurrencedf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 19 × 23
+   eventDate       decimalLatitude decimalLongitude basisOfRecord location_class
+   &lt;chr&gt;                     &lt;dbl&gt;            &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;         
+ 1 2009-09-23T00:…            34.0            -119. HumanObserva… nan           
+ 2 2009-09-25T11:…            34.0            -119. MachineObser… 1             
+ 3 2009-09-25T11:…            34.0            -119. MachineObser… 0             
+ 4 2009-09-27T17:…            34.0            -119. MachineObser… 1             
+ 5 2009-10-08T20:…            34.0            -119. MachineObser… 2             
+ 6 2009-10-15T11:…            34.0            -119. MachineObser… 0             
+ 7 2009-10-17T06:…            34.0            -119. MachineObser… 0             
+ 8 2009-10-17T09:…            34.0            -119. MachineObser… 2             
+ 9 2009-10-17T10:…            34.0            -119. MachineObser… 3             
+10 2009-10-18T08:…            34.0            -119. MachineObser… 1             
+11 2009-10-18T10:…            34.0            -119. MachineObser… 2             
+12 2009-10-18T11:…            34.0            -119. MachineObser… 0             
+13 2009-10-23T23:…            34.0            -119. MachineObser… 2             
+14 2009-10-24T00:…            34.0            -119. MachineObser… 0             
+15 2009-10-26T10:…            34.0            -119. MachineObser… 3             
+16 2009-10-27T16:…            34.0            -119. MachineObser… 1             
+17 2009-10-27T16:…            34.0            -119. MachineObser… 2             
+18 2009-10-29T11:…            34.0            -119. MachineObser… 2             
+19 2009-10-31T21:…            34.0            -119. MachineObser… 0             
+# ℹ 18 more variables: qartod_time_flag &lt;int&gt;, qartod_speed_flag &lt;int&gt;,
+#   qartod_location_flag &lt;int&gt;, qartod_rollup_flag &lt;int&gt;, kingdom &lt;chr&gt;,
+#   taxonRank &lt;chr&gt;, occurrenceStatus &lt;chr&gt;, sex &lt;chr&gt;, lifeStage &lt;chr&gt;,
+#   scientificName &lt;chr&gt;, scientificNameID &lt;chr&gt;, minimumDepthInMeters &lt;int&gt;,
+#   maximumDepthInMeters &lt;int&gt;, organismID &lt;chr&gt;, occurrenceID &lt;chr&gt;,
+#   geodeticDatum &lt;chr&gt;, eventID &lt;chr&gt;, coordinateUncertaintyInMeters &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>Notice how we went from 29 rows down to 19 rows by only selecting specific the location_class.</p>
+</section>
+</section>
+<section id="create-a-datageneralizations-column-to-describe-how-many-duplicates-were-found-for-each-deprecation-series" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="create-a-datageneralizations-column-to-describe-how-many-duplicates-were-found-for-each-deprecation-series"><span class="header-section-number">7.2.2</span> Create a dataGeneralizations column to describe how many duplicates were found for each deprecation series</h3>
+<p>Add a <code>dataGeneralizations</code> column containing a string like ‘first of # records’ to indicate there are more records in the raw dataset to be discovered by the super-curious.</p>
+<p>The dataGeneralizations string is compiled by counting the number of consecutive duplicates and inserting that into a standard string. That string is “first of [n] records” which will make more sense once we’ve filtered down to keep the first occurrence of the hour.</p>
+<p>The next step below this, we filter out only the first observation of the hour.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sort by date</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>occurrencedf <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(eventDate)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>occurrencedf <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">eventDateHrs =</span> <span class="fu">format</span>(<span class="fu">as.POSIXct</span>(eventDate, <span class="at">format=</span><span class="st">"%Y-%m-%dT%H:%M:%SZ"</span>),<span class="st">"%Y-%m-%dT%H"</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>           ) <span class="sc">%&gt;%</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_count</span>(eventDateHrs) <span class="sc">%&gt;%</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">dataGeneralizations =</span> <span class="fu">case_when</span>(n <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">""</span>,</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>                                           <span class="cn">TRUE</span> <span class="sc">~</span> <span class="fu">paste</span>(<span class="st">"first of "</span>, n ,<span class="st">"records"</span>)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>                                           )</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>           ) <span class="sc">%&gt;%</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>n)</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>occurrencedf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 19 × 25
+   eventDate       decimalLatitude decimalLongitude basisOfRecord location_class
+   &lt;chr&gt;                     &lt;dbl&gt;            &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;         
+ 1 2009-09-23T00:…            34.0            -119. HumanObserva… nan           
+ 2 2009-09-25T11:…            34.0            -119. MachineObser… 1             
+ 3 2009-09-25T11:…            34.0            -119. MachineObser… 0             
+ 4 2009-09-27T17:…            34.0            -119. MachineObser… 1             
+ 5 2009-10-08T20:…            34.0            -119. MachineObser… 2             
+ 6 2009-10-15T11:…            34.0            -119. MachineObser… 0             
+ 7 2009-10-17T06:…            34.0            -119. MachineObser… 0             
+ 8 2009-10-17T09:…            34.0            -119. MachineObser… 2             
+ 9 2009-10-17T10:…            34.0            -119. MachineObser… 3             
+10 2009-10-18T08:…            34.0            -119. MachineObser… 1             
+11 2009-10-18T10:…            34.0            -119. MachineObser… 2             
+12 2009-10-18T11:…            34.0            -119. MachineObser… 0             
+13 2009-10-23T23:…            34.0            -119. MachineObser… 2             
+14 2009-10-24T00:…            34.0            -119. MachineObser… 0             
+15 2009-10-26T10:…            34.0            -119. MachineObser… 3             
+16 2009-10-27T16:…            34.0            -119. MachineObser… 1             
+17 2009-10-27T16:…            34.0            -119. MachineObser… 2             
+18 2009-10-29T11:…            34.0            -119. MachineObser… 2             
+19 2009-10-31T21:…            34.0            -119. MachineObser… 0             
+# ℹ 20 more variables: qartod_time_flag &lt;int&gt;, qartod_speed_flag &lt;int&gt;,
+#   qartod_location_flag &lt;int&gt;, qartod_rollup_flag &lt;int&gt;, kingdom &lt;chr&gt;,
+#   taxonRank &lt;chr&gt;, occurrenceStatus &lt;chr&gt;, sex &lt;chr&gt;, lifeStage &lt;chr&gt;,
+#   scientificName &lt;chr&gt;, scientificNameID &lt;chr&gt;, minimumDepthInMeters &lt;int&gt;,
+#   maximumDepthInMeters &lt;int&gt;, organismID &lt;chr&gt;, occurrenceID &lt;chr&gt;,
+#   geodeticDatum &lt;chr&gt;, eventID &lt;chr&gt;, coordinateUncertaintyInMeters &lt;dbl&gt;,
+#   eventDateHrs &lt;chr&gt;, dataGeneralizations &lt;chr&gt;</code></pre>
+</div>
+</div>
+<section id="decimate-occurrences-down-to-the-first-detectionlocation-per-hour" class="level5" data-number="7.2.2.0.1">
+<h5 data-number="7.2.2.0.1" class="anchored" data-anchor-id="decimate-occurrences-down-to-the-first-detectionlocation-per-hour"><span class="header-section-number">7.2.2.0.1</span> Decimate occurrences down to the first detection/location per hour</h5>
+<p>Here we’ve done the decimation in Python: https://gist.github.com/MathewBiddle/d434ac2b538b2728aa80c6a7945f94be</p>
+<p>Essentially we build a new colum that is the date plus the two digit hour. Then we find where that column has duplicates and keep the first entry.</p>
+<p>In R, we do something slightly different as we only keep the distinct (ie. unique) rows and if there are duplicates, pick the first row of the duplicate.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sort by date</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(eventDate)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># filter table to only unique date + hour and pick the first row.</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec <span class="ot">&lt;-</span> <span class="fu">distinct</span>(occurrencedf_dec,eventDateHrs,<span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>eventDateHrs)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 17 × 24
+   eventDate       decimalLatitude decimalLongitude basisOfRecord location_class
+   &lt;chr&gt;                     &lt;dbl&gt;            &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;         
+ 1 2009-09-23T00:…            34.0            -119. HumanObserva… nan           
+ 2 2009-09-25T11:…            34.0            -119. MachineObser… 1             
+ 3 2009-09-27T17:…            34.0            -119. MachineObser… 1             
+ 4 2009-10-08T20:…            34.0            -119. MachineObser… 2             
+ 5 2009-10-15T11:…            34.0            -119. MachineObser… 0             
+ 6 2009-10-17T06:…            34.0            -119. MachineObser… 0             
+ 7 2009-10-17T09:…            34.0            -119. MachineObser… 2             
+ 8 2009-10-17T10:…            34.0            -119. MachineObser… 3             
+ 9 2009-10-18T08:…            34.0            -119. MachineObser… 1             
+10 2009-10-18T10:…            34.0            -119. MachineObser… 2             
+11 2009-10-18T11:…            34.0            -119. MachineObser… 0             
+12 2009-10-23T23:…            34.0            -119. MachineObser… 2             
+13 2009-10-24T00:…            34.0            -119. MachineObser… 0             
+14 2009-10-26T10:…            34.0            -119. MachineObser… 3             
+15 2009-10-27T16:…            34.0            -119. MachineObser… 1             
+16 2009-10-29T11:…            34.0            -119. MachineObser… 2             
+17 2009-10-31T21:…            34.0            -119. MachineObser… 0             
+# ℹ 19 more variables: qartod_time_flag &lt;int&gt;, qartod_speed_flag &lt;int&gt;,
+#   qartod_location_flag &lt;int&gt;, qartod_rollup_flag &lt;int&gt;, kingdom &lt;chr&gt;,
+#   taxonRank &lt;chr&gt;, occurrenceStatus &lt;chr&gt;, sex &lt;chr&gt;, lifeStage &lt;chr&gt;,
+#   scientificName &lt;chr&gt;, scientificNameID &lt;chr&gt;, minimumDepthInMeters &lt;int&gt;,
+#   maximumDepthInMeters &lt;int&gt;, organismID &lt;chr&gt;, occurrenceID &lt;chr&gt;,
+#   geodeticDatum &lt;chr&gt;, eventID &lt;chr&gt;, coordinateUncertaintyInMeters &lt;dbl&gt;,
+#   dataGeneralizations &lt;chr&gt;</code></pre>
+</div>
+</div>
+<p>Notice that we have gone from 19 rows to 17 rows. Removing rows observed on <code>2009-09-25T11:11:00Z</code> and <code>2009-10-27T16:22:00Z</code> as they were the second points within that specifc hour.</p>
+</section>
+<section id="filter-on-qartod-flags" class="level5" data-number="7.2.2.0.2">
+<h5 data-number="7.2.2.0.2" class="anchored" data-anchor-id="filter-on-qartod-flags"><span class="header-section-number">7.2.2.0.2</span> Filter on QARTOD flags?</h5>
+<p>We also have QARTOD flags and they are as follows:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>value</th>
+<th>meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>PASS</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>NOT_EVALUATED</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>SUSPECT</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>FAIL</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>MISSING</td>
+</tr>
+</tbody>
+</table>
+<p>The QARTOD tests are:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>variable</th>
+<th>long_name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>qartod_time_flag</td>
+<td>Time QC test - gross range test</td>
+</tr>
+<tr class="even">
+<td>qartod_speed_flag</td>
+<td>Speed QC test - gross range test</td>
+</tr>
+<tr class="odd">
+<td>qartod_location_flag</td>
+<td>Location QC test - Location test</td>
+</tr>
+<tr class="even">
+<td>qartod_rollup_flag</td>
+<td>Aggregate QC value</td>
+</tr>
+</tbody>
+</table>
+<p>I’m not sure what to do here. My preference would be to include all rows where <code>qartod_rollup_flag</code> == 1 and drop the rest. But I’m open to suggestions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># perform filter but don't save it.</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(occurrencedf_dec, qartod_rollup_flag <span class="sc">==</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 16 × 24
+   eventDate       decimalLatitude decimalLongitude basisOfRecord location_class
+   &lt;chr&gt;                     &lt;dbl&gt;            &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;         
+ 1 2009-09-23T00:…            34.0            -119. HumanObserva… nan           
+ 2 2009-09-27T17:…            34.0            -119. MachineObser… 1             
+ 3 2009-10-08T20:…            34.0            -119. MachineObser… 2             
+ 4 2009-10-15T11:…            34.0            -119. MachineObser… 0             
+ 5 2009-10-17T06:…            34.0            -119. MachineObser… 0             
+ 6 2009-10-17T09:…            34.0            -119. MachineObser… 2             
+ 7 2009-10-17T10:…            34.0            -119. MachineObser… 3             
+ 8 2009-10-18T08:…            34.0            -119. MachineObser… 1             
+ 9 2009-10-18T10:…            34.0            -119. MachineObser… 2             
+10 2009-10-18T11:…            34.0            -119. MachineObser… 0             
+11 2009-10-23T23:…            34.0            -119. MachineObser… 2             
+12 2009-10-24T00:…            34.0            -119. MachineObser… 0             
+13 2009-10-26T10:…            34.0            -119. MachineObser… 3             
+14 2009-10-27T16:…            34.0            -119. MachineObser… 1             
+15 2009-10-29T11:…            34.0            -119. MachineObser… 2             
+16 2009-10-31T21:…            34.0            -119. MachineObser… 0             
+# ℹ 19 more variables: qartod_time_flag &lt;int&gt;, qartod_speed_flag &lt;int&gt;,
+#   qartod_location_flag &lt;int&gt;, qartod_rollup_flag &lt;int&gt;, kingdom &lt;chr&gt;,
+#   taxonRank &lt;chr&gt;, occurrenceStatus &lt;chr&gt;, sex &lt;chr&gt;, lifeStage &lt;chr&gt;,
+#   scientificName &lt;chr&gt;, scientificNameID &lt;chr&gt;, minimumDepthInMeters &lt;int&gt;,
+#   maximumDepthInMeters &lt;int&gt;, organismID &lt;chr&gt;, occurrenceID &lt;chr&gt;,
+#   geodeticDatum &lt;chr&gt;, eventID &lt;chr&gt;, coordinateUncertaintyInMeters &lt;dbl&gt;,
+#   dataGeneralizations &lt;chr&gt;</code></pre>
+</div>
+</div>
+<p>Drop the quality flag columns to align with DarwinCore standard.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec <span class="ot">&lt;-</span> occurrencedf_dec <span class="sc">%&gt;%</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>        <span class="sc">-</span><span class="fu">c</span>(location_class,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>           qartod_time_flag,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>           qartod_speed_flag,</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>           qartod_location_flag,</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>           qartod_rollup_flag</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>           ))</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(occurrencedf_dec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "eventDate"                     "decimalLatitude"              
+ [3] "decimalLongitude"              "basisOfRecord"                
+ [5] "kingdom"                       "taxonRank"                    
+ [7] "occurrenceStatus"              "sex"                          
+ [9] "lifeStage"                     "scientificName"               
+[11] "scientificNameID"              "minimumDepthInMeters"         
+[13] "maximumDepthInMeters"          "organismID"                   
+[15] "occurrenceID"                  "geodeticDatum"                
+[17] "eventID"                       "coordinateUncertaintyInMeters"
+[19] "dataGeneralizations"          </code></pre>
+</div>
+</div>
+</section>
+<section id="write-decimated-occurrence-file-as-csv" class="level5" data-number="7.2.2.0.3">
+<h5 data-number="7.2.2.0.3" class="anchored" data-anchor-id="write-decimated-occurrence-file-as-csv"><span class="header-section-number">7.2.2.0.3</span> Write decimated occurrence file as csv</h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>tag_id <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"NC_GLOBAL"</span> <span class="sc">&amp;</span> name <span class="sc">==</span> <span class="st">"ptt_id"</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec_csv <span class="ot">&lt;-</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"{dir_data}/dwc/atn_{tag_id$value}_occurrence.csv"</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(occurrencedf_dec, <span class="at">file=</span>occurrencedf_dec_csv, <span class="at">row.names=</span><span class="cn">FALSE</span>, <span class="at">fileEncoding=</span><span class="st">"UTF-8"</span>, <span class="at">quote=</span><span class="cn">TRUE</span>, <span class="at">na=</span><span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="measurement-or-fact" class="level4" data-number="7.2.2.1">
+<h4 data-number="7.2.2.1" class="anchored" data-anchor-id="measurement-or-fact"><span class="header-section-number">7.2.2.1</span> Measurement or Fact</h4>
+<p>Since we do have any additional observations, we can create a measurement or fact file to include those data. Might be worthwhile to include tag/device metadata, some of the animal measurements, and the detachment information. Each term should have a definition URI.</p>
+<p>The measurementOrFact file will only contain information referencing the <code>basisOfRecord</code> = <code>HumanObservation</code> as these observations were made when the animal was directly tagged, in person (ie. when <code>basisOfRecord</code> == <code>HumanObservation</code>).</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 51%">
+<col style="width: 25%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>DarwinCore Term</th>
+<th>Status</th>
+<th>netCDF</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>organismID</td>
+<td></td>
+<td>The <code>platform_id</code> global attribute plus the <code>animal_common_name</code> global attribute.</td>
+</tr>
+<tr class="even">
+<td>occurrenceID</td>
+<td>Required</td>
+<td><code>eventDate</code>, plus data contained in <code>z</code> variable, plus <code>animal_common_name</code> global attribute.</td>
+</tr>
+<tr class="odd">
+<td>measurementType</td>
+<td>Required</td>
+<td><code>long_name</code> attribute of the <code>animal_weight</code>, <code>animal_length</code>, <code>animal_length_2</code> variables.</td>
+</tr>
+<tr class="even">
+<td>measurementValue</td>
+<td>Required</td>
+<td>The data from the <code>animal_weight</code>, <code>animal_length</code>, <code>animal_length_2</code> variables.</td>
+</tr>
+<tr class="odd">
+<td>eventID</td>
+<td>Strongly Recommended</td>
+<td><code>animal_common_name</code> global attribute plus the <code>eventDate</code>.</td>
+</tr>
+<tr class="even">
+<td>measurementUnit</td>
+<td>Strongly Recommended</td>
+<td><code>unit</code> attribute of the <code>animal_weight</code>, <code>animal_length</code>, <code>animal_length_2</code> variables.</td>
+</tr>
+<tr class="odd">
+<td>measurementMethod</td>
+<td>Strongly Recommended</td>
+<td><code>animal_weight</code>, <code>animal_length</code>, <code>animal_length_2</code> attributes of their respective variables.</td>
+</tr>
+<tr class="even">
+<td>measurementTypeID</td>
+<td>Strongly Recommended</td>
+<td>mapping table somewhere?</td>
+</tr>
+<tr class="odd">
+<td>measurementMethodID</td>
+<td>Strongly Recommended</td>
+<td>mapping table somewhere?</td>
+</tr>
+<tr class="even">
+<td>measurementUnitID</td>
+<td>Strongly Recommended</td>
+<td>mapping table somewhere?</td>
+</tr>
+<tr class="odd">
+<td>measurementAccuracy</td>
+<td>Share if available</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>measurementDeterminedDate</td>
+<td>Share if available</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>measurementDeterminedBy</td>
+<td>Share if available</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>measurementRemarks</td>
+<td>Share if available</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>measurementValueID</td>
+<td>Share if available</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<section id="extracting-variables-for-extended-measurement-or-fact-emof" class="level5" data-number="7.2.2.1.1">
+<h5 data-number="7.2.2.1.1" class="anchored" data-anchor-id="extracting-variables-for-extended-measurement-or-fact-emof"><span class="header-section-number">7.2.2.1.1</span> Extracting variables for Extended Measurement Or Fact (eMOF)</h5>
+<p>Here there are two approaches to transforming a variable to the eMOF Darwin Core extension. The goal is to collapse the measurement name, value, unit, related identifiers and remarks into a generalized long format that can be linked to occurrences and events. For more info see:</p>
+<ol type="1">
+<li><a href="https://manual.obis.org/format_emof.html">The OBIS manual</a></li>
+<li>The <a href="https://ioos.github.io/bio_mobilization_workshop/04-create-schema/index.html">Marine Biological Data Mobilization Workshop 2023</a> (SF:Not sure if it’s cool to reference the workshop like this)</li>
+</ol>
+<p>The first several lines of the below code show an example of pulling out the variable attributes and individually mapping them to the eMOF terms. However, this can be done more efficiently (although less readable) via this chunk of code:</p>
+<pre><code># Supply vector of variable names
+c("animal_length",
+  "animal_length_2",
+  "animal_weight") %&gt;%
+
+      # Create a named list of the variable attributes and convert it into a data frame, for each name in the above vector.
+      purrr::map_df(function(x) {
+        0list(measurementValue = ncvar_get( nc, x),
+             measurementType = ncatt_get( nc, x)$long_name,
+             measurementUnit = ncatt_get( nc, x)$units,
+             measurementMethod = ncatt_get( nc, x)[[paste0(x,'_type')]])
+        })</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Measurement or Fact extension</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># # Need to find the occurrence where basisOfRecord == HumanObservation, then pull the organism.</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>emof_data <span class="ot">&lt;-</span> <span class="co">#var_names %&gt;%</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#filter(str_starts(name, pattern = "animal_[lw]e")) %&gt;% #example using regex to parse names</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#    pull(name) %&gt;%</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Example using vector of variables</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">"animal_length"</span>,</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>      <span class="st">"animal_length_2"</span>,</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>      <span class="st">"animal_weight"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">map_df</span>(<span class="cf">function</span>(x) {</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">list</span>(<span class="at">measurementValue =</span> <span class="fu">ncvar_get</span>( nc, x),</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">measurementType =</span> <span class="fu">ncatt_get</span>( nc, x)<span class="sc">$</span>long_name,</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>             <span class="at">measurementUnit =</span> <span class="fu">ncatt_get</span>( nc, x)<span class="sc">$</span>units,</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">measurementMethod =</span> <span class="fu">ncatt_get</span>( nc, x)[[<span class="fu">paste0</span>(x,<span class="st">'_type'</span>)]])</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>    }) <span class="sc">%&gt;%</span></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(measurementValue <span class="sc">!=</span> <span class="st">"NaN"</span>)</span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>emofdf <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span></span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(basisOfRecord <span class="sc">==</span> <span class="st">'HumanObservation'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(organismID, eventID, occurrenceID) <span class="sc">%&gt;%</span></span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cbind</span>(emof_data)</span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(emofdf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   1 obs. of  7 variables:
+ $ organismID       : chr "105838_great_white_shark"
+ $ eventID          : chr "great_white shark_2009-09-23T00:00:00Z"
+ $ occurrenceID     : chr "2009-09-23T00:00:00Z_0_great_white_shark"
+ $ measurementValue : num 213
+ $ measurementType  : chr "length of the animal as measured or estimated at deployment"
+ $ measurementUnit  : chr "cm"
+ $ measurementMethod: chr "total length"</code></pre>
+</div>
+</div>
+</section>
+<section id="write-emof-file-as-csv" class="level5" data-number="7.2.2.1.2">
+<h5 data-number="7.2.2.1.2" class="anchored" data-anchor-id="write-emof-file-as-csv"><span class="header-section-number">7.2.2.1.2</span> Write emof file as csv</h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>tag_id <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"NC_GLOBAL"</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"ptt_id"</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>emof_csv <span class="ot">&lt;-</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"{dir_data}/dwc/atn_{tag_id$value}_emof.csv"</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(emofdf, <span class="at">file=</span>emof_csv, <span class="at">row.names=</span><span class="cn">FALSE</span>, <span class="at">fileEncoding=</span><span class="st">"UTF-8"</span>, <span class="at">quote=</span><span class="cn">TRUE</span>, <span class="at">na=</span><span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="metadata-creation" class="level4" data-number="7.2.2.2">
+<h4 data-number="7.2.2.2" class="anchored" data-anchor-id="metadata-creation"><span class="header-section-number">7.2.2.2</span> Metadata creation</h4>
+<p>Now that we know our data are aligned to Darwin Core, we can start collecting metadata. Using the R package <a href="https://docs.ropensci.org/EML/">EML</a> we can create the EML metadata to associate with the data above.</p>
+<p>Some good sources to help identify what requirements we need in the EML metadata can be found at:</p>
+<ul>
+<li><p>https://github.com/gbif/ipt/wiki/GMPHowToGuide</p></li>
+<li><p>https://github.com/gbif/ipt/wiki/GMPHowToGuide#dataset-resource</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(EML)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The first thing we need to do is collect all of the relevant pieces of metadata for our EML record.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># me &lt;- list(individualName = list(givenName = "Matt", surName = "Biddle"))</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co"># my_eml &lt;- list(dataset = list(</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co">#                           title = "A Minimal Valid EML Dataset",</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="co">#                           creator = me,</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="co">#                           contact = me</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="co">#                             )</span></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="co">#                 )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># geographicDescription &lt;- metadata %&gt;% dplyr::filter(variable == "NC_GLOBAL") %&gt;% dplyr::filter(name == "sea_name")</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># west &lt;- metadata %&gt;% dplyr::filter(variable == "NC_GLOBAL") %&gt;% dplyr::filter(name == "geospatial_lon_min")</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="co"># east &lt;- metadata %&gt;% dplyr::filter(variable == "NC_GLOBAL") %&gt;% dplyr::filter(name == "geospatial_lon_max")</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="co"># north &lt;- metadata %&gt;% dplyr::filter(variable == "NC_GLOBAL") %&gt;% dplyr::filter(name == "geospatial_lat_max")</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co"># south &lt;- metadata %&gt;% dplyr::filter(variable == "NC_GLOBAL") %&gt;% dplyr::filter(name == "geospatial_lat_min")</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="co"># altitudeMin &lt;- metadata %&gt;% dplyr::filter(variable == "NC_GLOBAL") %&gt;% dplyr::filter(name == "geospatial_vertical_min")</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="co"># altitudeMax &lt;- metadata %&gt;% dplyr::filter(variable == "NC_GLOBAL") %&gt;% dplyr::filter(name == "geospatial_vertical_max")</span></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a><span class="co"># altitudeUnits &lt;- metadata %&gt;% dplyr::filter(variable == "NC_GLOBAL") %&gt;% dplyr::filter(name == "geospatial_vertical_units")</span></span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a><span class="co"># coverage &lt;-</span></span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a><span class="co">#   set_coverage(begin = format(min(atn_tbl$time),'%Y-%m-%d'), end = format(max(atn_tbl$time), '%Y-%m-%d'),</span></span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a><span class="co">#                sci_names = RNetCDF::var.get.nc(RNetCDF::open.nc("atn_trajectory_template.nc"), "taxon_name"),</span></span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a><span class="co">#                geographicDescription = paste(geographicDescription$value),</span></span>
+<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a><span class="co">#                west = paste(west$value),</span></span>
+<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a><span class="co">#                east = paste(east$value) ,</span></span>
+<span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a><span class="co">#                north = paste(north$value) ,</span></span>
+<span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-32"><a href="#cb37-32" aria-hidden="true" tabindex="-1"></a><span class="co">#                south = paste(south$value) ,</span></span>
+<span id="cb37-33"><a href="#cb37-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-34"><a href="#cb37-34" aria-hidden="true" tabindex="-1"></a><span class="co">#                altitudeMin = paste(altitudeMin$value),</span></span>
+<span id="cb37-35"><a href="#cb37-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-36"><a href="#cb37-36" aria-hidden="true" tabindex="-1"></a><span class="co">#                altitudeMaximum = paste(altitudeMax$value),</span></span>
+<span id="cb37-37"><a href="#cb37-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-38"><a href="#cb37-38" aria-hidden="true" tabindex="-1"></a><span class="co">#                altitudeUnits = ifelse (paste(altitudeUnits$value) == 'm', "meter", "?"))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creator_name &lt;- metadata %&gt;% dplyr::filter(variable == "NC_GLOBAL") %&gt;% dplyr::filter(name == "creator_name")</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co"># creator_email &lt;- metadata %&gt;% dplyr::filter(variable == "NC_GLOBAL") %&gt;% dplyr::filter(name == "creator_email")</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="co"># creator_sector &lt;- metadata %&gt;% dplyr::filter(variable == "NC_GLOBAL") %&gt;% dplyr::filter(name == "creator_sector")</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="co"># creator &lt;- eml$creator(</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="co">#             eml$individualName(</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="co">#                 givenName = paste(creator_name$value),</span></span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a><span class="co">#                 surName = paste(creator_name$value)</span></span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a><span class="co">#                 ),</span></span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a><span class="co">#             position = paste(creator_sector$value),</span></span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a><span class="co">#             electronicMailAddress = paste(creator_email$value)</span></span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a><span class="co">#             )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #contact_name = metadata %&gt;% dplyr::filter(variable == "NC_GLOBAL") %&gt;% dplyr::filter(name == "contact_name")</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co"># contact &lt;- eml$contact(</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co">#             eml$individualName(</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="co">#             givenName = paste(creator_name$value),</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="co">#             surName = paste(creator_name$value)),</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="co">#             position = paste(creator_sector$value),</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a><span class="co">#             electronicMailAddress = paste(creator_email$value)</span></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a><span class="co">#             )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #metadata_name</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># metadataProvider &lt;- eml$metadataProvider(</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="co">#             eml$individualName(</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="co">#                 givenName = paste(creator_name$value),</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a><span class="co">#                 surName = paste(creator_name$value)),</span></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="co">#             position = paste(creator_sector$value),</span></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a><span class="co">#             electronicMailAddress = paste(creator_email$value)</span></span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a><span class="co">#             )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ## these are the entries in contributor, need to iterate since comma separated list.</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="co"># contrib_name &lt;- metadata %&gt;% dplyr::filter(variable == "NC_GLOBAL") %&gt;% dplyr::filter(name == "contributor_name")</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="co"># contrib_position &lt;- metadata %&gt;% dplyr::filter(variable == "NC_GLOBAL") %&gt;% dplyr::filter(name == "contributor_role")</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="co"># contrib_email &lt;- metadata %&gt;% dplyr::filter(variable == "NC_GLOBAL") %&gt;% dplyr::filter(name == "contributor_email")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># associatedParty &lt;- eml$associatedParty(</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co">#                     eml$individualName(</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="co">#                     givenName = paste(contrib_name$value),</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="co">#                     surName = paste(contrib_name$value)),</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="co">#                     position = paste(contrib_position$value),</span></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a><span class="co">#                     electronicMailAddress = paste(contrib_email$value)</span></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a><span class="co">#                     )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># abstract &lt;- metadata %&gt;% dplyr::filter(variable == "NC_GLOBAL") %&gt;% dplyr::filter(name == "summary")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # keywords</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="co"># keywords &lt;- metadata %&gt;% dplyr::filter(variable == "NC_GLOBAL") %&gt;% dplyr::filter(name == "keywords")</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="co"># kw_vocab &lt;- metadata %&gt;% dplyr::filter(variable == "NC_GLOBAL") %&gt;% dplyr::filter(name == "keywords_vocabulary")</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="co"># keywordSet &lt;- list(</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="co">#     list(</span></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="co">#         keywordThesaurus = kw_vocab$value$keywords_vocabulary,</span></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a><span class="co">#         keyword = as.list(strsplit(keywords$value$keywords, ", "))</span></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a><span class="co">#         ))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># title &lt;- metadata %&gt;% dplyr::filter(variable == "NC_GLOBAL") %&gt;% dplyr::filter(name == "title")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># methods &lt;- "NEED TO MAP FROM NCFILE"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># license &lt;- metadata %&gt;% dplyr::filter(variable == "NC_GLOBAL") %&gt;% dplyr::filter(name == "license")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now build the eml file.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(uuid)</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="co"># physical &lt;- set_physical(file_name_occur)</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="co"># # attributeList &lt;-</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="co"># #   set_attributes(attributes,</span></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="co"># #                  factors,</span></span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a><span class="co"># #                  col_classes = c("character",</span></span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a><span class="co"># #                                  "Date",</span></span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a><span class="co"># #                                  "Date",</span></span>
+<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a><span class="co"># #                                  "Date",</span></span>
+<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a><span class="co"># #                                  "factor",</span></span>
+<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-23"><a href="#cb48-23" aria-hidden="true" tabindex="-1"></a><span class="co"># #                                  "factor",</span></span>
+<span id="cb48-24"><a href="#cb48-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-25"><a href="#cb48-25" aria-hidden="true" tabindex="-1"></a><span class="co"># #                                  "factor",</span></span>
+<span id="cb48-26"><a href="#cb48-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-27"><a href="#cb48-27" aria-hidden="true" tabindex="-1"></a><span class="co"># #                                  "numeric"))</span></span>
+<span id="cb48-28"><a href="#cb48-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-29"><a href="#cb48-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-30"><a href="#cb48-30" aria-hidden="true" tabindex="-1"></a><span class="co"># my_eml &lt;- eml$eml(</span></span>
+<span id="cb48-31"><a href="#cb48-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-32"><a href="#cb48-32" aria-hidden="true" tabindex="-1"></a><span class="co">#            packageId = paste(uuid_tbl$value),</span></span>
+<span id="cb48-33"><a href="#cb48-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-34"><a href="#cb48-34" aria-hidden="true" tabindex="-1"></a><span class="co">#            system = "uuid",</span></span>
+<span id="cb48-35"><a href="#cb48-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-36"><a href="#cb48-36" aria-hidden="true" tabindex="-1"></a><span class="co">#            dataset = eml$dataset(</span></span>
+<span id="cb48-37"><a href="#cb48-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-38"><a href="#cb48-38" aria-hidden="true" tabindex="-1"></a><span class="co">#                alternateIdentifier = UUIDgenerate(use.time = TRUE),</span></span>
+<span id="cb48-39"><a href="#cb48-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-40"><a href="#cb48-40" aria-hidden="true" tabindex="-1"></a><span class="co">#                title = title$value,</span></span>
+<span id="cb48-41"><a href="#cb48-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-42"><a href="#cb48-42" aria-hidden="true" tabindex="-1"></a><span class="co">#                creator = creator,</span></span>
+<span id="cb48-43"><a href="#cb48-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-44"><a href="#cb48-44" aria-hidden="true" tabindex="-1"></a><span class="co">#                metadataProvider = metadataProvider,</span></span>
+<span id="cb48-45"><a href="#cb48-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-46"><a href="#cb48-46" aria-hidden="true" tabindex="-1"></a><span class="co">#                #associatedParty = associatedParty,</span></span>
+<span id="cb48-47"><a href="#cb48-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-48"><a href="#cb48-48" aria-hidden="true" tabindex="-1"></a><span class="co">#                contact = contact,</span></span>
+<span id="cb48-49"><a href="#cb48-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-50"><a href="#cb48-50" aria-hidden="true" tabindex="-1"></a><span class="co">#                pubDate = format(Sys.time(),'%Y-%m-%d'),</span></span>
+<span id="cb48-51"><a href="#cb48-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-52"><a href="#cb48-52" aria-hidden="true" tabindex="-1"></a><span class="co">#                language = "English",</span></span>
+<span id="cb48-53"><a href="#cb48-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-54"><a href="#cb48-54" aria-hidden="true" tabindex="-1"></a><span class="co">#                intellectualRights = eml$intellectualRights(</span></span>
+<span id="cb48-55"><a href="#cb48-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-56"><a href="#cb48-56" aria-hidden="true" tabindex="-1"></a><span class="co">#                                     para = "To the extent possible under law, the publisher has waived all rights to these data and has dedicated them to the &lt;ulink url=\"http://creativecommons.org/publicdomain/zero/1.0/legalcode\"&gt;&lt;citetitle&gt;Public Domain (CC0 1.0)&lt;/citetitle&gt;&lt;/ulink&gt;. Users may copy, modify, distribute and use the work, including for commercial purposes, without restriction."</span></span>
+<span id="cb48-57"><a href="#cb48-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-58"><a href="#cb48-58" aria-hidden="true" tabindex="-1"></a><span class="co">#                                     #para = paste(license$value),</span></span>
+<span id="cb48-59"><a href="#cb48-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-60"><a href="#cb48-60" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                            ),</span></span>
+<span id="cb48-61"><a href="#cb48-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-62"><a href="#cb48-62" aria-hidden="true" tabindex="-1"></a><span class="co">#                abstract = eml$abstract(</span></span>
+<span id="cb48-63"><a href="#cb48-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-64"><a href="#cb48-64" aria-hidden="true" tabindex="-1"></a><span class="co">#                                para = abstract$value$summary,</span></span>
+<span id="cb48-65"><a href="#cb48-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-66"><a href="#cb48-66" aria-hidden="true" tabindex="-1"></a><span class="co">#                                        ),</span></span>
+<span id="cb48-67"><a href="#cb48-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-68"><a href="#cb48-68" aria-hidden="true" tabindex="-1"></a><span class="co">#                keywordSet = keywordSet,</span></span>
+<span id="cb48-69"><a href="#cb48-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-70"><a href="#cb48-70" aria-hidden="true" tabindex="-1"></a><span class="co">#                coverage = coverage,</span></span>
+<span id="cb48-71"><a href="#cb48-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-72"><a href="#cb48-72" aria-hidden="true" tabindex="-1"></a><span class="co"># #                license = eml$license(</span></span>
+<span id="cb48-73"><a href="#cb48-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-74"><a href="#cb48-74" aria-hidden="true" tabindex="-1"></a><span class="co"># #                            licenseName = "CC0 1.0",</span></span>
+<span id="cb48-75"><a href="#cb48-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-76"><a href="#cb48-76" aria-hidden="true" tabindex="-1"></a><span class="co"># #                            #licenseName = paste(license$value),</span></span>
+<span id="cb48-77"><a href="#cb48-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-78"><a href="#cb48-78" aria-hidden="true" tabindex="-1"></a><span class="co"># #                            ),</span></span>
+<span id="cb48-79"><a href="#cb48-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-80"><a href="#cb48-80" aria-hidden="true" tabindex="-1"></a><span class="co">#                #dataTable = eml$dataTable(</span></span>
+<span id="cb48-81"><a href="#cb48-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-82"><a href="#cb48-82" aria-hidden="true" tabindex="-1"></a><span class="co">#                #  entityName = file_name_occur,</span></span>
+<span id="cb48-83"><a href="#cb48-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-84"><a href="#cb48-84" aria-hidden="true" tabindex="-1"></a><span class="co">#                #  entityDescription = "Occurrences",</span></span>
+<span id="cb48-85"><a href="#cb48-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-86"><a href="#cb48-86" aria-hidden="true" tabindex="-1"></a><span class="co">#                #  physical = physical)</span></span>
+<span id="cb48-87"><a href="#cb48-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-88"><a href="#cb48-88" aria-hidden="true" tabindex="-1"></a><span class="co">#                ))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Validate EML</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># val &lt;- eml_validate(my_eml)</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="co"># attr(val,"errors")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Write eml to file.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file_name_eml &lt;- 'eml.xml'</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="co"># write_eml(my_eml, file_name_eml)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Raw EML</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># my_eml</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="create-meta.xml" class="level5" data-number="7.2.2.2.1">
+<h5 data-number="7.2.2.2.1" class="anchored" data-anchor-id="create-meta.xml"><span class="header-section-number">7.2.2.2.1</span> Create meta.xml</h5>
+<p>Below is an example of the contents of meta.xml:</p>
+<pre><code>
+&lt;archive xmlns="http://rs.tdwg.org/dwc/text/" metadata="eml.xml"&gt;
+
+  &lt;core encoding="UTF-8" fieldsTerminatedBy="\t" linesTerminatedBy="\n" fieldsEnclosedBy="" ignoreHeaderLines="1" rowType="http://rs.tdwg.org/dwc/terms/Occurrence"&gt;
+
+    &lt;files&gt;
+
+      &lt;location&gt;occurrence.txt&lt;/location&gt;
+
+    &lt;/files&gt;
+
+    &lt;id index="0" /&gt;
+
+    &lt;field index="1" term="http://rs.tdwg.org/dwc/terms/datasetID"/&gt;
+
+    &lt;field index="2" term="http://rs.tdwg.org/dwc/terms/institutionCode"/&gt;
+
+    &lt;field index="3" term="http://rs.tdwg.org/dwc/terms/collectionCode"/&gt;
+
+    &lt;field index="4" term="http://rs.tdwg.org/dwc/terms/basisOfRecord"/&gt;
+
+    &lt;field index="5" term="http://rs.tdwg.org/dwc/terms/occurrenceID"/&gt;
+
+    &lt;field index="6" term="http://rs.tdwg.org/dwc/terms/catalogNumber"/&gt;
+
+    &lt;field index="7" term="http://rs.tdwg.org/dwc/terms/occurrenceRemarks"/&gt;
+
+    &lt;field index="8" term="http://rs.tdwg.org/dwc/terms/individualCount"/&gt;
+
+    &lt;field index="9" term="http://rs.tdwg.org/dwc/terms/sex"/&gt;
+
+    &lt;field index="10" term="http://rs.tdwg.org/dwc/terms/occurrenceStatus"/&gt;
+
+    &lt;field index="11" term="http://rs.tdwg.org/dwc/terms/eventDate"/&gt;
+
+    &lt;field index="12" term="http://rs.tdwg.org/dwc/terms/year"/&gt;
+
+    &lt;field index="13" term="http://rs.tdwg.org/dwc/terms/decimalLatitude"/&gt;
+
+    &lt;field index="14" term="http://rs.tdwg.org/dwc/terms/decimalLongitude"/&gt;
+
+    &lt;field index="15" term="http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters"/&gt;
+
+    &lt;field index="16" term="http://rs.tdwg.org/dwc/terms/scientificNameID"/&gt;
+
+    &lt;field index="17" term="http://rs.tdwg.org/dwc/terms/scientificName"/&gt;
+
+  &lt;/core&gt;
+
+  &lt;extension encoding="UTF-8" fieldsTerminatedBy="\t" linesTerminatedBy="\n" fieldsEnclosedBy="" ignoreHeaderLines="1" rowType="http://rs.iobis.org/obis/terms/ExtendedMeasurementOrFact"&gt;
+
+    &lt;files&gt;
+
+      &lt;location&gt;extendedmeasurementorfact.txt&lt;/location&gt;
+
+    &lt;/files&gt;
+
+    &lt;coreid index="0" /&gt;
+
+    &lt;field index="1" term="http://rs.tdwg.org/dwc/terms/occurrenceID"/&gt;
+
+    &lt;field index="2" term="http://rs.tdwg.org/dwc/terms/measurementType"/&gt;
+
+    &lt;field index="3" term="http://rs.tdwg.org/dwc/terms/measurementValue"/&gt;
+
+    &lt;field index="4" term="http://rs.tdwg.org/dwc/terms/measurementUnit"/&gt;
+
+    &lt;field index="5" term="http://rs.iobis.org/obis/terms/measurementUnitID"/&gt;
+
+    &lt;field index="6" term="http://rs.tdwg.org/dwc/terms/measurementDeterminedDate"/&gt;
+
+  &lt;/extension&gt;
+
+&lt;/archive&gt;
+</code></pre>
+<p>Checkout <a href="https://cran.r-project.org/web/packages/XML/index.html">XML package for R</a>.</p>
+<p><code>conda install -c conda-forge r-xml</code></p>
+<p>Another example in this <a href="https://github.com/EDIorg/ecocomDP/blob/372c293c9e597c64db22c027debe18528d44f53b/inst/extdata/dwca_event_core/meta.xml">github repository</a>.</p>
+<p>Or use the <a href="http://tools.gbif.org/dwca-assistant/">gui here</a> to create meta.xml.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(XML)</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="co"># doc = newXMLDoc()</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="co"># archiveNode = newXMLNode("archive", attrs = c(metadata=file_name_eml), namespaceDefinitions=c("http://rs.tdwg.org/dwc/text/"), doc=doc )</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a><span class="co"># ## For the core occurrence</span></span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a><span class="co"># coreNode = newXMLNode("core", attrs = c(encoding="UTF-8", linesTerminatedBy="\\r\\n", fieldsTerminatedBy=",", fieldsEnclosedBy='\"', ignoreHeaderLines="1", rowType="http://rs.tdwg.org/dwc/terms/Occurrence"), parent = archiveNode)</span></span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a><span class="co"># filesNode = newXMLNode("files", parent = coreNode)</span></span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a><span class="co"># locationNode = newXMLNode("location", file_name_occur, parent = filesNode)</span></span>
+<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a><span class="co"># idnode = newXMLNode("id", attrs = c(index="9"), parent = coreNode)</span></span>
+<span id="cb53-18"><a href="#cb53-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-19"><a href="#cb53-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-20"><a href="#cb53-20" aria-hidden="true" tabindex="-1"></a><span class="co"># # iterate over the columns in occurrence file to create field elements</span></span>
+<span id="cb53-21"><a href="#cb53-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-22"><a href="#cb53-22" aria-hidden="true" tabindex="-1"></a><span class="co"># i=0</span></span>
+<span id="cb53-23"><a href="#cb53-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-24"><a href="#cb53-24" aria-hidden="true" tabindex="-1"></a><span class="co"># for (col in colnames(occurrencedf))</span></span>
+<span id="cb53-25"><a href="#cb53-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-26"><a href="#cb53-26" aria-hidden="true" tabindex="-1"></a><span class="co">#     {</span></span>
+<span id="cb53-27"><a href="#cb53-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-28"><a href="#cb53-28" aria-hidden="true" tabindex="-1"></a><span class="co">#     termstr = paste("http://rs.tdwg.org/dwc/terms/",col, sep="")</span></span>
+<span id="cb53-29"><a href="#cb53-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-30"><a href="#cb53-30" aria-hidden="true" tabindex="-1"></a><span class="co">#     i=i+1</span></span>
+<span id="cb53-31"><a href="#cb53-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-32"><a href="#cb53-32" aria-hidden="true" tabindex="-1"></a><span class="co">#     fieldnode = newXMLNode("field", attrs = c(index=i, term=termstr), parent=coreNode)</span></span>
+<span id="cb53-33"><a href="#cb53-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-34"><a href="#cb53-34" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb53-35"><a href="#cb53-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-36"><a href="#cb53-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-37"><a href="#cb53-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-38"><a href="#cb53-38" aria-hidden="true" tabindex="-1"></a><span class="co"># ## for the extensions</span></span>
+<span id="cb53-39"><a href="#cb53-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-40"><a href="#cb53-40" aria-hidden="true" tabindex="-1"></a><span class="co"># extensionNode = newXMLNode("extension", attrs = c(encoding="UTF-8", linesTerminatedBy="\\r\\n", fieldsTerminatedBy=",", fieldsEnclosedBy='\"', ignoreHeaderLines="1", rowType="http://rs.tdwg.org/dwc/terms/Event"), parent = archiveNode)</span></span>
+<span id="cb53-41"><a href="#cb53-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-42"><a href="#cb53-42" aria-hidden="true" tabindex="-1"></a><span class="co"># filesNode = newXMLNode("files", parent = extensionNode)</span></span>
+<span id="cb53-43"><a href="#cb53-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-44"><a href="#cb53-44" aria-hidden="true" tabindex="-1"></a><span class="co"># locationNode = newXMLNode("location", file_name_event, parent = filesNode)</span></span>
+<span id="cb53-45"><a href="#cb53-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-46"><a href="#cb53-46" aria-hidden="true" tabindex="-1"></a><span class="co"># idnode = newXMLNode("id", attrs = c(index="0"), parent = extensionNode)</span></span>
+<span id="cb53-47"><a href="#cb53-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-48"><a href="#cb53-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-49"><a href="#cb53-49" aria-hidden="true" tabindex="-1"></a><span class="co"># # iterate over the columns in occurrence file to create field elements</span></span>
+<span id="cb53-50"><a href="#cb53-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-51"><a href="#cb53-51" aria-hidden="true" tabindex="-1"></a><span class="co"># i=0</span></span>
+<span id="cb53-52"><a href="#cb53-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-53"><a href="#cb53-53" aria-hidden="true" tabindex="-1"></a><span class="co"># for (col in colnames(eventdf))</span></span>
+<span id="cb53-54"><a href="#cb53-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-55"><a href="#cb53-55" aria-hidden="true" tabindex="-1"></a><span class="co">#     {</span></span>
+<span id="cb53-56"><a href="#cb53-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-57"><a href="#cb53-57" aria-hidden="true" tabindex="-1"></a><span class="co">#     if (col == 'modified'){</span></span>
+<span id="cb53-58"><a href="#cb53-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-59"><a href="#cb53-59" aria-hidden="true" tabindex="-1"></a><span class="co">#         termstr = paste("http://purl.org/dc/terms/", col, sep="")</span></span>
+<span id="cb53-60"><a href="#cb53-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-61"><a href="#cb53-61" aria-hidden="true" tabindex="-1"></a><span class="co">#     } else {</span></span>
+<span id="cb53-62"><a href="#cb53-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-63"><a href="#cb53-63" aria-hidden="true" tabindex="-1"></a><span class="co">#         termstr = paste("http://rs.tdwg.org/dwc/terms/",col, sep="")</span></span>
+<span id="cb53-64"><a href="#cb53-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-65"><a href="#cb53-65" aria-hidden="true" tabindex="-1"></a><span class="co">#         }</span></span>
+<span id="cb53-66"><a href="#cb53-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-67"><a href="#cb53-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-68"><a href="#cb53-68" aria-hidden="true" tabindex="-1"></a><span class="co">#     i=i+1</span></span>
+<span id="cb53-69"><a href="#cb53-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-70"><a href="#cb53-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-71"><a href="#cb53-71" aria-hidden="true" tabindex="-1"></a><span class="co">#     fieldnode = newXMLNode("field", attrs = c(index=i, term=termstr), parent=extensionNode)</span></span>
+<span id="cb53-72"><a href="#cb53-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-73"><a href="#cb53-73" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb53-74"><a href="#cb53-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-75"><a href="#cb53-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-76"><a href="#cb53-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-77"><a href="#cb53-77" aria-hidden="true" tabindex="-1"></a><span class="co"># print(doc)</span></span>
+<span id="cb53-78"><a href="#cb53-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-79"><a href="#cb53-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-80"><a href="#cb53-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-81"><a href="#cb53-81" aria-hidden="true" tabindex="-1"></a><span class="co"># saveXML(doc, file="meta.xml")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="build-the-darwincore-archive-zip-package" class="level4" data-number="7.2.2.3">
+<h4 data-number="7.2.2.3" class="anchored" data-anchor-id="build-the-darwincore-archive-zip-package"><span class="header-section-number">7.2.2.3</span> Build the DarwinCore-Archive zip package</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(zip)</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="co"># files = c(file_name_occur, file_name_event, file_name_eml, "meta.xml")</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="co"># zip::zip(</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a><span class="co">#     "atn.zip",</span></span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a><span class="co">#     files,</span></span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a><span class="co">#     root = ".",</span></span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a><span class="co">#     mode = "mirror",</span></span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span>
+<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-18"><a href="#cb54-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-19"><a href="#cb54-19" aria-hidden="true" tabindex="-1"></a><span class="co"># zip_list("atn.zip")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="sessioninfo" class="level3" data-number="7.2.3">
+<h3 data-number="7.2.3" class="anchored" data-anchor-id="sessioninfo"><span class="header-section-number">7.2.3</span> sessionInfo()</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sonoma 14.6.1
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: UTC
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] mapdata_2.3.1   maps_3.4.2      lubridate_1.9.3 forcats_1.0.0  
+ [5] stringr_1.5.1   dplyr_1.1.4     purrr_1.0.2     readr_2.1.5    
+ [9] tidyr_1.3.1     tibble_3.2.1    ggplot2_3.5.1   tidyverse_2.0.0
+[13] ncdf4_1.23      obistools_0.1.0 tidync_0.4.0   
+
+loaded via a namespace (and not attached):
+ [1] rappdirs_0.3.3    utf8_1.2.4        generics_0.1.3    xml2_1.3.6       
+ [5] stringi_1.8.4     hms_1.1.3         digest_0.6.37     magrittr_2.0.3   
+ [9] evaluate_0.24.0   grid_4.4.1        timechange_0.3.0  fastmap_1.2.0    
+[13] rprojroot_2.0.4   jsonlite_1.8.8    ncmeta_0.4.0      fansi_1.0.6      
+[17] crosstalk_1.2.1   scales_1.3.0      cli_3.6.3         RNetCDF_2.9-2    
+[21] rlang_1.1.4       munsell_0.5.1     withr_3.0.1       yaml_2.3.10      
+[25] tools_4.4.1       tzdb_0.4.0        colorspace_2.1-1  here_1.0.1       
+[29] vctrs_0.6.5       R6_2.5.1          lifecycle_1.0.4   leaflet_2.2.2    
+[33] htmlwidgets_1.6.4 pkgconfig_2.0.3   pillar_1.9.0      gtable_0.3.5     
+[37] glue_1.7.0        xfun_0.47         tidyselect_1.2.1  data.tree_1.1.0  
+[41] knitr_1.48        htmltools_0.5.8.1 rmarkdown_2.28    compiler_4.4.1   </code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/ioos\.github\.io\/bio_data_guide\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../datasets/dataset-edna/README.html" class="pagination-link" aria-label="dataset-edna">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">dataset-edna</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../faq.html" class="pagination-link" aria-label="FAQ">
+        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">FAQ</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ioos/bio_data_guide/edit/main/datasets/atn_satellite_telemetry/atn_satellite_telemetry_netCDF2DwC.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>

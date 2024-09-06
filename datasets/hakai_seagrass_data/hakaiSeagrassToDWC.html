@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="ZL Monteith, Hakai Institute">
+<meta name="dcterms.date" content="2024-09-06">
+<meta name="description" content="Scaling multiple dimensions of diversity in biological data">
+
+<title>4&nbsp; Seagrass Density to DWC eMoF format – BioDataGuide</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../datasets/trawl_catch_data/trawl-catch-data.html" rel="next">
+<link href="../../datasets/hakai_salmon_data/salmon-darwin-core-remap.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../lib/style.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../apps.html">Applications</a></li><li class="breadcrumb-item"><a href="../../datasets/hakai_seagrass_data/hakaiSeagrassToDWC.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Seagrass Density to DWC eMoF format</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">BioDataGuide</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/ioos/bio_data_guide/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="../../BioDataGuide.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="../../BioDataGuide.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../apps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Applications</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../datasets/TPWD_HARC_BagSeine/TPWD_HARC_BagSeine_OBISENV.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aligning Data to Darwin Core - Event Core with Extended Measurement or Fact</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../datasets/hakai_salmon_data/salmon-darwin-core-remap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Darwin Core Salmon Data Remap</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../datasets/hakai_seagrass_data/hakaiSeagrassToDWC.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Seagrass Density to DWC eMoF format</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../datasets/trawl_catch_data/trawl-catch-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">trawl_catch_data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../datasets/dataset-edna/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">dataset-edna</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../datasets/atn_satellite_telemetry/atn_satellite_telemetry_netCDF2DwC.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Converting ATN netCDF file to Darwin Core</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../faq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">FAQ</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tools.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../extras.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Extras</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#hakai-seagrass" id="toc-hakai-seagrass" class="nav-link active" data-scroll-target="#hakai-seagrass"><span class="header-section-number">4.1</span> Hakai Seagrass</a>
+  <ul class="collapse">
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">4.1.1</span> Setup</a></li>
+  <li><a href="#convert-data-to-darwin-core---extended-measurement-or-fact-format" id="toc-convert-data-to-darwin-core---extended-measurement-or-fact-format" class="nav-link" data-scroll-target="#convert-data-to-darwin-core---extended-measurement-or-fact-format"><span class="header-section-number">4.1.2</span> Convert Data to Darwin Core - Extended Measurement or Fact format</a></li>
+  <li><a href="#session-info" id="toc-session-info" class="nav-link" data-scroll-target="#session-info"><span class="header-section-number">4.1.3</span> Session Info</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/ioos/bio_data_guide/edit/main/datasets/hakai_seagrass_data/hakaiSeagrassToDWC.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../apps.html">Applications</a></li><li class="breadcrumb-item"><a href="../../datasets/hakai_seagrass_data/hakaiSeagrassToDWC.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Seagrass Density to DWC eMoF format</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Seagrass Density to DWC eMoF format</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>ZL Monteith, Hakai Institute </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 6, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="hakai-seagrass" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="hakai-seagrass"><span class="header-section-number">4.1</span> Hakai Seagrass</h2>
+<section id="setup" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="setup"><span class="header-section-number">4.1.1</span> Setup</h3>
+<p>This section clears the workspace, checks the working directory, and installs packages (if required) and loads packages, and loads necessary datasets</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"knitr"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Knitr global chunk options</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">message =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">warning =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">error   =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="load-data" class="level4" data-number="4.1.1.1">
+<h4 data-number="4.1.1.1" class="anchored" data-anchor-id="load-data"><span class="header-section-number">4.1.1.1</span> Load Data</h4>
+<p>First load the seagrass density survey data, set variable classes, and have a quick look</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load density data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>seagrassDensity <span class="ot">&lt;-</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read.csv</span>(seagrassDensity_csv,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">colClass =</span> <span class="st">"character"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date             =</span> <span class="fu">ymd</span>(date),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">depth            =</span> <span class="fu">as.numeric</span>(depth),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">transect_dist    =</span> <span class="fu">factor</span>(transect_dist),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">collected_start  =</span> <span class="fu">ymd_hms</span>(collected_start),</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">collected_end    =</span> <span class="fu">ymd_hms</span>(collected_end),</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">density          =</span> <span class="fu">as.numeric</span>(density),</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">density_msq      =</span> <span class="fu">as.numeric</span>(density_msq),</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">canopy_height_cm =</span> <span class="fu">as.numeric</span>(canopy_height_cm),</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">flowering_shoots =</span> <span class="fu">as.numeric</span>(flowering_shoots)) <span class="sc">%T&gt;%</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 3,031
+Columns: 22
+$ X                &lt;chr&gt; "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "1…
+$ organization     &lt;chr&gt; "HAKAI", "HAKAI", "HAKAI", "HAKAI", "HAKAI", "HAKAI",…
+$ work_area        &lt;chr&gt; "CALVERT", "CALVERT", "CALVERT", "CALVERT", "CALVERT"…
+$ project          &lt;chr&gt; "MARINEGEO", "MARINEGEO", "MARINEGEO", "MARINEGEO", "…
+$ survey           &lt;chr&gt; "PRUTH_BAY", "PRUTH_BAY", "PRUTH_BAY", "PRUTH_BAY", "…
+$ site_id          &lt;chr&gt; "PRUTH_BAY_INTERIOR4", "PRUTH_BAY_INTERIOR4", "PRUTH_…
+$ date             &lt;date&gt; 2016-05-13, 2016-05-13, 2016-05-13, 2016-05-13, 2016…
+$ sampling_bout    &lt;chr&gt; "4", "4", "4", "4", "4", "4", "4", "6", "6", "6", "6"…
+$ dive_supervisor  &lt;chr&gt; "Zach", "Zach", "Zach", "Zach", "Zach", "Zach", "Zach…
+$ collector        &lt;chr&gt; "Derek", "Derek", "Derek", "Derek", "Derek", "Derek",…
+$ hakai_id         &lt;chr&gt; "2016-05-13_PRUTH_BAY_INTERIOR4_0", "2016-05-13_PRUTH…
+$ sample_type      &lt;chr&gt; "seagrass_density", "seagrass_density", "seagrass_den…
+$ depth            &lt;dbl&gt; 6.0, 6.0, 6.0, 6.0, 5.0, 6.0, 6.0, 9.1, 9.0, 8.9, 9.0…
+$ transect_dist    &lt;fct&gt; 0, 5, 10, 15, 20, 25, 30, 10, 15, 20, 25, 30, 0, 5, 1…
+$ collected_start  &lt;dttm&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ collected_end    &lt;dttm&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ density          &lt;dbl&gt; 13, 10, 18, 22, 16, 31, 9, 5, 6, 6, 6, 3, 13, 30, 23,…
+$ density_msq      &lt;dbl&gt; 208, 160, 288, 352, 256, 496, 144, 80, 96, 96, 96, 48…
+$ canopy_height_cm &lt;dbl&gt; 60, 63, 80, 54, 55, 50, 63, 85, 80, 90, 95, 75, 60, 6…
+$ flowering_shoots &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, 0, 0, 0, 0, 0, NA, NA, NA…
+$ comments         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ quality_log      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</code></pre>
+</div>
+</div>
+<p>Next, load the habitat survey data, and same as above, set variable classes as necessary, and have a quick look.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load habitat data, set variable classes, have a quick look</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>seagrassHabitat <span class="ot">&lt;-</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read.csv</span>(seagrassHabitat_csv,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">colClasses =</span> <span class="st">"character"</span>) <span class="sc">%&gt;%</span>  </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date            =</span> <span class="fu">ymd</span>(date),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">depth           =</span> <span class="fu">as.numeric</span>(depth),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">hakai_id        =</span> <span class="fu">str_pad</span>(hakai_id, <span class="dv">5</span>, <span class="at">pad =</span> <span class="st">"0"</span>),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">transect_dist   =</span> <span class="fu">factor</span>(transect_dist),</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">collected_start =</span> <span class="fu">ymd_hms</span>(collected_start),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">collected_end   =</span> <span class="fu">ymd_hms</span>(collected_end)) <span class="sc">%T&gt;%</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 2,052
+Columns: 28
+$ X                &lt;chr&gt; "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "1…
+$ organization     &lt;chr&gt; "HAKAI", "HAKAI", "HAKAI", "HAKAI", "HAKAI", "HAKAI",…
+$ work_area        &lt;chr&gt; "CALVERT", "CALVERT", "CALVERT", "CALVERT", "CALVERT"…
+$ project          &lt;chr&gt; "MARINEGEO", "MARINEGEO", "MARINEGEO", "MARINEGEO", "…
+$ survey           &lt;chr&gt; "CHOKED_PASS", "CHOKED_PASS", "CHOKED_PASS", "CHOKED_…
+$ site_id          &lt;chr&gt; "CHOKED_PASS_INTERIOR6", "CHOKED_PASS_INTERIOR6", "CH…
+$ date             &lt;date&gt; 2017-11-22, 2017-11-22, 2017-11-22, 2017-11-22, 2017…
+$ sampling_bout    &lt;chr&gt; "6", "6", "6", "6", "6", "6", "1", "1", "1", "1", "1"…
+$ dive_supervisor  &lt;chr&gt; "gillian", "gillian", "gillian", "gillian", "gillian"…
+$ collector        &lt;chr&gt; "zach", "zach", "zach", "zach", "zach", "zach", "kyle…
+$ hakai_id         &lt;chr&gt; "10883", "2017-11-22_CHOKED_PASS_INTERIOR6_5 - 10", "…
+$ sample_type      &lt;chr&gt; "seagrass_habitat", "seagrass_habitat", "seagrass_hab…
+$ depth            &lt;dbl&gt; 9.2, 9.4, 9.3, 9.0, 9.2, 9.2, 3.4, 3.4, 3.4, 3.4, 3.4…
+$ transect_dist    &lt;fct&gt; 0 - 5, 10-May, 15-Oct, 15 - 20, 20 - 25, 25 - 30, 0 -…
+$ collected_start  &lt;dttm&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ collected_end    &lt;dttm&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ bag_uid          &lt;chr&gt; "10883", NA, NA, "11094", NA, "11182", "7119", NA, "7…
+$ bag_number       &lt;chr&gt; "3557", NA, NA, "3520", NA, "903", "800", NA, "318", …
+$ density_range    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ substrate        &lt;chr&gt; "sand,shell hash", "sand,shell hash", "sand,shell has…
+$ patchiness       &lt;chr&gt; "&lt; 1", "&lt; 1", "02-Jan", "&lt; 1", "&lt; 1", "&lt; 1", "&lt; 1", "…
+$ adj_habitat_1    &lt;chr&gt; "seagrass", "seagrass", "seagrass", "seagrass", "seag…
+$ adj_habitat_2    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ sample_collected &lt;chr&gt; "TRUE", "FALSE", "FALSE", "TRUE", "FALSE", "TRUE", "T…
+$ vegetation_1     &lt;chr&gt; NA, NA, NA, NA, NA, NA, "des", NA, "des", NA, NA, NA,…
+$ vegetation_2     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ comments         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ quality_log      &lt;chr&gt; "1: Flowering shoots 0 for entire transects", NA, NA,…</code></pre>
+</div>
+</div>
+<p>Finally, load coordinate data for surveys, and subset necessary variables</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>coordinates <span class="ot">&lt;-</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read.csv</span>(coordinate_csv,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">colClass =</span> <span class="fu">c</span>(<span class="st">"Point.Name"</span> <span class="ot">=</span> <span class="st">"character"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Point.Name, Decimal.Lat, Decimal.Long) <span class="sc">%T&gt;%</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 70
+Columns: 3
+$ Point.Name   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ Decimal.Lat  &lt;dbl&gt; 52.06200, 52.05200, 51.92270, 51.92500, 51.80900, 51.8090…
+$ Decimal.Long &lt;dbl&gt; -128.4120, -128.4030, -128.4648, -128.4540, -128.2360, -1…</code></pre>
+</div>
+</div>
+</section>
+<section id="merge-datasets" class="level4" data-number="4.1.1.2">
+<h4 data-number="4.1.1.2" class="anchored" data-anchor-id="merge-datasets"><span class="header-section-number">4.1.1.2</span> Merge Datasets</h4>
+<p>Now all the datasets have been loaded, and briefly formatted, we’ll join together the habitat and density surveys, and the coordinates for these.</p>
+<p>The seagrass density surveys collect data at discrete points (ie. 5 metres) along the transects, while the habitat surveys collect data over sections (ie. 0 - 5 metres) along the transects. In order to fit these two surveys together, we’ll narrow the habitat surveys from a range to a point so the locations will match. Based on how the habitat data is collected, the point the habitat survey is applied to will be the distance at the end of the swath (ie. 10-15m will become 15m). To account for no preceeding distance, the 0m distance will use the 0-5m section of the survey.</p>
+<p>First, well make the necessary transformations to the habitat dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reformat seagrassHabitat to merge with seagrassDensity</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="do">## replicate 0 - 5m transect dist to match with 0m in density survey;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="do">## rest of habitat bins can map one to one with density (ie. 5 - 10m -&gt; 10m)</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>seagrass0tmp <span class="ot">&lt;-</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  seagrassHabitat <span class="sc">%&gt;%</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(transect_dist <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"0 - 5"</span>, <span class="st">"0 - 2.5"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">transect_dist =</span> <span class="fu">factor</span>(<span class="dv">0</span>))</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="do">## collapse various levels to match with seagrassDensity transect_dist</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>seagrassHabitat<span class="sc">$</span>transect_dist <span class="ot">&lt;-</span> </span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fct_collapse</span>(seagrassHabitat<span class="sc">$</span>transect_dist,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>               <span class="st">"5"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"0 - 5"</span>, <span class="st">"2.5 - 7.5"</span>),</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>               <span class="st">"10"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"5 - 10"</span>, <span class="st">"7.5 - 12.5"</span>),</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>               <span class="st">"15"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"10 - 15"</span>, <span class="st">"12.5 - 17.5"</span>),</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>               <span class="st">"20"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"15 - 20"</span>, <span class="st">"17.5 - 22.5"</span>),</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>               <span class="st">"25"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"20 - 25"</span>, <span class="st">"22.5 - 27.5"</span>),</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>               <span class="st">"30"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"25 - 30"</span>, <span class="st">"27.5 - 30"</span>))</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="do">## merge seagrass0tmp into seagrassHabitat to account for 0m samples,</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="do">## set class for date, datetime variables</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>seagrassHabitatFull <span class="ot">&lt;-</span> </span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rbind</span>(seagrass0tmp, seagrassHabitat) <span class="sc">%&gt;%</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(transect_dist <span class="sc">!=</span> <span class="st">"0 - 2.5"</span>)  <span class="sc">%&gt;%</span> <span class="co"># already captured in seagrass0tmp </span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">droplevels</span>(.)  <span class="co"># remove now unused factor levels</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>With the distances of habitat and density surveys now corresponding, we can now merge these two datasets plus there coordinates together, combine redundant fields, and remove unnecessary fields.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge seagrassHabitatFull with seagrassDensity, then coordinates</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>seagrass <span class="ot">&lt;-</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(seagrassHabitatFull, seagrassDensity, </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"organization"</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"work_area"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"project"</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"survey"</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"site_id"</span>, </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"date"</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"transect_dist"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># merge hakai_id.x and hakai_id.y into single variable field;</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use combination of date, site_id, transect_dist, and field uid (hakai_id </span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># when present)</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">field_uid =</span> <span class="fu">ifelse</span>(sample_collected <span class="sc">==</span> <span class="cn">TRUE</span>, hakai_id.x, <span class="st">"NA"</span>),</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">hakai_id =</span> <span class="fu">paste</span>(date, <span class="st">"HAKAI:CALVERT"</span>, site_id, transect_dist, <span class="at">sep =</span> <span class="st">":"</span>),</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>         <span class="co"># below, aggregate metadata that didn't merge naturally (ie. due to minor </span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>         <span class="co"># differences in watch time or depth gauges)</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">dive_supervisor =</span> dive_supervisor.x,</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">collected_start =</span> <span class="fu">ymd_hms</span>(<span class="fu">ifelse</span>(<span class="fu">is.na</span>(collected_start.x),</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>                                          collected_start.y, </span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>                                          collected_start.x)),</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">collected_end   =</span> <span class="fu">ymd_hms</span>(<span class="fu">ifelse</span>(<span class="fu">is.na</span>(collected_start.x),</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>                                          collected_start.y,</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>                                          collected_start.x)),</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>         <span class="at">depth_m         =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(depth.x), depth.y, depth.x),</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>         <span class="at">sampling_bout   =</span> sampling_bout.x) <span class="sc">%&gt;%</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(., coordinates,  <span class="co"># add coordinates</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"site_id"</span> <span class="ot">=</span> <span class="st">"Point.Name"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>( <span class="sc">-</span> <span class="fu">c</span>(X.x, X.y, hakai_id.x, hakai_id.y,  <span class="co"># remove unnecessary variables</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>              dive_supervisor.x, dive_supervisor.y,</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>              collected_start.x, collected_start.y,</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>              collected_end.x, collected_end.y,</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>              depth.x, depth.y,</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>              sampling_bout.x, sampling_bout.y)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">density_msq =</span> <span class="fu">as.character</span>(density_msq),</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>         <span class="at">canopy_height_cm =</span> <span class="fu">as.character</span>(canopy_height_cm),</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>         <span class="at">flowering_shoots =</span> <span class="fu">as.character</span>(flowering_shoots),</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>         <span class="at">depth_m =</span> <span class="fu">as.character</span>(depth_m)) <span class="sc">%T&gt;%</span></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 3,743
+Columns: 38
+$ organization     &lt;chr&gt; "HAKAI", "HAKAI", "HAKAI", "HAKAI", "HAKAI", "HAKAI",…
+$ work_area        &lt;chr&gt; "CALVERT", "CALVERT", "CALVERT", "CALVERT", "CALVERT"…
+$ project          &lt;chr&gt; "MARINEGEO", "MARINEGEO", "MARINEGEO", "MARINEGEO", "…
+$ survey           &lt;chr&gt; "CHOKED_PASS", "CHOKED_PASS", "CHOKED_PASS", "PRUTH_B…
+$ site_id          &lt;chr&gt; "CHOKED_PASS_INTERIOR6", "CHOKED_PASS_EDGE1", "CHOKED…
+$ date             &lt;date&gt; 2017-11-22, 2017-05-19, 2017-05-19, 2017-07-03, 2017…
+$ collector.x      &lt;chr&gt; "zach", "kyle", NA, "tanya", "zach", "zach", "zach", …
+$ sample_type.x    &lt;chr&gt; "seagrass_habitat", "seagrass_habitat", "seagrass_hab…
+$ transect_dist    &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+$ bag_uid          &lt;chr&gt; "10883", "7119", "7031", "2352", "10255", "10023", "1…
+$ bag_number       &lt;chr&gt; "3557", "800", "301", "324", "3506", "3555", "3534", …
+$ density_range    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ substrate        &lt;chr&gt; "sand,shell hash", "sand,shell hash", "sand,shell has…
+$ patchiness       &lt;chr&gt; "&lt; 1", "&lt; 1", "&lt; 1", "&lt; 1", "&lt; 1", "05-Apr", "04-Mar"…
+$ adj_habitat_1    &lt;chr&gt; "seagrass", "sand", "standing kelp", "seagrass", "sea…
+$ adj_habitat_2    &lt;chr&gt; NA, NA, NA, NA, NA, NA, "standing kelp", NA, NA, NA, …
+$ sample_collected &lt;chr&gt; "TRUE", "TRUE", "TRUE", "TRUE", "TRUE", "TRUE", "TRUE…
+$ vegetation_1     &lt;chr&gt; NA, "des", "des", "zm", "des", NA, NA, NA, NA, NA, NA…
+$ vegetation_2     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, "…
+$ comments.x       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ quality_log.x    &lt;chr&gt; "1: Flowering shoots 0 for entire transects", NA, NA,…
+$ collector.y      &lt;chr&gt; "derek", "ondine", "ondine", "derek", "derek", "derek…
+$ sample_type.y    &lt;chr&gt; "seagrass_density", "seagrass_density", "seagrass_den…
+$ density          &lt;dbl&gt; 4, 10, 6, 13, 6, 1, 2, 6, 21, 3, 7, 4, 3, 14, 17, 11,…
+$ density_msq      &lt;chr&gt; "64", "160", "96", "208", "96", "16", "32", "96", "33…
+$ canopy_height_cm &lt;chr&gt; "80", "80", "110", "60", "125", "100", "100", "125", …
+$ flowering_shoots &lt;chr&gt; "0", NA, NA, NA, NA, NA, NA, "0", NA, NA, NA, "0", NA…
+$ comments.y       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ quality_log.y    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, "…
+$ field_uid        &lt;chr&gt; "10883", "07119", "07031", "02352", "10255", "10023",…
+$ hakai_id         &lt;chr&gt; "2017-11-22:HAKAI:CALVERT:CHOKED_PASS_INTERIOR6:0", "…
+$ dive_supervisor  &lt;chr&gt; "gillian", "gillian,gillian.sadlierbrown", "gillian,g…
+$ collected_start  &lt;dttm&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ collected_end    &lt;dttm&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ depth_m          &lt;chr&gt; "9.2", "3.4", "4.8", "2.4", "5.3", "5.6", "4.4", "2.5…
+$ sampling_bout    &lt;chr&gt; "6", "1", "3", "5", "5", "3", "5", "2", "1", "2", "6"…
+$ Decimal.Lat      &lt;dbl&gt; 51.67482, 51.67882, 51.67493, 51.64532, 51.67349, 51.…
+$ Decimal.Long     &lt;dbl&gt; -128.1195, -128.1148, -128.1237, -128.1193, -128.1180…</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="convert-data-to-darwin-core---extended-measurement-or-fact-format" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="convert-data-to-darwin-core---extended-measurement-or-fact-format"><span class="header-section-number">4.1.2</span> Convert Data to Darwin Core - Extended Measurement or Fact format</h3>
+<p>The Darwin Core ExtendedMeasurementOrFact (eMoF) extension bases records around a core event (rather than occurrence as in standard Darwin Core), allowing for additional measurement variables to be associated with occurrence data.</p>
+<section id="add-event-id-and-occurrence-id-variables-to-dataset" class="level4" data-number="4.1.2.1">
+<h4 data-number="4.1.2.1" class="anchored" data-anchor-id="add-event-id-and-occurrence-id-variables-to-dataset"><span class="header-section-number">4.1.2.1</span> Add Event ID and Occurrence ID variables to dataset</h4>
+<p>As this dataset will be annually updated, rather than using natural keys (ie. using package::uuid to autogenerate) for event and occurence IDs, here we will use surrogate keys made up of a concatenation of date survey, transect location, observation distance, and sample ID (for occurrenceID, when a sample is present).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create and populate eventID variable</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="do">## currently only event is used, but additional surveys and abiotic data</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="do">## are associated with parent events that may be included at a later date</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>seagrass<span class="sc">$</span>eventID <span class="ot">&lt;-</span> seagrass<span class="sc">$</span>hakai_id</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># create and populate occurrenceID; combine eventID with transect_dist </span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># and field_uid</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="do">## in the event of &lt;NA&gt; field_uid, no sample was collected, but</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="do">## measurements and occurrence are still taken; no further subsamples</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="do">## are associated with &lt;NA&gt; field_uids</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>seagrass<span class="sc">$</span>occurrenceID <span class="ot">&lt;-</span> </span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(seagrass, </span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>       <span class="fu">paste</span>(eventID, transect_dist, field_uid, <span class="at">sep =</span> <span class="st">":"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="create-event-occurrence-and-emof-tables" class="level4" data-number="4.1.2.2">
+<h4 data-number="4.1.2.2" class="anchored" data-anchor-id="create-event-occurrence-and-emof-tables"><span class="header-section-number">4.1.2.2</span> Create Event, Occurrence, and eMoF tables</h4>
+<p>Now that we’ve created eventIDs and occurrenceIDs to connect all the variables together, we can begin to create the Event, Occurrence, and extended Measurement or Fact table necessary for DarwinCore compliant datasets</p>
+<section id="event-table" class="level5" data-number="4.1.2.2.1">
+<h5 data-number="4.1.2.2.1" class="anchored" data-anchor-id="event-table"><span class="header-section-number">4.1.2.2.1</span> Event Table</h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># subset seagrass to create event table</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>seagrassEvent <span class="ot">&lt;-</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  seagrass <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  distinct <span class="sc">%&gt;%</span>  <span class="co"># some duplicates in data stemming from database conflicts</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(date,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>         Decimal.Lat, Decimal.Long, transect_dist,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>         depth_m, eventID) <span class="sc">%&gt;%</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">eventDate                     =</span> date,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">decimalLatitude               =</span> Decimal.Lat,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">decimalLongitude              =</span> Decimal.Long,</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">coordinateUncertaintyInMeters =</span> transect_dist,</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">minimumDepthInMeters          =</span> depth_m,</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">maximumDepthInMeters          =</span> depth_m) <span class="sc">%&gt;%</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">geodeticDatum  =</span> <span class="st">"WGS84"</span>,</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">samplingEffort =</span> <span class="st">"30 metre transect"</span>) <span class="sc">%T&gt;%</span> glimpse</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 3,659
+Columns: 8
+$ eventDate                     &lt;date&gt; 2017-11-22, 2017-05-19, 2017-05-19, 201…
+$ decimalLatitude               &lt;dbl&gt; 51.67482, 51.67882, 51.67493, 51.64532, …
+$ decimalLongitude              &lt;dbl&gt; -128.1195, -128.1148, -128.1237, -128.11…
+$ coordinateUncertaintyInMeters &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ maximumDepthInMeters          &lt;chr&gt; "9.2", "3.4", "4.8", "2.4", "5.3", "5.6"…
+$ eventID                       &lt;chr&gt; "2017-11-22:HAKAI:CALVERT:CHOKED_PASS_IN…
+$ geodeticDatum                 &lt;chr&gt; "WGS84", "WGS84", "WGS84", "WGS84", "WGS…
+$ samplingEffort                &lt;chr&gt; "30 metre transect", "30 metre transect"…</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save event table to csv</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(seagrassEvent, seagrassEvent_csv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="occurrence-table" class="level5" data-number="4.1.2.2.2">
+<h5 data-number="4.1.2.2.2" class="anchored" data-anchor-id="occurrence-table"><span class="header-section-number">4.1.2.2.2</span> Occurrence Table</h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># subset seagrass to create occurrence table</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>seagrassOccurrence <span class="ot">&lt;-</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  seagrass <span class="sc">%&gt;%</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  distinct <span class="sc">%&gt;%</span>  <span class="co"># some duplicates in data stemming from database conflicts</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(eventID, occurrenceID) <span class="sc">%&gt;%</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">basisOfRecord =</span> <span class="st">"HumanObservation"</span>,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">scientificName   =</span> <span class="st">"Zostera subg. Zostera marina"</span>,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">occurrenceStatus =</span> <span class="st">"present"</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Taxonomic name matching</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co"># in addition to the above metadata, DarwinCore format requires further</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co"># taxonomic data that can be acquired through the WoRMS register.</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Load taxonomic info, downloaded via WoRMS tool</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co"># zmWorms &lt;- </span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co">#   read.delim("raw_data/zmworms_matched.txt",</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co">#              header = TRUE,</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co">#              nrows  = 1)</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>zmWorms <span class="ot">&lt;-</span> <span class="fu">wm_record</span>(<span class="at">id =</span> <span class="dv">145795</span>)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="co"># join WoRMS name with seagrassOccurrence create above</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>seagrassOccurrence <span class="ot">&lt;-</span> </span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(seagrassOccurrence, zmWorms, </span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"scientificName"</span> <span class="ot">=</span> <span class="st">"scientificname"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(eventID, occurrenceID, basisOfRecord, scientificName, occurrenceStatus, AphiaID,</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>         url, authority, status, unacceptreason, taxonRankID, rank,</span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>         valid_AphiaID, valid_name, valid_authority, parentNameUsageID,</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>         kingdom, phylum, class, order, family, genus, citation, lsid,</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>         isMarine, match_type, modified) <span class="sc">%T&gt;%</span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>  glimpse</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 3,659
+Columns: 27
+$ eventID           &lt;chr&gt; "2017-11-22:HAKAI:CALVERT:CHOKED_PASS_INTERIOR6:0", …
+$ occurrenceID      &lt;chr&gt; "2017-11-22:HAKAI:CALVERT:CHOKED_PASS_INTERIOR6:0:0:…
+$ basisOfRecord     &lt;chr&gt; "HumanObservation", "HumanObservation", "HumanObserv…
+$ scientificName    &lt;chr&gt; "Zostera subg. Zostera marina", "Zostera subg. Zoste…
+$ occurrenceStatus  &lt;chr&gt; "present", "present", "present", "present", "present…
+$ AphiaID           &lt;int&gt; 145795, 145795, 145795, 145795, 145795, 145795, 1457…
+$ url               &lt;chr&gt; "https://www.marinespecies.org/aphia.php?p=taxdetail…
+$ authority         &lt;chr&gt; "Linnaeus, 1753", "Linnaeus, 1753", "Linnaeus, 1753"…
+$ status            &lt;chr&gt; "accepted", "accepted", "accepted", "accepted", "acc…
+$ unacceptreason    &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ taxonRankID       &lt;int&gt; 220, 220, 220, 220, 220, 220, 220, 220, 220, 220, 22…
+$ rank              &lt;chr&gt; "Species", "Species", "Species", "Species", "Species…
+$ valid_AphiaID     &lt;int&gt; 145795, 145795, 145795, 145795, 145795, 145795, 1457…
+$ valid_name        &lt;chr&gt; "Zostera subg. Zostera marina", "Zostera subg. Zoste…
+$ valid_authority   &lt;chr&gt; "Linnaeus, 1753", "Linnaeus, 1753", "Linnaeus, 1753"…
+$ parentNameUsageID &lt;int&gt; 370435, 370435, 370435, 370435, 370435, 370435, 3704…
+$ kingdom           &lt;chr&gt; "Plantae", "Plantae", "Plantae", "Plantae", "Plantae…
+$ phylum            &lt;chr&gt; "Tracheophyta", "Tracheophyta", "Tracheophyta", "Tra…
+$ class             &lt;chr&gt; "Magnoliopsida", "Magnoliopsida", "Magnoliopsida", "…
+$ order             &lt;chr&gt; "Alismatales", "Alismatales", "Alismatales", "Alisma…
+$ family            &lt;chr&gt; "Zosteraceae", "Zosteraceae", "Zosteraceae", "Zoster…
+$ genus             &lt;chr&gt; "Zostera", "Zostera", "Zostera", "Zostera", "Zostera…
+$ citation          &lt;chr&gt; "WoRMS (2024). Zostera subg. Zostera marina Linnaeus…
+$ lsid              &lt;chr&gt; "urn:lsid:marinespecies.org:taxname:145795", "urn:ls…
+$ isMarine          &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ match_type        &lt;chr&gt; "exact", "exact", "exact", "exact", "exact", "exact"…
+$ modified          &lt;chr&gt; "2008-12-09T10:03:16.140Z", "2008-12-09T10:03:16.140…</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save occurrence table to csv</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(seagrassOccurrence, seagrassOccurrence_csv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="extended-measurementorfact-table" class="level5" data-number="4.1.2.2.3">
+<h5 data-number="4.1.2.2.3" class="anchored" data-anchor-id="extended-measurementorfact-table"><span class="header-section-number">4.1.2.2.3</span> Extended MeasurementOrFact table</h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>seagrassMof <span class="ot">&lt;-</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  seagrass <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># select variables for eMoF table</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(date,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>         eventID, survey, site_id, transect_dist,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>         substrate, patchiness, adj_habitat_1, adj_habitat_2,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>         vegetation_1, vegetation_2,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>         density_msq, canopy_height_cm, flowering_shoots) <span class="sc">%&gt;%</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># split substrate into two variables (currently holds two substrate type in same variable)</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(substrate, <span class="at">sep =</span> <span class="st">","</span>, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"substrate_1"</span>, <span class="st">"substrate_2"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># change variables names to match NERC database (or to be more descriptive where none exist)</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">measurementDeterminedDate   =</span> date,</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">SubstrateTypeA              =</span> substrate_1,</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">SubstrateTypeB              =</span> substrate_2,</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">BarePatchLengthWithinSeagrass =</span> patchiness,</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">PrimaryAdjacentHabitat      =</span> adj_habitat_1,</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">SecondaryAdjacentHabitat    =</span> adj_habitat_2,</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">PrimaryAlgaeSp              =</span> vegetation_1,</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">SecondaryAlgaeSp            =</span> vegetation_2,</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">BedAbund                    =</span> density_msq,</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>         <span class="at">CanopyHeight                =</span> canopy_height_cm,</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">FloweringBedAbund           =</span> flowering_shoots) <span class="sc">%&gt;%</span>  </span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># reformat variables into DwC MeasurementOrFact format</span></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># (single values variable, with measurement type, unit, etc. variables)</span></span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>( <span class="sc">-</span> <span class="fu">c</span>(measurementDeterminedDate, eventID, survey, site_id, transect_dist),</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>                <span class="at">names_to =</span> <span class="st">"measurementType"</span>,</span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>                <span class="at">values_to =</span> <span class="st">"measurementValue"</span>,</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>                <span class="at">values_ptypes =</span> <span class="fu">list</span>(<span class="at">measurementValue =</span> <span class="st">"character"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use measurement type to fill in remainder of variables relating to </span></span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># NERC vocabulary and metadata fields</span></span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">measurementTypeID =</span> <span class="fu">case_when</span>(</span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">"BedAbund"</span> <span class="sc">~</span> <span class="st">"http://vocab.nerc.ac.uk/collection/P01/current/SDBIOL02/"</span>,</span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">"CanopyHeight"</span> <span class="sc">~</span> <span class="st">"http://vocab.nerc.ac.uk/collection/P01/current/OBSMAXLX/"</span>,</span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>      <span class="co"># measurementType == "BarePatchWithinSeagrass" ~ "",</span></span>
+<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">"FloweringBedAbund"</span> <span class="sc">~</span> <span class="st">"http://vocab.nerc.ac.uk/collection/P01/current/SDBIOL02/"</span>),</span>
+<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">measurementUnit =</span> <span class="fu">case_when</span>(</span>
+<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">"BedAbund"</span> <span class="sc">~</span> <span class="st">"Number per square metre"</span>,</span>
+<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">"CanopyHeight"</span> <span class="sc">~</span> <span class="st">"Centimetres"</span>,</span>
+<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">"BarePatchhLengthWithinSeagrass"</span> <span class="sc">~</span> <span class="st">"Metres"</span>,</span>
+<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">"FloweringBedAbund"</span> <span class="sc">~</span> <span class="st">"Number per square metre"</span>),</span>
+<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">measurementUnitID =</span> <span class="fu">case_when</span>(</span>
+<span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">"BedAbund"</span> <span class="sc">~</span> <span class="st">"http://vocab.nerc.ac.uk/collection/P06/current/UPMS/"</span>,</span>
+<span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">"CanopyHeight"</span> <span class="sc">~</span> <span class="st">"http://vocab.nerc.ac.uk/collection/P06/current/ULCM/"</span>,</span>
+<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">"BarePatchhLengthWithinSeagrass"</span> <span class="sc">~</span> <span class="st">"http://vocab.nerc.ac.uk/collection/P06/current/ULAA/2/"</span>,</span>
+<span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">"FloweringBedAbund"</span> <span class="sc">~</span> <span class="st">"http://vocab.nerc.ac.uk/collection/P06/current/UPMS/"</span>),</span>
+<span id="cb18-47"><a href="#cb18-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">measurementAccuracy =</span> <span class="fu">case_when</span>(</span>
+<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">"CanopyHeight"</span> <span class="sc">~</span> <span class="dv">5</span>),</span>
+<span id="cb18-49"><a href="#cb18-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">measurementMethod =</span> <span class="fu">case_when</span>(</span>
+<span id="cb18-50"><a href="#cb18-50" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">"BedAbund"</span> <span class="sc">~</span> <span class="st">"25cmx25cm quadrat count"</span>,</span>
+<span id="cb18-51"><a href="#cb18-51" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">"CanopyHeight"</span> <span class="sc">~</span> <span class="st">"in situ with ruler"</span>,</span>
+<span id="cb18-52"><a href="#cb18-52" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">"BarePatchhLengthWithinSeagrass"</span> <span class="sc">~</span> <span class="st">"estimated along transect line"</span>,</span>
+<span id="cb18-53"><a href="#cb18-53" aria-hidden="true" tabindex="-1"></a>      measurementType <span class="sc">==</span> <span class="st">"FloweringBedAbund"</span> <span class="sc">~</span> <span class="st">"25cmx25cm quadrat count"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb18-54"><a href="#cb18-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(eventID, measurementDeterminedDate, measurementType, measurementValue,</span>
+<span id="cb18-55"><a href="#cb18-55" aria-hidden="true" tabindex="-1"></a>         measurementTypeID, measurementUnit, measurementUnitID, measurementAccuracy,</span>
+<span id="cb18-56"><a href="#cb18-56" aria-hidden="true" tabindex="-1"></a>         measurementMethod) <span class="sc">%T&gt;%</span></span>
+<span id="cb18-57"><a href="#cb18-57" aria-hidden="true" tabindex="-1"></a><span class="co">#  select(!c(survey, site_id, transect_dist)) %T&gt;%</span></span>
+<span id="cb18-58"><a href="#cb18-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 37,430
+Columns: 9
+$ eventID                   &lt;chr&gt; "2017-11-22:HAKAI:CALVERT:CHOKED_PASS_INTERI…
+$ measurementDeterminedDate &lt;date&gt; 2017-11-22, 2017-11-22, 2017-11-22, 2017-11…
+$ measurementType           &lt;chr&gt; "SubstrateTypeA", "SubstrateTypeB", "BarePat…
+$ measurementValue          &lt;chr&gt; "sand", "shell hash", "&lt; 1", "seagrass", NA,…
+$ measurementTypeID         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, "http://vocab.ne…
+$ measurementUnit           &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, "Number per squa…
+$ measurementUnitID         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, "http://vocab.ne…
+$ measurementAccuracy       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, 5, NA, NA, N…
+$ measurementMethod         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, "25cmx25cm quadr…</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save eMoF table to csv</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(seagrassMof, seagrassMof_csv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="session-info" class="level3" data-number="4.1.3">
+<h3 data-number="4.1.3" class="anchored" data-anchor-id="session-info"><span class="header-section-number">4.1.3</span> Session Info</h3>
+<p>Print session information below in case necessary for future reference</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print Session Info for future reference</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sonoma 14.6.1
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: UTC
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] worrms_0.4.3    magrittr_2.0.3  lubridate_1.9.3 forcats_1.0.0  
+ [5] stringr_1.5.1   dplyr_1.1.4     purrr_1.0.2     readr_2.1.5    
+ [9] tidyr_1.3.1     tibble_3.2.1    ggplot2_3.5.1   tidyverse_2.0.0
+[13] here_1.0.1      knitr_1.48     
+
+loaded via a namespace (and not attached):
+ [1] gtable_0.3.5      jsonlite_1.8.8    compiler_4.4.1    Rcpp_1.0.13      
+ [5] tidyselect_1.2.1  urltools_1.7.3    scales_1.3.0      triebeard_0.4.1  
+ [9] yaml_2.3.10       fastmap_1.2.0     R6_2.5.1          generics_0.1.3   
+[13] curl_5.2.2        htmlwidgets_1.6.4 crul_1.5.0        munsell_0.5.1    
+[17] rprojroot_2.0.4   pillar_1.9.0      tzdb_0.4.0        rlang_1.1.4      
+[21] utf8_1.2.4        httpcode_0.3.0    stringi_1.8.4     xfun_0.47        
+[25] timechange_0.3.0  cli_3.6.3         withr_3.0.1       digest_0.6.37    
+[29] grid_4.4.1        hms_1.1.3         lifecycle_1.0.4   vctrs_0.6.5      
+[33] evaluate_0.24.0   glue_1.7.0        fansi_1.0.6       colorspace_2.1-1 
+[37] rmarkdown_2.28    tools_4.4.1       pkgconfig_2.0.3   htmltools_0.5.8.1</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/ioos\.github\.io\/bio_data_guide\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../datasets/hakai_salmon_data/salmon-darwin-core-remap.html" class="pagination-link" aria-label="Darwin Core Salmon Data Remap">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Darwin Core Salmon Data Remap</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../datasets/trawl_catch_data/trawl-catch-data.html" class="pagination-link" aria-label="trawl_catch_data">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">trawl_catch_data</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ioos/bio_data_guide/edit/main/datasets/hakai_seagrass_data/hakaiSeagrassToDWC.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>

@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Scaling multiple dimensions of diversity in biological data">
+
+<title>2&nbsp; Aligning Data to Darwin Core - Event Core with Extended Measurement or Fact – BioDataGuide</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../datasets/hakai_salmon_data/salmon-darwin-core-remap.html" rel="next">
+<link href="../../apps.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../lib/style.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../apps.html">Applications</a></li><li class="breadcrumb-item"><a href="../../datasets/TPWD_HARC_BagSeine/TPWD_HARC_BagSeine_OBISENV.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aligning Data to Darwin Core - Event Core with Extended Measurement or Fact</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">BioDataGuide</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/ioos/bio_data_guide/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="../../BioDataGuide.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="../../BioDataGuide.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../apps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Applications</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../datasets/TPWD_HARC_BagSeine/TPWD_HARC_BagSeine_OBISENV.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aligning Data to Darwin Core - Event Core with Extended Measurement or Fact</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../datasets/hakai_salmon_data/salmon-darwin-core-remap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Darwin Core Salmon Data Remap</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../datasets/hakai_seagrass_data/hakaiSeagrassToDWC.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Seagrass Density to DWC eMoF format</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../datasets/trawl_catch_data/trawl-catch-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">trawl_catch_data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../datasets/dataset-edna/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">dataset-edna</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../datasets/atn_satellite_telemetry/atn_satellite_telemetry_netCDF2DwC.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Converting ATN netCDF file to Darwin Core</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../faq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">FAQ</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tools.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../extras.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Extras</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#general-information-about-this-notebook" id="toc-general-information-about-this-notebook" class="nav-link active" data-scroll-target="#general-information-about-this-notebook"><span class="header-section-number">2.0.1</span> General information about this notebook</a></li>
+  <li><a href="#event-file" id="toc-event-file" class="nav-link" data-scroll-target="#event-file"><span class="header-section-number">2.0.2</span> Event file</a></li>
+  <li><a href="#occurrence-file" id="toc-occurrence-file" class="nav-link" data-scroll-target="#occurrence-file"><span class="header-section-number">2.0.3</span> Occurrence file</a></li>
+  <li><a href="#extended-measurement-or-fact-extension-file" id="toc-extended-measurement-or-fact-extension-file" class="nav-link" data-scroll-target="#extended-measurement-or-fact-extension-file"><span class="header-section-number">2.0.4</span> Extended Measurement or Fact extension file</a></li>
+  <li><a href="#cleaning-up-event-and-occurrence-files" id="toc-cleaning-up-event-and-occurrence-files" class="nav-link" data-scroll-target="#cleaning-up-event-and-occurrence-files"><span class="header-section-number">2.0.5</span> Cleaning up Event and Occurrence files</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/ioos/bio_data_guide/edit/main/datasets/TPWD_HARC_BagSeine/TPWD_HARC_BagSeine_OBISENV.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../apps.html">Applications</a></li><li class="breadcrumb-item"><a href="../../datasets/TPWD_HARC_BagSeine/TPWD_HARC_BagSeine_OBISENV.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aligning Data to Darwin Core - Event Core with Extended Measurement or Fact</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aligning Data to Darwin Core - Event Core with Extended Measurement or Fact</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Abby Benson<br>
+January 9, 2022</p>
+<section id="general-information-about-this-notebook" class="level3" data-number="2.0.1">
+<h3 data-number="2.0.1" class="anchored" data-anchor-id="general-information-about-this-notebook"><span class="header-section-number">2.0.1</span> General information about this notebook</h3>
+<p>Script to process the Texas Parks and Wildlife Department (TPWD) Aransas Bay bag seine data from the format used by the Houston Advanced Research Center (HARC) for bays in Texas. Taxonomy was processed using a separate script (<a href="https://www.sciencebase.gov/catalog/file/get/53a887f4e4b075096c60cfdd?f=__disk__ab%2F6e%2Ff8%2Fab6ef8426ea328cb6c54d13ee7b6b7ce791d23f8">TPWD_Taxonomy.R</a>) using a taxa list pulled from the pdf “<a href="https://www.sciencebase.gov/catalog/file/get/53a887f4e4b075096c60cfdd?f=__disk__d9%2Ff6%2F46%2Fd9f646b40cf7c6cc3fa77d1e7aebe88f46cf7145">2009 Resource Monitoring Operations Manual</a>”. All original data, processed data and scripts are stored on <a href="https://www.sciencebase.gov/catalog/item/53a887f4e4b075096c60cfdd">an item</a> in USGS ScienceBase.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load some of the libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>BagSeine <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://www.sciencebase.gov/catalog/file/get/53a887f4e4b075096c60cfdd?f=__disk__6e%2F6a%2F67%2F6e6a678c41cf928e025fd30339789cc8b893a815&amp;allowOpen=true"</span>, <span class="at">stringsAsFactors=</span><span class="cn">FALSE</span>, <span class="at">strip.white =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that if not already done you’ll need to run the <a href="https://www.sciencebase.gov/catalog/file/get/53a887f4e4b075096c60cfdd?f=__disk__ab%2F6e%2Ff8%2Fab6ef8426ea328cb6c54d13ee7b6b7ce791d23f8">TPWD_Taxonomy.R</a> script to get the taxaList file squared away or load the taxonomy file to the World Register of Marine Species Taxon Match Tool https://www.marinespecies.org/aphia.php?p=match</p>
+</section>
+<section id="event-file" class="level3" data-number="2.0.2">
+<h3 data-number="2.0.2" class="anchored" data-anchor-id="event-file"><span class="header-section-number">2.0.2</span> Event file</h3>
+<p>To start we will create the Darwin Core <strong>Event</strong> file. This is the file that will have all the information about the sampling event such as date, location, depth, sampling protocol. Basically anything about the cruise or the way the sampling was done will go in this file. You can see all the Darwin Core terms that are part of the event file here http://tools.gbif.org/dwca-validator/extension.do?id=dwc:Event.</p>
+<p>The original format for these TPWD HARC files has all of the information associated as the event in the first approximately 50 columns and then all of the information about the occurrence (species) as columns for each species. We will need to start by limiting to the event information only.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>event <span class="ot">&lt;-</span> BagSeine[,<span class="dv">1</span><span class="sc">:</span><span class="dv">47</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Next there are several pieces of information that need 1) to be added like the geodeticDatum 2) to be pieced together from multiple columns like datasetID or 3) minor changes like the minimum and maximum depth.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>event <span class="ot">&lt;-</span> event <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="st">"Event"</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">modified =</span> lubridate<span class="sc">::</span><span class="fu">today</span>(),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">language =</span> <span class="st">"en"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">license =</span> <span class="st">"http://creativecommons.org/publicdomain/zero/1.0/legalcode"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">institutionCode =</span> <span class="st">"TPWD"</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">ownerInstitutionCode =</span> <span class="st">"HARC"</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">coordinateUncertaintyInMeters =</span> <span class="st">"100"</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">geodeticDatum =</span> <span class="st">"WGS84"</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">georeferenceProtocol =</span> <span class="st">"Handheld GPS"</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">country =</span> <span class="st">"United States"</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">countryCode =</span> <span class="st">"US"</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">stateProvince =</span> <span class="st">"Texas"</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">datasetID =</span> <span class="fu">gsub</span>(<span class="st">" "</span>, <span class="st">"_"</span>, <span class="fu">paste</span>(<span class="st">"TPWD_HARC_Texas"</span>, event<span class="sc">$</span>Bay, event<span class="sc">$</span>Gear_Type)),</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">eventID =</span> <span class="fu">paste</span>(<span class="st">"Station"</span>, event<span class="sc">$</span>station_code, <span class="st">"Date"</span>, event<span class="sc">$</span>completion_dttm, <span class="at">sep =</span> <span class="st">"_"</span>),</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">sampleSizeUnit =</span> <span class="st">"hectares"</span>,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">CompDate =</span> lubridate<span class="sc">::</span><span class="fu">mdy_hms</span>(event<span class="sc">$</span>CompDate, <span class="at">tz=</span><span class="st">"America/Chicago"</span>), </span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">StartDate =</span> lubridate<span class="sc">::</span><span class="fu">mdy_hms</span>(event<span class="sc">$</span>StartDate, <span class="at">tz=</span><span class="st">"America/Chicago"</span>),</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">minimumDepthInMeters =</span> <span class="fu">ifelse</span>(start_shallow_water_depth_num <span class="sc">&lt;</span> start_deep_water_depth_num, </span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>                                       start_shallow_water_depth_num, start_deep_water_depth_num),</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>         <span class="at">maximumDepthInMeters =</span> <span class="fu">ifelse</span>(start_deep_water_depth_num <span class="sc">&gt;</span> start_shallow_water_depth_num,</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>                                       start_deep_water_depth_num, start_shallow_water_depth_num))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(event[,<span class="dv">48</span><span class="sc">:</span><span class="dv">64</span>], <span class="at">n =</span> <span class="dv">10</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    type   modified language                                                    license institutionCode</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>  Event <span class="dv">2022-01-09</span>       en http<span class="sc">:</span><span class="er">//</span>creativecommons.org<span class="sc">/</span>publicdomain<span class="sc">/</span>zero<span class="sc">/</span><span class="fl">1.0</span><span class="sc">/</span>legalcode            TPWD</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>  Event <span class="dv">2022-01-09</span>       en http<span class="sc">:</span><span class="er">//</span>creativecommons.org<span class="sc">/</span>publicdomain<span class="sc">/</span>zero<span class="sc">/</span><span class="fl">1.0</span><span class="sc">/</span>legalcode            TPWD</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>  Event <span class="dv">2022-01-09</span>       en http<span class="sc">:</span><span class="er">//</span>creativecommons.org<span class="sc">/</span>publicdomain<span class="sc">/</span>zero<span class="sc">/</span><span class="fl">1.0</span><span class="sc">/</span>legalcode            TPWD</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>  Event <span class="dv">2022-01-09</span>       en http<span class="sc">:</span><span class="er">//</span>creativecommons.org<span class="sc">/</span>publicdomain<span class="sc">/</span>zero<span class="sc">/</span><span class="fl">1.0</span><span class="sc">/</span>legalcode            TPWD</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>  Event <span class="dv">2022-01-09</span>       en http<span class="sc">:</span><span class="er">//</span>creativecommons.org<span class="sc">/</span>publicdomain<span class="sc">/</span>zero<span class="sc">/</span><span class="fl">1.0</span><span class="sc">/</span>legalcode            TPWD</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span>  Event <span class="dv">2022-01-09</span>       en http<span class="sc">:</span><span class="er">//</span>creativecommons.org<span class="sc">/</span>publicdomain<span class="sc">/</span>zero<span class="sc">/</span><span class="fl">1.0</span><span class="sc">/</span>legalcode            TPWD</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="dv">7</span>  Event <span class="dv">2022-01-09</span>       en http<span class="sc">:</span><span class="er">//</span>creativecommons.org<span class="sc">/</span>publicdomain<span class="sc">/</span>zero<span class="sc">/</span><span class="fl">1.0</span><span class="sc">/</span>legalcode            TPWD</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="dv">8</span>  Event <span class="dv">2022-01-09</span>       en http<span class="sc">:</span><span class="er">//</span>creativecommons.org<span class="sc">/</span>publicdomain<span class="sc">/</span>zero<span class="sc">/</span><span class="fl">1.0</span><span class="sc">/</span>legalcode            TPWD</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="dv">9</span>  Event <span class="dv">2022-01-09</span>       en http<span class="sc">:</span><span class="er">//</span>creativecommons.org<span class="sc">/</span>publicdomain<span class="sc">/</span>zero<span class="sc">/</span><span class="fl">1.0</span><span class="sc">/</span>legalcode            TPWD</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> Event <span class="dv">2022-01-09</span>       en http<span class="sc">:</span><span class="er">//</span>creativecommons.org<span class="sc">/</span>publicdomain<span class="sc">/</span>zero<span class="sc">/</span><span class="fl">1.0</span><span class="sc">/</span>legalcode            TPWD</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>   ownerInstitutionCode coordinateUncertaintyInMeters geodeticDatum georeferenceProtocol       country</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>                  HARC                           <span class="dv">100</span>         WGS84         Handheld GPS United States</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>                  HARC                           <span class="dv">100</span>         WGS84         Handheld GPS United States</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>                  HARC                           <span class="dv">100</span>         WGS84         Handheld GPS United States</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>                  HARC                           <span class="dv">100</span>         WGS84         Handheld GPS United States</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>                  HARC                           <span class="dv">100</span>         WGS84         Handheld GPS United States</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span>                  HARC                           <span class="dv">100</span>         WGS84         Handheld GPS United States</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="dv">7</span>                  HARC                           <span class="dv">100</span>         WGS84         Handheld GPS United States</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="dv">8</span>                  HARC                           <span class="dv">100</span>         WGS84         Handheld GPS United States</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="dv">9</span>                  HARC                           <span class="dv">100</span>         WGS84         Handheld GPS United States</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span>                 HARC                           <span class="dv">100</span>         WGS84         Handheld GPS United States</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>   countryCode stateProvince                             datasetID                                eventID</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>           US         Texas TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_95_Date_09JAN1997<span class="sc">:</span><span class="dv">14</span><span class="sc">:</span><span class="dv">35</span><span class="sc">:</span><span class="fl">00.000</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>           US         Texas TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_95_Date_18AUG2000<span class="sc">:</span><span class="dv">11</span><span class="sc">:</span><span class="dv">02</span><span class="sc">:</span><span class="fl">00.000</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>           US         Texas TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_28JUN2005<span class="sc">:</span><span class="dv">08</span><span class="sc">:</span><span class="dv">41</span><span class="sc">:</span><span class="fl">00.000</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>           US         Texas TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_23AUG2006<span class="sc">:</span><span class="dv">11</span><span class="sc">:</span><span class="dv">47</span><span class="sc">:</span><span class="fl">00.000</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>           US         Texas TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_17OCT2006<span class="sc">:</span><span class="dv">14</span><span class="sc">:</span><span class="dv">23</span><span class="sc">:</span><span class="fl">00.000</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span>           US         Texas TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_19FEB1996<span class="sc">:</span><span class="dv">10</span><span class="sc">:</span><span class="dv">27</span><span class="sc">:</span><span class="fl">00.000</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="dv">7</span>           US         Texas TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_11JUN2001<span class="sc">:</span><span class="dv">14</span><span class="sc">:</span><span class="dv">12</span><span class="sc">:</span><span class="fl">00.000</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="dv">8</span>           US         Texas TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_16MAR1992<span class="sc">:</span><span class="dv">09</span><span class="sc">:</span><span class="dv">46</span><span class="sc">:</span><span class="fl">00.000</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="dv">9</span>           US         Texas TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_25SEP1996<span class="sc">:</span><span class="dv">11</span><span class="sc">:</span><span class="dv">28</span><span class="sc">:</span><span class="fl">00.000</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span>          US         Texas TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_08MAY1997<span class="sc">:</span><span class="dv">13</span><span class="sc">:</span><span class="dv">20</span><span class="sc">:</span><span class="fl">00.000</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>   sampleSizeUnit minimumDepthInMeters maximumDepthInMeters</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>        hectares                  <span class="fl">0.0</span>                  <span class="fl">0.6</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>        hectares                  <span class="fl">0.1</span>                  <span class="fl">0.5</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>        hectares                  <span class="fl">0.4</span>                  <span class="fl">0.6</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>        hectares                  <span class="fl">0.2</span>                  <span class="fl">0.4</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>        hectares                  <span class="fl">0.7</span>                  <span class="fl">0.8</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span>        hectares                  <span class="fl">0.1</span>                  <span class="fl">0.3</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="dv">7</span>        hectares                  <span class="fl">0.4</span>                  <span class="fl">0.5</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="dv">8</span>        hectares                  <span class="fl">0.0</span>                  <span class="fl">0.4</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="dv">9</span>        hectares                  <span class="fl">0.3</span>                  <span class="fl">0.7</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span>       hectares                  <span class="fl">0.4</span>                  <span class="fl">0.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For this dataset there was a start timestamp and end timestamp that we can use to identify the sampling effort which can be really valuable information for downstream users when trying to reuse data from multiple projects.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Calculate duration of bag seine event</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>event<span class="sc">$</span>samplingEffort <span class="ot">&lt;-</span> <span class="st">""</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(event)){</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  event[i,]<span class="sc">$</span>samplingEffort <span class="ot">&lt;-</span> <span class="fu">abs</span>(lubridate<span class="sc">::</span><span class="fu">as.duration</span>(event[i,]<span class="sc">$</span>CompDate <span class="sc">-</span> event[i,]<span class="sc">$</span>StartDate))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>event<span class="sc">$</span>samplingEffort <span class="ot">&lt;-</span> <span class="fu">paste</span>(event<span class="sc">$</span>samplingEffort, <span class="st">"seconds"</span>, <span class="at">sep =</span> <span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Finally there were a few columns that were a direct match to a Darwin Core term and therefore just need to be renamed to follow the standard.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>event <span class="ot">&lt;-</span> event <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">samplingProtocol =</span> Gear_Type,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">locality =</span> Estuary,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">waterBody =</span> SubBay,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">decimalLatitude =</span> Latitude,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">decimalLongitude =</span> Longitude,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">sampleSizeValue =</span> surface_area_num,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">eventDate =</span> CompDate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="occurrence-file" class="level3" data-number="2.0.3">
+<h3 data-number="2.0.3" class="anchored" data-anchor-id="occurrence-file"><span class="header-section-number">2.0.3</span> Occurrence file</h3>
+<p>The next file we need to create is the <strong>Occurrence</strong> file. This file includes all the information about the species that were observed. An occurrence in Darwin Core is the intersection of an organism at a time and a place. We have already done the work to identify the time and place in the event file so we don’t need to do that again here. What we do need to is identify all the information about the organisms. Another piece of information that goes in here is basisOfRecord which is a required field and has a controlled vocabulary. For the data we work with you’ll usually put <code>HumanObservation</code> or <code>MachineObservation</code>. If it’s eDNA data you’ll use <code>MaterialSample</code>. If your data are part of a museum collection you’ll use <code>PreservedSpecimen</code>.</p>
+<p>Important to note that there is overlap in the Darwin Core terms that “allowed” to be in the event file and in the occurrence file. This is because data can be submitted as “Occurrence Only” where you don’t have a separate event file. In that case, the location and date information will need to be included in the occurrence file. Since we are formatting this dataset as a sampling event we will not include location and date information in the occurrence file. To see all the Darwin Core terms that can go in the occurrence file go here https://tools.gbif.org/dwca-validator/extension.do?id=dwc:occurrence.</p>
+<p>This dataset in its original format is in “wide format”. All that means is that data that we would expect to be encoded as values in the rows are instead column headers. We have to pull all the scientific names out of the column headers and turn them into actual values in the data.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>occurrence <span class="ot">&lt;-</span> <span class="fu">melt</span>(BagSeine, <span class="at">id=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">47</span>, <span class="at">measure=</span><span class="dv">48</span><span class="sc">:</span><span class="dv">109</span>, <span class="at">variable.name=</span><span class="st">"vernacularName"</span>, <span class="at">value.name=</span><span class="st">"relativeAbundance"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You’ll notice when we did that step we went from 5481 obs (or rows) in the data to 334341 obs. We went from wide to long.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(BagSeine)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">5481</span>  <span class="dv">109</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(occurrence)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">334341</span>     <span class="dv">49</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now as with the event file we have several pieces of information that need to be added or changed to make sure the data are following Darwin Core. We always want to include as much information as possible to make the data as reusable as possible.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>occurrence <span class="ot">&lt;-</span> occurrence <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vernacularName =</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">."</span>,<span class="st">' '</span>, vernacularName),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">eventID =</span> <span class="fu">paste</span>(<span class="st">"Station"</span>, station_code, <span class="st">"Date"</span>, completion_dttm, <span class="at">sep =</span> <span class="st">"_"</span>),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">occurrenceStatus =</span> <span class="fu">ifelse</span>(relativeAbundance <span class="sc">==</span> <span class="dv">0</span>, <span class="st">"Absent"</span>, <span class="st">"Present"</span>),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">basisOfRecord =</span> <span class="st">"HumanObservation"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">organismQuantityType =</span> <span class="st">"Relative Abundance"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">collectionCode =</span> <span class="fu">paste</span>(Bay, Gear_Type, <span class="at">sep =</span> <span class="st">" "</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We will match the taxa list with our occurrence file data to bring in the taxonomic information that we pulled from WoRMS. To save time you’ll just import the processed taxa list which includes the taxonomic hierarchy and the required term scientificNameID which is one of the most important pieces of information to include for OBIS.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>taxaList <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://www.sciencebase.gov/catalog/file/get/53a887f4e4b075096c60cfdd?f=__disk__49%2F0a%2F73%2F490a7337fa94039715809496b22f5d003b8a79a2&amp;allowOpen=true"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Merge taxaList with occurrence</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>occurrence <span class="ot">&lt;-</span> <span class="fu">merge</span>(occurrence, taxaList, <span class="at">by =</span> <span class="st">"vernacularName"</span>, <span class="at">all.x =</span> T)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Test that all the vernacularNames found a match in taxaList_updated</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>Hmisc<span class="sc">::</span><span class="fu">describe</span>(occurrence<span class="sc">$</span>scientificNameID)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>       n  missing distinct </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">334341</span>        <span class="dv">0</span>       <span class="dv">61</span> </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>lowest <span class="sc">:</span> urn<span class="sc">:</span>lsid<span class="sc">:</span>marinespecies.org<span class="sc">:</span>taxname<span class="sc">:</span><span class="dv">105792</span> urn<span class="sc">:</span>lsid<span class="sc">:</span>marinespecies.org<span class="sc">:</span>taxname<span class="sc">:</span><span class="dv">107034</span> urn<span class="sc">:</span>lsid<span class="sc">:</span>marinespecies.org<span class="sc">:</span>taxname<span class="sc">:</span><span class="dv">107379</span> urn<span class="sc">:</span>lsid<span class="sc">:</span>marinespecies.org<span class="sc">:</span>taxname<span class="sc">:</span><span class="dv">126983</span> urn<span class="sc">:</span>lsid<span class="sc">:</span>marinespecies.org<span class="sc">:</span>taxname<span class="sc">:</span><span class="dv">127089</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>highest<span class="sc">:</span> urn<span class="sc">:</span>lsid<span class="sc">:</span>marinespecies.org<span class="sc">:</span>taxname<span class="sc">:</span><span class="dv">367528</span> urn<span class="sc">:</span>lsid<span class="sc">:</span>marinespecies.org<span class="sc">:</span>taxname<span class="sc">:</span><span class="dv">396707</span> urn<span class="sc">:</span>lsid<span class="sc">:</span>marinespecies.org<span class="sc">:</span>taxname<span class="sc">:</span><span class="dv">421784</span> urn<span class="sc">:</span>lsid<span class="sc">:</span>marinespecies.org<span class="sc">:</span>taxname<span class="sc">:</span><span class="dv">422069</span> urn<span class="sc">:</span>lsid<span class="sc">:</span>marinespecies.org<span class="sc">:</span>taxname<span class="sc">:</span><span class="dv">443955</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For that last line of code we are expecting to see no missing values for scientificNameID. Every row in the file should have a value in scientificNameID which should be a WoRMS LSID that look like this <code>urn:lsid:marinespecies.org:taxname:144531</code></p>
+<p>We need to create a unique ID for each row in the occurrence file. This is known as the <code>occurrenceID</code> and is a required term. The <code>occurrenceID</code> needs to be globally unique and needs to be permanent and kept in place if any updates to the dataset are made. You should not create brand new occurrenceIDs when you update a dataset. To facilitate this I like to build the <code>occurrenceID</code> from pieces of information available in the dataset to create a unique ID for each row in the occurrence file. For this dataset I used the <code>eventID</code> (Station + Date) plus the scientific name. This only works if there is only one scientific name per station per date so if you have different ages or sexes of species at the same station and date this method of creating the occurrenceID won’t work for you.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>occurrence<span class="sc">$</span>occurrenceID <span class="ot">&lt;-</span> <span class="fu">paste</span>(occurrence<span class="sc">$</span>eventID, <span class="fu">gsub</span>(<span class="st">" "</span>, <span class="st">"_"</span>,occurrence<span class="sc">$</span>scientificName), <span class="at">sep =</span> <span class="st">"_"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>occurrence[<span class="dv">1</span>,]<span class="sc">$</span>occurrenceID</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Station_95_Date_09JAN1997:14:35:00.000_Atractosteus_spatula"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For the occurrence file we only have one column to rename. We could have avoided this step if we had named it <code>organismQuantity</code> up above but I kept this to remind me what the data providers had called this.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>occurrence <span class="ot">&lt;-</span> occurrence <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">organismQuantity =</span> relativeAbundance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="extended-measurement-or-fact-extension-file" class="level3" data-number="2.0.4">
+<h3 data-number="2.0.4" class="anchored" data-anchor-id="extended-measurement-or-fact-extension-file"><span class="header-section-number">2.0.4</span> Extended Measurement or Fact extension file</h3>
+<p>The final file we are going to create is the <strong>Extended Measurement or Fact extension (emof)</strong>. This is a bit like a catch all for any measurements or facts that are not captured in Darwin Core. Darwin Core does not have terms for things like temperature, salinity, gear type, cruise number, length, weight, etc. We are going to create a long format file where each of these is a set of rows in the extended measurement or fact file. You can find all the terms in this extension here https://tools.gbif.org/dwca-validator/extension.do?id=http://rs.iobis.org/obis/terms/ExtendedMeasurementOrFact.</p>
+<p>OBIS uses the BODC NERC Vocabulary Server to provide explicit definitions for each of the measurements https://vocab.nerc.ac.uk/search_nvs/.</p>
+<p>For this dataset I was only able to find code definitions provided by the data providers for some of the measurements. I included the ones that I was able to find code definitions and left out any that I couldn’t find those for. The ones I was able to find code definitions for were <code>Total.Of.Samples_Count</code>, <code>gear_size</code>, <code>start_wind_speed_num</code>, <code>start_barometric_pressure_num</code>, <code>start_temperature_num</code>, <code>start_salinity_num</code>, <code>start_dissolved_oxygen_num</code>. All the others I left out.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>totalOfSamples <span class="ot">&lt;-</span> event[<span class="fu">c</span>(<span class="st">"Total.Of.Samples_Count"</span>, <span class="st">"eventID"</span>)]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>totalOfSamples <span class="ot">&lt;-</span> totalOfSamples[<span class="fu">which</span>(<span class="sc">!</span><span class="fu">is.na</span>(totalOfSamples<span class="sc">$</span>Total.Of.Samples_Count)),]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>totalOfSamples <span class="ot">&lt;-</span> totalOfSamples <span class="sc">%&gt;%</span> </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">measurementType =</span> <span class="st">"Total number of samples used to calculate relative abundance"</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementUnit =</span> <span class="st">""</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementTypeID =</span> <span class="st">""</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementUnitID =</span> <span class="st">""</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">occurrenceID =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">measurementValue =</span> Total.Of.Samples_Count)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>gear_size <span class="ot">&lt;-</span> event[<span class="fu">c</span>(<span class="st">"gear_size"</span>, <span class="st">"eventID"</span>)]</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>gear_size <span class="ot">&lt;-</span> gear_size[<span class="fu">which</span>(<span class="sc">!</span><span class="fu">is.na</span>(gear_size<span class="sc">$</span>gear_size)),]</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>gear_size <span class="ot">&lt;-</span> gear_size <span class="sc">%&gt;%</span> </span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">measurementType =</span> <span class="st">"gear size"</span>,</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementUnit =</span> <span class="st">"meters"</span>,</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementTypeID =</span> <span class="st">"http://vocab.nerc.ac.uk/collection/P01/current/MTHAREA1/"</span>,</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementUnitID =</span> <span class="st">"http://vocab.nerc.ac.uk/collection/P06/current/ULAA/"</span>,</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">occurrenceID =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">measurementValue =</span> gear_size)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>start_wind_speed_num <span class="ot">&lt;-</span> event[<span class="fu">c</span>(<span class="st">"start_wind_speed_num"</span>, <span class="st">"eventID"</span>)]</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>start_wind_speed_num <span class="ot">&lt;-</span> start_wind_speed_num[<span class="fu">which</span>(<span class="sc">!</span><span class="fu">is.na</span>(start_wind_speed_num<span class="sc">$</span>start_wind_speed_num)),]</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>start_wind_speed_num <span class="ot">&lt;-</span> start_wind_speed_num <span class="sc">%&gt;%</span> </span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">measurementType =</span> <span class="st">"wind speed"</span>,</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementUnit =</span> <span class="st">"not provided"</span>,</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementTypeID =</span> <span class="st">"http://vocab.nerc.ac.uk/collection/P01/current/EWSBZZ01/"</span>,</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementUnitID =</span> <span class="st">""</span>,</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>         <span class="at">occurrenceID =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">measurementValue =</span> start_wind_speed_num)</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>start_barometric_pressure_num <span class="ot">&lt;-</span> event[<span class="fu">c</span>(<span class="st">"start_barometric_pressure_num"</span>, <span class="st">"eventID"</span>)]</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>start_barometric_pressure_num <span class="ot">&lt;-</span> start_barometric_pressure_num[<span class="fu">which</span>(<span class="sc">!</span><span class="fu">is.na</span>(start_barometric_pressure_num<span class="sc">$</span>start_barometric_pressure_num)),]</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>start_barometric_pressure_num <span class="ot">&lt;-</span> start_barometric_pressure_num <span class="sc">%&gt;%</span> </span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">measurementType =</span> <span class="st">"barometric pressure"</span>,</span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementUnit =</span> <span class="st">"not provided"</span>,</span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementTypeID =</span> <span class="st">"http://vocab.nerc.ac.uk/collection/P07/current/CFSN0015/"</span>,</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementUnitID =</span> <span class="st">""</span>,</span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>         <span class="at">occurrenceID =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">measurementValue =</span> start_barometric_pressure_num)</span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>start_temperature_num <span class="ot">&lt;-</span> event[<span class="fu">c</span>(<span class="st">"start_temperature_num"</span>, <span class="st">"eventID"</span>)]</span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>start_temperature_num <span class="ot">&lt;-</span> start_temperature_num[<span class="fu">which</span>(<span class="sc">!</span><span class="fu">is.na</span>(start_temperature_num<span class="sc">$</span>start_temperature_num)),]</span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>start_temperature_num <span class="ot">&lt;-</span> start_temperature_num <span class="sc">%&gt;%</span> </span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">measurementType =</span> <span class="st">"water temperature"</span>,</span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementUnit =</span> <span class="st">"Celsius"</span>,</span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementTypeID =</span> <span class="st">"http://vocab.nerc.ac.uk/collection/P01/current/TEMPPR01/"</span>,</span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementUnitID =</span> <span class="st">"http://vocab.nerc.ac.uk/collection/P06/current/UPAA/"</span>,</span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>         <span class="at">occurrenceID =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">measurementValue =</span> start_temperature_num)</span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a>start_salinity_num <span class="ot">&lt;-</span> event[<span class="fu">c</span>(<span class="st">"start_salinity_num"</span>, <span class="st">"eventID"</span>)]</span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a>start_salinity_num <span class="ot">&lt;-</span> start_salinity_num[<span class="fu">which</span>(<span class="sc">!</span><span class="fu">is.na</span>(start_salinity_num<span class="sc">$</span>start_salinity_num)),]</span>
+<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a>start_salinity_num <span class="ot">&lt;-</span> start_salinity_num <span class="sc">%&gt;%</span> </span>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">measurementType =</span> <span class="st">"salinity"</span>,</span>
+<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementUnit =</span> <span class="st">"ppt"</span>,</span>
+<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementTypeID =</span> <span class="st">"http://vocab.nerc.ac.uk/collection/P01/current/ODSDM021/"</span>,</span>
+<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementUnitID =</span> <span class="st">"http://vocab.nerc.ac.uk/collection/P06/current/UPPT/"</span>,</span>
+<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a>         <span class="at">occurrenceID =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">measurementValue =</span> start_salinity_num)</span>
+<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a>start_dissolved_oxygen_num <span class="ot">&lt;-</span> event[<span class="fu">c</span>(<span class="st">"start_dissolved_oxygen_num"</span>, <span class="st">"eventID"</span>)]</span>
+<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a>start_dissolved_oxygen_num <span class="ot">&lt;-</span> start_dissolved_oxygen_num[<span class="fu">which</span>(<span class="sc">!</span><span class="fu">is.na</span>(start_dissolved_oxygen_num<span class="sc">$</span>start_dissolved_oxygen_num)),]</span>
+<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a>start_dissolved_oxygen_num <span class="ot">&lt;-</span> start_dissolved_oxygen_num <span class="sc">%&gt;%</span> </span>
+<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">measurementType =</span> <span class="st">"dissolved oxygen"</span>,</span>
+<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementUnit =</span> <span class="st">"ppm"</span>,</span>
+<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementTypeID =</span> <span class="st">"http://vocab.nerc.ac.uk/collection/P09/current/DOX2/"</span>,</span>
+<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementUnitID =</span> <span class="st">"http://vocab.nerc.ac.uk/collection/P06/current/UPPM/"</span>,</span>
+<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a>         <span class="at">occurrenceID =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">measurementValue =</span> start_dissolved_oxygen_num)</span>
+<span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a>alternate_station_code <span class="ot">&lt;-</span> event[<span class="fu">c</span>(<span class="st">"alternate_station_code"</span>, <span class="st">"eventID"</span>)]</span>
+<span id="cb14-72"><a href="#cb14-72" aria-hidden="true" tabindex="-1"></a>alternate_station_code <span class="ot">&lt;-</span> alternate_station_code[<span class="fu">which</span>(<span class="sc">!</span><span class="fu">is.na</span>(alternate_station_code<span class="sc">$</span>alternate_station_code)),]</span>
+<span id="cb14-73"><a href="#cb14-73" aria-hidden="true" tabindex="-1"></a>alternate_station_code <span class="ot">&lt;-</span> alternate_station_code <span class="sc">%&gt;%</span> </span>
+<span id="cb14-74"><a href="#cb14-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">measurementType =</span> <span class="st">"alternate station code"</span>,</span>
+<span id="cb14-75"><a href="#cb14-75" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementUnit =</span> <span class="st">""</span>,</span>
+<span id="cb14-76"><a href="#cb14-76" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementTypeID =</span> <span class="st">""</span>,</span>
+<span id="cb14-77"><a href="#cb14-77" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementUnitID =</span> <span class="st">""</span>,</span>
+<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a>         <span class="at">occurrenceID =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-79"><a href="#cb14-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">measurementValue =</span> alternate_station_code)</span>
+<span id="cb14-80"><a href="#cb14-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-81"><a href="#cb14-81" aria-hidden="true" tabindex="-1"></a>organismQuantity <span class="ot">&lt;-</span> occurrence[<span class="fu">c</span>(<span class="st">"organismQuantity"</span>, <span class="st">"eventID"</span>, <span class="st">"occurrenceID"</span>)]</span>
+<span id="cb14-82"><a href="#cb14-82" aria-hidden="true" tabindex="-1"></a>organismQuantity <span class="ot">&lt;-</span> organismQuantity[<span class="fu">which</span>(<span class="sc">!</span><span class="fu">is.na</span>(organismQuantity<span class="sc">$</span>organismQuantity)),]</span>
+<span id="cb14-83"><a href="#cb14-83" aria-hidden="true" tabindex="-1"></a>organismQuantity <span class="ot">&lt;-</span> organismQuantity <span class="sc">%&gt;%</span> </span>
+<span id="cb14-84"><a href="#cb14-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">measurementType =</span> <span class="st">"relative abundance"</span>,</span>
+<span id="cb14-85"><a href="#cb14-85" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementUnit =</span> <span class="st">""</span>,</span>
+<span id="cb14-86"><a href="#cb14-86" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementTypeID =</span> <span class="st">"http://vocab.nerc.ac.uk/collection/S06/current/S0600020/"</span>,</span>
+<span id="cb14-87"><a href="#cb14-87" aria-hidden="true" tabindex="-1"></a>         <span class="at">measurementUnitID =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-88"><a href="#cb14-88" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">measurementValue =</span> organismQuantity)</span>
+<span id="cb14-89"><a href="#cb14-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-90"><a href="#cb14-90" aria-hidden="true" tabindex="-1"></a><span class="co"># Bind the separate measurements together into one file  </span></span>
+<span id="cb14-91"><a href="#cb14-91" aria-hidden="true" tabindex="-1"></a>mof <span class="ot">&lt;-</span> <span class="fu">rbind</span>(totalOfSamples, start_barometric_pressure_num, start_dissolved_oxygen_num, </span>
+<span id="cb14-92"><a href="#cb14-92" aria-hidden="true" tabindex="-1"></a>             start_salinity_num, start_temperature_num, start_wind_speed_num, gear_size,</span>
+<span id="cb14-93"><a href="#cb14-93" aria-hidden="true" tabindex="-1"></a>             alternate_station_code, organismQuantity)</span>
+<span id="cb14-94"><a href="#cb14-94" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mof)</span>
+<span id="cb14-95"><a href="#cb14-95" aria-hidden="true" tabindex="-1"></a> measurementValue                                eventID</span>
+<span id="cb14-96"><a href="#cb14-96" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>               <span class="dv">18</span> Station_95_Date_09JAN1997<span class="sc">:</span><span class="dv">14</span><span class="sc">:</span><span class="dv">35</span><span class="sc">:</span><span class="fl">00.000</span></span>
+<span id="cb14-97"><a href="#cb14-97" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>              <span class="dv">103</span> Station_95_Date_18AUG2000<span class="sc">:</span><span class="dv">11</span><span class="sc">:</span><span class="dv">02</span><span class="sc">:</span><span class="fl">00.000</span></span>
+<span id="cb14-98"><a href="#cb14-98" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>              <span class="dv">401</span> Station_96_Date_28JUN2005<span class="sc">:</span><span class="dv">08</span><span class="sc">:</span><span class="dv">41</span><span class="sc">:</span><span class="fl">00.000</span></span>
+<span id="cb14-99"><a href="#cb14-99" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>               <span class="dv">35</span> Station_96_Date_23AUG2006<span class="sc">:</span><span class="dv">11</span><span class="sc">:</span><span class="dv">47</span><span class="sc">:</span><span class="fl">00.000</span></span>
+<span id="cb14-100"><a href="#cb14-100" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>               <span class="dv">57</span> Station_96_Date_17OCT2006<span class="sc">:</span><span class="dv">14</span><span class="sc">:</span><span class="dv">23</span><span class="sc">:</span><span class="fl">00.000</span></span>
+<span id="cb14-101"><a href="#cb14-101" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span>                <span class="dv">5</span> Station_96_Date_19FEB1996<span class="sc">:</span><span class="dv">10</span><span class="sc">:</span><span class="dv">27</span><span class="sc">:</span><span class="fl">00.000</span></span>
+<span id="cb14-102"><a href="#cb14-102" aria-hidden="true" tabindex="-1"></a>                                               measurementType measurementUnit measurementTypeID</span>
+<span id="cb14-103"><a href="#cb14-103" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> Total number of samples used to calculate relative abundance                                  </span>
+<span id="cb14-104"><a href="#cb14-104" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> Total number of samples used to calculate relative abundance                                  </span>
+<span id="cb14-105"><a href="#cb14-105" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> Total number of samples used to calculate relative abundance                                  </span>
+<span id="cb14-106"><a href="#cb14-106" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> Total number of samples used to calculate relative abundance                                  </span>
+<span id="cb14-107"><a href="#cb14-107" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> Total number of samples used to calculate relative abundance                                  </span>
+<span id="cb14-108"><a href="#cb14-108" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> Total number of samples used to calculate relative abundance                                  </span>
+<span id="cb14-109"><a href="#cb14-109" aria-hidden="true" tabindex="-1"></a>  measurementUnitID occurrenceID</span>
+<span id="cb14-110"><a href="#cb14-110" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>                               </span>
+<span id="cb14-111"><a href="#cb14-111" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>                               </span>
+<span id="cb14-112"><a href="#cb14-112" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>                               </span>
+<span id="cb14-113"><a href="#cb14-113" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>                               </span>
+<span id="cb14-114"><a href="#cb14-114" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>                               </span>
+<span id="cb14-115"><a href="#cb14-115" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span>                               </span>
+<span id="cb14-116"><a href="#cb14-116" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(mof)</span>
+<span id="cb14-117"><a href="#cb14-117" aria-hidden="true" tabindex="-1"></a>       measurementValue                                 eventID    measurementType measurementUnit</span>
+<span id="cb14-118"><a href="#cb14-118" aria-hidden="true" tabindex="-1"></a><span class="dv">334336</span>        <span class="fl">0.0000000</span> Station_217_Date_03APR2003<span class="sc">:</span><span class="dv">13</span><span class="sc">:</span><span class="dv">28</span><span class="sc">:</span><span class="fl">00.000</span> relative abundance                </span>
+<span id="cb14-119"><a href="#cb14-119" aria-hidden="true" tabindex="-1"></a><span class="dv">334337</span>        <span class="fl">0.0000000</span> Station_217_Date_24FEB2006<span class="sc">:</span><span class="dv">10</span><span class="sc">:</span><span class="dv">12</span><span class="sc">:</span><span class="fl">00.000</span> relative abundance                </span>
+<span id="cb14-120"><a href="#cb14-120" aria-hidden="true" tabindex="-1"></a><span class="dv">334338</span>        <span class="fl">0.1428571</span> Station_217_Date_23JUN2001<span class="sc">:</span><span class="dv">12</span><span class="sc">:</span><span class="dv">28</span><span class="sc">:</span><span class="fl">00.000</span> relative abundance                </span>
+<span id="cb14-121"><a href="#cb14-121" aria-hidden="true" tabindex="-1"></a><span class="dv">334339</span>        <span class="fl">0.0000000</span> Station_212_Date_23MAY1990<span class="sc">:</span><span class="dv">10</span><span class="sc">:</span><span class="dv">43</span><span class="sc">:</span><span class="fl">00.000</span> relative abundance                </span>
+<span id="cb14-122"><a href="#cb14-122" aria-hidden="true" tabindex="-1"></a><span class="dv">334340</span>        <span class="fl">0.1224490</span> Station_212_Date_24JUL1990<span class="sc">:</span><span class="dv">09</span><span class="sc">:</span><span class="dv">34</span><span class="sc">:</span><span class="fl">00.000</span> relative abundance                </span>
+<span id="cb14-123"><a href="#cb14-123" aria-hidden="true" tabindex="-1"></a><span class="dv">334341</span>        <span class="fl">0.0000000</span> Station_212_Date_21MAR2001<span class="sc">:</span><span class="dv">11</span><span class="sc">:</span><span class="dv">52</span><span class="sc">:</span><span class="fl">00.000</span> relative abundance                </span>
+<span id="cb14-124"><a href="#cb14-124" aria-hidden="true" tabindex="-1"></a>                                              measurementTypeID measurementUnitID</span>
+<span id="cb14-125"><a href="#cb14-125" aria-hidden="true" tabindex="-1"></a><span class="dv">334336</span> http<span class="sc">:</span><span class="er">//</span>vocab.nerc.ac.uk<span class="sc">/</span>collection<span class="sc">/</span>S06<span class="sc">/</span>current<span class="sc">/</span>S0600020<span class="sc">/</span>                  </span>
+<span id="cb14-126"><a href="#cb14-126" aria-hidden="true" tabindex="-1"></a><span class="dv">334337</span> http<span class="sc">:</span><span class="er">//</span>vocab.nerc.ac.uk<span class="sc">/</span>collection<span class="sc">/</span>S06<span class="sc">/</span>current<span class="sc">/</span>S0600020<span class="sc">/</span>                  </span>
+<span id="cb14-127"><a href="#cb14-127" aria-hidden="true" tabindex="-1"></a><span class="dv">334338</span> http<span class="sc">:</span><span class="er">//</span>vocab.nerc.ac.uk<span class="sc">/</span>collection<span class="sc">/</span>S06<span class="sc">/</span>current<span class="sc">/</span>S0600020<span class="sc">/</span>                  </span>
+<span id="cb14-128"><a href="#cb14-128" aria-hidden="true" tabindex="-1"></a><span class="dv">334339</span> http<span class="sc">:</span><span class="er">//</span>vocab.nerc.ac.uk<span class="sc">/</span>collection<span class="sc">/</span>S06<span class="sc">/</span>current<span class="sc">/</span>S0600020<span class="sc">/</span>                  </span>
+<span id="cb14-129"><a href="#cb14-129" aria-hidden="true" tabindex="-1"></a><span class="dv">334340</span> http<span class="sc">:</span><span class="er">//</span>vocab.nerc.ac.uk<span class="sc">/</span>collection<span class="sc">/</span>S06<span class="sc">/</span>current<span class="sc">/</span>S0600020<span class="sc">/</span>                  </span>
+<span id="cb14-130"><a href="#cb14-130" aria-hidden="true" tabindex="-1"></a><span class="dv">334341</span> http<span class="sc">:</span><span class="er">//</span>vocab.nerc.ac.uk<span class="sc">/</span>collection<span class="sc">/</span>S06<span class="sc">/</span>current<span class="sc">/</span>S0600020<span class="sc">/</span>                  </span>
+<span id="cb14-131"><a href="#cb14-131" aria-hidden="true" tabindex="-1"></a>                                                        occurrenceID</span>
+<span id="cb14-132"><a href="#cb14-132" aria-hidden="true" tabindex="-1"></a><span class="dv">334336</span> Station_217_Date_03APR2003<span class="sc">:</span><span class="dv">13</span><span class="sc">:</span><span class="dv">28</span><span class="sc">:</span><span class="fl">00.000</span>_Litopenaeus_setiferus</span>
+<span id="cb14-133"><a href="#cb14-133" aria-hidden="true" tabindex="-1"></a><span class="dv">334337</span> Station_217_Date_24FEB2006<span class="sc">:</span><span class="dv">10</span><span class="sc">:</span><span class="dv">12</span><span class="sc">:</span><span class="fl">00.000</span>_Litopenaeus_setiferus</span>
+<span id="cb14-134"><a href="#cb14-134" aria-hidden="true" tabindex="-1"></a><span class="dv">334338</span> Station_217_Date_23JUN2001<span class="sc">:</span><span class="dv">12</span><span class="sc">:</span><span class="dv">28</span><span class="sc">:</span><span class="fl">00.000</span>_Litopenaeus_setiferus</span>
+<span id="cb14-135"><a href="#cb14-135" aria-hidden="true" tabindex="-1"></a><span class="dv">334339</span> Station_212_Date_23MAY1990<span class="sc">:</span><span class="dv">10</span><span class="sc">:</span><span class="dv">43</span><span class="sc">:</span><span class="fl">00.000</span>_Litopenaeus_setiferus</span>
+<span id="cb14-136"><a href="#cb14-136" aria-hidden="true" tabindex="-1"></a><span class="dv">334340</span> Station_212_Date_24JUL1990<span class="sc">:</span><span class="dv">09</span><span class="sc">:</span><span class="dv">34</span><span class="sc">:</span><span class="fl">00.000</span>_Litopenaeus_setiferus</span>
+<span id="cb14-137"><a href="#cb14-137" aria-hidden="true" tabindex="-1"></a><span class="dv">334341</span> Station_212_Date_21MAR2001<span class="sc">:</span><span class="dv">11</span><span class="sc">:</span><span class="dv">52</span><span class="sc">:</span><span class="fl">00.000</span>_Litopenaeus_setiferus</span>
+<span id="cb14-138"><a href="#cb14-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-139"><a href="#cb14-139" aria-hidden="true" tabindex="-1"></a><span class="co"># Write out the file</span></span>
+<span id="cb14-140"><a href="#cb14-140" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(mof, <span class="at">file =</span> (<span class="fu">paste0</span>(event[<span class="dv">1</span>,]<span class="sc">$</span>datasetID, <span class="st">"_mof_"</span>, lubridate<span class="sc">::</span><span class="fu">today</span>(),<span class="st">".csv"</span>)), <span class="at">fileEncoding =</span> <span class="st">"UTF-8"</span>, <span class="at">row.names =</span> F, <span class="at">na =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="cleaning-up-event-and-occurrence-files" class="level3" data-number="2.0.5">
+<h3 data-number="2.0.5" class="anchored" data-anchor-id="cleaning-up-event-and-occurrence-files"><span class="header-section-number">2.0.5</span> Cleaning up Event and Occurrence files</h3>
+<p>Now that we have all of our files created we can clean up the <strong>Event</strong> and <strong>Occurrence</strong> files to remove the columns that are not following Darwin Core. We had to leave the extra bits in before because we needed them to create the <strong>emof</strong> file above.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>event <span class="ot">&lt;-</span> event[<span class="fu">c</span>(<span class="st">"samplingProtocol"</span>,<span class="st">"locality"</span>,<span class="st">"waterBody"</span>,<span class="st">"decimalLatitude"</span>,<span class="st">"decimalLongitude"</span>,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"eventDate"</span>,<span class="st">"sampleSizeValue"</span>,<span class="st">"minimumDepthInMeters"</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"maximumDepthInMeters"</span>,<span class="st">"type"</span>,<span class="st">"modified"</span>,<span class="st">"language"</span>,<span class="st">"license"</span>,<span class="st">"institutionCode"</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"ownerInstitutionCode"</span>,<span class="st">"coordinateUncertaintyInMeters"</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"geodeticDatum"</span>, <span class="st">"georeferenceProtocol"</span>,<span class="st">"country"</span>,<span class="st">"countryCode"</span>,<span class="st">"stateProvince"</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"datasetID"</span>,<span class="st">"eventID"</span>,<span class="st">"sampleSizeUnit"</span>,<span class="st">"samplingEffort"</span>)]</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(event)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  samplingProtocol                locality   waterBody decimalLatitude decimalLongitude</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>        Bag Seine Mission<span class="sc">-</span>Aransas Estuary Aransas Bay        <span class="fl">28.13472</span>        <span class="sc">-</span><span class="fl">97.00833</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>        Bag Seine Mission<span class="sc">-</span>Aransas Estuary Aransas Bay        <span class="fl">28.13528</span>        <span class="sc">-</span><span class="fl">97.00722</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>        Bag Seine Mission<span class="sc">-</span>Aransas Estuary Aransas Bay        <span class="fl">28.13444</span>        <span class="sc">-</span><span class="fl">96.99611</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>        Bag Seine Mission<span class="sc">-</span>Aransas Estuary Aransas Bay        <span class="fl">28.13444</span>        <span class="sc">-</span><span class="fl">96.99611</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>        Bag Seine Mission<span class="sc">-</span>Aransas Estuary Aransas Bay        <span class="fl">28.13444</span>        <span class="sc">-</span><span class="fl">96.99611</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span>        Bag Seine Mission<span class="sc">-</span>Aransas Estuary Aransas Bay        <span class="fl">28.13472</span>        <span class="sc">-</span><span class="fl">96.99583</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>            eventDate sampleSizeValue minimumDepthInMeters maximumDepthInMeters  type   modified language</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="dv">1997-01-09</span> <span class="dv">14</span><span class="sc">:</span><span class="dv">35</span><span class="sc">:</span><span class="dv">00</span>            <span class="fl">0.03</span>                  <span class="fl">0.0</span>                  <span class="fl">0.6</span> Event <span class="dv">2022-01-09</span>       en</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="dv">2000-08-18</span> <span class="dv">11</span><span class="sc">:</span><span class="dv">02</span><span class="sc">:</span><span class="dv">00</span>            <span class="fl">0.03</span>                  <span class="fl">0.1</span>                  <span class="fl">0.5</span> Event <span class="dv">2022-01-09</span>       en</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="dv">2005-06-28</span> <span class="dv">08</span><span class="sc">:</span><span class="dv">41</span><span class="sc">:</span><span class="dv">00</span>            <span class="fl">0.03</span>                  <span class="fl">0.4</span>                  <span class="fl">0.6</span> Event <span class="dv">2022-01-09</span>       en</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="dv">2006-08-23</span> <span class="dv">11</span><span class="sc">:</span><span class="dv">47</span><span class="sc">:</span><span class="dv">00</span>            <span class="fl">0.03</span>                  <span class="fl">0.2</span>                  <span class="fl">0.4</span> Event <span class="dv">2022-01-09</span>       en</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="dv">2006-10-17</span> <span class="dv">14</span><span class="sc">:</span><span class="dv">23</span><span class="sc">:</span><span class="dv">00</span>            <span class="fl">0.03</span>                  <span class="fl">0.7</span>                  <span class="fl">0.8</span> Event <span class="dv">2022-01-09</span>       en</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> <span class="dv">1996-02-19</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">27</span><span class="sc">:</span><span class="dv">00</span>            <span class="fl">0.03</span>                  <span class="fl">0.1</span>                  <span class="fl">0.3</span> Event <span class="dv">2022-01-09</span>       en</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>                                                     license institutionCode ownerInstitutionCode</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> http<span class="sc">:</span><span class="er">//</span>creativecommons.org<span class="sc">/</span>publicdomain<span class="sc">/</span>zero<span class="sc">/</span><span class="fl">1.0</span><span class="sc">/</span>legalcode            TPWD                 HARC</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> http<span class="sc">:</span><span class="er">//</span>creativecommons.org<span class="sc">/</span>publicdomain<span class="sc">/</span>zero<span class="sc">/</span><span class="fl">1.0</span><span class="sc">/</span>legalcode            TPWD                 HARC</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> http<span class="sc">:</span><span class="er">//</span>creativecommons.org<span class="sc">/</span>publicdomain<span class="sc">/</span>zero<span class="sc">/</span><span class="fl">1.0</span><span class="sc">/</span>legalcode            TPWD                 HARC</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> http<span class="sc">:</span><span class="er">//</span>creativecommons.org<span class="sc">/</span>publicdomain<span class="sc">/</span>zero<span class="sc">/</span><span class="fl">1.0</span><span class="sc">/</span>legalcode            TPWD                 HARC</span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> http<span class="sc">:</span><span class="er">//</span>creativecommons.org<span class="sc">/</span>publicdomain<span class="sc">/</span>zero<span class="sc">/</span><span class="fl">1.0</span><span class="sc">/</span>legalcode            TPWD                 HARC</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> http<span class="sc">:</span><span class="er">//</span>creativecommons.org<span class="sc">/</span>publicdomain<span class="sc">/</span>zero<span class="sc">/</span><span class="fl">1.0</span><span class="sc">/</span>legalcode            TPWD                 HARC</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>  coordinateUncertaintyInMeters geodeticDatum georeferenceProtocol       country countryCode stateProvince</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>                           <span class="dv">100</span>         WGS84         Handheld GPS United States          US         Texas</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>                           <span class="dv">100</span>         WGS84         Handheld GPS United States          US         Texas</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>                           <span class="dv">100</span>         WGS84         Handheld GPS United States          US         Texas</span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>                           <span class="dv">100</span>         WGS84         Handheld GPS United States          US         Texas</span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>                           <span class="dv">100</span>         WGS84         Handheld GPS United States          US         Texas</span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span>                           <span class="dv">100</span>         WGS84         Handheld GPS United States          US         Texas</span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>                              datasetID                                eventID sampleSizeUnit</span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_95_Date_09JAN1997<span class="sc">:</span><span class="dv">14</span><span class="sc">:</span><span class="dv">35</span><span class="sc">:</span><span class="fl">00.000</span>       hectares</span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_95_Date_18AUG2000<span class="sc">:</span><span class="dv">11</span><span class="sc">:</span><span class="dv">02</span><span class="sc">:</span><span class="fl">00.000</span>       hectares</span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_28JUN2005<span class="sc">:</span><span class="dv">08</span><span class="sc">:</span><span class="dv">41</span><span class="sc">:</span><span class="fl">00.000</span>       hectares</span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_23AUG2006<span class="sc">:</span><span class="dv">11</span><span class="sc">:</span><span class="dv">47</span><span class="sc">:</span><span class="fl">00.000</span>       hectares</span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_17OCT2006<span class="sc">:</span><span class="dv">14</span><span class="sc">:</span><span class="dv">23</span><span class="sc">:</span><span class="fl">00.000</span>       hectares</span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> TPWD_HARC_Texas_Aransas_Bay_Bag_Seine Station_96_Date_19FEB1996<span class="sc">:</span><span class="dv">10</span><span class="sc">:</span><span class="dv">27</span><span class="sc">:</span><span class="fl">00.000</span>       hectares</span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a>  samplingEffort</span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>    <span class="dv">120</span> seconds</span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>    <span class="dv">120</span> seconds</span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>    <span class="dv">120</span> seconds</span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>    <span class="dv">120</span> seconds</span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>    <span class="dv">120</span> seconds</span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span>    <span class="dv">120</span> seconds</span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(event, <span class="at">file =</span> <span class="fu">paste0</span>(event[<span class="dv">1</span>,]<span class="sc">$</span>datasetID, <span class="st">"_event_"</span>, lubridate<span class="sc">::</span><span class="fu">today</span>(),<span class="st">".csv"</span>), <span class="at">fileEncoding =</span> <span class="st">"UTF-8"</span>, <span class="at">row.names =</span> F, <span class="at">na =</span> <span class="st">""</span>)                    </span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a>occurrence <span class="ot">&lt;-</span> occurrence[<span class="fu">c</span>(<span class="st">"vernacularName"</span>,<span class="st">"eventID"</span>,<span class="st">"occurrenceStatus"</span>,<span class="st">"basisOfRecord"</span>,</span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"scientificName"</span>,<span class="st">"scientificNameID"</span>,<span class="st">"kingdom"</span>,<span class="st">"phylum"</span>,<span class="st">"class"</span>,</span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"order"</span>,<span class="st">"family"</span>,<span class="st">"genus"</span>,</span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"scientificNameAuthorship"</span>,<span class="st">"taxonRank"</span>, <span class="st">"organismQuantity"</span>,</span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"organismQuantityType"</span>, <span class="st">"occurrenceID"</span>,<span class="st">"collectionCode"</span>)]</span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(occurrence)</span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a>  vernacularName                                eventID occurrenceStatus    basisOfRecord</span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>  Alligator gar Station_95_Date_09JAN1997<span class="sc">:</span><span class="dv">14</span><span class="sc">:</span><span class="dv">35</span><span class="sc">:</span><span class="fl">00.000</span>           Absent HumanObservation</span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>  Alligator gar Station_95_Date_18AUG2000<span class="sc">:</span><span class="dv">11</span><span class="sc">:</span><span class="dv">02</span><span class="sc">:</span><span class="fl">00.000</span>           Absent HumanObservation</span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>  Alligator gar Station_96_Date_28JUN2005<span class="sc">:</span><span class="dv">08</span><span class="sc">:</span><span class="dv">41</span><span class="sc">:</span><span class="fl">00.000</span>           Absent HumanObservation</span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>  Alligator gar Station_96_Date_23AUG2006<span class="sc">:</span><span class="dv">11</span><span class="sc">:</span><span class="dv">47</span><span class="sc">:</span><span class="fl">00.000</span>           Absent HumanObservation</span>
+<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>  Alligator gar Station_96_Date_17OCT2006<span class="sc">:</span><span class="dv">14</span><span class="sc">:</span><span class="dv">23</span><span class="sc">:</span><span class="fl">00.000</span>           Absent HumanObservation</span>
+<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span>  Alligator gar Station_96_Date_19FEB1996<span class="sc">:</span><span class="dv">10</span><span class="sc">:</span><span class="dv">27</span><span class="sc">:</span><span class="fl">00.000</span>           Absent HumanObservation</span>
+<span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a>        scientificName                          scientificNameID  kingdom   phylum       class</span>
+<span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> Atractosteus spatula urn<span class="sc">:</span>lsid<span class="sc">:</span>marinespecies.org<span class="sc">:</span>taxname<span class="sc">:</span><span class="dv">279822</span> Animalia Chordata Actinopteri</span>
+<span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> Atractosteus spatula urn<span class="sc">:</span>lsid<span class="sc">:</span>marinespecies.org<span class="sc">:</span>taxname<span class="sc">:</span><span class="dv">279822</span> Animalia Chordata Actinopteri</span>
+<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> Atractosteus spatula urn<span class="sc">:</span>lsid<span class="sc">:</span>marinespecies.org<span class="sc">:</span>taxname<span class="sc">:</span><span class="dv">279822</span> Animalia Chordata Actinopteri</span>
+<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> Atractosteus spatula urn<span class="sc">:</span>lsid<span class="sc">:</span>marinespecies.org<span class="sc">:</span>taxname<span class="sc">:</span><span class="dv">279822</span> Animalia Chordata Actinopteri</span>
+<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> Atractosteus spatula urn<span class="sc">:</span>lsid<span class="sc">:</span>marinespecies.org<span class="sc">:</span>taxname<span class="sc">:</span><span class="dv">279822</span> Animalia Chordata Actinopteri</span>
+<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> Atractosteus spatula urn<span class="sc">:</span>lsid<span class="sc">:</span>marinespecies.org<span class="sc">:</span>taxname<span class="sc">:</span><span class="dv">279822</span> Animalia Chordata Actinopteri</span>
+<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a>             order        family        genus scientificNameAuthorship taxonRank organismQuantity</span>
+<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> Lepisosteiformes Lepisosteidae <span class="fu">Atractosteus</span>         (Lacepède, <span class="dv">1803</span>)   Species                <span class="dv">0</span></span>
+<span id="cb15-75"><a href="#cb15-75" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> Lepisosteiformes Lepisosteidae <span class="fu">Atractosteus</span>         (Lacepède, <span class="dv">1803</span>)   Species                <span class="dv">0</span></span>
+<span id="cb15-76"><a href="#cb15-76" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> Lepisosteiformes Lepisosteidae <span class="fu">Atractosteus</span>         (Lacepède, <span class="dv">1803</span>)   Species                <span class="dv">0</span></span>
+<span id="cb15-77"><a href="#cb15-77" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> Lepisosteiformes Lepisosteidae <span class="fu">Atractosteus</span>         (Lacepède, <span class="dv">1803</span>)   Species                <span class="dv">0</span></span>
+<span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> Lepisosteiformes Lepisosteidae <span class="fu">Atractosteus</span>         (Lacepède, <span class="dv">1803</span>)   Species                <span class="dv">0</span></span>
+<span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> Lepisosteiformes Lepisosteidae <span class="fu">Atractosteus</span>         (Lacepède, <span class="dv">1803</span>)   Species                <span class="dv">0</span></span>
+<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a>  organismQuantityType                                                occurrenceID        collectionCode</span>
+<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>   Relative Abundance Station_95_Date_09JAN1997<span class="sc">:</span><span class="dv">14</span><span class="sc">:</span><span class="dv">35</span><span class="sc">:</span><span class="fl">00.000</span>_Atractosteus_spatula Aransas Bay Bag Seine</span>
+<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>   Relative Abundance Station_95_Date_18AUG2000<span class="sc">:</span><span class="dv">11</span><span class="sc">:</span><span class="dv">02</span><span class="sc">:</span><span class="fl">00.000</span>_Atractosteus_spatula Aransas Bay Bag Seine</span>
+<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>   Relative Abundance Station_96_Date_28JUN2005<span class="sc">:</span><span class="dv">08</span><span class="sc">:</span><span class="dv">41</span><span class="sc">:</span><span class="fl">00.000</span>_Atractosteus_spatula Aransas Bay Bag Seine</span>
+<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>   Relative Abundance Station_96_Date_23AUG2006<span class="sc">:</span><span class="dv">11</span><span class="sc">:</span><span class="dv">47</span><span class="sc">:</span><span class="fl">00.000</span>_Atractosteus_spatula Aransas Bay Bag Seine</span>
+<span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>   Relative Abundance Station_96_Date_17OCT2006<span class="sc">:</span><span class="dv">14</span><span class="sc">:</span><span class="dv">23</span><span class="sc">:</span><span class="fl">00.000</span>_Atractosteus_spatula Aransas Bay Bag Seine</span>
+<span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span>   Relative Abundance Station_96_Date_19FEB1996<span class="sc">:</span><span class="dv">10</span><span class="sc">:</span><span class="dv">27</span><span class="sc">:</span><span class="fl">00.000</span>_Atractosteus_spatula Aransas Bay Bag Seine</span>
+<span id="cb15-87"><a href="#cb15-87" aria-hidden="true" tabindex="-1"></a>                           </span>
+<span id="cb15-88"><a href="#cb15-88" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(occurrence, <span class="at">file =</span> <span class="fu">paste0</span>(event[<span class="dv">1</span>,]<span class="sc">$</span>datasetID, <span class="st">"_occurrence_"</span>,lubridate<span class="sc">::</span><span class="fu">today</span>(),<span class="st">".csv"</span>), <span class="at">fileEncoding =</span> <span class="st">"UTF-8"</span>, <span class="at">row.names =</span> F, <span class="at">na =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/ioos\.github\.io\/bio_data_guide\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../apps.html" class="pagination-link" aria-label="Applications">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Applications</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../datasets/hakai_salmon_data/salmon-darwin-core-remap.html" class="pagination-link" aria-label="Darwin Core Salmon Data Remap">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Darwin Core Salmon Data Remap</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ioos/bio_data_guide/edit/main/datasets/TPWD_HARC_BagSeine/TPWD_HARC_BagSeine_OBISENV.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
