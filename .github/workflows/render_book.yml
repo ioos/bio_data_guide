@@ -30,8 +30,9 @@ jobs:
       - name: Install TinyTeX
         uses: r-lib/actions/setup-tinytex@v2          
       
-      # - name: Install librsvg (for converting svg for img)
-      #   run: brew install librsvg
+      - name: Install librsvg
+        # convert svg to png for pdf
+        run: brew install librsvg
         
       - name: Install R
         uses: r-lib/actions/setup-r@v2
