@@ -23,9 +23,9 @@ jobs:
         # with:
         #   tinytex: true  # for pdf but buggy on finding version
         
-      - name: Install chromium for Quarto     
-        # for rendering Mermaid diagrams to pdf: https://quarto.org/docs/authoring/diagrams.html#chrome-install
-        run: quarto install chromium
+      # - name: Install chromium for Quarto     
+      #   # for rendering Mermaid diagrams to pdf: https://quarto.org/docs/authoring/diagrams.html#chrome-install
+      #   run: quarto install chromium
 
       - name: Install TinyTeX
         uses: r-lib/actions/setup-tinytex@v2          
@@ -44,7 +44,8 @@ jobs:
         with:
           cache-version: 2
           
-      - name: Copy eDNA README.md to .qmd (placeholder)
+      - name: Prep files for Quarto render 
+        # copy eDNA README.md to .qmd (placeholder for _quarto.yml)
         # necessary for `quarter render` to work, and before pre-render script overwrites .qmd
         run: cp datasets/dataset-edna/README.md datasets/dataset-edna/README.qmd
 
