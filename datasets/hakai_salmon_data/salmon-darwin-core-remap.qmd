@@ -2,19 +2,19 @@
 title: "Darwin Core Salmon Data Remap"
 author: "Brett Johnson"
 date: "`r date()`"
-output:
-  html_document:
-    code_folding: show
-    number_sections: yes
-    theme: cosmo
-    toc: yes
-    toc_float: yes
-  pdf_document:
-    toc: yes
+# output:
+#   html_document:
+#     code_folding: show
+#     number_sections: yes
+#     theme: cosmo
+#     toc: yes
+#     toc_float: yes
+#   pdf_document:
+#     toc: yes
 ---
 
 ## Salmon Ocean Ecology Data
-```{r setup, include = FALSE}
+```{r include = FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, error = FALSE)
 library(tidyverse)
 library(here)

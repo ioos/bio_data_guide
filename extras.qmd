@@ -19,10 +19,10 @@ If you are interested in creating an EML metadata file, it is possible to upload
 2. OBIS-USA uploaded to IPT.
 3. Once the data were uploaded, the IPT identified there was an issue with the `occurrenceID` field. The issue was then
 presented and discussed in a GitHub ticket:
-   [![issue 78](./figs/issue_78.png)](https://github.com/ioos/bio_data_guide/issues/78)
+   [![issue 78](figs/issue_78.png)](https://github.com/ioos/bio_data_guide/issues/78)
 4. The data manager uploaded the raw data and code to GitHub through the pull request below. This included a fix for
 the `occurrenceID` issue.
-   [![PR 77](./figs/PR_77.png)](https://github.com/ioos/bio_data_guide/pull/77)
+   [![PR 77](figs/PR_77.png)](https://github.com/ioos/bio_data_guide/pull/77)
 5. The OBIS node manager was notified of the availability of a revised dataset by pointing directly to the appropriate
 commit in GitHub:
    [![commit ef17f89](./figs/commit_ef17f89.png)](https://github.com/ioos/bio_data_guide/commit/ef17f89f23316a6227fdf58de509582bd9854a55)

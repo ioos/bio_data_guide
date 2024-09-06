@@ -1,3 +1,15 @@
+# BioDataGuide
+
+Hello and welcome to the Darwin Core Marine Example Compendium! (We're calling it the BioDataGuide for short.) Here, we document relevant resources and standards 
+which apply to various marine biological data types. This is a growing guide that is put together by scientists and 
+data managers responsible for transforming their data to meet international standards.
+
+This guide is meant for  data managers, scientists, or technicians new to transforming/publishing/mobilizing data. 
+There is a general introduction to the world of international data integration, followed by some specific examples of 
+data transformations.
+
+To contribute to this guide see (CONTRIBUTING.md)[CONTRIBUTING.md]
+
 # Standardizing Marine Biological Data Working Group (SMBD)
 
 ## Purpose
@@ -96,7 +108,7 @@ This is a work in progress, a growing guide that is being put together by scient
 The Guide is exported into multiple formats, including a [pdf](https://github.com/ioos/bio_data_guide/raw/gh-pages/darwin-core-guide.pdf) and an [epub](https://github.com/ioos/bio_data_guide/raw/gh-pages/darwin-core-guide.epub) document. 
 Chapters are written in R Markdown files; [contributions are welcome!](https://github.com/ioos/bio_data_guide/blob/main/CONTRIBUTING.md)
 
-Technical details of how to work with the book can be found in [`/building-the-data-guide.md`](https://github.com/ioos/bio_data_guide/blob/main/building-the-guide.md).
+Technical details of how to work with the book can be found in [`/refs/building-the-data-guide.md`](https://github.com/ioos/bio_data_guide/blob/main/refs/building-the-guide.md).
 
 <!--
 
