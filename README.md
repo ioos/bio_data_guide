@@ -8,7 +8,7 @@ This guide is meant for  data managers, scientists, or technicians new to transf
 There is a general introduction to the world of international data integration, followed by some specific examples of 
 data transformations.
 
-To contribute to this guide see (CONTRIBUTING.md)[https://github.com/ioos/bio_data_guide/blob/master/Standardizing%20Marine%20Biological%20Data/CONTRIBUTING.md]
+To contribute to this guide see (CONTRIBUTING.md)[CONTRIBUTING.md]
 
 # Standardizing Marine Biological Data Working Group (SMBD)
 
