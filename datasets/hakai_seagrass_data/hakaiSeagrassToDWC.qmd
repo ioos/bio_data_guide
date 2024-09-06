@@ -16,7 +16,7 @@ This section clears the workspace, checks the working directory, and
 installs packages (if required) and loads packages, and loads necessary
 datasets
 
-```{r }
+```{r}
 library("knitr")
 # Knitr global chunk options
 opts_chunk$set(message = FALSE,
@@ -25,14 +25,22 @@ opts_chunk$set(message = FALSE,
 
 ```
 
-```{r setup, results = "hide", echo = FALSE}
+```{r, results = "hide", echo = FALSE}
 # The following command will remove all objects** for a fresh start. Make 
 #   sure any objects you want to keep are saved before running!
 rm(list = ls())
 
-# Check working directory; set if necessary so document will compile
-#   properly
-getwd()
+# paths ----
+# set relative to repository (versus changing working directory)
+library(here)
+dir_in                 <- here("datasets/hakai_seagrass_data/raw_data")
+seagrassDensity_csv    <- file.path(dir_in, "seagrass_density_survey.csv")
+seagrassHabitat_csv    <- file.path(dir_in, "seagrass_habitat_survey.csv")
+coordinate_csv         <- file.path(dir_in, "seagrassCoordinates.csv")
+dir_out                <- here("datasets/hakai_seagrass_data/processed_data")
+seagrassEvent_csv      <- file.path(dir_out, "hakaiSeagrassDwcEvent.csv")
+seagrassOccurrence_csv <- file.path(dir_out, "hakaiSeagrassDwcOccurrence.csv")
+seagrassMof_csv        <- file.path(dir_out, "hakaiSeagrassDwcEmof.csv")
 
 # Install packages; uncomment and run if packages not already installed
 # install.packages(c("tidyverse", "uuid"))
@@ -48,7 +56,7 @@ First load the seagrass density survey data, set variable classes, and have a qu
 ```{r loadDensity}
 # Load density data
 seagrassDensity <- 
-  read.csv("raw_data/seagrass_density_survey.csv",
+  read.csv(seagrassDensity_csv,
            colClass = "character") %>%
   mutate(date             = ymd(date),
          depth            = as.numeric(depth),
@@ -68,7 +76,7 @@ and have a quick look.
 ```{r loadHabitat}
 # load habitat data, set variable classes, have a quick look
 seagrassHabitat <-
-  read.csv("raw_data/seagrass_habitat_survey.csv",
+  read.csv(seagrassHabitat_csv,
            colClasses = "character") %>%  
   mutate(date            = ymd(date),
          depth           = as.numeric(depth),
@@ -83,7 +91,7 @@ Finally, load coordinate data for surveys, and subset necessary variables
 
 ```{r loadCoordinates}
 coordinates <- 
-  read.csv("raw_data/seagrassCoordinates.csv",
+  read.csv(coordinate_csv,
            colClass = c("Point.Name" = "character")) %>%
   select(Point.Name, Decimal.Lat, Decimal.Long) %T>%
   glimpse()
@@ -232,7 +240,7 @@ seagrassEvent <-
          samplingEffort = "30 metre transect") %T>% glimpse
 
 # save event table to csv
-write.csv(seagrassEvent, "processed_data/hakaiSeagrassDwcEvent.csv")
+write.csv(seagrassEvent, seagrassEvent_csv)
 ```
 
 ##### Occurrence Table
@@ -270,7 +278,7 @@ seagrassOccurrence <-
   glimpse
 
 # save occurrence table to csv
-write.csv(seagrassOccurrence, "processed_data/hakaiSeagrassDwcOccurrence.csv")
+write.csv(seagrassOccurrence, seagrassOccurrence_csv)
 ```
 
 ##### Extended MeasurementOrFact table
@@ -336,7 +344,7 @@ seagrassMof <-
   glimpse()
 
 # save eMoF table to csv
-write.csv(seagrassMof, "processed_data/hakaiSeagrassDwcEmof.csv")
+write.csv(seagrassMof, seagrassMof_csv)
 ```
 
 ### Session Info

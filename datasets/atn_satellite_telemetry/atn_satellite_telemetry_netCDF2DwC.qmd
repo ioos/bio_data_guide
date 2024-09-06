@@ -1,9 +1,13 @@
 ---
-title: An R Markdown document converted from "atn_satellite_telemetry_netCDF2DwC.ipynb"
-output: html_document
+title: Converting ATN netCDF file to Darwin Core
+format:
+  pdf:
+    documentclass: scrreprt # report
+    keep-tex: true
+    include-in-header: lib/preamble.tex
 ---
 
-## Converting ATN netCDF file to Dawrin Core
+An R Markdown document converted from "atn_satellite_telemetry_netCDF2DwC.ipynb"
 
 Created: 2022-03-23
 Updated: 2023-11-16
@@ -27,48 +31,52 @@ library(lubridate)
 library(maps)
 library(mapdata)
 ```
-### Downloading and preprocessing the source data
+
+## Downloading and preprocessing the source data
 
 See https://www.ncei.noaa.gov/archive/accession/0282699
 
 ```{r}
-url = 'https://www.nodc.noaa.gov/archive/arc0217/0282699/1.1/data/0-data/atn_45866_great-white-shark_trajectory_20090923-20091123.nc'
+# paths ----
+url_nc = 'https://www.nodc.noaa.gov/archive/arc0217/0282699/1.1/data/0-data/atn_45866_great-white-shark_trajectory_20090923-20091123.nc'
+dir_data <- here::here("datasets/atn_satellite_telemetry/data")
+file_nc <- file.path(dir_data, "src", basename(url_nc))
+stopifnot(dir.exists(dir_data))
 
-#fname = str_split_i(url, "/", i=-1)
-fname = paste('data/src/',basename(url))
-
-download.file(url, fname, mode = "wb")
+if (!file.exists(file_nc))
+  download.file(url_nc, file_nc, mode = "wb")
 ```
 
-#### Open the netCDF file
+### Open the netCDF file
+
 Once the file is opened, we print out the details of what the netCDF file contains.
 
 ```{r}
-atn <- nc_open(fname)
+atn <- nc_open(file_nc)
 atn
 ```
 
-#### Collect all the metadata from the netCDF file.
+### Collect all the metadata from the netCDF file.
 
 This gathers not only the global attributes, but the variable level attributes as well. As you can see in the **variable** column the term `NC_GLOBAL` refers to global attributes.
 
 ```{r}
-metadata <- ncmeta::nc_atts(fname)
+metadata <- ncmeta::nc_atts(file_nc)
 metadata
 ```
 
-#### Store the data as a tibble
+### Store the data as a tibble
 Collect the data dimensioned by `time` from the netCDF file as a tibble. Then, print the first ten rows.
 
 ```{r}
-atn <- tidync(fname)
+atn <- tidync(file_nc)
 
 atn_tbl <- atn %>% hyper_tibble(force=TRUE)
 
 head(atn_tbl, n=4)
 ```
 
-#### Dealing with time
+### Dealing with time
 
 Notice the data in the **time** column aren't formatted as times. We need to read the metadata associated with the time variable to understand what the units are. Below, we print a tibble of all the attributes from the **time** variable.
 
@@ -90,12 +98,12 @@ atn_tbl$time <- as.POSIXct(atn_tbl$time, origin=lunit[3], tz="GMT")
 
 str(atn_tbl)
 ```
----
-### Converting to Darwin Core
+
+## Converting to Darwin Core
 
 Now let's work through converting this netCDF file to Darwin Core. Following the guidance published at https://github.com/tdwg/dwc-for-biologging/wiki/Data-guidelines and https://github.com/ocean-tracking-network/biologging_standardization/tree/master/examples/braun-blueshark/darwincore-example
 
-#### Occurrence Core
+### Occurrence Core
 
 Below is the mapping table from DarwinCore to the netCDF file. 
 
@@ -125,7 +133,7 @@ Now start working through the crosswalk. A few thoughts about some of the functi
 
 ```{r}
 # Defined to grab attributes in subsequent code
-nc <- nc_open(fname)
+nc <- nc_open(file_nc)
 
 occurrencedf <- atn_tbl %>%  
     select( # Select desired columns
@@ -203,7 +211,7 @@ occurrencedf$eventID <- sub(" ", "_", paste0(cname$value, "_", occurrencedf$even
 str(occurrencedf)
 ```
 
-##### Add coordinateUncertaintyInMeters AND filter by location_class
+#### Add coordinateUncertaintyInMeters AND filter by location_class
 
 When we add `coordinateUncertaintyInMeters` we are also filtering out where `location_class` == `A`,`B`,or `Z`.
 
@@ -253,7 +261,7 @@ occurrencedf
 
 Notice how we went from 29 rows down to 19 rows by only selecting specific the location_class.
 
-##### Create a dataGeneralizations column to describe how many duplicates were found for each deprecation series
+### Create a dataGeneralizations column to describe how many duplicates were found for each deprecation series
 
 Add a `dataGeneralizations` column containing a string like 'first of # records' to indicate there are more records in the raw dataset to be discovered by the super-curious.
 
@@ -341,23 +349,15 @@ occurrencedf_dec <- occurrencedf_dec %>%
         
 names(occurrencedf_dec)
 ```
-#### Add NCEI URL to references
 
-For full transparency, we will add the Darwin Core term references to provide the URL to the NCEI landing page, where the full dataset can be accessed by curious users.
-
-```{r}
-occurrencedf_dec$references <- "https://www.ncei.noaa.gov/archive/accession/0282699"
-
-occurrencedf_dec
-```
 ##### Write decimated occurrence file as csv
 
 ```{r}
 tag_id <- metadata %>% dplyr::filter(variable == "NC_GLOBAL" & name == "ptt_id")
 
-file_name_occur <- paste('data/dwc/atn_',tag_id$value,'_occurrence.csv', sep = "")
+occurrencedf_dec_csv <- glue::glue("{dir_data}/dwc/atn_{tag_id$value}_occurrence.csv")
 
-write.csv(occurrencedf_dec, file=file_name_occur, row.names=FALSE, fileEncoding="UTF-8", quote=TRUE, na="")
+write.csv(occurrencedf_dec, file=occurrencedf_dec_csv, row.names=FALSE, fileEncoding="UTF-8", quote=TRUE, na="")
 ```
 
 #### Measurement or Fact
@@ -443,9 +443,9 @@ str(emofdf)
 ```{r}
 tag_id <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "ptt_id")
 
-file_name_emof <- paste('data/dwc/atn_',tag_id$value,'_emof.csv', sep = "")
+emof_csv <- glue::glue("{dir_data}/dwc/atn_{tag_id$value}_emof.csv")
 
-write.csv(emofdf, file=file_name_emof, row.names=FALSE, fileEncoding="UTF-8", quote=TRUE, na="")
+write.csv(emofdf, file=emof_csv, row.names=FALSE, fileEncoding="UTF-8", quote=TRUE, na="")
 ```
 
 

@@ -1,4 +1,5 @@
 # Introduction {#intro}
+
 The world of standardizing marine biological data can seem complex for the naive oceanographer, biologist, scientist, or
 programmer. This book intends to ease the burden of learning about the [Darwin Core standard](https://dwc.tdwg.org/) by
 compiling a list of example applications and tools for translating source data into Darwin Core. This collection of

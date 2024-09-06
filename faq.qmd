@@ -1,6 +1,7 @@
-# (APPENDIX) Appendix {-}
-
-# Frequently Asked Questions
+---
+title: FAQ
+subtitle: Frequently Asked Questions
+---
 
 1. **Q.** What data structure does OBIS recommend?
 
