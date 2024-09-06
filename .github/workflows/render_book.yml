@@ -21,12 +21,16 @@ jobs:
       - name: Install Quarto
         uses: quarto-dev/quarto-actions/setup@v2
         # with:
-        #   tinytex: true  # for pdf
-          
+        #   tinytex: true  # for pdf but buggy on finding version
+        
+      - name: Install chromium for Quarto     
+        # for rendering Mermaid diagrams to pdf: https://quarto.org/docs/authoring/diagrams.html#chrome-install
+        run: quarto install chromium
+
       - name: Install TinyTeX
         uses: r-lib/actions/setup-tinytex@v2          
       
-      # - name: Install librsvg (svg for pdf)
+      # - name: Install librsvg (for converting svg for img)
       #   run: brew install librsvg
         
       - name: Install R

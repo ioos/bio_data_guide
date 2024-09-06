@@ -11,7 +11,7 @@ book:
   description: "Scaling multiple dimensions of diversity in biological data"
   author: 
     - "By: [Standardizing Marine Biological Data Working Group](https://github.com/ioos/bio_data_guide/graphs/contributors)"
-    - "![](/figs/contrib.rocks.png)"
+    - "![](/figs/contrib.rocks.svg)"
   date: today
   date-format: "YYYY-MM-DD"
   site-url: https://ioos.github.io/bio_data_guide/
@@ -31,7 +31,7 @@ book:
         - datasets/hakai_salmon_data/salmon-darwin-core-remap.qmd
         - datasets/hakai_seagrass_data/hakaiSeagrassToDWC.qmd
         - datasets/trawl_catch_data/trawl-catch-data.qmd
-        - datasets/dataset-edna/README.qmd
+        - datasets/dataset-edna/README.qmd  # NOTE: this needs to be copied from README.qmd, since in git submodule
         - datasets/atn_satellite_telemetry/atn_satellite_telemetry_netCDF2DwC.qmd
   appendices:
     - faq.qmd
