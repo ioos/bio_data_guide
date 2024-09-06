@@ -31,7 +31,7 @@ book:
         - datasets/hakai_salmon_data/salmon-darwin-core-remap.qmd
         - datasets/hakai_seagrass_data/hakaiSeagrassToDWC.qmd
         - datasets/trawl_catch_data/trawl-catch-data.qmd
-        - datasets/dataset-edna/README.md
+        - datasets/dataset-edna/README.qmd
         - datasets/atn_satellite_telemetry/atn_satellite_telemetry_netCDF2DwC.qmd
   appendices:
     - faq.qmd
