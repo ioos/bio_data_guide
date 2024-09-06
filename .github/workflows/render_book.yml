@@ -49,7 +49,7 @@ jobs:
         # necessary for `quarter render` to work, and before pre-render script overwrites .qmd
         run: cp datasets/dataset-edna/README.md datasets/dataset-edna/README.qmd
 
-      - name: Render and Publish
+      - name: Quarto Render and Publish
         # TODO: `quarto publish gh-pages` https://quarto.org/docs/publishing/github-pages.html#publishing
         uses: quarto-dev/quarto-actions/publish@v2
         with:
