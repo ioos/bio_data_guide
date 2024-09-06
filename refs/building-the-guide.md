@@ -2,7 +2,7 @@
 
 A Github Action will build the book automatically when you push changes to the repository. However, you can also build the book locally on your machine, which is especially helpful for testing output and debugging any issues.
 
-## Download the repo and setup software (Rstudio, Quarto, TinyTex)
+## Setup software (R, Rstudio, Quarto, TinyTex) and download the repository
 
 * Make sure you have the most recent version of R and R Studio
 
@@ -58,6 +58,8 @@ A Github Action will build the book automatically when you push changes to the r
   ```bash
   quarto check
   ```
+  
+* Inspect results (`BioDataGuide.pdf`, `index.html`) in the output directory `_book/`.
 
 * Commit and push changes to all modified files via the **Git** pane in R Studio. Note that the `_book` directory is ignored by git (per the `.gitignore` file), since the book is rendered and published by the Github Action (`.github/workflows/render_book.yml`) into the `gh-pages` Github branch.
 
@@ -77,7 +79,7 @@ A Github Action will build the book automatically when you push changes to the r
   `[username].github.io/bio_data_guide`
     * `[username]` is your GitHub username.
 
-## Adding package dependencies to `DESCRIPTION`
+## Adding R package dependencies to `DESCRIPTION`
 
 Depending on the type of R package:
 
