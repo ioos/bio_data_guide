@@ -47,7 +47,7 @@ We have open monthly meetings every **2nd Wednesday of the month at 16:00 ET** t
 Please feel free to join us!
 
 * 👉[**Join us every month** using connection details here!](https://docs.google.com/document/d/1JfXHFXhP0rB8juAK3-KvOtqtwDofPwewoAB_ZyFwSwY/edit#bookmark=id.1ksv4uv)👈
-* [Join the standardizing-bke7693.slack.com slack](https://join.slack.com/t/standardizing-bke7693/shared_invite/zt-1nzsonomt-wWRrYw6zFCNLRUB~NfCgtQ) and say hi on the `#general` channel.
+* [Join the standardizing-bke7693.slack.com slack](https://join.slack.com/t/standardizing-bke7693/shared_invite/zt-2rlgfmdlc-ptX4G24eGE9lLo2k~rO58g) and say hi on the `#general` channel.
 * Submit an [issue](https://github.com/ioos/bio_data_guide/issues) to this repository.
 * [![Join the chat at https://gitter.im/ioos/bio-data](https://badges.gitter.im/ioos/bio-data.svg)](https://gitter.im/ioos/bio-data?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
