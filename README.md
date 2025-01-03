@@ -64,7 +64,7 @@ Made with [contrib.rocks](https://contrib.rocks).
 
 There are multiple resources in this GitHub repository, including:
 
-* :notebook: Living documentation for anyone working with, learning about, or conributing to IOOS's best practices for biological data.
+* :notebook: Living documentation for anyone working with, learning about, or contributing to IOOS's best practices for biological data.
 * 🗄️ Datasets being actively worked on by community members.
 * ♻️ Code and documentation used on other datasets that can be re-used.
 * 🧰 Tools to help you navigate the organizational, technical, and social challenges of publishing data.
