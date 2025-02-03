@@ -5,7 +5,7 @@ January 9, 2022
 
 ### General information about this notebook
 Script to process the Texas Parks and Wildlife Department (TPWD) Aransas Bay bag seine data from
-the format used by the Houston Advanced Research Center (HARC) for bays in Texas. Taxonomy was processed using a separate script ([TPWD_Taxonomy.R](https://www.sciencebase.gov/catalog/file/get/53a887f4e4b075096c60cfdd?f=__disk__ab%2F6e%2Ff8%2Fab6ef8426ea328cb6c54d13ee7b6b7ce791d23f8)) using a taxa list pulled from the pdf "[2009 Resource Monitoring Operations Manual](https://www.sciencebase.gov/catalog/file/get/53a887f4e4b075096c60cfdd?f=__disk__d9%2Ff6%2F46%2Fd9f646b40cf7c6cc3fa77d1e7aebe88f46cf7145)". All original data, processed data and scripts are stored on [an item](https://www.sciencebase.gov/catalog/item/53a887f4e4b075096c60cfdd) in USGS ScienceBase. 
+the format used by the Houston Advanced Research Center (HARC) for bays in Texas. Taxonomy was processed using a separate script ([TPWD_Taxonomy.R](https://www.sciencebase.gov/catalog/file/get/53a887f4e4b075096c60cfdd?f=__disk__f9%2F3f%2Fa4%2Ff93fa4b6f508af3e290a59a9fa8009180a320966)) using a taxa list pulled from the pdf "[2009 Resource Monitoring Operations Manual](https://www.sciencebase.gov/catalog/file/get/53a887f4e4b075096c60cfdd?f=__disk__d9%2Ff6%2F46%2Fd9f646b40cf7c6cc3fa77d1e7aebe88f46cf7145)". All original data, processed data and scripts are stored on [an item](https://www.sciencebase.gov/catalog/item/53a887f4e4b075096c60cfdd) in USGS ScienceBase. 
 
 
 ```r
@@ -20,7 +20,7 @@ library(readr)
 BagSeine <- read.csv("https://www.sciencebase.gov/catalog/file/get/53a887f4e4b075096c60cfdd?f=__disk__6e%2F6a%2F67%2F6e6a678c41cf928e025fd30339789cc8b893a815&allowOpen=true", stringsAsFactors=FALSE, strip.white = TRUE)
 ```
 
-Note that if not already done you'll need to run the [TPWD_Taxonomy.R](https://www.sciencebase.gov/catalog/file/get/53a887f4e4b075096c60cfdd?f=__disk__ab%2F6e%2Ff8%2Fab6ef8426ea328cb6c54d13ee7b6b7ce791d23f8) script to get the taxaList file squared away or load the taxonomy file to the World Register of Marine Species Taxon Match Tool https://www.marinespecies.org/aphia.php?p=match
+Note that if not already done you'll need to run the [TPWD_Taxonomy.R](https://www.sciencebase.gov/catalog/file/get/53a887f4e4b075096c60cfdd?f=__disk__f9%2F3f%2Fa4%2Ff93fa4b6f508af3e290a59a9fa8009180a320966) script to get the taxaList file squared away or load the taxonomy file to the World Register of Marine Species Taxon Match Tool https://www.marinespecies.org/aphia.php?p=match
 
 ### Event file
 
