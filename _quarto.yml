@@ -9,7 +9,7 @@ book:
   title: "BioDataGuide"
   subtitle: "Darwin Core Marine Example Compendium"
   description: "Scaling multiple dimensions of diversity in biological data"
-  author: "[Standardizing Marine Biological Data Working Group](https://github.com/ioos/bio_data_guide/graphs/contributors) ![](/figs/contrib.rocks.svg)"
+  author: "[Standardizing Marine Biological Data Working Group](https://github.com/ioos/bio_data_guide/graphs/contributors) ![](https://github.com/ioos/bio_data_guide/raw/refs/heads/main/figs/contrib.rocks.svg)"
   date: today
   date-format: "YYYY-MM-DD"
   site-url: https://ioos.github.io/bio_data_guide/
