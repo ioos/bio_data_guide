@@ -3,7 +3,7 @@
 The world of standardizing marine biological data can seem complex for the naive oceanographer, biologist, scientist, or
 programmer. This book intends to ease the burden of learning about the [Darwin Core standard](https://dwc.tdwg.org/) by
 compiling a list of example applications and tools for translating source data into Darwin Core. This collection of
-resources does not replace the Darwin Core standards documentation (https://dwc.tdwg.org/) or the OBIS Manual (https://manual.obis.org/),
+resources does not replace the Darwin Core standards documentation (<https://dwc.tdwg.org/>) or the OBIS Manual (<https://manual.obis.org/>),
 but instead it supplements those resources with examples of real world applications.
 
 In this book we cover:

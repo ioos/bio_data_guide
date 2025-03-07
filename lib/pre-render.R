@@ -20,3 +20,23 @@ if (!file.exists(img_svg))
 readLines(doc_md) |> 
   str_replace(img_url, glue("/{img_svg}")) |>
   writeLines(doc_qmd)
+
+# update bare links {x} (like http:// or https://) in all *.qmd files with angle tags <{x}>, 
+#   except if already surrounded by a markdown link, ie [.*]({x}) or <{x}>, or in an R chunk
+# The regex pattern (courtesy of claude.ai):
+# - `(?<!\\]\\()` - Negative lookbehind to avoid URLs in markdown links
+# - `(?<!<)` - Negative lookbehind to avoid URLs already in angle brackets
+# - `(https?://[^\\s)]+)` - The URL pattern to capture
+# - `(?!>)` - Negative lookahead to avoid URLs already ending with angle brackets
+# - `(?![^](?:[^][^])*[^]$)` - Negative lookahead to avoid URLs in inline code (between backticks)
+# - `(?![^```]*```[^```]*$)`` - Negative lookahead to avoid URLs in code blocks
+pattern <- "(?<!\\]\\()(?<!<)(https?://[^\\s)]+)(?!>)(?![^`]*`(?:[^`]*`[^`]*`)*[^`]*$)(?![^```]*```[^```]*$)"
+qmd_files <- list.files(".", pattern = "\\.qmd$", recursive = T, full.names = T)
+for (q in qmd_files) {
+  readLines(q, warn = FALSE) |> 
+    paste(collapse = "\n") |> 
+    str_replace_all(
+      pattern,
+      "<\\1>") |> 
+    writeLines(q)
+}
