@@ -14,11 +14,11 @@ Updated: 2023-11-16
 
 Credit: Stephen Formel, Mathew Biddle
 
-This notebook walks through downloading an example netCDF file from the an Archive package at NCEI and translating it to a Darwin Core Archive compliant package for easy loading and publishing via the Integrated Publishing Toolkit (IPT). The example file follows a specific specification for ATN satellite trajectory observations as documented [here](https://github.com/ioos/ioos-atn-data/blob/main/templates/atn_trajectory_template.cdl). More information about the ATN netCDF specification can be found in the repository https://github.com/ioos/ioos-atn-data.
+This notebook walks through downloading an example netCDF file from the an Archive package at NCEI and translating it to a Darwin Core Archive compliant package for easy loading and publishing via the Integrated Publishing Toolkit (IPT). The example file follows a specific specification for ATN satellite trajectory observations as documented [here](https://github.com/ioos/ioos-atn-data/blob/main/templates/atn_trajectory_template.cdl). More information about the ATN netCDF specification can be found in the repository <https://github.com/ioos/ioos-atn-data.>
 
 This example uses the [tidync](https://ropensci.org/blog/2019/11/05/tidync/) package to work with netCDF data.
 
-Data used in this notebook are available from NCEI at the following link https://www.ncei.noaa.gov/archive/accession/0282699.
+Data used in this notebook are available from NCEI at the following link <https://www.ncei.noaa.gov/archive/accession/0282699.>
 
 ```{r}
 #Load libraries
@@ -34,7 +34,7 @@ library(mapdata)
 
 ## Downloading and preprocessing the source data
 
-See https://www.ncei.noaa.gov/archive/accession/0282699
+See <https://www.ncei.noaa.gov/archive/accession/0282699>
 
 ```{r}
 # paths ----
@@ -101,7 +101,7 @@ str(atn_tbl)
 
 ## Converting to Darwin Core
 
-Now let's work through converting this netCDF file to Darwin Core. Following the guidance published at https://github.com/tdwg/dwc-for-biologging/wiki/Data-guidelines and https://github.com/ocean-tracking-network/biologging_standardization/tree/master/examples/braun-blueshark/darwincore-example
+Now let's work through converting this netCDF file to Darwin Core. Following the guidance published at <https://github.com/tdwg/dwc-for-biologging/wiki/Data-guidelines> and <https://github.com/ocean-tracking-network/biologging_standardization/tree/master/examples/braun-blueshark/darwincore-example>
 
 ### Occurrence Core
 
@@ -288,7 +288,7 @@ occurrencedf
 
 ##### Decimate occurrences down to the first detection/location per hour
 
-Here we've done the decimation in Python: https://gist.github.com/MathewBiddle/d434ac2b538b2728aa80c6a7945f94be
+Here we've done the decimation in Python: <https://gist.github.com/MathewBiddle/d434ac2b538b2728aa80c6a7945f94be>
 
 Essentially we build a new colum that is the date plus the two digit hour. Then we find where that column has duplicates and keep the first entry.
 
@@ -457,9 +457,9 @@ Now that we know our data are aligned to Darwin Core, we can start collecting me
 
 Some good sources to help identify what requirements we need in the EML metadata can be found at:
 
-* https://github.com/gbif/ipt/wiki/GMPHowToGuide
+* <https://github.com/gbif/ipt/wiki/GMPHowToGuide>
 
-* https://github.com/gbif/ipt/wiki/GMPHowToGuide#dataset-resource
+* <https://github.com/gbif/ipt/wiki/GMPHowToGuide#dataset-resource>
 
 
 ```{r}
