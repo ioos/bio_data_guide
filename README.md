@@ -19,7 +19,7 @@ local, tribal, and private data managers, scientists, computer programmers, and 
 and knowledge to mobilize marine biological data.
 
 ## How do we do it?
-We host monthly meetings, a Slack space, and this GitHub repository to provide various mechanisms for community members
+We host quarterly meetings, a Slack space, and this GitHub repository to provide various mechanisms for community members
 to participate. 
 
 The primary focus of the working group is to help you get past any blockers you might be experiencing during the 
