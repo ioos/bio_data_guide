@@ -119,7 +119,7 @@ geodeticDatum | Required | attribute `epsg_code` in the `crs` variable.
 scientificName | Required | data from the variable `taxon_name`.
 scientificNameID |  | data from the variable `taxon_lsid`.
 eventID | Strongly recommended | `animal_common_name` global attribute plus the `eventDate`.
-samplingProtocol | Strongly recommended | 
+samplingProtocol | Strongly recommended | hardcoded to `satellite telemetry`
 kingdom | Strongly recommended | `kingdom` attribute in the `animal` variable.
 taxonRank | Strongly recommended | `rank` attribute in the `animal` variable.
 coordinateUncertaintyInMeters | Share if available | maximum value of the data from the variables `error_radius`, `semi_major_axis`, and `offset`.
