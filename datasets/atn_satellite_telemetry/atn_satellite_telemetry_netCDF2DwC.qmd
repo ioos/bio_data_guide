@@ -125,6 +125,7 @@ taxonRank | Strongly recommended | `rank` attribute in the `animal` variable.
 coordinateUncertaintyInMeters | Share if available | maximum value of the data from the variables `error_radius`, `semi_major_axis`, and `offset`.
 lifeStage | Share if available | data from the variable `animal_life_stage`.
 sex | Share if available | data from the variable `animal_sex`.
+associatedReferences | Share if available | NCEI accession url.
 
 Now start working through the crosswalk. A few thoughts about some of the functions we use:
 
@@ -205,6 +206,9 @@ occurrencedf$geodeticDatum <- paste(gd_tbl$value)
 #eventID - {common_name}_{dateTime}
 cname = metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "animal_common_name")
 occurrencedf$eventID <- sub(" ", "_", paste0(cname$value, "_", occurrencedf$eventDate))
+
+# associatedReferences
+occurrencedf$associatedReferences <- paste0("https://www.ncei.noaa.gov/archive/accession/",str_split(url_nc,"/",simplify=TRUE)[[8]])
 ```
 
 ```{r}
@@ -251,7 +255,7 @@ occurrencedf <- occurrencedf %>%
                                                      location_class == '3' ~ 250,
                                                      location_class == '2' ~ 500,
                                                      location_class == '1' ~ 1500,
-                                                     location_class == '0' ~ 10000) # https://github.com/ioos/bio_data_guide/issues/145#issuecomment-1805739244
+                                                     location_class == '0' ~ 10000) # <https://github.com/ioos/bio_data_guide/issues/145#issuecomment-1805739244>
           ) %>% 
     arrange(eventDate) # arrange by increasing date
 
