@@ -39,7 +39,7 @@ See <https://www.ncei.noaa.gov/archive/accession/0282699>
 ```{r}
 # paths ----
 url_nc = "https://www.ncei.noaa.gov/data/oceans/archive/arc0217/0282699/1.1/data/0-data/atn_45866_great-white-shark_trajectory_20090923-20091123.nc"
-dir_data <- here::here("datasets/atn_satellite_telemetry/data")
+dir_data <- "datasets/atn_satellite_telemetry/data"
 file_nc <- file.path(dir_data, "src", basename(url_nc))
 stopifnot(dir.exists(dir_data))
 
