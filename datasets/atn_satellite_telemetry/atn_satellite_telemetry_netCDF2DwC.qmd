@@ -39,7 +39,13 @@ See <https://www.ncei.noaa.gov/archive/accession/0282699>
 ```{r}
 # paths ----
 
-url_nc <- "https://www.ncei.noaa.gov/data/oceans/archive/arc0217/0282699/1.1/data/0-data/atn_45866_great-white-shark_trajectory_20090923-20091123.nc"
+url_base <- "https://www.ncei.noaa.gov/data/oceans/archive"
+
+url_package <- "/arc0217/0282699/1.1/data/0-data/"
+
+url_file <- "atn_45866_great-white-shark_trajectory_20090923-20091123.nc"
+
+url_nc <- paste(url_base,url_package,url_file)
 
 dir_data <- "datasets/atn_satellite_telemetry/data"
 
