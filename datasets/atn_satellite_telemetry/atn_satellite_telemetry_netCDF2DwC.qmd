@@ -51,7 +51,7 @@ dir_data <- "datasets/atn_satellite_telemetry/data"
 
 file_nc <- file.path(dir_data, "src", basename(url_nc))
 
-stopifnot(dir.exists(dir_data))
+# stopifnot(dir.exists(dir_data))
 
 if (!file.exists(file_nc))
   download.file(url_nc, file_nc, mode = "wb")
