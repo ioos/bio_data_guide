@@ -62,7 +62,7 @@ if (!file.exists(file_nc))
 Once the file is opened, we print out the details of what the netCDF file contains.
 
 ```{r}
-file_nc <- "datasets/atn_satellite_telemetry/data/atn_45866_great-white-shark_trajectory_20090923-20091123.nc"
+file_nc <- "datasets/atn_satellite_telemetry/data/src/atn_45866_great-white-shark_trajectory_20090923-20091123.nc"
 atn <- nc_open(file_nc)
 atn
 ```
