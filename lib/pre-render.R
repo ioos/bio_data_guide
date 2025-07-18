@@ -30,7 +30,7 @@ readLines(doc_md) |>
 # - `(?!>)` - Negative lookahead to avoid URLs already ending with angle brackets
 # - `(?![^](?:[^][^])*[^]$)` - Negative lookahead to avoid URLs in inline code (between backticks)
 # - `(?![^```]*```[^```]*$)`` - Negative lookahead to avoid URLs in code blocks [?<=```](?s)(.*)[?=```]
-pattern <- "(?<!\\]\\()(?<!<)(https?://[^\\s)]+)(?!>)(?![^`]*`(?:[^`]*`[^`]*`)*[^`]*$)(?![?<=```](?s)(.*)[?=```]*$)"
+pattern <- "(?<!\\]\\()(?<!<)(https?://[^\\s)]+)(?!>)(?![^`]*`(?:[^`]*`[^`]*`)*[^`]*$)(?!```[\\s\\S]*?```*$)"
 qmd_files <- list.files(".", pattern = "\\.qmd$", recursive = T, full.names = T)
 for (q in qmd_files) {
   readLines(q, warn = FALSE) |> 
