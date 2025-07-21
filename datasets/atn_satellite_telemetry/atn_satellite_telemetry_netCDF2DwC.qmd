@@ -72,7 +72,7 @@ atn
 This gathers not only the global attributes, but the variable level attributes as well. As you can see in the **variable** column the term `NC_GLOBAL` refers to global attributes.
 
 ```{r}
-metadata <- ncmeta::nc_atts(file_nc)
+metadata <- ncmeta::nc_atts(here(file_nc))
 metadata
 ```
 
@@ -80,7 +80,7 @@ metadata
 Collect the data dimensioned by `time` from the netCDF file as a tibble. Then, print the first ten rows.
 
 ```{r}
-atn <- tidync(file_nc)
+atn <- tidync(here(file_nc))
 
 atn_tbl <- atn %>% hyper_tibble(force=TRUE)
 
@@ -145,7 +145,7 @@ Now start working through the crosswalk. A few thoughts about some of the functi
 
 ```{r}
 # Defined to grab attributes in subsequent code
-nc <- nc_open(file_nc)
+nc <- nc_open(here(file_nc))
 
 occurrencedf <- atn_tbl %>%  
     select( # Select desired columns
