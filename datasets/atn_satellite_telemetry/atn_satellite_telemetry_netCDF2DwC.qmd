@@ -30,6 +30,7 @@ library(tidyverse) #includes stringr
 library(lubridate)
 library(maps)
 library(mapdata)
+library(here)
 ```
 
 ## Downloading and preprocessing the source data
