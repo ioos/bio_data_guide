@@ -370,7 +370,7 @@ names(occurrencedf_dec)
 ```{r}
 tag_id <- metadata %>% dplyr::filter(variable == "NC_GLOBAL" & name == "ptt_id")
 
-occurrencedf_dec_csv <- glue::glue("{dir_data}/dwc/atn_{tag_id$value}_occurrence.csv")
+occurrencedf_dec_csv <- here(glue::glue("{dir_data}/dwc/atn_{tag_id$value}_occurrence.csv"))
 
 write.csv(occurrencedf_dec, file=occurrencedf_dec_csv, row.names=FALSE, fileEncoding="UTF-8", quote=TRUE, na="")
 ```
@@ -458,7 +458,7 @@ str(emofdf)
 ```{r}
 tag_id <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "ptt_id")
 
-emof_csv <- glue::glue("{dir_data}/dwc/atn_{tag_id$value}_emof.csv")
+emof_csv <- here(glue::glue("{dir_data}/dwc/atn_{tag_id$value}_emof.csv"))
 
 write.csv(emofdf, file=emof_csv, row.names=FALSE, fileEncoding="UTF-8", quote=TRUE, na="")
 ```
