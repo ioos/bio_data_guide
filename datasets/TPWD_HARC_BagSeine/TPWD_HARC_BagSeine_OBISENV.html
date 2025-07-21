@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -74,7 +74,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -465,7 +465,7 @@ January 9, 2022</p>
 </section>
 <section id="extended-measurement-or-fact-extension-file" class="level3" data-number="2.0.4">
 <h3 data-number="2.0.4" class="anchored" data-anchor-id="extended-measurement-or-fact-extension-file"><span class="header-section-number">2.0.4</span> Extended Measurement or Fact extension file</h3>
-<p>The final file we are going to create is the <strong>Extended Measurement or Fact extension (emof)</strong>. This is a bit like a catch all for any measurements or facts that are not captured in Darwin Core. Darwin Core does not have terms for things like temperature, salinity, gear type, cruise number, length, weight, etc. We are going to create a long format file where each of these is a set of rows in the extended measurement or fact file. You can find all the terms in this extension here <a href="https://tools.gbif.org/dwca-validator/extension.do?id=%3Chttp://rs.iobis.org/obis/terms/ExtendedMeasurementOrFact." class="uri">https://tools.gbif.org/dwca-validator/extension.do?id=&lt;http://rs.iobis.org/obis/terms/ExtendedMeasurementOrFact.</a>&gt;</p>
+<p>The final file we are going to create is the <strong>Extended Measurement or Fact extension (emof)</strong>. This is a bit like a catch all for any measurements or facts that are not captured in Darwin Core. Darwin Core does not have terms for things like temperature, salinity, gear type, cruise number, length, weight, etc. We are going to create a long format file where each of these is a set of rows in the extended measurement or fact file. You can find all the terms in this extension here <a href="https://tools.gbif.org/dwca-validator/extension.do?id=http://rs.iobis.org/obis/terms/ExtendedMeasurementOrFact." class="uri">https://tools.gbif.org/dwca-validator/extension.do?id=http://rs.iobis.org/obis/terms/ExtendedMeasurementOrFact.</a></p>
 <p>OBIS uses the BODC NERC Vocabulary Server to provide explicit definitions for each of the measurements <a href="https://vocab.nerc.ac.uk/search_nvs/." class="uri">https://vocab.nerc.ac.uk/search_nvs/.</a></p>
 <p>For this dataset I was only able to find code definitions provided by the data providers for some of the measurements. I included the ones that I was able to find code definitions and left out any that I couldn’t find those for. The ones I was able to find code definitions for were <code>Total.Of.Samples_Count</code>, <code>gear_size</code>, <code>start_wind_speed_num</code>, <code>start_barometric_pressure_num</code>, <code>start_temperature_num</code>, <code>start_salinity_num</code>, <code>start_dissolved_oxygen_num</code>. All the others I left out.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>totalOfSamples <span class="ot">&lt;-</span> event[<span class="fu">c</span>(<span class="st">"Total.Of.Samples_Count"</span>, <span class="st">"eventID"</span>)]</span>
