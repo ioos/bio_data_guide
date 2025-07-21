@@ -303,6 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#occurrence-core" id="toc-occurrence-core" class="nav-link" data-scroll-target="#occurrence-core"><span class="header-section-number">7.2.1</span> Occurrence Core</a></li>
   <li><a href="#create-a-datageneralizations-column-to-describe-how-many-duplicates-were-found-for-each-deprecation-series" id="toc-create-a-datageneralizations-column-to-describe-how-many-duplicates-were-found-for-each-deprecation-series" class="nav-link" data-scroll-target="#create-a-datageneralizations-column-to-describe-how-many-duplicates-were-found-for-each-deprecation-series"><span class="header-section-number">7.2.2</span> Create a dataGeneralizations column to describe how many duplicates were found for each deprecation series</a></li>
   </ul></li>
+  <li><a href="#print-session-info" id="toc-print-session-info" class="nav-link" data-scroll-target="#print-session-info"><span class="header-section-number">7.3</span> Print session info</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/ioos/bio_data_guide/edit/main/datasets/atn_satellite_telemetry/atn_satellite_telemetry_netCDF2DwC.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -329,11 +330,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>An R Markdown document converted from “atn_satellite_telemetry_netCDF2DwC.ipynb”</p>
-<p>Created: 2022-03-23 Updated: 2023-11-16</p>
+<p>Created: 2022-03-23 Updated: 2025-07-21</p>
 <p>Credit: Stephen Formel, Mathew Biddle</p>
 <p>This notebook walks through downloading an example netCDF file from the an Archive package at NCEI and translating it to a Darwin Core Archive compliant package for easy loading and publishing via the Integrated Publishing Toolkit (IPT). The example file follows a specific specification for ATN satellite trajectory observations as documented <a href="https://github.com/ioos/ioos-atn-data/blob/main/templates/atn_trajectory_template.cdl">here</a>. More information about the ATN netCDF specification can be found in the repository <a href="https://github.com/ioos/ioos-atn-data." class="uri">https://github.com/ioos/ioos-atn-data.</a></p>
 <p>This example uses the <a href="https://ropensci.org/blog/2019/11/05/tidync/">tidync</a> package to work with netCDF data.</p>
-<p>Data used in this notebook are available from NCEI at the following link <a href="https://www.ncei.noaa.gov/archive/accession/0282699." class="uri">https://www.ncei.noaa.gov/archive/accession/0282699.</a></p>
+<p>Data used in this notebook are available from NCEI at the following link <a href="https://www.ncei.noaa.gov/archive/accession/0282699" class="uri">https://www.ncei.noaa.gov/archive/accession/0282699</a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Load libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -385,30 +386,19 @@ The following object is masked from 'package:purrr':
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>dir_data <span class="ot">&lt;-</span> <span class="st">"datasets/atn_satellite_telemetry/data"</span></span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>file_nc <span class="ot">&lt;-</span> <span class="fu">file.path</span>(dir_data, <span class="st">"src"</span>, <span class="fu">basename</span>(url_nc))</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>file_nc <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="fu">file.path</span>(dir_data, <span class="st">"src"</span>, <span class="fu">basename</span>(url_nc)))</span>
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># stopifnot(dir.exists(dir_data))</span></span>
 <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(file_nc))</span>
 <span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(url_nc, file_nc, <span class="at">mode =</span> <span class="st">"wb"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in download.file(url_nc, file_nc, mode = "wb"): URL
-https://www.ncei.noaa.gov/data/oceans/archive/arc0217/0282699/1.1/data/0-data/atn_45866_great-white-shark_trajectory_20090923-20091123.nc:
-cannot open destfile
-'datasets/atn_satellite_telemetry/data/src/atn_45866_great-white-shark_trajectory_20090923-20091123.nc',
-reason 'No such file or directory'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in download.file(url_nc, file_nc, mode = "wb"): download had nonzero
-exit status</code></pre>
-</div>
 </div>
 <section id="open-the-netcdf-file" class="level3" data-number="7.1.1">
 <h3 data-number="7.1.1" class="anchored" data-anchor-id="open-the-netcdf-file"><span class="header-section-number">7.1.1</span> Open the netCDF file</h3>
 <p>Once the file is opened, we print out the details of what the netCDF file contains.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>atn <span class="ot">&lt;-</span> <span class="fu">nc_open</span>(<span class="fu">here</span>(file_nc))</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>atn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>atn <span class="ot">&lt;-</span> <span class="fu">nc_open</span>(file_nc)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>atn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>File /Users/runner/work/bio_data_guide/bio_data_guide/datasets/atn_satellite_telemetry/data/src/atn_45866_great-white-shark_trajectory_20090923-20091123.nc (NC_FORMAT_NETCDF4):
 
@@ -858,8 +848,8 @@ exit status</code></pre>
 <h3 data-number="7.1.2" class="anchored" data-anchor-id="collect-all-the-metadata-from-the-netcdf-file."><span class="header-section-number">7.1.2</span> Collect all the metadata from the netCDF file.</h3>
 <p>This gathers not only the global attributes, but the variable level attributes as well. As you can see in the <strong>variable</strong> column the term <code>NC_GLOBAL</code> refers to global attributes.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> ncmeta<span class="sc">::</span><span class="fu">nc_atts</span>(<span class="fu">here</span>(file_nc))</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>metadata</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> ncmeta<span class="sc">::</span><span class="fu">nc_atts</span>(file_nc)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>metadata</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 381 × 4
       id name                  variable  value       
@@ -882,11 +872,11 @@ exit status</code></pre>
 <h3 data-number="7.1.3" class="anchored" data-anchor-id="store-the-data-as-a-tibble"><span class="header-section-number">7.1.3</span> Store the data as a tibble</h3>
 <p>Collect the data dimensioned by <code>time</code> from the netCDF file as a tibble. Then, print the first ten rows.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>atn <span class="ot">&lt;-</span> <span class="fu">tidync</span>(<span class="fu">here</span>(file_nc))</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>atn_tbl <span class="ot">&lt;-</span> atn <span class="sc">%&gt;%</span> <span class="fu">hyper_tibble</span>(<span class="at">force=</span><span class="cn">TRUE</span>)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(atn_tbl, <span class="at">n=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>atn <span class="ot">&lt;-</span> <span class="fu">tidync</span>(file_nc)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>atn_tbl <span class="ot">&lt;-</span> atn <span class="sc">%&gt;%</span> <span class="fu">hyper_tibble</span>(<span class="at">force=</span><span class="cn">TRUE</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(atn_tbl, <span class="at">n=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 23
        time     z   lat   lon   ptt instrument type  location_class error_radius
@@ -908,8 +898,8 @@ exit status</code></pre>
 <p>Notice the data in the <strong>time</strong> column aren’t formatted as times. We need to read the metadata associated with the time variable to understand what the units are. Below, we print a tibble of all the attributes from the <strong>time</strong> variable.</p>
 <p>Notice the <em>units</em> attribute and it’s value of <code>seconds since 1990-01-01 00:00:00Z</code>. We need to use that information to convert the time variable to something useful that <code>ggplot</code> can handle.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>time_attrs <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"time"</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>time_attrs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>time_attrs <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"time"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>time_attrs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 13 × 4
       id name                  variable value       
@@ -931,13 +921,13 @@ exit status</code></pre>
 </div>
 <p>So, we grab the value from the <code>units</code> attribute, split the string to collect the date information, and apply that to a time conversion function <code>as.POSIXct</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#library(stringr) - loaded with tidyverse</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># grab origin date from time variable units attribute</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>tunit <span class="ot">&lt;-</span> time_attrs <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"units"</span>)</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>lunit <span class="ot">&lt;-</span> <span class="fu">str_split</span>(tunit<span class="sc">$</span>value,<span class="st">' '</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>atn_tbl<span class="sc">$</span>time <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(atn_tbl<span class="sc">$</span>time, <span class="at">origin=</span>lunit[<span class="dv">3</span>], <span class="at">tz=</span><span class="st">"GMT"</span>)</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(atn_tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#library(stringr) - loaded with tidyverse</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># grab origin date from time variable units attribute</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>tunit <span class="ot">&lt;-</span> time_attrs <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"units"</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>lunit <span class="ot">&lt;-</span> <span class="fu">str_split</span>(tunit<span class="sc">$</span>value,<span class="st">' '</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>atn_tbl<span class="sc">$</span>time <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(atn_tbl<span class="sc">$</span>time, <span class="at">origin=</span>lunit[<span class="dv">3</span>], <span class="at">tz=</span><span class="st">"GMT"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(atn_tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [29 × 23] (S3: tbl_df/tbl/data.frame)
  $ time                : POSIXct[1:29], format: "2009-09-23 00:00:00" "2009-09-25 06:42:00" ...
@@ -1080,85 +1070,85 @@ exit status</code></pre>
 <li><code>rename</code> is another nice dplyr function for renaming columns. It workes well following <code>mutate</code> because you can see the mutation applied to a column and then the column renamed, rather than a complex creation of a new column and dropping of the old column.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Defined to grab attributes in subsequent code</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>nc <span class="ot">&lt;-</span> <span class="fu">nc_open</span>(<span class="fu">here</span>(file_nc))</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>occurrencedf <span class="ot">&lt;-</span> atn_tbl <span class="sc">%&gt;%</span>  </span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>( <span class="co"># Select desired columns</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>        time, </span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>        lat,</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>        lon,</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>        type,</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>        location_class,</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>        qartod_time_flag,</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>        qartod_speed_flag,</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>        qartod_location_flag,</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>        qartod_rollup_flag</span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">%&gt;%</span></span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>( <span class="co"># add and mutate columns.</span></span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> <span class="fu">case_when</span>(type <span class="sc">==</span> <span class="st">'User'</span> <span class="sc">~</span> <span class="st">'HumanObservation'</span>,</span>
-<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>                         type <span class="sc">==</span> <span class="st">'Argos'</span> <span class="sc">~</span> <span class="st">'MachineObservation'</span>),</span>
-<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">time =</span> <span class="fu">format</span>(time, <span class="st">'%Y-%m-%dT%H:%M:%SZ'</span>),</span>
-<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">kingdom =</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"animal"</span> <span class="sc">&amp;</span> name <span class="sc">==</span> <span class="st">"kingdom"</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(value) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(<span class="at">use.names =</span> <span class="cn">FALSE</span>),</span>
-<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">taxonRank =</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"animal"</span> <span class="sc">&amp;</span> name <span class="sc">==</span> <span class="st">"rank"</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(value) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(<span class="at">use.names =</span> <span class="cn">FALSE</span>),</span>
-<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">occurrenceStatus =</span> <span class="st">"present"</span>,</span>
-<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>        <span class="at">sex =</span> <span class="fu">ncvar_get</span>( nc, <span class="st">'animal_sex'</span>),</span>
-<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>        <span class="at">lifeStage =</span> <span class="fu">ncvar_get</span>( nc, <span class="st">'animal_life_stage'</span>),</span>
-<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>        <span class="at">scientificName =</span> <span class="fu">ncvar_get</span>( nc, <span class="st">'taxon_name'</span>),</span>
-<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a>        <span class="at">scientificNameID =</span> <span class="fu">ncvar_get</span>( nc, <span class="st">"taxon_lsid"</span>)</span>
-<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">%&gt;%</span></span>
-<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(  <span class="co"># rename columns to Darwin Core terms</span></span>
-<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a>        <span class="at">basisOfRecord =</span> type,</span>
-<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a>        <span class="at">eventDate =</span> time,</span>
-<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a>        <span class="at">decimalLatitude =</span> lat,</span>
-<span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a>        <span class="at">decimalLongitude =</span> lon) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(eventDate) <span class="co">#arrange by increasing date</span></span>
-<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a><span class="co"># minimumDepthInMeters = z,</span></span>
-<span id="cb20-51"><a href="#cb20-51" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>minimumDepthInMeters <span class="ot">=</span> atn_tbl<span class="sc">$</span>z</span>
-<span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-53"><a href="#cb20-53" aria-hidden="true" tabindex="-1"></a><span class="co"># maximumDepthInMeters = z,</span></span>
-<span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>maximumDepthInMeters <span class="ot">=</span> atn_tbl<span class="sc">$</span>z</span>
-<span id="cb20-55"><a href="#cb20-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-56"><a href="#cb20-56" aria-hidden="true" tabindex="-1"></a><span class="co"># organismID - {platformID}_{common_name}</span></span>
-<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a>common_name_tbl <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"NC_GLOBAL"</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"animal_common_name"</span>)</span>
-<span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a>common_name <span class="ot">&lt;-</span> <span class="fu">chartr</span>(<span class="st">" "</span>, <span class="st">"_"</span>, common_name_tbl<span class="sc">$</span>value)</span>
-<span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a>platform_id_tbl <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"NC_GLOBAL"</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"platform_id"</span>)</span>
-<span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a>platform_id <span class="ot">&lt;-</span> <span class="fu">chartr</span>(<span class="st">" "</span>, <span class="st">"_"</span>, platform_id_tbl<span class="sc">$</span>value)</span>
-<span id="cb20-61"><a href="#cb20-61" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>organismID <span class="ot">&lt;-</span> <span class="fu">paste</span>(platform_id , common_name, <span class="at">sep =</span> <span class="st">"_"</span>) </span>
-<span id="cb20-62"><a href="#cb20-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-63"><a href="#cb20-63" aria-hidden="true" tabindex="-1"></a><span class="co"># occurrenceID - {eventDate}_{depth}_{common_name}</span></span>
-<span id="cb20-64"><a href="#cb20-64" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>occurrenceID <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">" "</span>, <span class="st">"_"</span>, <span class="fu">paste</span>(<span class="st">"ioos_atn"</span>, occurrencedf<span class="sc">$</span>eventDate, atn_tbl<span class="sc">$</span>z, common_name, <span class="at">sep =</span> <span class="st">"_"</span>))</span>
-<span id="cb20-65"><a href="#cb20-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-66"><a href="#cb20-66" aria-hidden="true" tabindex="-1"></a><span class="co"># geodeticDatum</span></span>
-<span id="cb20-67"><a href="#cb20-67" aria-hidden="true" tabindex="-1"></a>gd_tbl <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"crs"</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"epsg_code"</span>)</span>
-<span id="cb20-68"><a href="#cb20-68" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>geodeticDatum <span class="ot">&lt;-</span> <span class="fu">paste</span>(gd_tbl<span class="sc">$</span>value)</span>
-<span id="cb20-69"><a href="#cb20-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-70"><a href="#cb20-70" aria-hidden="true" tabindex="-1"></a><span class="co"># eventID</span></span>
-<span id="cb20-71"><a href="#cb20-71" aria-hidden="true" tabindex="-1"></a><span class="co">#eventID - {common_name}_{dateTime}</span></span>
-<span id="cb20-72"><a href="#cb20-72" aria-hidden="true" tabindex="-1"></a>cname <span class="ot">=</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"NC_GLOBAL"</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"animal_common_name"</span>)</span>
-<span id="cb20-73"><a href="#cb20-73" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>eventID <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">" "</span>, <span class="st">"_"</span>, <span class="fu">paste0</span>(cname<span class="sc">$</span>value, <span class="st">"_"</span>, occurrencedf<span class="sc">$</span>eventDate))</span>
-<span id="cb20-74"><a href="#cb20-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-75"><a href="#cb20-75" aria-hidden="true" tabindex="-1"></a><span class="co"># associatedReferences</span></span>
-<span id="cb20-76"><a href="#cb20-76" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>associatedReferences <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"https://www.ncei.noaa.gov/archive/accession/"</span>,<span class="fu">str_split</span>(url_nc,<span class="st">"/"</span>,<span class="at">simplify=</span><span class="cn">TRUE</span>)[[<span class="dv">8</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Defined to grab attributes in subsequent code</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>nc <span class="ot">&lt;-</span> <span class="fu">nc_open</span>(file_nc)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>occurrencedf <span class="ot">&lt;-</span> atn_tbl <span class="sc">%&gt;%</span>  </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>( <span class="co"># Select desired columns</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>        time, </span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>        lat,</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>        lon,</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>        type,</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>        location_class,</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>        qartod_time_flag,</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>        qartod_speed_flag,</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>        qartod_location_flag,</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>        qartod_rollup_flag</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">%&gt;%</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>( <span class="co"># add and mutate columns.</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> <span class="fu">case_when</span>(type <span class="sc">==</span> <span class="st">'User'</span> <span class="sc">~</span> <span class="st">'HumanObservation'</span>,</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>                         type <span class="sc">==</span> <span class="st">'Argos'</span> <span class="sc">~</span> <span class="st">'MachineObservation'</span>),</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">time =</span> <span class="fu">format</span>(time, <span class="st">'%Y-%m-%dT%H:%M:%SZ'</span>),</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">kingdom =</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"animal"</span> <span class="sc">&amp;</span> name <span class="sc">==</span> <span class="st">"kingdom"</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(value) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(<span class="at">use.names =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">taxonRank =</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"animal"</span> <span class="sc">&amp;</span> name <span class="sc">==</span> <span class="st">"rank"</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(value) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>(<span class="at">use.names =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">occurrenceStatus =</span> <span class="st">"present"</span>,</span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>        <span class="at">sex =</span> <span class="fu">ncvar_get</span>( nc, <span class="st">'animal_sex'</span>),</span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>        <span class="at">lifeStage =</span> <span class="fu">ncvar_get</span>( nc, <span class="st">'animal_life_stage'</span>),</span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>        <span class="at">scientificName =</span> <span class="fu">ncvar_get</span>( nc, <span class="st">'taxon_name'</span>),</span>
+<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a>        <span class="at">scientificNameID =</span> <span class="fu">ncvar_get</span>( nc, <span class="st">"taxon_lsid"</span>)</span>
+<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">%&gt;%</span></span>
+<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(  <span class="co"># rename columns to Darwin Core terms</span></span>
+<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a>        <span class="at">basisOfRecord =</span> type,</span>
+<span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a>        <span class="at">eventDate =</span> time,</span>
+<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a>        <span class="at">decimalLatitude =</span> lat,</span>
+<span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a>        <span class="at">decimalLongitude =</span> lon) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-47"><a href="#cb18-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(eventDate) <span class="co">#arrange by increasing date</span></span>
+<span id="cb18-49"><a href="#cb18-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-50"><a href="#cb18-50" aria-hidden="true" tabindex="-1"></a><span class="co"># minimumDepthInMeters = z,</span></span>
+<span id="cb18-51"><a href="#cb18-51" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>minimumDepthInMeters <span class="ot">=</span> atn_tbl<span class="sc">$</span>z</span>
+<span id="cb18-52"><a href="#cb18-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-53"><a href="#cb18-53" aria-hidden="true" tabindex="-1"></a><span class="co"># maximumDepthInMeters = z,</span></span>
+<span id="cb18-54"><a href="#cb18-54" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>maximumDepthInMeters <span class="ot">=</span> atn_tbl<span class="sc">$</span>z</span>
+<span id="cb18-55"><a href="#cb18-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-56"><a href="#cb18-56" aria-hidden="true" tabindex="-1"></a><span class="co"># organismID - {platformID}_{common_name}</span></span>
+<span id="cb18-57"><a href="#cb18-57" aria-hidden="true" tabindex="-1"></a>common_name_tbl <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"NC_GLOBAL"</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"animal_common_name"</span>)</span>
+<span id="cb18-58"><a href="#cb18-58" aria-hidden="true" tabindex="-1"></a>common_name <span class="ot">&lt;-</span> <span class="fu">chartr</span>(<span class="st">" "</span>, <span class="st">"_"</span>, common_name_tbl<span class="sc">$</span>value)</span>
+<span id="cb18-59"><a href="#cb18-59" aria-hidden="true" tabindex="-1"></a>platform_id_tbl <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"NC_GLOBAL"</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"platform_id"</span>)</span>
+<span id="cb18-60"><a href="#cb18-60" aria-hidden="true" tabindex="-1"></a>platform_id <span class="ot">&lt;-</span> <span class="fu">chartr</span>(<span class="st">" "</span>, <span class="st">"_"</span>, platform_id_tbl<span class="sc">$</span>value)</span>
+<span id="cb18-61"><a href="#cb18-61" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>organismID <span class="ot">&lt;-</span> <span class="fu">paste</span>(platform_id , common_name, <span class="at">sep =</span> <span class="st">"_"</span>) </span>
+<span id="cb18-62"><a href="#cb18-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-63"><a href="#cb18-63" aria-hidden="true" tabindex="-1"></a><span class="co"># occurrenceID - {eventDate}_{depth}_{common_name}</span></span>
+<span id="cb18-64"><a href="#cb18-64" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>occurrenceID <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">" "</span>, <span class="st">"_"</span>, <span class="fu">paste</span>(<span class="st">"ioos_atn"</span>, occurrencedf<span class="sc">$</span>eventDate, atn_tbl<span class="sc">$</span>z, common_name, <span class="at">sep =</span> <span class="st">"_"</span>))</span>
+<span id="cb18-65"><a href="#cb18-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-66"><a href="#cb18-66" aria-hidden="true" tabindex="-1"></a><span class="co"># geodeticDatum</span></span>
+<span id="cb18-67"><a href="#cb18-67" aria-hidden="true" tabindex="-1"></a>gd_tbl <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"crs"</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"epsg_code"</span>)</span>
+<span id="cb18-68"><a href="#cb18-68" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>geodeticDatum <span class="ot">&lt;-</span> <span class="fu">paste</span>(gd_tbl<span class="sc">$</span>value)</span>
+<span id="cb18-69"><a href="#cb18-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-70"><a href="#cb18-70" aria-hidden="true" tabindex="-1"></a><span class="co"># eventID</span></span>
+<span id="cb18-71"><a href="#cb18-71" aria-hidden="true" tabindex="-1"></a><span class="co">#eventID - {common_name}_{dateTime}</span></span>
+<span id="cb18-72"><a href="#cb18-72" aria-hidden="true" tabindex="-1"></a>cname <span class="ot">=</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"NC_GLOBAL"</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"animal_common_name"</span>)</span>
+<span id="cb18-73"><a href="#cb18-73" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>eventID <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">" "</span>, <span class="st">"_"</span>, <span class="fu">paste0</span>(cname<span class="sc">$</span>value, <span class="st">"_"</span>, occurrencedf<span class="sc">$</span>eventDate))</span>
+<span id="cb18-74"><a href="#cb18-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-75"><a href="#cb18-75" aria-hidden="true" tabindex="-1"></a><span class="co"># associatedReferences</span></span>
+<span id="cb18-76"><a href="#cb18-76" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>associatedReferences <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"https://www.ncei.noaa.gov/archive/accession/"</span>,<span class="fu">str_split</span>(url_nc,<span class="st">"/"</span>,<span class="at">simplify=</span><span class="cn">TRUE</span>)[[<span class="dv">8</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(occurrencedf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(occurrencedf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [29 × 23] (S3: tbl_df/tbl/data.frame)
  $ eventDate           : chr [1:29] "2009-09-23T00:00:00Z" "2009-09-25T06:42:00Z" "2009-09-25T11:09:00Z" "2009-09-25T11:11:00Z" ...
@@ -1270,20 +1260,20 @@ exit status</code></pre>
 </table>
 <p>Below we create a lookup table for the <code>location_class</code> values we agree are good, which contains the <code>coordinateUncertaintyInMeters</code> for the appropriate location class. When we merge that table with our raw data, the observations that don’t match the location_classes in our lookup table will not be transfered over (ie. they will be filtered out).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>occurrencedf <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(location_class <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'nan'</span>,<span class="st">'G'</span>,<span class="st">'3'</span>,<span class="st">'2'</span>,<span class="st">'1'</span>,<span class="st">'0'</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(  <span class="co"># This returns NA for any other values than those defined below</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">coordinateUncertaintyInMeters =</span> <span class="fu">case_when</span>(location_class <span class="sc">==</span> <span class="st">'nan'</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                                                     location_class <span class="sc">==</span> <span class="st">'G'</span> <span class="sc">~</span> <span class="dv">200</span>,</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                                                     location_class <span class="sc">==</span> <span class="st">'3'</span> <span class="sc">~</span> <span class="dv">250</span>,</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                                                     location_class <span class="sc">==</span> <span class="st">'2'</span> <span class="sc">~</span> <span class="dv">500</span>,</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>                                                     location_class <span class="sc">==</span> <span class="st">'1'</span> <span class="sc">~</span> <span class="dv">1500</span>,</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>                                                     location_class <span class="sc">==</span> <span class="st">'0'</span> <span class="sc">~</span> <span class="dv">10000</span>) <span class="co"># &lt;https://github.com/ioos/bio_data_guide/issues/145#issuecomment-1805739244&gt;</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(eventDate) <span class="co"># arrange by increasing date</span></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>occurrencedf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>occurrencedf <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(location_class <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'nan'</span>,<span class="st">'G'</span>,<span class="st">'3'</span>,<span class="st">'2'</span>,<span class="st">'1'</span>,<span class="st">'0'</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(  <span class="co"># This returns NA for any other values than those defined below</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">coordinateUncertaintyInMeters =</span> <span class="fu">case_when</span>(location_class <span class="sc">==</span> <span class="st">'nan'</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>                                                     location_class <span class="sc">==</span> <span class="st">'G'</span> <span class="sc">~</span> <span class="dv">200</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>                                                     location_class <span class="sc">==</span> <span class="st">'3'</span> <span class="sc">~</span> <span class="dv">250</span>,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>                                                     location_class <span class="sc">==</span> <span class="st">'2'</span> <span class="sc">~</span> <span class="dv">500</span>,</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>                                                     location_class <span class="sc">==</span> <span class="st">'1'</span> <span class="sc">~</span> <span class="dv">1500</span>,</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>                                                     location_class <span class="sc">==</span> <span class="st">'0'</span> <span class="sc">~</span> <span class="dv">10000</span>) <span class="co"># &lt;https://github.com/ioos/bio_data_guide/issues/145#issuecomment-1805739244&gt;</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(eventDate) <span class="co"># arrange by increasing date</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>occurrencedf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 19 × 24
    eventDate       decimalLatitude decimalLongitude basisOfRecord location_class
@@ -1325,20 +1315,20 @@ exit status</code></pre>
 <p>The dataGeneralizations string is compiled by counting the number of consecutive duplicates and inserting that into a standard string. That string is “first of [n] records” which will make more sense once we’ve filtered down to keep the first occurrence of the hour.</p>
 <p>The next step below this, we filter out only the first observation of the hour.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sort by date</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>occurrencedf <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(eventDate)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>occurrencedf <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">eventDateHrs =</span> <span class="fu">format</span>(<span class="fu">as.POSIXct</span>(eventDate, <span class="at">format=</span><span class="st">"%Y-%m-%dT%H:%M:%SZ"</span>),<span class="st">"%Y-%m-%dT%H"</span>)</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>           ) <span class="sc">%&gt;%</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_count</span>(eventDateHrs) <span class="sc">%&gt;%</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">dataGeneralizations =</span> <span class="fu">case_when</span>(n <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">""</span>,</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>                                           <span class="cn">TRUE</span> <span class="sc">~</span> <span class="fu">paste</span>(<span class="st">"first of "</span>, n ,<span class="st">"records"</span>)</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>                                           )</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>           ) <span class="sc">%&gt;%</span></span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>n)</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>occurrencedf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sort by date</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>occurrencedf <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(eventDate)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>occurrencedf <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">eventDateHrs =</span> <span class="fu">format</span>(<span class="fu">as.POSIXct</span>(eventDate, <span class="at">format=</span><span class="st">"%Y-%m-%dT%H:%M:%SZ"</span>),<span class="st">"%Y-%m-%dT%H"</span>)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>           ) <span class="sc">%&gt;%</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_count</span>(eventDateHrs) <span class="sc">%&gt;%</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">dataGeneralizations =</span> <span class="fu">case_when</span>(n <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">""</span>,</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>                                           <span class="cn">TRUE</span> <span class="sc">~</span> <span class="fu">paste</span>(<span class="st">"first of "</span>, n ,<span class="st">"records"</span>)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>                                           )</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>           ) <span class="sc">%&gt;%</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>n)</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>occurrencedf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 19 × 26
    eventDate       decimalLatitude decimalLongitude basisOfRecord location_class
@@ -1377,14 +1367,14 @@ exit status</code></pre>
 <p>Essentially we build a new colum that is the date plus the two digit hour. Then we find where that column has duplicates and keep the first entry.</p>
 <p>In R, we do something slightly different as we only keep the distinct (ie. unique) rows and if there are duplicates, pick the first row of the duplicate.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sort by date</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(eventDate)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># filter table to only unique date + hour and pick the first row.</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec <span class="ot">&lt;-</span> <span class="fu">distinct</span>(occurrencedf_dec,eventDateHrs,<span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>eventDateHrs)</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sort by date</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(eventDate)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># filter table to only unique date + hour and pick the first row.</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec <span class="ot">&lt;-</span> <span class="fu">distinct</span>(occurrencedf_dec,eventDateHrs,<span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>eventDateHrs)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 17 × 25
    eventDate       decimalLatitude decimalLongitude basisOfRecord location_class
@@ -1479,8 +1469,8 @@ exit status</code></pre>
 </table>
 <p>I’m not sure what to do here. My preference would be to include all rows where <code>qartod_rollup_flag</code> == 1 and drop the rest. But I’m open to suggestions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># perform filter but don't save it.</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(occurrencedf_dec, qartod_rollup_flag <span class="sc">==</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># perform filter but don't save it.</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(occurrencedf_dec, qartod_rollup_flag <span class="sc">==</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 16 × 25
    eventDate       decimalLatitude decimalLongitude basisOfRecord location_class
@@ -1512,16 +1502,16 @@ exit status</code></pre>
 </div>
 <p>Drop the quality flag columns to align with DarwinCore standard.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec <span class="ot">&lt;-</span> occurrencedf_dec <span class="sc">%&gt;%</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>        <span class="sc">-</span><span class="fu">c</span>(location_class,</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>           qartod_time_flag,</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>           qartod_speed_flag,</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>           qartod_location_flag,</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>           qartod_rollup_flag</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>           ))</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(occurrencedf_dec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec <span class="ot">&lt;-</span> occurrencedf_dec <span class="sc">%&gt;%</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>        <span class="sc">-</span><span class="fu">c</span>(location_class,</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>           qartod_time_flag,</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>           qartod_speed_flag,</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>           qartod_location_flag,</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>           qartod_rollup_flag</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>           ))</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(occurrencedf_dec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "eventDate"                     "decimalLatitude"              
  [3] "decimalLongitude"              "basisOfRecord"                
@@ -1539,11 +1529,11 @@ exit status</code></pre>
 <section id="write-decimated-occurrence-file-as-csv" class="level5" data-number="7.2.2.0.3">
 <h5 data-number="7.2.2.0.3" class="anchored" data-anchor-id="write-decimated-occurrence-file-as-csv"><span class="header-section-number">7.2.2.0.3</span> Write decimated occurrence file as csv</h5>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>tag_id <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"NC_GLOBAL"</span> <span class="sc">&amp;</span> name <span class="sc">==</span> <span class="st">"ptt_id"</span>)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec_csv <span class="ot">&lt;-</span> <span class="fu">here</span>(glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"{dir_data}/dwc/atn_{tag_id$value}_occurrence.csv"</span>))</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(occurrencedf_dec, <span class="at">file=</span>occurrencedf_dec_csv, <span class="at">row.names=</span><span class="cn">FALSE</span>, <span class="at">fileEncoding=</span><span class="st">"UTF-8"</span>, <span class="at">quote=</span><span class="cn">TRUE</span>, <span class="at">na=</span><span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>tag_id <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"NC_GLOBAL"</span> <span class="sc">&amp;</span> name <span class="sc">==</span> <span class="st">"ptt_id"</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec_csv <span class="ot">&lt;-</span> <span class="fu">here</span>(glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"{dir_data}/dwc/atn_{tag_id$value}_occurrence.csv"</span>))</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(occurrencedf_dec, <span class="at">file=</span>occurrencedf_dec_csv, <span class="at">row.names=</span><span class="cn">FALSE</span>, <span class="at">fileEncoding=</span><span class="st">"UTF-8"</span>, <span class="at">quote=</span><span class="cn">TRUE</span>, <span class="at">na=</span><span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="measurement-or-fact" class="level4" data-number="7.2.2.1">
@@ -1662,33 +1652,33 @@ c("animal_length",
              measurementMethod = ncatt_get( nc, x)[[paste0(x,'_type')]])
         })</code></pre>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Measurement or Fact extension</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co"># # Need to find the occurrence where basisOfRecord == HumanObservation, then pull the organism.</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>emof_data <span class="ot">&lt;-</span> <span class="co">#var_names %&gt;%</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#filter(str_starts(name, pattern = "animal_[lw]e")) %&gt;% #example using regex to parse names</span></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#    pull(name) %&gt;%</span></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Example using vector of variables</span></span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">"animal_length"</span>,</span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>      <span class="st">"animal_length_2"</span>,</span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>      <span class="st">"animal_weight"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">map_df</span>(<span class="cf">function</span>(x) {</span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">list</span>(<span class="at">measurementValue =</span> <span class="fu">ncvar_get</span>( nc, x),</span>
-<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">measurementType =</span> <span class="fu">ncatt_get</span>( nc, x)<span class="sc">$</span>long_name,</span>
-<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>             <span class="at">measurementUnit =</span> <span class="fu">ncatt_get</span>( nc, x)<span class="sc">$</span>units,</span>
-<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">measurementMethod =</span> <span class="fu">ncatt_get</span>( nc, x)[[<span class="fu">paste0</span>(x,<span class="st">'_type'</span>)]])</span>
-<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>    }) <span class="sc">%&gt;%</span></span>
-<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(measurementValue <span class="sc">!=</span> <span class="st">"NaN"</span>)</span>
-<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>emofdf <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span></span>
-<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(basisOfRecord <span class="sc">==</span> <span class="st">'HumanObservation'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(organismID, eventID, occurrenceID) <span class="sc">%&gt;%</span></span>
-<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cbind</span>(emof_data)</span>
-<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(emofdf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Measurement or Fact extension</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># # Need to find the occurrence where basisOfRecord == HumanObservation, then pull the organism.</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>emof_data <span class="ot">&lt;-</span> <span class="co">#var_names %&gt;%</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#filter(str_starts(name, pattern = "animal_[lw]e")) %&gt;% #example using regex to parse names</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#    pull(name) %&gt;%</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Example using vector of variables</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">"animal_length"</span>,</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>      <span class="st">"animal_length_2"</span>,</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>      <span class="st">"animal_weight"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">map_df</span>(<span class="cf">function</span>(x) {</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">list</span>(<span class="at">measurementValue =</span> <span class="fu">ncvar_get</span>( nc, x),</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">measurementType =</span> <span class="fu">ncatt_get</span>( nc, x)<span class="sc">$</span>long_name,</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>             <span class="at">measurementUnit =</span> <span class="fu">ncatt_get</span>( nc, x)<span class="sc">$</span>units,</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">measurementMethod =</span> <span class="fu">ncatt_get</span>( nc, x)[[<span class="fu">paste0</span>(x,<span class="st">'_type'</span>)]])</span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    }) <span class="sc">%&gt;%</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(measurementValue <span class="sc">!=</span> <span class="st">"NaN"</span>)</span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>emofdf <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span></span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(basisOfRecord <span class="sc">==</span> <span class="st">'HumanObservation'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(organismID, eventID, occurrenceID) <span class="sc">%&gt;%</span></span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cbind</span>(emof_data)</span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(emofdf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   1 obs. of  7 variables:
  $ organismID       : chr "105838_great_white_shark"
@@ -1704,21 +1694,20 @@ c("animal_length",
 <section id="write-emof-file-as-csv" class="level5" data-number="7.2.2.1.2">
 <h5 data-number="7.2.2.1.2" class="anchored" data-anchor-id="write-emof-file-as-csv"><span class="header-section-number">7.2.2.1.2</span> Write emof file as csv</h5>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>tag_id <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"NC_GLOBAL"</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"ptt_id"</span>)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>emof_csv <span class="ot">&lt;-</span> <span class="fu">here</span>(glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"{dir_data}/dwc/atn_{tag_id$value}_emof.csv"</span>))</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(emofdf, <span class="at">file=</span>emof_csv, <span class="at">row.names=</span><span class="cn">FALSE</span>, <span class="at">fileEncoding=</span><span class="st">"UTF-8"</span>, <span class="at">quote=</span><span class="cn">TRUE</span>, <span class="at">na=</span><span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>tag_id <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"NC_GLOBAL"</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"ptt_id"</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>emof_csv <span class="ot">&lt;-</span> <span class="fu">here</span>(glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"{dir_data}/dwc/atn_{tag_id$value}_emof.csv"</span>))</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(emofdf, <span class="at">file=</span>emof_csv, <span class="at">row.names=</span><span class="cn">FALSE</span>, <span class="at">fileEncoding=</span><span class="st">"UTF-8"</span>, <span class="at">quote=</span><span class="cn">TRUE</span>, <span class="at">na=</span><span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="print-session-info" class="level5" data-number="7.2.2.1.3">
-<h5 data-number="7.2.2.1.3" class="anchored" data-anchor-id="print-session-info"><span class="header-section-number">7.2.2.1.3</span> Print session info</h5>
-<pre><code>### sessionInfo()
-
-::: {.cell}
-
-```{.r .cell-code}
-sessionInfo()</code></pre>
+</section>
+</section>
+</section>
+<section id="print-session-info" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="print-session-info"><span class="header-section-number">7.3</span> Print session info</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>R version 4.4.1 (2024-06-14)
 Platform: aarch64-apple-darwin20
@@ -1756,12 +1745,9 @@ loaded via a namespace (and not attached):
 [37] data.tree_1.1.0    knitr_1.50         farver_2.1.2       htmltools_0.5.8.1 
 [41] rmarkdown_2.29     compiler_4.4.1    </code></pre>
 </div>
-<p>:::</p>
+</div>
 
 
-</section>
-</section>
-</section>
 </section>
 
 </main> <!-- /main -->
