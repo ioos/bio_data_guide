@@ -40,17 +40,13 @@ See <https://www.ncei.noaa.gov/archive/accession/0282699>
 ```{r}
 # paths ----
 
-url_base <- "https://www.ncei.noaa.gov/data/oceans/archive"
-
+url_base    <- "https://www.ncei.noaa.gov/data/oceans/archive"
 url_package <- "/arc0217/0282699/1.1/data/0-data/"
+url_file    <- "atn_45866_great-white-shark_trajectory_20090923-20091123.nc"
+dir_data    <- here("datasets/atn_satellite_telemetry/data")
 
-url_file <- "atn_45866_great-white-shark_trajectory_20090923-20091123.nc"
-
-url_nc <- paste0(url_base,url_package,url_file)
-
-dir_data <- "datasets/atn_satellite_telemetry/data"
-
-file_nc <- here(file.path(dir_data, "src", basename(url_nc)))
+url_nc  <- paste0(url_base, url_package, url_file)
+file_nc <- file.path(dir_data, "src", url_file)
 
 # stopifnot(dir.exists(dir_data))
 
@@ -370,7 +366,7 @@ names(occurrencedf_dec)
 ```{r}
 tag_id <- metadata %>% dplyr::filter(variable == "NC_GLOBAL" & name == "ptt_id")
 
-occurrencedf_dec_csv <- here(glue::glue("{dir_data}/dwc/atn_{tag_id$value}_occurrence.csv"))
+occurrencedf_dec_csv <- glue::glue("{dir_data}/dwc/atn_{tag_id$value}_occurrence.csv")
 
 write.csv(occurrencedf_dec, file=occurrencedf_dec_csv, row.names=FALSE, fileEncoding="UTF-8", quote=TRUE, na="")
 ```
@@ -458,7 +454,7 @@ str(emofdf)
 ```{r}
 tag_id <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "ptt_id")
 
-emof_csv <- here(glue::glue("{dir_data}/dwc/atn_{tag_id$value}_emof.csv"))
+emof_csv <- glue::glue("{dir_data}/dwc/atn_{tag_id$value}_emof.csv")
 
 write.csv(emofdf, file=emof_csv, row.names=FALSE, fileEncoding="UTF-8", quote=TRUE, na="")
 ```
