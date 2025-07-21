@@ -10,7 +10,7 @@ format:
 An R Markdown document converted from "atn_satellite_telemetry_netCDF2DwC.ipynb"
 
 Created: 2022-03-23
-Updated: 2023-11-16
+Updated: 2025-07-21
 
 Credit: Stephen Formel, Mathew Biddle
 
@@ -18,7 +18,7 @@ This notebook walks through downloading an example netCDF file from the an Archi
 
 This example uses the [tidync](https://ropensci.org/blog/2019/11/05/tidync/) package to work with netCDF data.
 
-Data used in this notebook are available from NCEI at the following link <https://www.ncei.noaa.gov/archive/accession/0282699.>
+Data used in this notebook are available from NCEI at the following link <https://www.ncei.noaa.gov/archive/accession/0282699>.
 
 ```{r}
 #Load libraries
@@ -50,7 +50,7 @@ url_nc <- paste0(url_base,url_package,url_file)
 
 dir_data <- "datasets/atn_satellite_telemetry/data"
 
-file_nc <- file.path(dir_data, "src", basename(url_nc))
+file_nc <- here(file.path(dir_data, "src", basename(url_nc)))
 
 # stopifnot(dir.exists(dir_data))
 
@@ -63,7 +63,7 @@ if (!file.exists(file_nc))
 Once the file is opened, we print out the details of what the netCDF file contains.
 
 ```{r}
-atn <- nc_open(here(file_nc))
+atn <- nc_open(file_nc)
 atn
 ```
 
@@ -72,7 +72,7 @@ atn
 This gathers not only the global attributes, but the variable level attributes as well. As you can see in the **variable** column the term `NC_GLOBAL` refers to global attributes.
 
 ```{r}
-metadata <- ncmeta::nc_atts(here(file_nc))
+metadata <- ncmeta::nc_atts(file_nc)
 metadata
 ```
 
@@ -80,7 +80,7 @@ metadata
 Collect the data dimensioned by `time` from the netCDF file as a tibble. Then, print the first ten rows.
 
 ```{r}
-atn <- tidync(here(file_nc))
+atn <- tidync(file_nc)
 
 atn_tbl <- atn %>% hyper_tibble(force=TRUE)
 
@@ -145,7 +145,7 @@ Now start working through the crosswalk. A few thoughts about some of the functi
 
 ```{r}
 # Defined to grab attributes in subsequent code
-nc <- nc_open(here(file_nc))
+nc <- nc_open(file_nc)
 
 occurrencedf <- atn_tbl %>%  
     select( # Select desired columns
@@ -463,10 +463,8 @@ emof_csv <- here(glue::glue("{dir_data}/dwc/atn_{tag_id$value}_emof.csv"))
 write.csv(emofdf, file=emof_csv, row.names=FALSE, fileEncoding="UTF-8", quote=TRUE, na="")
 ```
 
-##### Print session info
+## Print session info
 
-```
-### sessionInfo()
 ```{r}
 sessionInfo()
 ```
