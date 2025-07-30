@@ -1,0 +1,291 @@
+<eml:eml xmlns:eml="eml://ecoinformatics.org/eml-2.1.1"
+         xmlns:dc="http://purl.org/dc/terms/"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="eml://ecoinformatics.org/eml-2.1.1 http://rs.gbif.org/schema/eml-gbif-profile/1.0.2/eml.xsd"
+         packageId="https://ipt-obis.gbif.us/resource.do?id=atn_137491_spotted-seal_trajectory_20180418-20180526" system="http://gbif.org" scope="system"
+         xml:lang="eng">
+
+<dataset>
+  <alternateIdentifier>https://ipt-obis.gbif.us/resource.do?r=atn_137491_spotted-seal_trajectory_20180418-20180526</alternateIdentifier>
+  <title xml:lang="eng">Spotted seal (Phoca largha) location data from a satellite telemetry tag (ptt id 137491) deployed in the Bering Sea from 2018-04-18 to 2018-05-26, deployment id 5ad6ce42efec72080c898c77</title>
+  <creator>
+    <individualName>
+        <givenName>Mathew</givenName>
+      <surName>Biddle</surName>
+    </individualName>
+    <organizationName>Animal Tracking Network</organizationName>
+    <positionName>Physical Scientist</positionName>
+    <address>
+        <deliveryPoint>U.S. Integrated Ocean Observing System Program</deliveryPoint>
+        <city>Silver Spring</city>
+        <administrativeArea>Maryland</administrativeArea>
+        <postalCode>20910</postalCode>
+        <country>US</country>
+    </address>
+    <phone></phone>
+    <electronicMailAddress>mathew.biddle@noaa.gov</electronicMailAddress>
+    <onlineUrl>https://atn.ioos.us/</onlineUrl>
+  </creator>
+
+  <metadataProvider>
+    <individualName>
+        <givenName>US Integrated Ocean Observing System (IOOS) Animal Telemetry Network (ATN)</givenName>
+      <surName>US Integrated Ocean Observing System (IOOS) Animal Telemetry Network (ATN)</surName>
+    </individualName>
+    <organizationName>US Integrated Ocean Observing System Office</organizationName>
+    <positionName>Data Manager</positionName>
+    <address>
+        <country>USA</country>
+    </address>
+    <electronicMailAddress>atndata@ioos.us</electronicMailAddress>
+    <onlineUrl>https://atn.ioos.us</onlineUrl>
+  </metadataProvider>
+
+<!-- todo: looping over every individual associated w/ Project. Feed a contacts object with dictionary entries for ech-->
+    <associatedParty>
+      <individualName>
+        <givenName>Stacie Koslovsky</givenName>
+        <surName>Stacie Koslovsky</surName>
+      </individualName>
+      <organizationName>NOAA Alaska Fisheries Science Center</organizationName>
+      <electronicMailAddress>stacie.koslovsky@noaa.gov</electronicMailAddress>
+      <onlineUrl>https://orcid.org/0000-0002-9476-5383</onlineUrl>
+      <role>author</role>
+    </associatedParty>
+  
+    <associatedParty>
+      <individualName>
+        <givenName>Michael Cameron</givenName>
+        <surName>Michael Cameron</surName>
+      </individualName>
+      <organizationName>NOAA Alaska Fisheries Science Center</organizationName>
+      <electronicMailAddress>michael.cameron@noaa.gov</electronicMailAddress>
+      <onlineUrl></onlineUrl>
+      <role>author</role>
+    </associatedParty>
+  
+    <associatedParty>
+      <individualName>
+        <givenName>Peter Boveng</givenName>
+        <surName>Peter Boveng</surName>
+      </individualName>
+      <organizationName>NOAA Alaska Fisheries Science Center</organizationName>
+      <electronicMailAddress>peter.boveng@noaa.gov</electronicMailAddress>
+      <onlineUrl>https://orcid.org/0000-0003-2732-4833</onlineUrl>
+      <role>author</role>
+    </associatedParty>
+  
+    <associatedParty>
+      <individualName>
+        <givenName>Heather Ziel</givenName>
+        <surName>Heather Ziel</surName>
+      </individualName>
+      <organizationName>NOAA Alaska Fisheries Science Center</organizationName>
+      <electronicMailAddress>heather.ziel@noaa.gov</electronicMailAddress>
+      <onlineUrl>https://orcid.org/0000-0001-7068-4418</onlineUrl>
+      <role>author</role>
+    </associatedParty>
+  
+
+<pubDate>2025-05-27T21:27:32Z</pubDate>
+<language>eng</language>
+<abstract>
+    <para>Wildlife Computers SPOT tag (ptt id 137491) deployed on a spotted seal (Phoca largha) by Josh London in the Bering Sea from 2018-04-18 to 2018-05-26</para>
+    <para>Abstract:A Dataset from Bio-loggers Deployed on Ribbon Seals (Histriophoca fasciata) and Spotted Seals (Phoca largha) in the Bering Sea, 2005-2018</para>
+</abstract>
+
+<keywordSet>
+  <keyword>EARTH SCIENCE > AGRICULTURE > ANIMAL SCIENCE > ANIMAL ECOLOGY AND BEHAVIOR</keyword>
+  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
+</keywordSet>
+
+<keywordSet>
+  <keyword>EARTH SCIENCE > BIOSPHERE > ECOLOGICAL DYNAMICS > SPECIES/POPULATION INTERACTIONS > MIGRATORY RATES/ROUTES</keyword>
+  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
+</keywordSet>
+
+<keywordSet>
+  <keyword>EARTH SCIENCE > OCEANS</keyword>
+  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
+</keywordSet>
+
+<keywordSet>
+  <keyword>EARTH SCIENCE > CLIMATE INDICATORS > BIOSPHERIC INDICATORS > SPECIES MIGRATION</keyword>
+  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
+</keywordSet>
+
+<keywordSet>
+  <keyword>EARTH SCIENCE > OCEANS</keyword>
+  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
+</keywordSet>
+
+<keywordSet>
+  <keyword>EARTH SCIENCE > BIOLOGICAL CLASSIFICATION > ANIMALS/VERTEBRATES</keyword>
+  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
+</keywordSet>
+
+<keywordSet>
+  <keyword>EARTH SCIENCE > BIOSPHERE > ECOSYSTEMS > MARINE ECOSYSTEMS</keyword>
+  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
+</keywordSet>
+
+<keywordSet>
+  <keyword>PROVIDERS > GOVERNMENT AGENCIES-U.S. FEDERAL AGENCIES > DOC > NOAA > IOOS</keyword>
+  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
+</keywordSet>
+
+<keywordSet>
+  <keyword>PROVIDERS > COMMERCIAL > Axiom Data Science</keyword>
+  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
+</keywordSet>
+
+<keywordSet>
+
+  <keyword>ATN</keyword>
+
+  <keyword>Animal Telemetry Network</keyword>
+
+  <keyword>IOOS</keyword>
+
+  <keyword>Integrated Ocean Observing System</keyword>
+
+  <keyword>trajectory</keyword>
+
+  <keyword>satellite telemetry tag</keyword>
+
+</keywordSet>
+
+
+  <additionalInfo>
+    <para>Access Constraints:  none
+Use Constraints:
+Acknowledge the use of specific records from contributing databases in the form appearing in the &apos;Citation&apos; field thereof (if any); and acknowledge the use of the OBIS facility.
+
+For information purposes, email to info@obis.org  the full citation of any publication made (printed or electronic) that cites OBIS or any constituent part.
+
+Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.html#disclaimer for more details
+</para>
+  </additionalInfo>
+  <intellectualRights>
+    <para>This work is licensed under a <ulink url="https://creativecommons.org/publicdomain/zero/1.0/legalcode"><citetitle>Public Domain (CC0 1.0)</citetitle></ulink>.</para>
+  </intellectualRights>
+  <distribution scope="document">
+    <online>
+      <url function="information">https://portal.atn.ioos.us/#metadata/70c76508-b252-4c3d-9f27-e4cba9300537/project</url>
+    </online>
+  </distribution>
+  <coverage>
+      <geographicCoverage>
+          <geographicDescription>Bering Sea</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-166.0702</westBoundingCoordinate>
+          <eastBoundingCoordinate>-158.2506</eastBoundingCoordinate>
+          <northBoundingCoordinate>64.9335</northBoundingCoordinate>
+          <southBoundingCoordinate>60.0306</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+          <temporalCoverage>
+              <rangeOfDates>
+                  <beginDate>
+                    <calendarDate>2018-04-18T04:45:00Z</calendarDate>
+                  </beginDate>
+                <endDate>
+                  <calendarDate>2018-05-26T02:54:22Z</calendarDate>
+                </endDate>
+              </rangeOfDates>
+          </temporalCoverage>
+          <taxonomicCoverage>
+          <!-- todo: provide taxonomic statement if we can produce one from data -->
+                <generalTaxonomicCoverage>Species included below are tagged by this project and have left any embargo. Other individuals or species may later be appended to this dataset.</generalTaxonomicCoverage>
+                <taxonomicClassification>
+                  <taxonRankName>species</taxonRankName>
+                <taxonRankValue>Phoca largha</taxonRankValue>
+                  <commonName>spotted seal</commonName>
+              </taxonomicClassification>
+            </taxonomicCoverage>
+  </coverage>
+  <purpose>
+    <para>These data are for display on the OBIS portal and associated mapping programs and for download to personal computers for ad-hoc end-user analysis.</para>
+  </purpose>
+  <contact>
+    <individualName>
+        <givenName>Josh London</givenName>
+      <surName>Josh London</surName>
+    </individualName>
+    <organizationName>NOAA Alaska Fisheries Science Center</organizationName>
+    <positionName>principalInvestigator</positionName>
+    <!--
+    <address>
+        <deliveryPoint>Dalhousie University</deliveryPoint>
+        <city>Halifax</city>
+        <administrativeArea>Nova Scotia</administrativeArea>
+        <postalCode>B3H 4J1</postalCode>
+        <country>CA</country>
+    </address>
+    -->
+    <!--<phone>xxx</phone>-->
+    <electronicMailAddress>josh.london@noaa.gov</electronicMailAddress>
+    <onlineUrl>https://www.fisheries.noaa.gov/alaska/marine-mammal-protection/ice-seal-research-alaska</onlineUrl>
+  </contact>
+  <methods>
+        <methodStep>
+          <description>
+            <para>This resource was created by the Animal Telemetry Network as a summarized representation of animal presence determined by electronic tagging efforts. Darwin Core (DwC) records were extracted from the OTN database and filtered and summarized according to international agreed-upon standards.</para>
+          </description>
+        </methodStep>
+      <sampling>
+        <studyExtent>
+          <description>
+            <para>A Dataset from Bio-loggers Deployed on Ribbon Seals (Histriophoca fasciata) and Spotted Seals (Phoca largha) in the Bering Sea, 2005-2018</para>
+          </description>
+        </studyExtent>
+        <samplingDescription>
+          <para>Wildlife Computers SPOT tag (ptt id 137491) deployed on a spotted seal (Phoca largha) by Josh London in the Bering Sea from 2018-04-18 to 2018-05-26</para>
+        </samplingDescription>
+      </sampling>
+      <qualityControl>
+        <description>
+          <para>NetCDF file created from position data obtained from Wildlife Computers API.</para>
+        </description>
+      </qualityControl>
+  </methods>
+  <project>
+      <title>A Dataset from Bio-loggers Deployed on Ribbon Seals (Histriophoca fasciata) and Spotted Seals (Phoca largha) in the Bering Sea, 2005-2018</title>
+      <personnel>
+        <individualName>
+          <givenName>Josh London</givenName>
+          <surName>Josh London</surName>
+        </individualName>
+        <role>principalInvestigator</role>
+      </personnel>
+    <abstract><para>A Dataset from Bio-loggers Deployed on Ribbon Seals (Histriophoca fasciata) and Spotted Seals (Phoca largha) in the Bering Sea, 2005-2018</para>
+    </abstract>
+  </project>
+</dataset>
+  <additionalMetadata>
+    <metadata>
+      <gbif>
+          <dateStamp>2025-05-27T21:27:32Z</dateStamp>
+          <hierarchyLevel>dataset</hierarchyLevel>
+            <citation>London, Josh; Koslovsky, Stacie; Cameron, Michael; Boveng, Peter; Ziel, Heather. (2025). Spotted seal (Phoca largha) location data from a satellite telemetry tag (ptt id 137491) deployed in the Bering Sea from 2018-04-18 to 2018-05-26, deployment id 5ad6ce42efec72080c898c77. [Dataset]. US Integrated Ocean Observing System (IOOS) Animal Telemetry Network (ATN).. Accessed via the OBIS-USA IPT on INSERT DATE</citation>
+          <bibliography>
+                <citation>London, Josh; Koslovsky, Stacie; Cameron, Michael; Boveng, Peter; Ziel, Heather. (2025). Spotted seal (Phoca largha) location data from a satellite telemetry tag (ptt id 137491) deployed in the Bering Sea from 2018-04-18 to 2018-05-26, deployment id 5ad6ce42efec72080c898c77. [Dataset]. US Integrated Ocean Observing System (IOOS) Animal Telemetry Network (ATN).</citation>
+          </bibliography>
+            <physical>
+              <objectName>A Dataset from Bio-loggers Deployed on Ribbon Seals (Histriophoca fasciata) and Spotted Seals (Phoca largha) in the Bering Sea, 2005-2018</objectName>
+              <characterEncoding>ASCII</characterEncoding>
+              <dataFormat>
+                <externallyDefinedFormat>
+                  <formatName>HTM</formatName>
+                </externallyDefinedFormat>
+              </dataFormat>
+              <distribution>
+                <online>
+                  <url function="download">https://portal.atn.ioos.us/#metadata/70c76508-b252-4c3d-9f27-e4cba9300537/project</url>
+                </online>
+              </distribution>
+            </physical>
+      </gbif>
+    </metadata>
+  </additionalMetadata>
+</eml:eml>

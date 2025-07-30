@@ -1,0 +1,2 @@
+eventID,eventDate,decimalLatitude,decimalLongitude,geodeticDatum,minimumDepthInMeters,maximumDepthInMeters,countryCode,samplingProtocol
+spotted_seal_2018-04-18T04:45:00Z,2018-04-18T04:45:00Z,63.6222,-165.0651,EPSG:4326,0.0,0.0,US,satellite telemetry
