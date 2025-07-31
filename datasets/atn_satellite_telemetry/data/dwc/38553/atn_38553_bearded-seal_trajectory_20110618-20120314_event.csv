@@ -1,2 +1,2 @@
 eventID,eventDate,decimalLatitude,decimalLongitude,geodeticDatum,minimumDepthInMeters,maximumDepthInMeters,countryCode,samplingProtocol
-bearded_seal_2011-06-18T03:00:00Z,2011-06-18T03:00:00Z,66.64,-163.0,EPSG:4326,0.0,0.0,US,satellite telemetry
+38553_bearded_seal_2011-06-18T03:00:00Z,2011-06-18T03:00:00Z,66.64,-163.0,EPSG:4326,0.0,0.0,US,satellite telemetry

@@ -14,7 +14,7 @@
       <surName>{{ data_manager_lastname }}</surName>
     </individualName>
     <organizationName>Animal Tracking Network</organizationName>
-    <positionName>{{ data_manager_title}}</positionName>
+    <positionName>{{ data_manager_title }}</positionName>
     <address>
         <deliveryPoint>U.S. Integrated Ocean Observing System Program</deliveryPoint>
         <city>Silver Spring</city>
@@ -29,8 +29,8 @@
 
   <metadataProvider>
     <individualName>
-        <givenName>{{ publisher_name }}</givenName>
-      <surName>{{ publisher_name }}</surName>
+      <givenName>{{ publisher_name.split(" ")[0] }}</givenName>
+      <surName>{{ publisher_name.split(" ")[-1] }}</surName>
     </individualName>
     <organizationName>{{ publisher_institution }}</organizationName>
     <positionName>Data Manager</positionName>
@@ -46,28 +46,27 @@
 {%- for party in contributors %}
     <associatedParty>
       <individualName>
-        <givenName>{{ party.contributor_name }}</givenName>
-        <surName>{{ party.contributor_name }}</surName>
+        <givenName>{{ party.contributor_name.split(" ")[0] }}</givenName>
+        <surName>{{ party.contributor_name.split(" ")[-1] }}</surName>
       </individualName>
       <organizationName>{{ party.contributor_institution }}</organizationName>
       <electronicMailAddress>{{ party.contributor_email }}</electronicMailAddress>
       <onlineUrl>{{ party.contributor_url }}</onlineUrl>
       <role>{{ party.contributor_role }}</role>
     </associatedParty>
-  {% endfor %}
-
+{% endfor %}
 <pubDate>{{ date_created }}</pubDate>
 <language>eng</language>
 <abstract>
     <para>{{ summary }}</para>
     <para>Abstract:{{ project }}</para>
 </abstract>
-{% for keyword in keywords.split(", ")%}
 <keywordSet>
+{% for keyword in keywords.split(", ")%}
   <keyword>{{ keyword }}</keyword>
+{% endfor %}
   <keywordThesaurus>{{ keywords_vocabulary }}</keywordThesaurus>
 </keywordSet>
-{% endfor %}
 <keywordSet>
 {% for keyword in arbitrary_keywords.split(", ")%}
   <keyword>{{ keyword }}</keyword>
@@ -95,7 +94,7 @@ Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.ht
   </distribution>
   <coverage>
       <geographicCoverage>
-          <geographicDescription>{{ sea_name }}</geographicDescription>
+        <geographicDescription>{{ sea_name }}</geographicDescription>
         <boundingCoordinates>
           <westBoundingCoordinate>{{ geospatial_lon_min }}</westBoundingCoordinate>
           <eastBoundingCoordinate>{{ geospatial_lon_max }}</eastBoundingCoordinate>
@@ -118,7 +117,7 @@ Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.ht
                 <generalTaxonomicCoverage>Species included below are tagged by this project and have left any embargo. Other individuals or species may later be appended to this dataset.</generalTaxonomicCoverage>
                 <taxonomicClassification>
                   <taxonRankName>species</taxonRankName>
-                <taxonRankValue>{{ animal_scientific_name }}</taxonRankValue>
+                  <taxonRankValue>{{ animal_scientific_name }}</taxonRankValue>
                   <commonName>{{ animal_common_name }}</commonName>
               </taxonomicClassification>
             </taxonomicCoverage>
@@ -128,8 +127,8 @@ Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.ht
   </purpose>
   <contact>
     <individualName>
-        <givenName>{{ creator_name }}</givenName>
-      <surName>{{ creator_name }}</surName>
+      <givenName>{{ creator_name.split(" ")[0] }}</givenName>
+      <surName>{{ creator_name.split(" ")[-1] }}</surName>
     </individualName>
     <organizationName>{{ creator_institution }}</organizationName>
     <positionName>{{ creator_role }}</positionName>
@@ -172,8 +171,8 @@ Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.ht
       <title>{{ project }}</title>
       <personnel>
         <individualName>
-          <givenName>{{ creator_name }}</givenName>
-          <surName>{{ creator_name }}</surName>
+          <givenName>{{ creator_name.split(" ")[0] }}</givenName>
+          <surName>{{ creator_name.split(" ")[-1] }}</surName>
         </individualName>
         <role>{{ creator_role }}</role>
       </personnel>

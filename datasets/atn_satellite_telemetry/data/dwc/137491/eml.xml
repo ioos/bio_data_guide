@@ -29,8 +29,8 @@
 
   <metadataProvider>
     <individualName>
-        <givenName>US Integrated Ocean Observing System (IOOS) Animal Telemetry Network (ATN)</givenName>
-      <surName>US Integrated Ocean Observing System (IOOS) Animal Telemetry Network (ATN)</surName>
+      <givenName>US</givenName>
+      <surName>(ATN)</surName>
     </individualName>
     <organizationName>US Integrated Ocean Observing System Office</organizationName>
     <positionName>Data Manager</positionName>
@@ -44,48 +44,47 @@
 <!-- todo: looping over every individual associated w/ Project. Feed a contacts object with dictionary entries for ech-->
     <associatedParty>
       <individualName>
-        <givenName>Stacie Koslovsky</givenName>
-        <surName>Stacie Koslovsky</surName>
+        <givenName>Stacie</givenName>
+        <surName>Koslovsky</surName>
       </individualName>
       <organizationName>NOAA Alaska Fisheries Science Center</organizationName>
       <electronicMailAddress>stacie.koslovsky@noaa.gov</electronicMailAddress>
       <onlineUrl>https://orcid.org/0000-0002-9476-5383</onlineUrl>
       <role>author</role>
     </associatedParty>
-  
+
     <associatedParty>
       <individualName>
-        <givenName>Michael Cameron</givenName>
-        <surName>Michael Cameron</surName>
+        <givenName>Michael</givenName>
+        <surName>Cameron</surName>
       </individualName>
       <organizationName>NOAA Alaska Fisheries Science Center</organizationName>
       <electronicMailAddress>michael.cameron@noaa.gov</electronicMailAddress>
       <onlineUrl></onlineUrl>
       <role>author</role>
     </associatedParty>
-  
+
     <associatedParty>
       <individualName>
-        <givenName>Peter Boveng</givenName>
-        <surName>Peter Boveng</surName>
+        <givenName>Peter</givenName>
+        <surName>Boveng</surName>
       </individualName>
       <organizationName>NOAA Alaska Fisheries Science Center</organizationName>
       <electronicMailAddress>peter.boveng@noaa.gov</electronicMailAddress>
       <onlineUrl>https://orcid.org/0000-0003-2732-4833</onlineUrl>
       <role>author</role>
     </associatedParty>
-  
+
     <associatedParty>
       <individualName>
-        <givenName>Heather Ziel</givenName>
-        <surName>Heather Ziel</surName>
+        <givenName>Heather</givenName>
+        <surName>Ziel</surName>
       </individualName>
       <organizationName>NOAA Alaska Fisheries Science Center</organizationName>
       <electronicMailAddress>heather.ziel@noaa.gov</electronicMailAddress>
       <onlineUrl>https://orcid.org/0000-0001-7068-4418</onlineUrl>
       <role>author</role>
     </associatedParty>
-  
 
 <pubDate>2025-05-27T21:27:32Z</pubDate>
 <language>eng</language>
@@ -93,52 +92,28 @@
     <para>Wildlife Computers SPOT tag (ptt id 137491) deployed on a spotted seal (Phoca largha) by Josh London in the Bering Sea from 2018-04-18 to 2018-05-26</para>
     <para>Abstract:A Dataset from Bio-loggers Deployed on Ribbon Seals (Histriophoca fasciata) and Spotted Seals (Phoca largha) in the Bering Sea, 2005-2018</para>
 </abstract>
-
 <keywordSet>
+
   <keyword>EARTH SCIENCE > AGRICULTURE > ANIMAL SCIENCE > ANIMAL ECOLOGY AND BEHAVIOR</keyword>
-  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
-</keywordSet>
 
-<keywordSet>
   <keyword>EARTH SCIENCE > BIOSPHERE > ECOLOGICAL DYNAMICS > SPECIES/POPULATION INTERACTIONS > MIGRATORY RATES/ROUTES</keyword>
-  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
-</keywordSet>
 
-<keywordSet>
   <keyword>EARTH SCIENCE > OCEANS</keyword>
-  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
-</keywordSet>
 
-<keywordSet>
   <keyword>EARTH SCIENCE > CLIMATE INDICATORS > BIOSPHERIC INDICATORS > SPECIES MIGRATION</keyword>
-  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
-</keywordSet>
 
-<keywordSet>
   <keyword>EARTH SCIENCE > OCEANS</keyword>
-  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
-</keywordSet>
 
-<keywordSet>
   <keyword>EARTH SCIENCE > BIOLOGICAL CLASSIFICATION > ANIMALS/VERTEBRATES</keyword>
-  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
-</keywordSet>
 
-<keywordSet>
   <keyword>EARTH SCIENCE > BIOSPHERE > ECOSYSTEMS > MARINE ECOSYSTEMS</keyword>
-  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
-</keywordSet>
 
-<keywordSet>
   <keyword>PROVIDERS > GOVERNMENT AGENCIES-U.S. FEDERAL AGENCIES > DOC > NOAA > IOOS</keyword>
-  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
-</keywordSet>
 
-<keywordSet>
   <keyword>PROVIDERS > COMMERCIAL > Axiom Data Science</keyword>
+
   <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
 </keywordSet>
-
 <keywordSet>
 
   <keyword>ATN</keyword>
@@ -176,7 +151,7 @@ Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.ht
   </distribution>
   <coverage>
       <geographicCoverage>
-          <geographicDescription>Bering Sea</geographicDescription>
+        <geographicDescription>Bering Sea</geographicDescription>
         <boundingCoordinates>
           <westBoundingCoordinate>-166.0702</westBoundingCoordinate>
           <eastBoundingCoordinate>-158.2506</eastBoundingCoordinate>
@@ -199,7 +174,7 @@ Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.ht
                 <generalTaxonomicCoverage>Species included below are tagged by this project and have left any embargo. Other individuals or species may later be appended to this dataset.</generalTaxonomicCoverage>
                 <taxonomicClassification>
                   <taxonRankName>species</taxonRankName>
-                <taxonRankValue>Phoca largha</taxonRankValue>
+                  <taxonRankValue>Phoca largha</taxonRankValue>
                   <commonName>spotted seal</commonName>
               </taxonomicClassification>
             </taxonomicCoverage>
@@ -209,8 +184,8 @@ Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.ht
   </purpose>
   <contact>
     <individualName>
-        <givenName>Josh London</givenName>
-      <surName>Josh London</surName>
+      <givenName>Josh</givenName>
+      <surName>London</surName>
     </individualName>
     <organizationName>NOAA Alaska Fisheries Science Center</organizationName>
     <positionName>principalInvestigator</positionName>
@@ -253,8 +228,8 @@ Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.ht
       <title>A Dataset from Bio-loggers Deployed on Ribbon Seals (Histriophoca fasciata) and Spotted Seals (Phoca largha) in the Bering Sea, 2005-2018</title>
       <personnel>
         <individualName>
-          <givenName>Josh London</givenName>
-          <surName>Josh London</surName>
+          <givenName>Josh</givenName>
+          <surName>London</surName>
         </individualName>
         <role>principalInvestigator</role>
       </personnel>

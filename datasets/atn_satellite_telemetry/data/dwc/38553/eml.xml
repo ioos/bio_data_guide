@@ -29,8 +29,8 @@
 
   <metadataProvider>
     <individualName>
-        <givenName>US Integrated Ocean Observing System (IOOS) Animal Telemetry Network (ATN)</givenName>
-      <surName>US Integrated Ocean Observing System (IOOS) Animal Telemetry Network (ATN)</surName>
+      <givenName>US</givenName>
+      <surName>(ATN)</surName>
     </individualName>
     <organizationName>US Integrated Ocean Observing System Office</organizationName>
     <positionName>Data Manager</positionName>
@@ -44,48 +44,47 @@
 <!-- todo: looping over every individual associated w/ Project. Feed a contacts object with dictionary entries for ech-->
     <associatedParty>
       <individualName>
-        <givenName>Josh London</givenName>
-        <surName>Josh London</surName>
+        <givenName>Josh</givenName>
+        <surName>London</surName>
       </individualName>
       <organizationName>NOAA Alaska Fisheries Science Center</organizationName>
       <electronicMailAddress>josh.london@noaa.gov</electronicMailAddress>
       <onlineUrl>https://orcid.org/0000-0002-3647-5046</onlineUrl>
       <role>originator</role>
     </associatedParty>
-  
+
     <associatedParty>
       <individualName>
-        <givenName>Michael Cameron</givenName>
-        <surName>Michael Cameron</surName>
+        <givenName>Michael</givenName>
+        <surName>Cameron</surName>
       </individualName>
       <organizationName>NOAA Alaska Fisheries Science Center</organizationName>
       <electronicMailAddress>michael.cameron@noaa.gov</electronicMailAddress>
       <onlineUrl></onlineUrl>
       <role>author</role>
     </associatedParty>
-  
+
     <associatedParty>
       <individualName>
-        <givenName>John Jansen</givenName>
-        <surName>John Jansen</surName>
+        <givenName>John</givenName>
+        <surName>Jansen</surName>
       </individualName>
       <organizationName>NOAA Alaska Fisheries Science Center</organizationName>
       <electronicMailAddress>john.jansen@noaa.gov</electronicMailAddress>
       <onlineUrl></onlineUrl>
       <role>author</role>
     </associatedParty>
-  
+
     <associatedParty>
       <individualName>
-        <givenName>Alex Whiting</givenName>
-        <surName>Alex Whiting</surName>
+        <givenName>Alex</givenName>
+        <surName>Whiting</surName>
       </individualName>
       <organizationName>Native Village of Kotzebue</organizationName>
       <electronicMailAddress></electronicMailAddress>
       <onlineUrl>https://orcid.org/0000-0003-0664-490X</onlineUrl>
       <role>author</role>
     </associatedParty>
-  
 
 <pubDate>2024-08-28T00:07:07Z</pubDate>
 <language>eng</language>
@@ -93,52 +92,28 @@
     <para>Wildlife Computers SPLASH10 tag (ptt id 38553) deployed on a bearded seal (Erignathus barbatus) by Peter Boveng in the Arctic Ocean, Beaufort Sea, Bering Sea, and the Chukchi Sea from 2011-06-18 to 2012-03-14</para>
     <para>Abstract:A Dataset from Bio-loggers Deployed on Adult Bearded Seals (Erignathus barbatus) in Kotzebue Sound, Alaska, USA, 2009-2012</para>
 </abstract>
-
 <keywordSet>
+
   <keyword>EARTH SCIENCE > AGRICULTURE > ANIMAL SCIENCE > ANIMAL ECOLOGY AND BEHAVIOR</keyword>
-  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
-</keywordSet>
 
-<keywordSet>
   <keyword>EARTH SCIENCE > BIOSPHERE > ECOLOGICAL DYNAMICS > SPECIES/POPULATION INTERACTIONS > MIGRATORY RATES/ROUTES</keyword>
-  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
-</keywordSet>
 
-<keywordSet>
   <keyword>EARTH SCIENCE > OCEANS</keyword>
-  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
-</keywordSet>
 
-<keywordSet>
   <keyword>EARTH SCIENCE > CLIMATE INDICATORS > BIOSPHERIC INDICATORS > SPECIES MIGRATION</keyword>
-  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
-</keywordSet>
 
-<keywordSet>
   <keyword>EARTH SCIENCE > OCEANS</keyword>
-  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
-</keywordSet>
 
-<keywordSet>
   <keyword>EARTH SCIENCE > BIOLOGICAL CLASSIFICATION > ANIMALS/VERTEBRATES</keyword>
-  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
-</keywordSet>
 
-<keywordSet>
   <keyword>EARTH SCIENCE > BIOSPHERE > ECOSYSTEMS > MARINE ECOSYSTEMS</keyword>
-  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
-</keywordSet>
 
-<keywordSet>
   <keyword>PROVIDERS > GOVERNMENT AGENCIES-U.S. FEDERAL AGENCIES > DOC > NOAA > IOOS</keyword>
-  <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
-</keywordSet>
 
-<keywordSet>
   <keyword>PROVIDERS > COMMERCIAL > Axiom Data Science</keyword>
+
   <keywordThesaurus>GCMD Science Keywords v15.1</keywordThesaurus>
 </keywordSet>
-
 <keywordSet>
 
   <keyword>ATN</keyword>
@@ -176,7 +151,7 @@ Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.ht
   </distribution>
   <coverage>
       <geographicCoverage>
-          <geographicDescription>Arctic Ocean,Beaufort Sea,Bering Sea,Chukchi Sea</geographicDescription>
+        <geographicDescription>Arctic Ocean,Beaufort Sea,Bering Sea,Chukchi Sea</geographicDescription>
         <boundingCoordinates>
           <westBoundingCoordinate>-173.277</westBoundingCoordinate>
           <eastBoundingCoordinate>-145.971</eastBoundingCoordinate>
@@ -199,7 +174,7 @@ Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.ht
                 <generalTaxonomicCoverage>Species included below are tagged by this project and have left any embargo. Other individuals or species may later be appended to this dataset.</generalTaxonomicCoverage>
                 <taxonomicClassification>
                   <taxonRankName>species</taxonRankName>
-                <taxonRankValue>Erignathus barbatus</taxonRankValue>
+                  <taxonRankValue>Erignathus barbatus</taxonRankValue>
                   <commonName>bearded seal</commonName>
               </taxonomicClassification>
             </taxonomicCoverage>
@@ -209,8 +184,8 @@ Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.ht
   </purpose>
   <contact>
     <individualName>
-        <givenName>Peter Boveng</givenName>
-      <surName>Peter Boveng</surName>
+      <givenName>Peter</givenName>
+      <surName>Boveng</surName>
     </individualName>
     <organizationName>NOAA Alaska Fisheries Science Center</organizationName>
     <positionName>principalInvestigator</positionName>
@@ -253,8 +228,8 @@ Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.ht
       <title>A Dataset from Bio-loggers Deployed on Adult Bearded Seals (Erignathus barbatus) in Kotzebue Sound, Alaska, USA, 2009-2012</title>
       <personnel>
         <individualName>
-          <givenName>Peter Boveng</givenName>
-          <surName>Peter Boveng</surName>
+          <givenName>Peter</givenName>
+          <surName>Boveng</surName>
         </individualName>
         <role>principalInvestigator</role>
       </personnel>
