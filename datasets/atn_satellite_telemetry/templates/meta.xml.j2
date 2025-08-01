@@ -6,14 +6,14 @@
       <location>{{ event_filename.split("\\")[-1] }}</location>
     </files>
     <coreid index="0" />{% for event_colname in event_cols_list %}
-    <field index="{{ loop.index }}" term="http://rs.tdwg.org/dwc/terms/{{ event_colname }}"/>{% endfor %}
+    <field index="{{ loop.index - 1}}" term="http://rs.tdwg.org/dwc/terms/{{ event_colname }}"/>{% endfor %}
   </core>
   <extension encoding="UTF-8" fieldsTerminatedBy="," linesTerminatedBy="\n" fieldsEnclosedBy='"' ignoreHeaderLines="1" rowType="http://rs.tdwg.org/dwc/terms/Occurrence">
     <files>
       <location>{{ occurrence_filename.split("\\")[-1] }}</location>
     </files>
     <id index="0" />{% for colname in cols_list %}
-      <field index="{{ loop.index }}" term="{% if colname in('modified', 'license','rightsHolder', 'accessRights') %}http://purl.org/dc/terms/{% else %}http://rs.tdwg.org/dwc/terms/{% endif %}{{ colname }}"/> {% endfor %}
+      <field index="{{ loop.index - 1 }}" term="{% if colname in('modified', 'license','rightsHolder', 'accessRights') %}http://purl.org/dc/terms/{% else %}http://rs.tdwg.org/dwc/terms/{% endif %}{{ colname }}"/> {% endfor %}
   </extension>
 
   {% else %}
@@ -23,7 +23,7 @@
       <location>{{ occurrence_filename.split("\\")[-1] }}</location>
     </files>
     <id index="0" />{% for colname in cols_list %}
-      <field index="{{ loop.index }}" term="{% if colname in('modified', 'license','rightsHolder', 'accessRights') %}http://purl.org/dc/terms/{% else %}http://rs.tdwg.org/dwc/terms/{% endif %}{{ colname }}"/> {% endfor %}
+      <field index="{{ loop.index - 1}}" term="{% if colname in('modified', 'license','rightsHolder', 'accessRights') %}http://purl.org/dc/terms/{% else %}http://rs.tdwg.org/dwc/terms/{% endif %}{{ colname }}"/> {% endfor %}
   </core>
   {% endif %}
 
@@ -32,8 +32,8 @@
     <files>
       <location>{{ emof_filename.split("\\")[-1] }}</location>
     </files>
-    <coreid index="0" />{% for emof_colname in emof_cols_list %}
-    <field index="{{ loop.index }}" term="{% if emof_colname in('measurementTypeID', 'measurementValueID','measurementUnitID') %}http://rs.iobis.org/obis/terms/{% else %}http://rs.tdwg.org/dwc/terms/{% endif %}{{ emof_colname }}"/>{% endfor %}
+    <coreid index="2" />{% for emof_colname in emof_cols_list %}
+    <field index="{{ loop.index - 1}}" term="{% if emof_colname in('measurementTypeID', 'measurementValueID','measurementUnitID') %}http://rs.iobis.org/obis/terms/{% else %}http://rs.tdwg.org/dwc/terms/{% endif %}{{ emof_colname }}"/>{% endfor %}
   </extension>
   {% endif %}
 

@@ -7,6 +7,7 @@
 
 <dataset>
   <alternateIdentifier>https://ipt-obis.gbif.us/resource.do?r={{ dataset_short_name }}</alternateIdentifier>
+  <alternateIdentifier>https://doi.org/10.25921/wp4e-ph20</alternateIdentifier>
   <title xml:lang="eng">{{ title }}</title>
   <creator>
     <individualName>
@@ -55,7 +56,7 @@
       <role>{{ party.contributor_role }}</role>
     </associatedParty>
 {% endfor %}
-<pubDate>{{ date_created }}</pubDate>
+<pubDate>{{ date_created.split("T")[0] }}</pubDate>
 <language>eng</language>
 <abstract>
     <para>{{ summary }}</para>
@@ -71,8 +72,8 @@
 {% for keyword in arbitrary_keywords.split(", ")%}
   <keyword>{{ keyword }}</keyword>
 {% endfor %}
+  <keywordThesaurus>arbitrary keywords</keywordThesaurus>
 </keywordSet>
-
 
   <additionalInfo>
     <para>Access Constraints:  none
@@ -105,10 +106,10 @@ Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.ht
           <temporalCoverage>
               <rangeOfDates>
                   <beginDate>
-                    <calendarDate>{{ time_coverage_start }}</calendarDate>
+                    <calendarDate>{{ time_coverage_start.split("T")[0] }}</calendarDate>
                   </beginDate>
                 <endDate>
-                  <calendarDate>{{ time_coverage_end }}</calendarDate>
+                  <calendarDate>{{ time_coverage_end.split("T")[0] }}</calendarDate>
                 </endDate>
               </rangeOfDates>
           </temporalCoverage>
@@ -132,23 +133,13 @@ Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.ht
     </individualName>
     <organizationName>{{ creator_institution }}</organizationName>
     <positionName>{{ creator_role }}</positionName>
-    <!--
-    <address>
-        <deliveryPoint>Dalhousie University</deliveryPoint>
-        <city>Halifax</city>
-        <administrativeArea>Nova Scotia</administrativeArea>
-        <postalCode>B3H 4J1</postalCode>
-        <country>CA</country>
-    </address>
-    -->
-    <!--<phone>xxx</phone>-->
     <electronicMailAddress>{{ creator_email }}</electronicMailAddress>
     <onlineUrl>{{ creator_institution_url }}</onlineUrl>
   </contact>
   <methods>
         <methodStep>
           <description>
-            <para>This resource was created by the Animal Telemetry Network as a summarized representation of animal presence determined by electronic tagging efforts. Darwin Core (DwC) records were extracted from the OTN database and filtered and summarized according to international agreed-upon standards.</para>
+            <para>This resource was created by the Animal Telemetry Network as a summarized representation of animal presence determined by electronic tagging efforts. Darwin Core (DwC) records were extracted from the ATN database and filtered and summarized according to international agreed-upon standards.</para>
           </description>
         </methodStep>
       <sampling>
@@ -200,6 +191,20 @@ Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.ht
               <distribution>
                 <online>
                   <url function="download">{{ infoUrl }}</url>
+                </online>
+              </distribution>
+            </physical>
+            <physical>
+              <objectName>U.S. Animal Telemetry Network (2023). Marine animal satellite telemetry location and profile data from the U.S. Animal Telemetry Network (ATN). [indicate subset used]. NOAA National Centers for Environmental Information. Dataset.</objectName>
+              <characterEncoding>ASCII</characterEncoding>
+              <dataFormat>
+                <externallyDefinedFormat>
+                  <formatName>HTM</formatName>
+                </externallyDefinedFormat>
+              </dataFormat>
+              <distribution>
+                <online>
+                  <url function="download">https://doi.org/10.25921/wp4e-ph20</url>
                 </online>
               </distribution>
             </physical>
