@@ -32,7 +32,7 @@
     <files>
       <location>{{ emof_filename.split("\\")[-1] }}</location>
     </files>
-    <coreid index="2" />{% for emof_colname in emof_cols_list %}
+    <coreid index="1" />{% for emof_colname in emof_cols_list %}
     <field index="{{ loop.index - 1}}" term="{% if emof_colname in('measurementTypeID', 'measurementValueID','measurementUnitID') %}http://rs.iobis.org/obis/terms/{% else %}http://rs.tdwg.org/dwc/terms/{% endif %}{{ emof_colname }}"/>{% endfor %}
   </extension>
   {% endif %}

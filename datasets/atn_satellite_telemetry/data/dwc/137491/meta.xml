@@ -49,14 +49,13 @@
     <files>
       <location>atn_137491_spotted-seal_trajectory_20180418-20180526_emof.csv</location>
     </files>
-    <coreid index="2" />
-    <field index="0" term="http://rs.tdwg.org/dwc/terms/organismID"/>
-    <field index="1" term="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
-    <field index="2" term="http://rs.tdwg.org/dwc/terms/eventID"/>
-    <field index="3" term="http://rs.tdwg.org/dwc/terms/measurementValue"/>
-    <field index="4" term="http://rs.tdwg.org/dwc/terms/measurementType"/>
-    <field index="5" term="http://rs.tdwg.org/dwc/terms/measurementMethod"/>
-    <field index="6" term="http://rs.tdwg.org/dwc/terms/measurementUnit"/>
+    <coreid index="1" />
+    <field index="0" term="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
+    <field index="1" term="http://rs.tdwg.org/dwc/terms/eventID"/>
+    <field index="2" term="http://rs.tdwg.org/dwc/terms/measurementValue"/>
+    <field index="3" term="http://rs.tdwg.org/dwc/terms/measurementType"/>
+    <field index="4" term="http://rs.tdwg.org/dwc/terms/measurementMethod"/>
+    <field index="5" term="http://rs.tdwg.org/dwc/terms/measurementUnit"/>
   </extension>
   
 
