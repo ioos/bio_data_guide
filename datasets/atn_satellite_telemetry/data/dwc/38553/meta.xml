@@ -1,26 +1,23 @@
 <archive xmlns="http://rs.tdwg.org/dwc/text/" metadata="eml.xml">
-
-  
   <core encoding="UTF-8" fieldsTerminatedBy="," linesTerminatedBy="\n" fieldsEnclosedBy='"' ignoreHeaderLines="1" rowType="http://rs.tdwg.org/dwc/terms/Event">
     <files>
       <location>atn_38553_bearded-seal_trajectory_20110618-20120314_event.csv</location>
     </files>
-    <coreid index="0" />
+    <id index="0" />
     <field index="0" term="http://rs.tdwg.org/dwc/terms/eventID"/>
     <field index="1" term="http://rs.tdwg.org/dwc/terms/eventDate"/>
-    <field index="2" term="http://rs.tdwg.org/dwc/terms/decimalLatitude"/>
-    <field index="3" term="http://rs.tdwg.org/dwc/terms/decimalLongitude"/>
-    <field index="4" term="http://rs.tdwg.org/dwc/terms/geodeticDatum"/>
-    <field index="5" term="http://rs.tdwg.org/dwc/terms/minimumDepthInMeters"/>
-    <field index="6" term="http://rs.tdwg.org/dwc/terms/maximumDepthInMeters"/>
-    <field index="7" term="http://rs.tdwg.org/dwc/terms/countryCode"/>
-    <field index="8" term="http://rs.tdwg.org/dwc/terms/samplingProtocol"/>
+    <field index="2" term="http://rs.tdwg.org/dwc/terms/footprintWKT"/>
+    <field index="3" term="http://rs.tdwg.org/dwc/terms/minimumDepthInMeters"/>
+    <field index="4" term="http://rs.tdwg.org/dwc/terms/maximumDepthInMeters"/>
+    <field index="5" term="http://rs.tdwg.org/dwc/terms/eventType"/>
+    <field index="6" term="http://rs.tdwg.org/dwc/terms/countryCode"/>
+    <field index="7" term="http://rs.tdwg.org/dwc/terms/samplingProtocol"/>
   </core>
   <extension encoding="UTF-8" fieldsTerminatedBy="," linesTerminatedBy="\n" fieldsEnclosedBy='"' ignoreHeaderLines="1" rowType="http://rs.tdwg.org/dwc/terms/Occurrence">
     <files>
       <location>atn_38553_bearded-seal_trajectory_20110618-20120314_occurrence.csv</location>
     </files>
-    <id index="0" />
+    <coreid index="10" />
       <field index="0" term="http://rs.tdwg.org/dwc/terms/occurrenceID"/> 
       <field index="1" term="http://rs.tdwg.org/dwc/terms/occurrenceStatus"/> 
       <field index="2" term="http://rs.tdwg.org/dwc/terms/basisOfRecord"/> 
@@ -39,11 +36,9 @@
       <field index="15" term="http://rs.tdwg.org/dwc/terms/sex"/> 
       <field index="16" term="http://rs.tdwg.org/dwc/terms/associatedReferences"/> 
       <field index="17" term="http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters"/> 
-      <field index="18" term="http://rs.tdwg.org/dwc/terms/dataGeneralizations"/> 
+      <field index="18" term="http://rs.tdwg.org/dwc/terms/minimumDepthInMeters"/> 
+      <field index="19" term="http://rs.tdwg.org/dwc/terms/maximumDepthInMeters"/> 
+      <field index="20" term="http://rs.tdwg.org/dwc/terms/dataGeneralizations"/> 
+      <field index="21" term="http://rs.tdwg.org/dwc/terms/occurrenceRemarks"/> 
   </extension>
-
-  
-
-  
-
 </archive>

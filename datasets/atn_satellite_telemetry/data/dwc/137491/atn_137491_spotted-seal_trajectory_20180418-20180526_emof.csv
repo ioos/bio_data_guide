@@ -1,3 +1,3 @@
 occurrenceID,eventID,measurementValue,measurementType,measurementMethod,measurementUnit
-ioos_atn_137491_2018-04-18T04:45:00Z_0.0_spotted_seal,137491_spotted_seal_2018-04-18T04:45:00Z,69.0,animal_weight: mass of the animal as measured or estimated at deployment,69.0 (kg),kg
-ioos_atn_137491_2018-04-18T04:45:00Z_0.0_spotted_seal,137491_spotted_seal_2018-04-18T04:45:00Z,129.0,animal_length: length of the animal as measured or estimated at deployment,129.0 (cm) standard length,cm
+ioos_atn_137491_2018-04-18T04:45:00Z_0.0_spotted_seal,ioos_atn_137491,69.0,animal_weight: mass of the animal as measured or estimated at deployment,69.0 (kg),kg
+ioos_atn_137491_2018-04-18T04:45:00Z_0.0_spotted_seal,ioos_atn_137491,129.0,animal_length: length of the animal as measured or estimated at deployment,129.0 (cm) standard length,cm

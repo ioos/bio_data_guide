@@ -10,3 +10,4 @@ datasets/atn_satellite_telemetry/data/dwc/*
 !datasets/atn_satellite_telemetry/data/dwc/137491/
 !datasets/atn_satellite_telemetry/data/dwc/137494/
 !datasets/atn_satellite_telemetry/data/dwc/38553/
+datasets/atn_satellite_telemetry/.env
