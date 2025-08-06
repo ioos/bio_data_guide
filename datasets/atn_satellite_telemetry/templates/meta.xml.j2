@@ -10,14 +10,14 @@
     <files>
       <location>{{ occurrence_filename.split("\\")[-1] }}</location>
     </files>
-    <coreid index="10" />{% for colname in cols_list %}
-      <field index="{{ loop.index - 1 }}" term="{% if colname in('modified', 'license','rightsHolder', 'accessRights') %}http://purl.org/dc/terms/{% else %}http://rs.tdwg.org/dwc/terms/{% endif %}{{ colname }}"/> {% endfor %}
+    <coreid index="0" />{% for colname in cols_list %}{%if colname !='eventID' %}
+      <field index="{{ loop.index - 1 }}" term="{% if colname in('modified', 'license','rightsHolder', 'accessRights', 'bibliographicCitation') %}http://purl.org/dc/terms/{% else %}http://rs.tdwg.org/dwc/terms/{% endif %}{{ colname }}"/>{% endif %}{% endfor %}
   </extension>{% if emof_filename %}
   <extension encoding="UTF-8" fieldsTerminatedBy="," linesTerminatedBy="\n" fieldsEnclosedBy='"' ignoreHeaderLines="1" rowType="http://rs.iobis.org/obis/terms/ExtendedMeasurementOrFact">
     <files>
       <location>{{ emof_filename.split("\\")[-1] }}</location>
     </files>
-    <coreid index="1" />{% for emof_colname in emof_cols_list %}
-    <field index="{{ loop.index - 1}}" term="{% if emof_colname in('measurementTypeID', 'measurementValueID','measurementUnitID') %}http://rs.iobis.org/obis/terms/{% else %}http://rs.tdwg.org/dwc/terms/{% endif %}{{ emof_colname }}"/>{% endfor %}
+    <coreid index="0" />{% for emof_colname in emof_cols_list %}{% if emof_colname != 'eventID' %}    
+      <field index="{{ loop.index - 1}}" term="{% if emof_colname in('measurementTypeID', 'measurementValueID','measurementUnitID') %}http://rs.iobis.org/obis/terms/{% else %}http://rs.tdwg.org/dwc/terms/{% endif %}{{ emof_colname }}"/>{% endif %}{% endfor %}
   </extension>{% endif %}
 </archive>

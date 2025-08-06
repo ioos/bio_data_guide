@@ -17,28 +17,28 @@
     <files>
       <location>atn_38553_bearded-seal_trajectory_20110618-20120314_occurrence.csv</location>
     </files>
-    <coreid index="10" />
-      <field index="0" term="http://rs.tdwg.org/dwc/terms/occurrenceID"/> 
-      <field index="1" term="http://rs.tdwg.org/dwc/terms/occurrenceStatus"/> 
-      <field index="2" term="http://rs.tdwg.org/dwc/terms/basisOfRecord"/> 
-      <field index="3" term="http://rs.tdwg.org/dwc/terms/organismID"/> 
-      <field index="4" term="http://rs.tdwg.org/dwc/terms/eventDate"/> 
-      <field index="5" term="http://rs.tdwg.org/dwc/terms/decimalLatitude"/> 
-      <field index="6" term="http://rs.tdwg.org/dwc/terms/decimalLongitude"/> 
-      <field index="7" term="http://rs.tdwg.org/dwc/terms/geodeticDatum"/> 
-      <field index="8" term="http://rs.tdwg.org/dwc/terms/scientificName"/> 
-      <field index="9" term="http://rs.tdwg.org/dwc/terms/scientificNameID"/> 
-      <field index="10" term="http://rs.tdwg.org/dwc/terms/eventID"/> 
-      <field index="11" term="http://rs.tdwg.org/dwc/terms/samplingProtocol"/> 
-      <field index="12" term="http://rs.tdwg.org/dwc/terms/kingdom"/> 
-      <field index="13" term="http://rs.tdwg.org/dwc/terms/taxonRank"/> 
-      <field index="14" term="http://rs.tdwg.org/dwc/terms/lifeStage"/> 
-      <field index="15" term="http://rs.tdwg.org/dwc/terms/sex"/> 
-      <field index="16" term="http://rs.tdwg.org/dwc/terms/associatedReferences"/> 
-      <field index="17" term="http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters"/> 
-      <field index="18" term="http://rs.tdwg.org/dwc/terms/minimumDepthInMeters"/> 
-      <field index="19" term="http://rs.tdwg.org/dwc/terms/maximumDepthInMeters"/> 
-      <field index="20" term="http://rs.tdwg.org/dwc/terms/dataGeneralizations"/> 
-      <field index="21" term="http://rs.tdwg.org/dwc/terms/occurrenceRemarks"/> 
+    <coreid index="0" />
+      <field index="1" term="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
+      <field index="2" term="http://rs.tdwg.org/dwc/terms/occurrenceStatus"/>
+      <field index="3" term="http://rs.tdwg.org/dwc/terms/basisOfRecord"/>
+      <field index="4" term="http://rs.tdwg.org/dwc/terms/organismID"/>
+      <field index="5" term="http://rs.tdwg.org/dwc/terms/eventDate"/>
+      <field index="6" term="http://rs.tdwg.org/dwc/terms/decimalLatitude"/>
+      <field index="7" term="http://rs.tdwg.org/dwc/terms/decimalLongitude"/>
+      <field index="8" term="http://rs.tdwg.org/dwc/terms/geodeticDatum"/>
+      <field index="9" term="http://rs.tdwg.org/dwc/terms/scientificName"/>
+      <field index="10" term="http://rs.tdwg.org/dwc/terms/scientificNameID"/>
+      <field index="11" term="http://rs.tdwg.org/dwc/terms/samplingProtocol"/>
+      <field index="12" term="http://rs.tdwg.org/dwc/terms/kingdom"/>
+      <field index="13" term="http://rs.tdwg.org/dwc/terms/taxonRank"/>
+      <field index="14" term="http://rs.tdwg.org/dwc/terms/lifeStage"/>
+      <field index="15" term="http://rs.tdwg.org/dwc/terms/sex"/>
+      <field index="16" term="http://rs.tdwg.org/dwc/terms/associatedReferences"/>
+      <field index="17" term="http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters"/>
+      <field index="18" term="http://rs.tdwg.org/dwc/terms/minimumDepthInMeters"/>
+      <field index="19" term="http://rs.tdwg.org/dwc/terms/maximumDepthInMeters"/>
+      <field index="20" term="http://rs.tdwg.org/dwc/terms/dataGeneralizations"/>
+      <field index="21" term="http://purl.org/dc/terms/bibliographicCitation"/>
+      <field index="22" term="http://rs.tdwg.org/dwc/terms/occurrenceRemarks"/>
   </extension>
 </archive>
