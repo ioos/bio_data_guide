@@ -288,7 +288,7 @@ Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.ht
           <givenName>Peter</givenName>
           <surName>Boveng</surName>
         </individualName>
-        <role>principalInvestigator</role>
+        <role>principal investigator</role>
       </personnel>
     <abstract><para>A Dataset from Bio-loggers Deployed on Adult Bearded Seals (Erignathus barbatus) in Kotzebue Sound, Alaska, USA, 2009-2012</para>
     </abstract>

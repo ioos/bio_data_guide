@@ -290,7 +290,7 @@ Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.ht
           <givenName>Josh</givenName>
           <surName>London</surName>
         </individualName>
-        <role>principalInvestigator</role>
+        <role>principal investigator</role>
       </personnel>
     <abstract><para>A Dataset from Bio-loggers Deployed on Ribbon Seals (Histriophoca fasciata) and Spotted Seals (Phoca largha) in the Bering Sea, 2005-2018</para>
     </abstract>
