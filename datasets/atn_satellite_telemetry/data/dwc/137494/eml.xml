@@ -8,6 +8,7 @@
 <dataset>
   <alternateIdentifier>https://ipt-obis.gbif.us/resource?r=atn_137494_ribbon-seal_trajectory_20140426-20140426</alternateIdentifier>
   <alternateIdentifier>https://doi.org/10.25921/wp4e-ph20</alternateIdentifier>
+  <alternateIdentifier>https://www.ncei.noaa.gov/archive/accession/0305178</alternateIdentifier>
   <title xml:lang="eng">Ribbon seal (Histriophoca fasciata) location data from a satellite telemetry tag (ptt id 137494) deployed in the Bering Sea from 2014-04-26 to 2014-04-26, deployment id 535b7f8de36c4f5e17acc135</title>
   <creator>
     <individualName>
@@ -154,7 +155,7 @@
 <pubDate>2025-05-27</pubDate>
 <language>eng</language>
 <abstract>
-    <para>This is the OBIS extraction of Ribbon seal (Histriophoca fasciata) location data from a satellite telemetry tag (ptt id 137494) deployed in the Bering Sea from 2014-04-26 to 2014-04-26, deployment id 535b7f8de36c4f5e17acc135 from the IOOS Animal Telemetry Network. This extraction is a subset of detections intended to be useful for the OBIS network.  The source dataset, containing the full set of detections, is available at NCEI: https://doi.org/10.25921/wp4e-ph20</para>
+    <para>This is the OBIS extraction of Ribbon seal (Histriophoca fasciata) location data from a satellite telemetry tag (ptt id 137494) deployed in the Bering Sea from 2014-04-26 to 2014-04-26, deployment id 535b7f8de36c4f5e17acc135 from the IOOS Animal Telemetry Network. This extraction is a subset of detections intended to be useful for the OBIS network.  The source dataset, containing the full set of detections, is available at NCEI: https://www.ncei.noaa.gov/archive/accession/0305178. The entire collection of satellite telemetry location and profile data collected from satellite-linked tags deployed on marine animals and contributed by organizations that are part of the U.S. Animal Telemetry Network (ATN) can be found at: https://doi.org/10.25921/wp4e-ph20</para>
 </abstract>
 <!--
 <funding>
@@ -264,7 +265,7 @@ Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.ht
   <methods>
         <methodStep>
           <description>
-            <para>This resource was created by the Animal Telemetry Network as a summarized representation of animal presence determined by electronic tagging efforts. Darwin Core (DwC) records were extracted from the ATN database and filtered and summarized according to international agreed-upon standards.</para>
+            <para>This resource was created by the Animal Telemetry Network as a summarized representation of animal presence determined by electronic tagging efforts. Darwin Core (DwC) records were extracted from the ATN database and filtered and summarized according to international agreed-upon standards. The source dataset, containing the full set of detections, is available at NCEI: https://www.ncei.noaa.gov/archive/accession/0305178.</para>
           </description>
         </methodStep>
       <sampling>
@@ -316,6 +317,20 @@ Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.ht
               <distribution>
                 <online>
                   <url function="download">https://portal.atn.ioos.us/#metadata/70c76508-b252-4c3d-9f27-e4cba9300537/project</url>
+                </online>
+              </distribution>
+            </physical>
+            <physical>
+              <objectName>Ribbon seal (Histriophoca fasciata) location data from satellite telemetry tag ptt 137494 deployed in the Bering Sea by the Marine Mammal Laboratory, NOAA Alaska Fisheries Science Center on 2014-04-26 (NCEI Accession 0305178)</objectName>
+              <characterEncoding>ASCII</characterEncoding>
+              <dataFormat>
+                <externallyDefinedFormat>
+                  <formatName>HTM</formatName>
+                </externallyDefinedFormat>
+              </dataFormat>
+              <distribution>
+                <online>
+                  <url function="download">https://www.ncei.noaa.gov/archive/accession/0305178</url>
                 </online>
               </distribution>
             </physical>
