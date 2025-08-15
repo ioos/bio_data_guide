@@ -10,4 +10,7 @@ datasets/atn_satellite_telemetry/data/dwc/*
 !datasets/atn_satellite_telemetry/data/dwc/137491/
 !datasets/atn_satellite_telemetry/data/dwc/137494/
 !datasets/atn_satellite_telemetry/data/dwc/38553/
+!datasets/atn_satellite_telemetry/data/dwc/atn_137491_spotted-seal_trajectory_20180418-20180526/
+!datasets/atn_satellite_telemetry/data/dwc/atn_137494_ribbon-seal_trajectory_20140426-20140426/
+!datasets/atn_satellite_telemetry/data/dwc/atn_38553_bearded-seal_trajectory_20110618-20120314/
 datasets/atn_satellite_telemetry/.env

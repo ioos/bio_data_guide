@@ -1,0 +1,3 @@
+eventID,occurrenceID,measurementValue,measurementType,measurementMethod,measurementUnit
+atn_137491_spotted-seal_trajectory_20180418-20180526,ioos_atn_137491_2018-04-18T04:45:00Z_0.0_spotted_seal,69.0,animal_weight: mass of the animal as measured or estimated at deployment,69.0 (kg),kg
+atn_137491_spotted-seal_trajectory_20180418-20180526,ioos_atn_137491_2018-04-18T04:45:00Z_0.0_spotted_seal,129.0,animal_length: length of the animal as measured or estimated at deployment,129.0 (cm) standard length,cm
