@@ -263,7 +263,14 @@ Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.ht
   <methods>
         <methodStep>
           <description>
-            <para>This resource was created by the Animal Telemetry Network as a summarized representation of animal presence determined by electronic tagging efforts. Darwin Core (DwC) records were extracted from the ATN database and filtered and summarized according to international agreed-upon standards. The source dataset, containing the full set of detections, is available at NCEI: https://www.ncei.noaa.gov/archive/accession/0298218.</para>
+            <para>This resource was created by the Animal Telemetry Network as a summarized representation of animal presence determined by satellite telemetry tagging efforts. Darwin Core (DwC) records were extracted from the ATN database and filtered and summarized according to international agreed-upon standards. The source dataset, containing the full set of detections, is available at NCEI: https://www.ncei.noaa.gov/archive/accession/0298218.</para>
+          </description>
+        </methodStep>
+        <methodStep>
+          <description>
+            <para>
+            Wildlife Computers SPLASH10 tag (serial number: 10A0200) attached to bearded seal on head.
+            </para>
           </description>
         </methodStep>
       <sampling>

@@ -1,0 +1,5 @@
+eventID,occurrenceID,measurementValue,measurementType,measurementTypeID,measurementMethod,measurementUnit,measurementUnitID
+atn_38553_bearded-seal_trajectory_20110618-20120314,ioos_atn_38553_2011-06-18T03:00:00Z_0.0_bearded_seal,10A0200,tag serial number,http://vocab.nerc.ac.uk/collection/MVB/current/MVB000189/,,,
+atn_38553_bearded-seal_trajectory_20110618-20120314,ioos_atn_38553_2011-06-18T03:00:00Z_0.0_bearded_seal,Wildlife Computers,tag manufacturer,http://vocab.nerc.ac.uk/collection/MVB/current/MVB000183/,,,
+atn_38553_bearded-seal_trajectory_20110618-20120314,ioos_atn_38553_2011-06-18T03:00:00Z_0.0_bearded_seal,SPLASH10,tag make and model,http://vocab.nerc.ac.uk/collection/MVB/current/MVB000185/,,,
+atn_38553_bearded-seal_trajectory_20110618-20120314,ioos_atn_38553_2011-06-18T03:00:00Z_0.0_bearded_seal,head,tag attachment location,http://vocab.nerc.ac.uk/collection/MVB/current/MVB000395/,,,

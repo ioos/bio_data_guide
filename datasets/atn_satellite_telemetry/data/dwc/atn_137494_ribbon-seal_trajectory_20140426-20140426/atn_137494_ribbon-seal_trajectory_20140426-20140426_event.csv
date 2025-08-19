@@ -1,2 +1,2 @@
 eventID,eventDate,footprintWKT,minimumDepthInMeters,maximumDepthInMeters,eventType,countryCode,samplingProtocol
-atn_137494_ribbon-seal_trajectory_20140426-20140426,2014-04-26T00:51:11Z/2014-04-27T15:30:50Z,"MULTIPOINT (-178.0899 60.6317, -177.8437 61.0606, -177.471 61.1814, -177.4029 61.1712)",0.0,0.0,deployment,US,satellite telemetry
+atn_137494_ribbon-seal_trajectory_20140426-20140426,2014-04-26T00:51:11Z/2014-04-27T15:30:50Z,"POLYGON ((-178.0899 60.6317, -177.8437 61.0606, -177.471 61.1814, -177.4029 61.1712, -178.0899 60.6317))",0.0,0.0,deployment,US,satellite telemetry

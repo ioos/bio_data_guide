@@ -1,2 +1,2 @@
 eventID,eventDate,footprintWKT,minimumDepthInMeters,maximumDepthInMeters,eventType,countryCode,samplingProtocol
-atn_137491_spotted-seal_trajectory_20180418-20180526,2018-04-18T04:45:00Z/2018-05-20T19:26:36Z,"MULTIPOINT (-165.0651 63.6222, -165.0595 63.6399, -164.4277 60.0415, -164.0013 63.365, -161.5203 64.6676)",0.0,0.0,deployment,US,satellite telemetry
+atn_137491_spotted-seal_trajectory_20180418-20180526,2018-04-18T04:45:00Z/2018-05-20T19:26:36Z,"POLYGON ((-164.4277 60.0415, -165.0651 63.6222, -165.0595 63.6399, -161.5203 64.6676, -164.4277 60.0415))",0.0,0.0,deployment,US,satellite telemetry

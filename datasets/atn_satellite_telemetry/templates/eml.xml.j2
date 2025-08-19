@@ -177,7 +177,14 @@ Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.ht
   <methods>
         <methodStep>
           <description>
-            <para>This resource was created by the Animal Telemetry Network as a summarized representation of animal presence determined by electronic tagging efforts. Darwin Core (DwC) records were extracted from the ATN database and filtered and summarized according to international agreed-upon standards. The source dataset, containing the full set of detections, is available at NCEI: https://www.ncei.noaa.gov/archive/accession/{{ ncei_accession_number }}.</para>
+            <para>This resource was created by the Animal Telemetry Network as a summarized representation of animal presence determined by satellite telemetry tagging efforts. Darwin Core (DwC) records were extracted from the ATN database and filtered and summarized according to international agreed-upon standards. The source dataset, containing the full set of detections, is available at NCEI: https://www.ncei.noaa.gov/archive/accession/{{ ncei_accession_number }}.</para>
+          </description>
+        </methodStep>
+        <methodStep>
+          <description>
+            <para>
+            {{ manufacturer }} {{ make_model }} tag (serial number: {{ serial_number }}) attached to {{ animal_common_name }}{%if attachment %} on {{ attachment }}.{% else %}.{% endif %}
+            </para>
           </description>
         </methodStep>
       <sampling>

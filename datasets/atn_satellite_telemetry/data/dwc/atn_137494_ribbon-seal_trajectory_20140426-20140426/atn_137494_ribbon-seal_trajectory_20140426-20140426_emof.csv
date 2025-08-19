@@ -1,0 +1,6 @@
+eventID,occurrenceID,measurementValue,measurementType,measurementTypeID,measurementMethod,measurementUnit,measurementUnitID
+atn_137494_ribbon-seal_trajectory_20140426-20140426,ioos_atn_137494_2014-04-26T00:51:11Z_0.0_ribbon_seal,67.0,animal_weight: mass of the animal as measured or estimated at deployment,http://vocab.nerc.ac.uk/collection/MVB/current/MVB000019,67.0 (kg),kg,http://vocab.nerc.ac.uk/collection/P06/current/KGXX/
+atn_137494_ribbon-seal_trajectory_20140426-20140426,ioos_atn_137494_2014-04-26T00:51:11Z_0.0_ribbon_seal,131.0,animal_length: length of the animal as measured or estimated at deployment,http://vocab.nerc.ac.uk/collection/P01/current/TL01XX01/,131.0 (cm) standard length,cm,http://vocab.nerc.ac.uk/collection/P06/current/ULCM/
+atn_137494_ribbon-seal_trajectory_20140426-20140426,ioos_atn_137494_2014-04-26T00:51:11Z_0.0_ribbon_seal,13U0107,tag serial number,http://vocab.nerc.ac.uk/collection/MVB/current/MVB000189/,,,
+atn_137494_ribbon-seal_trajectory_20140426-20140426,ioos_atn_137494_2014-04-26T00:51:11Z_0.0_ribbon_seal,Wildlife Computers,tag manufacturer,http://vocab.nerc.ac.uk/collection/MVB/current/MVB000183/,,,
+atn_137494_ribbon-seal_trajectory_20140426-20140426,ioos_atn_137494_2014-04-26T00:51:11Z_0.0_ribbon_seal,SPOT,tag make and model,http://vocab.nerc.ac.uk/collection/MVB/current/MVB000185/,,,

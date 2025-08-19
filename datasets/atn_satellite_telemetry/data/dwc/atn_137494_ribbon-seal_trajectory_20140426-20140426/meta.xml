@@ -41,4 +41,17 @@
       <field index="21" term="http://purl.org/dc/terms/bibliographicCitation"/>
       <field index="22" term="http://rs.tdwg.org/dwc/terms/occurrenceRemarks"/>
   </extension>
+  <extension encoding="UTF-8" fieldsTerminatedBy="," linesTerminatedBy="\n" fieldsEnclosedBy='"' ignoreHeaderLines="1" rowType="http://rs.iobis.org/obis/terms/ExtendedMeasurementOrFact">
+    <files>
+      <location>atn_137494_ribbon-seal_trajectory_20140426-20140426_emof.csv</location>
+    </files>
+    <coreid index="0" />    
+      <field index="1" term="http://rs.tdwg.org/dwc/terms/occurrenceID"/>    
+      <field index="2" term="http://rs.tdwg.org/dwc/terms/measurementValue"/>    
+      <field index="3" term="http://rs.tdwg.org/dwc/terms/measurementType"/>    
+      <field index="4" term="http://rs.iobis.org/obis/terms/measurementTypeID"/>    
+      <field index="5" term="http://rs.tdwg.org/dwc/terms/measurementMethod"/>    
+      <field index="6" term="http://rs.tdwg.org/dwc/terms/measurementUnit"/>    
+      <field index="7" term="http://rs.iobis.org/obis/terms/measurementUnitID"/>
+  </extension>
 </archive>
