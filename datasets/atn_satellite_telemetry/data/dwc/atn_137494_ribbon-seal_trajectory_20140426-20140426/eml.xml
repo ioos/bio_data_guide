@@ -9,16 +9,17 @@
   <alternateIdentifier>https://ipt-obis.gbif.us/resource?r=atn_137494_ribbon-seal_trajectory_20140426-20140426</alternateIdentifier>
   <alternateIdentifier>https://doi.org/10.25921/wp4e-ph20</alternateIdentifier>
   <alternateIdentifier>https://www.ncei.noaa.gov/archive/accession/0305178</alternateIdentifier>
+  <alternateIdentifier>https://doi.org/10.24431/rw1k8er</alternateIdentifier>
   <title xml:lang="eng">Ribbon seal (Histriophoca fasciata) location data from a satellite telemetry tag (ptt id 137494) deployed in the Bering Sea from 2014-04-26 to 2014-04-26, deployment id 535b7f8de36c4f5e17acc135</title>
   <creator>
     <individualName>
         <givenName>Megan</givenName>
       <surName>McKinzie</surName>
     </individualName>
-    <organizationName>Animal Tracking Network</organizationName>
+    <organizationName>U.S. Animal Telemetry Network (ATN)</organizationName>
     <positionName>Data Manager</positionName>
     <address>
-        <deliveryPoint>U.S. Integrated Ocean Observing System Program</deliveryPoint>
+        <deliveryPoint>U.S. Integrated Ocean Observing System</deliveryPoint>
         <city>Silver Spring</city>
         <administrativeArea>Maryland</administrativeArea>
         <postalCode>20910</postalCode>
@@ -155,7 +156,7 @@
 <pubDate>2025-05-27</pubDate>
 <language>eng</language>
 <abstract>
-    <para>This is the OBIS extraction of Ribbon seal (Histriophoca fasciata) location data from a satellite telemetry tag (ptt id 137494) deployed in the Bering Sea from 2014-04-26 to 2014-04-26, deployment id 535b7f8de36c4f5e17acc135 from the IOOS Animal Telemetry Network. This extraction is a subset of detections intended to be useful for the OBIS network.  The source dataset, containing the full set of detections, is available at NCEI: https://www.ncei.noaa.gov/archive/accession/0305178. The entire collection of satellite telemetry location and profile data collected from satellite-linked tags deployed on marine animals and contributed by organizations that are part of the U.S. Animal Telemetry Network (ATN) can be found at: https://doi.org/10.25921/wp4e-ph20</para>
+    <para>This is the OBIS extraction of Ribbon seal (Histriophoca fasciata) location data from a satellite telemetry tag (ptt id 137494) deployed in the Bering Sea from 2014-04-26 to 2014-04-26, deployment id 535b7f8de36c4f5e17acc135 from the U.S. Animal Telemetry Network (ATN). This extraction is a subset of detections intended to be useful for the OBIS network.  The source dataset, containing the full set of detections, is available at NCEI: https://www.ncei.noaa.gov/archive/accession/0305178. The entire collection of satellite telemetry location and profile data collected from satellite-linked tags deployed on marine animals and contributed by organizations that are part of the U.S. Animal Telemetry Network (ATN) can be found at: https://doi.org/10.25921/wp4e-ph20</para>
 </abstract>
 <!--
 <funding>
@@ -209,7 +210,7 @@ Acknowledge the use of specific records from contributing databases in the form 
 For information purposes, email to info@obis.org  the full citation of any publication made (printed or electronic) that cites OBIS or any constituent part.
 
 Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.html#disclaimer for more details
-</para>
+    </para>
   </additionalInfo>
   <intellectualRights>
     <para>This work is licensed under a <ulink url="https://creativecommons.org/publicdomain/zero/1.0/legalcode"><citetitle>Public Domain (CC0 1.0)</citetitle></ulink>.</para>
@@ -352,6 +353,20 @@ Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.ht
               <distribution>
                 <online>
                   <url function="download">https://doi.org/10.25921/wp4e-ph20</url>
+                </online>
+              </distribution>
+            </physical>
+            <physical>
+              <objectName>London, J., Koslovsky, S., Boveng, P., Ziel, H., &amp; Cameron, M. (2024). A Dataset from Bio-loggers Deployed on Ribbon Seals (Histriophoca fasciata) and Spotted Seals (Phoca largha) in the Bering Sea, 2005-2018 (Version 1) [Data set]. Axiom Data Science. https://doi.org/10.24431/rw1k8er</objectName>
+              <characterEncoding>ASCII</characterEncoding>
+              <dataFormat>
+                <externallyDefinedFormat>
+                  <formatName>HTM</formatName>
+                </externallyDefinedFormat>
+              </dataFormat>
+              <distribution>
+                <online>
+                  <url function="download">https://doi.org/10.24431/rw1k8er</url>
                 </online>
               </distribution>
             </physical>
