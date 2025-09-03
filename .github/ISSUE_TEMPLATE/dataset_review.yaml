@@ -3,7 +3,7 @@ description: Request a review or comments on a dataset you've have already align
 title: "[dataset]: "
 labels: ["data help"]
 assignees:
-  - sformel-usgs
+  - sformel
   - mathewbiddle
 body:
   - type: markdown
