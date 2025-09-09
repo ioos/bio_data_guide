@@ -121,7 +121,9 @@ Acknowledge the use of specific records from contributing databases in the form 
 
 For information purposes, email to info@obis.org  the full citation of any publication made (printed or electronic) that cites OBIS or any constituent part.
 
-Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.html#disclaimer for more details
+Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.html#disclaimer for more details.
+
+{{ license }}
     </para>
   </additionalInfo>
   <intellectualRights>
@@ -184,7 +186,7 @@ Recognize the limitations of data in OBIS. See https://manual.obis.org/policy.ht
         <methodStep>
           <description>
             <para>
-            {{ manufacturer }} {{ make_model }} tag (serial number: {{ serial_number }}) attached to {{ animal_common_name }}{%if attachment %} on {{ attachment }}.{% else %}.{% endif %}
+            {{ manufacturer }} {{ make_model }} tag {%if serial_number %}(serial number: {{ serial_number }}){% endif %} attached to {{ animal_common_name }}{%if attachment %} on {{ attachment }}{% endif %}.
             </para>
           </description>
         </methodStep>
