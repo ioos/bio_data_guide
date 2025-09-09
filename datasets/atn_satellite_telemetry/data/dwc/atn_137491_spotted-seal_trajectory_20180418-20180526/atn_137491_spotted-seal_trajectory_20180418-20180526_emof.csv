@@ -1,0 +1,7 @@
+eventID,occurrenceID,measurementValue,measurementType,measurementTypeID,measurementMethod,measurementUnit,measurementUnitID
+atn_137491_spotted-seal_trajectory_20180418-20180526,ioos_atn_137491_2018-04-18T04:45:00Z_0.0_spotted_seal,69.0,animal_weight: mass of the animal as measured or estimated at deployment,http://vocab.nerc.ac.uk/collection/MVB/current/MVB000019,69.0 (kg),kg,http://vocab.nerc.ac.uk/collection/P06/current/KGXX/
+atn_137491_spotted-seal_trajectory_20180418-20180526,ioos_atn_137491_2018-04-18T04:45:00Z_0.0_spotted_seal,129.0,animal_length: length of the animal as measured or estimated at deployment,http://vocab.nerc.ac.uk/collection/P01/current/TL01XX01/,129.0 (cm) standard length,cm,http://vocab.nerc.ac.uk/collection/P06/current/ULCM/
+atn_137491_spotted-seal_trajectory_20180418-20180526,ioos_atn_137491_2018-04-18T04:45:00Z_0.0_spotted_seal,16U2111,tag serial number,http://vocab.nerc.ac.uk/collection/MVB/current/MVB000189/,,,
+atn_137491_spotted-seal_trajectory_20180418-20180526,ioos_atn_137491_2018-04-18T04:45:00Z_0.0_spotted_seal,Wildlife Computers,tag manufacturer,http://vocab.nerc.ac.uk/collection/MVB/current/MVB000183/,,,
+atn_137491_spotted-seal_trajectory_20180418-20180526,ioos_atn_137491_2018-04-18T04:45:00Z_0.0_spotted_seal,SPOT,tag make and model,http://vocab.nerc.ac.uk/collection/MVB/current/MVB000185/,,,
+atn_137491_spotted-seal_trajectory_20180418-20180526,ioos_atn_137491_2018-04-18T04:45:00Z_0.0_spotted_seal,flipper,tag attachment location,http://vocab.nerc.ac.uk/collection/MVB/current/MVB000395/,,,

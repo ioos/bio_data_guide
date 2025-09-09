@@ -202,7 +202,7 @@ platform_id_tbl <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr
 platform_id <- chartr(" ", "_", platform_id_tbl$value)
 occurrencedf$organismID <- paste(platform_id , common_name, sep = "_") 
 
-# occurrenceID - {eventDate}_{depth}_{common_name}
+# occurrenceID - ioos_atn_{eventDate}_{depth}_{common_name}
 occurrencedf$occurrenceID <- sub(" ", "_", paste("ioos_atn", occurrencedf$eventDate, atn_tbl$z, common_name, sep = "_"))
 
 # geodeticDatum
@@ -285,13 +285,17 @@ The next step below this, we filter out only the first observation of the hour.
 occurrencedf <- occurrencedf %>% arrange(eventDate)
 
 occurrencedf <- occurrencedf %>%
+
     mutate(eventDateHrs = format(as.POSIXct(eventDate, format="%Y-%m-%dT%H:%M:%SZ"),"%Y-%m-%dT%H")
            ) %>%
+
     add_count(eventDateHrs) %>%
+
     mutate(dataGeneralizations = case_when(n == 1 ~ "",
                                            TRUE ~ paste("first of ", n ,"records")
                                            )
            ) %>%
+
     select(-n)
 
 occurrencedf
@@ -431,6 +435,7 @@ emof_data <- #var_names %>%
     c("animal_length",
       "animal_length_2",
       "animal_weight") %>%
+
     purrr::map_df(function(x) {
         list(measurementValue = ncvar_get( nc, x),
              measurementType = ncatt_get( nc, x)$long_name,
@@ -442,8 +447,11 @@ emof_data <- #var_names %>%
 
 
 emofdf <- occurrencedf %>%
+
     filter(basisOfRecord == 'HumanObservation') %>%
+
     select(organismID, eventID, occurrenceID) %>%
+    
     cbind(emof_data)
 
 str(emofdf)
