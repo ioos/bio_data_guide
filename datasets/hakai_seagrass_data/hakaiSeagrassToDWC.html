@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="ZL Monteith, Hakai Institute">
-<meta name="dcterms.date" content="2025-08-25">
+<meta name="dcterms.date" content="2025-09-15">
 <meta name="description" content="Scaling multiple dimensions of diversity in biological data">
 
 <title>4&nbsp; Seagrass Density to DWC eMoF format – BioDataGuide</title>
@@ -72,14 +72,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../datasets/hakai_salmon_data/salmon-darwin-core-remap.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -134,7 +135,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../../index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../../">BioDataGuide</a> 
         <div class="sidebar-tools-main tools-wide">
@@ -324,7 +327,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 25, 2025</p>
+      <p class="date">September 15, 2025</p>
     </div>
   </div>
   
@@ -342,17 +345,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="4.1.1" class="anchored" data-anchor-id="setup"><span class="header-section-number">4.1.1</span> Setup</h3>
 <p>This section clears the workspace, checks the working directory, and installs packages (if required) and loads packages, and loads necessary datasets</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"knitr"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"knitr"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Knitr global chunk options</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">message =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">warning =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">error   =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">error   =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="load-data" class="level4" data-number="4.1.1.1">
 <h4 data-number="4.1.1.1" class="anchored" data-anchor-id="load-data"><span class="header-section-number">4.1.1.1</span> Load Data</h4>
 <p>First load the seagrass density survey data, set variable classes, and have a quick look</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load density data</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load density data</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>seagrassDensity <span class="ot">&lt;-</span> </span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read.csv</span>(seagrassDensity_csv,</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">colClass =</span> <span class="st">"character"</span>) <span class="sc">%&gt;%</span></span>
@@ -365,7 +368,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">density_msq      =</span> <span class="fu">as.numeric</span>(density_msq),</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">canopy_height_cm =</span> <span class="fu">as.numeric</span>(canopy_height_cm),</span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">flowering_shoots =</span> <span class="fu">as.numeric</span>(flowering_shoots)) <span class="sc">%T&gt;%</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 3,031
 Columns: 22
@@ -395,7 +398,7 @@ $ quality_log      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 </div>
 <p>Next, load the habitat survey data, and same as above, set variable classes as necessary, and have a quick look.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load habitat data, set variable classes, have a quick look</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load habitat data, set variable classes, have a quick look</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>seagrassHabitat <span class="ot">&lt;-</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read.csv</span>(seagrassHabitat_csv,</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">colClasses =</span> <span class="st">"character"</span>) <span class="sc">%&gt;%</span>  </span>
@@ -405,7 +408,7 @@ $ quality_log      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">transect_dist   =</span> <span class="fu">factor</span>(transect_dist),</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">collected_start =</span> <span class="fu">ymd_hms</span>(collected_start),</span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">collected_end   =</span> <span class="fu">ymd_hms</span>(collected_end)) <span class="sc">%T&gt;%</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 2,052
 Columns: 28
@@ -441,11 +444,11 @@ $ quality_log      &lt;chr&gt; "1: Flowering shoots 0 for entire transects", NA,
 </div>
 <p>Finally, load coordinate data for surveys, and subset necessary variables</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>coordinates <span class="ot">&lt;-</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>coordinates <span class="ot">&lt;-</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read.csv</span>(coordinate_csv,</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">colClass =</span> <span class="fu">c</span>(<span class="st">"Point.Name"</span> <span class="ot">=</span> <span class="st">"character"</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Point.Name, Decimal.Lat, Decimal.Long) <span class="sc">%T&gt;%</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 70
 Columns: 3
@@ -461,7 +464,7 @@ $ Decimal.Long &lt;dbl&gt; -128.4120, -128.4030, -128.4648, -128.4540, -128.2360
 <p>The seagrass density surveys collect data at discrete points (ie. 5 metres) along the transects, while the habitat surveys collect data over sections (ie. 0 - 5 metres) along the transects. In order to fit these two surveys together, we’ll narrow the habitat surveys from a range to a point so the locations will match. Based on how the habitat data is collected, the point the habitat survey is applied to will be the distance at the end of the swath (ie. 10-15m will become 15m). To account for no preceeding distance, the 0m distance will use the 0-5m section of the survey.</p>
 <p>First, well make the necessary transformations to the habitat dataset.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reformat seagrassHabitat to merge with seagrassDensity</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reformat seagrassHabitat to merge with seagrassDensity</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="do">## replicate 0 - 5m transect dist to match with 0m in density survey;</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="do">## rest of habitat bins can map one to one with density (ie. 5 - 10m -&gt; 10m)</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>seagrass0tmp <span class="ot">&lt;-</span> </span>
@@ -484,11 +487,11 @@ $ Decimal.Long &lt;dbl&gt; -128.4120, -128.4030, -128.4648, -128.4540, -128.2360
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>seagrassHabitatFull <span class="ot">&lt;-</span> </span>
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rbind</span>(seagrass0tmp, seagrassHabitat) <span class="sc">%&gt;%</span></span>
 <span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(transect_dist <span class="sc">!=</span> <span class="st">"0 - 2.5"</span>)  <span class="sc">%&gt;%</span> <span class="co"># already captured in seagrass0tmp </span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">droplevels</span>(.)  <span class="co"># remove now unused factor levels</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">droplevels</span>(.)  <span class="co"># remove now unused factor levels</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>With the distances of habitat and density surveys now corresponding, we can now merge these two datasets plus there coordinates together, combine redundant fields, and remove unnecessary fields.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge seagrassHabitatFull with seagrassDensity, then coordinates</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge seagrassHabitatFull with seagrassDensity, then coordinates</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>seagrass <span class="ot">&lt;-</span> </span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(seagrassHabitatFull, seagrassDensity, </span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"organization"</span>,</span>
@@ -526,7 +529,7 @@ $ Decimal.Long &lt;dbl&gt; -128.4120, -128.4030, -128.4648, -128.4540, -128.2360
 <span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>         <span class="at">canopy_height_cm =</span> <span class="fu">as.character</span>(canopy_height_cm),</span>
 <span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>         <span class="at">flowering_shoots =</span> <span class="fu">as.character</span>(flowering_shoots),</span>
 <span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>         <span class="at">depth_m =</span> <span class="fu">as.character</span>(depth_m)) <span class="sc">%T&gt;%</span></span>
-<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 3,743
 Columns: 38
@@ -579,7 +582,7 @@ $ Decimal.Long     &lt;dbl&gt; -128.1195, -128.1148, -128.1237, -128.1193, -128.
 <h4 data-number="4.1.2.1" class="anchored" data-anchor-id="add-event-id-and-occurrence-id-variables-to-dataset"><span class="header-section-number">4.1.2.1</span> Add Event ID and Occurrence ID variables to dataset</h4>
 <p>As this dataset will be annually updated, rather than using natural keys (ie. using package::uuid to autogenerate) for event and occurence IDs, here we will use surrogate keys made up of a concatenation of date survey, transect location, observation distance, and sample ID (for occurrenceID, when a sample is present).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create and populate eventID variable</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create and populate eventID variable</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="do">## currently only event is used, but additional surveys and abiotic data</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="do">## are associated with parent events that may be included at a later date</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>seagrass<span class="sc">$</span>eventID <span class="ot">&lt;-</span> seagrass<span class="sc">$</span>hakai_id</span>
@@ -591,7 +594,7 @@ $ Decimal.Long     &lt;dbl&gt; -128.1195, -128.1148, -128.1237, -128.1193, -128.
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="do">## are associated with &lt;NA&gt; field_uids</span></span>
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>seagrass<span class="sc">$</span>occurrenceID <span class="ot">&lt;-</span> </span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(seagrass, </span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>       <span class="fu">paste</span>(eventID, transect_dist, field_uid, <span class="at">sep =</span> <span class="st">":"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>       <span class="fu">paste</span>(eventID, transect_dist, field_uid, <span class="at">sep =</span> <span class="st">":"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="create-event-occurrence-and-emof-tables" class="level4" data-number="4.1.2.2">
@@ -600,7 +603,7 @@ $ Decimal.Long     &lt;dbl&gt; -128.1195, -128.1148, -128.1237, -128.1193, -128.
 <section id="event-table" class="level5" data-number="4.1.2.2.1">
 <h5 data-number="4.1.2.2.1" class="anchored" data-anchor-id="event-table"><span class="header-section-number">4.1.2.2.1</span> Event Table</h5>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># subset seagrass to create event table</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># subset seagrass to create event table</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>seagrassEvent <span class="ot">&lt;-</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  seagrass <span class="sc">%&gt;%</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  distinct <span class="sc">%&gt;%</span>  <span class="co"># some duplicates in data stemming from database conflicts</span></span>
@@ -614,7 +617,7 @@ $ Decimal.Long     &lt;dbl&gt; -128.1195, -128.1148, -128.1237, -128.1193, -128.
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">minimumDepthInMeters          =</span> depth_m,</span>
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">maximumDepthInMeters          =</span> depth_m) <span class="sc">%&gt;%</span></span>
 <span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">geodeticDatum  =</span> <span class="st">"WGS84"</span>,</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">samplingEffort =</span> <span class="st">"30 metre transect"</span>) <span class="sc">%T&gt;%</span> glimpse</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">samplingEffort =</span> <span class="st">"30 metre transect"</span>) <span class="sc">%T&gt;%</span> glimpse</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 3,659
 Columns: 8
@@ -627,14 +630,14 @@ $ eventID                       &lt;chr&gt; "2017-11-22:HAKAI:CALVERT:CHOKED_PAS
 $ geodeticDatum                 &lt;chr&gt; "WGS84", "WGS84", "WGS84", "WGS84", "WGS…
 $ samplingEffort                &lt;chr&gt; "30 metre transect", "30 metre transect"…</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save event table to csv</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(seagrassEvent, seagrassEvent_csv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save event table to csv</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(seagrassEvent, seagrassEvent_csv)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="occurrence-table" class="level5" data-number="4.1.2.2.2">
 <h5 data-number="4.1.2.2.2" class="anchored" data-anchor-id="occurrence-table"><span class="header-section-number">4.1.2.2.2</span> Occurrence Table</h5>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># subset seagrass to create occurrence table</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># subset seagrass to create occurrence table</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>seagrassOccurrence <span class="ot">&lt;-</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  seagrass <span class="sc">%&gt;%</span></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  distinct <span class="sc">%&gt;%</span>  <span class="co"># some duplicates in data stemming from database conflicts</span></span>
@@ -663,7 +666,7 @@ $ samplingEffort                &lt;chr&gt; "30 metre transect", "30 metre trans
 <span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>         valid_AphiaID, valid_name, valid_authority, parentNameUsageID,</span>
 <span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>         kingdom, phylum, class, order, family, genus, citation, lsid,</span>
 <span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>         isMarine, match_type, modified) <span class="sc">%T&gt;%</span></span>
-<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>  glimpse</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>  glimpse</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 3,660
 Columns: 27
@@ -695,14 +698,14 @@ $ isMarine          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 
 $ match_type        &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
 $ modified          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save occurrence table to csv</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(seagrassOccurrence, seagrassOccurrence_csv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save occurrence table to csv</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(seagrassOccurrence, seagrassOccurrence_csv)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="extended-measurementorfact-table" class="level5" data-number="4.1.2.2.3">
 <h5 data-number="4.1.2.2.3" class="anchored" data-anchor-id="extended-measurementorfact-table"><span class="header-section-number">4.1.2.2.3</span> Extended MeasurementOrFact table</h5>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>seagrassMof <span class="ot">&lt;-</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>seagrassMof <span class="ot">&lt;-</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  seagrass <span class="sc">%&gt;%</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># select variables for eMoF table</span></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(date,</span>
@@ -759,7 +762,7 @@ $ modified          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 
 <span id="cb18-55"><a href="#cb18-55" aria-hidden="true" tabindex="-1"></a>         measurementTypeID, measurementUnit, measurementUnitID, measurementAccuracy,</span>
 <span id="cb18-56"><a href="#cb18-56" aria-hidden="true" tabindex="-1"></a>         measurementMethod) <span class="sc">%T&gt;%</span></span>
 <span id="cb18-57"><a href="#cb18-57" aria-hidden="true" tabindex="-1"></a><span class="co">#  select(!c(survey, site_id, transect_dist)) %T&gt;%</span></span>
-<span id="cb18-58"><a href="#cb18-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-58"><a href="#cb18-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 37,430
 Columns: 9
@@ -773,8 +776,8 @@ $ measurementUnitID         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, "http://voca
 $ measurementAccuracy       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, 5, NA, NA, N…
 $ measurementMethod         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, "25cmx25cm quadr…</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save eMoF table to csv</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(seagrassMof, seagrassMof_csv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save eMoF table to csv</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(seagrassMof, seagrassMof_csv)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
@@ -783,12 +786,12 @@ $ measurementMethod         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, "25cmx25cm q
 <h3 data-number="4.1.3" class="anchored" data-anchor-id="session-info"><span class="header-section-number">4.1.3</span> Session Info</h3>
 <p>Print session information below in case necessary for future reference</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print Session Info for future reference</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print Session Info for future reference</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>R version 4.4.1 (2024-06-14)
 Platform: aarch64-apple-darwin20
-Running under: macOS Sonoma 14.7.6
+Running under: macOS 15.6
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -804,22 +807,22 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] worrms_0.4.3    magrittr_2.0.3  lubridate_1.9.4 forcats_1.0.0  
- [5] stringr_1.5.1   dplyr_1.1.4     purrr_1.1.0     readr_2.1.5    
- [9] tidyr_1.3.1     tibble_3.3.0    ggplot2_3.5.2   tidyverse_2.0.0
-[13] here_1.0.1      knitr_1.50     
+ [1] worrms_0.4.3    magrittr_2.0.4  lubridate_1.9.4 forcats_1.0.0  
+ [5] stringr_1.5.2   dplyr_1.1.4     purrr_1.1.0     readr_2.1.5    
+ [9] tidyr_1.3.1     tibble_3.3.0    ggplot2_4.0.0   tidyverse_2.0.0
+[13] here_1.0.2      knitr_1.50     
 
 loaded via a namespace (and not attached):
  [1] gtable_0.3.6       jsonlite_2.0.0     compiler_4.4.1     Rcpp_1.1.0        
  [5] tidyselect_1.2.1   urltools_1.7.3.1   scales_1.4.0       triebeard_0.4.1   
  [9] yaml_2.3.10        fastmap_1.2.0      R6_2.6.1           generics_0.1.4    
-[13] curl_6.4.0         htmlwidgets_1.6.4  crul_1.6.0         rprojroot_2.1.0   
+[13] curl_7.0.0         htmlwidgets_1.6.4  crul_1.6.0         rprojroot_2.1.1   
 [17] pillar_1.11.0      RColorBrewer_1.1-3 tzdb_0.5.0         rlang_1.1.6       
-[21] httpcode_0.3.0     stringi_1.8.7      xfun_0.52          timechange_0.3.0  
-[25] cli_3.6.5          withr_3.0.2        digest_0.6.37      grid_4.4.1        
-[29] hms_1.1.3          lifecycle_1.0.4    vctrs_0.6.5        evaluate_1.0.4    
-[33] glue_1.8.0         farver_2.1.2       rmarkdown_2.29     tools_4.4.1       
-[37] pkgconfig_2.0.3    htmltools_0.5.8.1 </code></pre>
+[21] httpcode_0.3.0     stringi_1.8.7      xfun_0.53          S7_0.2.0          
+[25] timechange_0.3.0   cli_3.6.5          withr_3.0.2        digest_0.6.37     
+[29] grid_4.4.1         hms_1.1.3          lifecycle_1.0.4    vctrs_0.6.5       
+[33] evaluate_1.0.5     glue_1.8.0         farver_2.1.2       rmarkdown_2.29    
+[37] tools_4.4.1        pkgconfig_2.0.3    htmltools_0.5.8.1 </code></pre>
 </div>
 </div>
 
@@ -879,13 +882,14 @@ loaded via a namespace (and not attached):
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

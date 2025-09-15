@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,14 +72,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../datasets/hakai_seagrass_data/hakaiSeagrassToDWC.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -134,7 +135,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../../index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../../">BioDataGuide</a> 
         <div class="sidebar-tools-main tools-wide">
@@ -352,7 +355,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In this specific data record, we created a single Event Core with three extensions: an <em>occurrence</em> extension, <em>measurement or fact</em> extension, and the <em>resourceRelationship</em> extension. However, in this walk-through I’ll only touch on the Event Core, occurrence extension and resourceRelationship extension.</p>
 <p>The trawl data is part of a larger project collecting various data types related to salmon ocean ecology. Therefore, in our Event Core we nested information related to the sampling event in the specific layer. (include a visual representation of the schema). Prior to creating the Event Core, we ensured that e.g.&nbsp;dates and times followed the correct ISO-8601 standards, and converted to the correct time zone.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Time is recorded numerically (1037 instead of 10:37), so need to change these columns:</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Time is recorded numerically (1037 instead of 10:37), so need to change these columns:</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>trawl2019<span class="sc">$</span>END_DEPLOYMENT_TIME <span class="ot">&lt;-</span> <span class="fu">substr</span>(<span class="fu">as.POSIXct</span>(<span class="fu">sprintf</span>(<span class="st">"%04.0f"</span>, trawl2019<span class="sc">$</span>END_DEPLOYMENT_TIME), <span class="at">format =</span> <span class="st">"%H%M"</span>), <span class="dv">12</span>, <span class="dv">16</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>trawl2019<span class="sc">$</span>BEGIN_RETRIEVAL_TIME <span class="ot">&lt;-</span> <span class="fu">substr</span>(<span class="fu">as.POSIXct</span>(<span class="fu">sprintf</span>(<span class="st">"%04.0f"</span>, trawl2019<span class="sc">$</span>BEGIN_RETRIEVAL_TIME), <span class="at">format =</span> <span class="st">"%H%M"</span>), <span class="dv">12</span>, <span class="dv">16</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Additionally, the vessel time is recorded in 'Vladivostok' according to the metadata tab. This has to be converted to UTC.  </span></span>
@@ -367,11 +370,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">project =</span> <span class="st">"IYS"</span>,</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">cruise =</span> <span class="fu">paste</span>(project, <span class="st">"GoA2019"</span>, <span class="at">sep =</span> <span class="st">":"</span>), </span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">station =</span> <span class="fu">paste</span>(cruise, TOW_NUMBER, <span class="at">sep=</span><span class="st">":Stn"</span>),</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">trawl =</span> <span class="fu">paste</span>(station, <span class="st">"trawl"</span>, <span class="at">sep=</span><span class="st">":"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">trawl =</span> <span class="fu">paste</span>(station, <span class="st">"trawl"</span>, <span class="at">sep=</span><span class="st">":"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Then we created the various layers of our Event Core. We created these layers/data frames from two separate datasets that data are pulled from - one dataset that contains the <em>overall</em> catch data, and one dataset that contains the <em>specimen</em> data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>trawl2019_allCatch <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="fu">here</span>(<span class="st">"Trawl"</span>, <span class="st">"2019"</span>, <span class="st">"raw_data"</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>trawl2019_allCatch <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="fu">here</span>(<span class="st">"Trawl"</span>, <span class="st">"2019"</span>, <span class="st">"raw_data"</span>, </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"2019_GoA_Fish_Trawl_catchdata.xlsx"</span>), <span class="at">sheet =</span> <span class="st">"CATCH_FINAL"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">project =</span> <span class="st">"IYS"</span>,</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">cruise =</span> <span class="fu">paste</span>(project, <span class="st">"GoA2019"</span>, <span class="at">sep =</span> <span class="st">":"</span>),</span>
@@ -385,11 +388,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">station =</span> <span class="fu">paste</span>(cruise, TOW_NUMBER, <span class="at">sep =</span> <span class="st">":Stn"</span>),</span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">trawl =</span> <span class="fu">paste</span>(station, <span class="st">"trawl"</span>, <span class="at">sep =</span> <span class="st">":"</span>),</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">sample =</span> <span class="fu">paste</span>(trawl, <span class="st">"sample"</span>, <span class="at">sep =</span> <span class="st">":"</span>),</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">sample =</span> <span class="fu">paste</span>(sample, <span class="fu">row_number</span>(), <span class="at">sep =</span> <span class="st">""</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">sample =</span> <span class="fu">paste</span>(sample, <span class="fu">row_number</span>(), <span class="at">sep =</span> <span class="st">""</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Next we created the Event Core, ensuring that we connect the data to the right layer (i.e.&nbsp;date and time should be connected to the layer associated with the sampling event). Please note that because we are creating multiple layers and nesting information, and then at a later stage combining different tables, this results in cells being populated with <code>NA</code>. These have to be removed prior to publishing the Event Core through the IPT.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>trawl2019_project <span class="ot">&lt;-</span> trawl2019 <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>trawl2019_project <span class="ot">&lt;-</span> trawl2019 <span class="sc">%&gt;%</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">eventID =</span> project) <span class="sc">%&gt;%</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(eventID) <span class="sc">%&gt;%</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="st">"project"</span>)</span>
@@ -454,12 +457,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove NAs from the Event Core:</span></span>
 <span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>trawl2019_event <span class="ot">&lt;-</span> <span class="fu">sapply</span>(trawl2019_event, as.character)</span>
 <span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>trawl2019_event[<span class="fu">is.na</span>(trawl2019_event)] <span class="ot">&lt;-</span> <span class="st">""</span></span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>trawl2019_event <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(trawl2019_event)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>trawl2019_event <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(trawl2019_event)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>TO DO: Add visual of e.g.&nbsp;the top 10 rows of the Event Core.</strong></p>
 <p>Now that we created the Event Core, we create the occurrence extension. To do this, we create two separate occurrence data tables: one that includes the occurrence data for the <em>total</em> catch, and one data table for the <em>specimen</em> data. Finally, the Occurrence extension is created by combining these two data frames. Personally, I prefer to re-order it so it makes visual sense to me (nest the specimen occurrence records under their respective overall catch data).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>trawl2019_allCatch_worms <span class="ot">&lt;-</span> worrms<span class="sc">::</span><span class="fu">wm_records_names</span>(<span class="fu">unique</span>(trawl2019_allCatch<span class="sc">$</span>scientificname))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>trawl2019_allCatch_worms <span class="ot">&lt;-</span> worrms<span class="sc">::</span><span class="fu">wm_records_names</span>(<span class="fu">unique</span>(trawl2019_allCatch<span class="sc">$</span>scientificname))</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>trawl2019_occ <span class="ot">&lt;-</span> <span class="fu">left_join</span>(trawl2019_allCatch, trawl2019_allCatch_worms, <span class="at">by =</span> <span class="st">"scientificname"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">eventID =</span> trawl,</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">specificEpithet =</span> species,</span>
@@ -492,13 +495,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="co"># To re-order the occurrenceID, use following code:</span></span>
 <span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>order <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_sort</span>(trawl2019_occ_ext<span class="sc">$</span>occurrenceID, <span class="at">numeric=</span><span class="cn">TRUE</span>)</span>
 <span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>trawl2019_occ_ext <span class="ot">&lt;-</span> trawl2019_occ_ext[<span class="fu">match</span>(order, trawl2019_occ_ext<span class="sc">$</span>occurrenceID),] <span class="sc">%&gt;%</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">basisOfRecord =</span> <span class="st">"HumanObservation"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">basisOfRecord =</span> <span class="st">"HumanObservation"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>TO DO: Add visual of e.g.&nbsp;the top 10 rows of the Occurrence extension.</strong></p>
 <p><strong>Please note</strong> that in the <em>overall</em> species-specific occurrence data frame, <em>individualCount</em> was not included. This term should not be used for abundance studies, but to avoid confusion and the appearance that the specimen records are an additional observation on top of the overall catch record, the <em>individualCount</em> term was left blank for the overall catch data.</p>
 <p>A resource relationship extension is created to further highlight that the individual samples in the occurrence extension are part of a larger overall catch that was also listed in the occurrence extension. In this extension, we wanted to make sure to highlight that the <em>specimen</em> occurrence records are <em>a subset of</em> the <em>overall</em> catch data through the field <code>relationshipOfResource1</code>. Each of these relationships gets a unique <code>resourceRelationshipID</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>trawl_resourceRelationship <span class="ot">&lt;-</span> trawl2019_occ_ext <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>trawl_resourceRelationship <span class="ot">&lt;-</span> trawl2019_occ_ext <span class="sc">%&gt;%</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(eventID, occurrenceID, scientificName) <span class="sc">%&gt;%</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">resourceID =</span> <span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">"sample"</span>, trawl2019_occ_ext<span class="sc">$</span>occurrenceID), trawl2019_occ_ext<span class="sc">$</span>occurrenceID, <span class="cn">NA</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">eventID =</span> <span class="fu">gsub</span>(<span class="st">":sample.*"</span>, <span class="st">""</span>, trawl2019_occ_ext<span class="sc">$</span>eventID)) <span class="sc">%&gt;%</span></span>
@@ -520,7 +523,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">resourceRelationshipID =</span> <span class="fu">paste</span>(relatedResourceID, <span class="st">"rr"</span>, <span class="at">sep =</span> <span class="st">":"</span>),</span>
 <span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>         <span class="at">ID =</span> <span class="fu">sprintf</span>(<span class="st">"%03d"</span>, <span class="fu">row_number</span>()),</span>
 <span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">resourceRelationshipID =</span> <span class="fu">paste</span>(resourceRelationshipID, ID, <span class="at">sep =</span> <span class="st">":"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(eventID, resourceRelationshipID, resourceID, relationshipOfResource, relatedResourceID)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(eventID, resourceRelationshipID, resourceID, relationshipOfResource, relatedResourceID)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>TO DO: Add visual of e.g.&nbsp;the top 10 rows of the ResourceRelationship extension.</strong></p>
 </section>
@@ -584,13 +587,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../datasets/dataset-edna/README.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -132,7 +133,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../../index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../../">BioDataGuide</a> 
         <div class="sidebar-tools-main tools-wide">
@@ -336,17 +339,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This example uses the <a href="https://ropensci.org/blog/2019/11/05/tidync/">tidync</a> package to work with netCDF data.</p>
 <p>Data used in this notebook are available from NCEI at the following link <a href="https://www.ncei.noaa.gov/archive/accession/0282699" class="uri">https://www.ncei.noaa.gov/archive/accession/0282699</a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Load libraries</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Load libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidync)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(obistools)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ncdf4)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co">#includes stringr</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co">#includes stringr</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.4     ✔ readr     2.1.5
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.5.2     ✔ tibble    3.3.0
+✔ forcats   1.0.0     ✔ stringr   1.5.2
+✔ ggplot2   4.0.0     ✔ tibble    3.3.0
 ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
 ✔ purrr     1.1.0     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
@@ -354,8 +357,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maps)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'maps'
@@ -364,8 +367,8 @@ The following object is masked from 'package:purrr':
 
     map</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapdata)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapdata)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>here() starts at /Users/runner/work/bio_data_guide/bio_data_guide</code></pre>
 </div>
@@ -374,7 +377,7 @@ The following object is masked from 'package:purrr':
 <h2 data-number="7.1" class="anchored" data-anchor-id="downloading-and-preprocessing-the-source-data"><span class="header-section-number">7.1</span> Downloading and preprocessing the source data</h2>
 <p>See <a href="https://www.ncei.noaa.gov/archive/accession/0282699" class="uri">https://www.ncei.noaa.gov/archive/accession/0282699</a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># paths ----</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># paths ----</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>url_base    <span class="ot">&lt;-</span> <span class="st">"https://www.ncei.noaa.gov/data/oceans/archive"</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>url_package <span class="ot">&lt;-</span> <span class="st">"/arc0217/0282699/1.1/data/0-data/"</span></span>
@@ -387,14 +390,14 @@ The following object is masked from 'package:purrr':
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># stopifnot(dir.exists(dir_data))</span></span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(file_nc))</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(url_nc, file_nc, <span class="at">mode =</span> <span class="st">"wb"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(url_nc, file_nc, <span class="at">mode =</span> <span class="st">"wb"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="open-the-netcdf-file" class="level3" data-number="7.1.1">
 <h3 data-number="7.1.1" class="anchored" data-anchor-id="open-the-netcdf-file"><span class="header-section-number">7.1.1</span> Open the netCDF file</h3>
 <p>Once the file is opened, we print out the details of what the netCDF file contains.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>atn <span class="ot">&lt;-</span> <span class="fu">nc_open</span>(file_nc)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>atn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>atn <span class="ot">&lt;-</span> <span class="fu">nc_open</span>(file_nc)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>atn</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>File /Users/runner/work/bio_data_guide/bio_data_guide/datasets/atn_satellite_telemetry/data/src/atn_45866_great-white-shark_trajectory_20090923-20091123.nc (NC_FORMAT_NETCDF4):
 
@@ -844,8 +847,8 @@ The following object is masked from 'package:purrr':
 <h3 data-number="7.1.2" class="anchored" data-anchor-id="collect-all-the-metadata-from-the-netcdf-file."><span class="header-section-number">7.1.2</span> Collect all the metadata from the netCDF file.</h3>
 <p>This gathers not only the global attributes, but the variable level attributes as well. As you can see in the <strong>variable</strong> column the term <code>NC_GLOBAL</code> refers to global attributes.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> ncmeta<span class="sc">::</span><span class="fu">nc_atts</span>(file_nc)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>metadata</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> ncmeta<span class="sc">::</span><span class="fu">nc_atts</span>(file_nc)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>metadata</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 381 × 4
       id name                  variable  value       
@@ -868,11 +871,11 @@ The following object is masked from 'package:purrr':
 <h3 data-number="7.1.3" class="anchored" data-anchor-id="store-the-data-as-a-tibble"><span class="header-section-number">7.1.3</span> Store the data as a tibble</h3>
 <p>Collect the data dimensioned by <code>time</code> from the netCDF file as a tibble. Then, print the first ten rows.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>atn <span class="ot">&lt;-</span> <span class="fu">tidync</span>(file_nc)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>atn <span class="ot">&lt;-</span> <span class="fu">tidync</span>(file_nc)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>atn_tbl <span class="ot">&lt;-</span> atn <span class="sc">%&gt;%</span> <span class="fu">hyper_tibble</span>(<span class="at">force=</span><span class="cn">TRUE</span>)</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(atn_tbl, <span class="at">n=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(atn_tbl, <span class="at">n=</span><span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 23
        time     z   lat   lon   ptt instrument type  location_class error_radius
@@ -894,8 +897,8 @@ The following object is masked from 'package:purrr':
 <p>Notice the data in the <strong>time</strong> column aren’t formatted as times. We need to read the metadata associated with the time variable to understand what the units are. Below, we print a tibble of all the attributes from the <strong>time</strong> variable.</p>
 <p>Notice the <em>units</em> attribute and it’s value of <code>seconds since 1990-01-01 00:00:00Z</code>. We need to use that information to convert the time variable to something useful that <code>ggplot</code> can handle.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>time_attrs <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"time"</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>time_attrs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>time_attrs <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"time"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>time_attrs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 13 × 4
       id name                  variable value       
@@ -917,13 +920,13 @@ The following object is masked from 'package:purrr':
 </div>
 <p>So, we grab the value from the <code>units</code> attribute, split the string to collect the date information, and apply that to a time conversion function <code>as.POSIXct</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#library(stringr) - loaded with tidyverse</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#library(stringr) - loaded with tidyverse</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># grab origin date from time variable units attribute</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>tunit <span class="ot">&lt;-</span> time_attrs <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"units"</span>)</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>lunit <span class="ot">&lt;-</span> <span class="fu">str_split</span>(tunit<span class="sc">$</span>value,<span class="st">' '</span>)[[<span class="dv">1</span>]]</span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>atn_tbl<span class="sc">$</span>time <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(atn_tbl<span class="sc">$</span>time, <span class="at">origin=</span>lunit[<span class="dv">3</span>], <span class="at">tz=</span><span class="st">"GMT"</span>)</span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(atn_tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(atn_tbl)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [29 × 23] (S3: tbl_df/tbl/data.frame)
  $ time                : POSIXct[1:29], format: "2009-09-23 00:00:00" "2009-09-25 06:42:00" ...
@@ -1066,7 +1069,7 @@ The following object is masked from 'package:purrr':
 <li><code>rename</code> is another nice dplyr function for renaming columns. It workes well following <code>mutate</code> because you can see the mutation applied to a column and then the column renamed, rather than a complex creation of a new column and dropping of the old column.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Defined to grab attributes in subsequent code</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Defined to grab attributes in subsequent code</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>nc <span class="ot">&lt;-</span> <span class="fu">nc_open</span>(file_nc)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>occurrencedf <span class="ot">&lt;-</span> atn_tbl <span class="sc">%&gt;%</span>  </span>
@@ -1141,10 +1144,10 @@ The following object is masked from 'package:purrr':
 <span id="cb18-73"><a href="#cb18-73" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>eventID <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">" "</span>, <span class="st">"_"</span>, <span class="fu">paste0</span>(cname<span class="sc">$</span>value, <span class="st">"_"</span>, occurrencedf<span class="sc">$</span>eventDate))</span>
 <span id="cb18-74"><a href="#cb18-74" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-75"><a href="#cb18-75" aria-hidden="true" tabindex="-1"></a><span class="co"># associatedReferences</span></span>
-<span id="cb18-76"><a href="#cb18-76" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>associatedReferences <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"https://www.ncei.noaa.gov/archive/accession/"</span>,<span class="fu">str_split</span>(url_nc,<span class="st">"/"</span>,<span class="at">simplify=</span><span class="cn">TRUE</span>)[[<span class="dv">8</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-76"><a href="#cb18-76" aria-hidden="true" tabindex="-1"></a>occurrencedf<span class="sc">$</span>associatedReferences <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"https://www.ncei.noaa.gov/archive/accession/"</span>,<span class="fu">str_split</span>(url_nc,<span class="st">"/"</span>,<span class="at">simplify=</span><span class="cn">TRUE</span>)[[<span class="dv">8</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(occurrencedf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(occurrencedf)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [29 × 23] (S3: tbl_df/tbl/data.frame)
  $ eventDate           : chr [1:29] "2009-09-23T00:00:00Z" "2009-09-25T06:42:00Z" "2009-09-25T11:09:00Z" "2009-09-25T11:11:00Z" ...
@@ -1256,7 +1259,7 @@ The following object is masked from 'package:purrr':
 </table>
 <p>Below we create a lookup table for the <code>location_class</code> values we agree are good, which contains the <code>coordinateUncertaintyInMeters</code> for the appropriate location class. When we merge that table with our raw data, the observations that don’t match the location_classes in our lookup table will not be transfered over (ie. they will be filtered out).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>occurrencedf <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>occurrencedf <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(location_class <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'nan'</span>,<span class="st">'G'</span>,<span class="st">'3'</span>,<span class="st">'2'</span>,<span class="st">'1'</span>,<span class="st">'0'</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(  <span class="co"># This returns NA for any other values than those defined below</span></span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">coordinateUncertaintyInMeters =</span> <span class="fu">case_when</span>(location_class <span class="sc">==</span> <span class="st">'nan'</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
@@ -1269,7 +1272,7 @@ The following object is masked from 'package:purrr':
 <span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(eventDate) <span class="co"># arrange by increasing date</span></span>
 <span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>occurrencedf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>occurrencedf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 19 × 24
    eventDate       decimalLatitude decimalLongitude basisOfRecord location_class
@@ -1311,7 +1314,7 @@ The following object is masked from 'package:purrr':
 <p>The dataGeneralizations string is compiled by counting the number of consecutive duplicates and inserting that into a standard string. That string is “first of [n] records” which will make more sense once we’ve filtered down to keep the first occurrence of the hour.</p>
 <p>The next step below this, we filter out only the first observation of the hour.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sort by date</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sort by date</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>occurrencedf <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(eventDate)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>occurrencedf <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span></span>
@@ -1324,7 +1327,7 @@ The following object is masked from 'package:purrr':
 <span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>           ) <span class="sc">%&gt;%</span></span>
 <span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>n)</span>
 <span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>occurrencedf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>occurrencedf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 19 × 26
    eventDate       decimalLatitude decimalLongitude basisOfRecord location_class
@@ -1363,14 +1366,14 @@ The following object is masked from 'package:purrr':
 <p>Essentially we build a new colum that is the date plus the two digit hour. Then we find where that column has duplicates and keep the first entry.</p>
 <p>In R, we do something slightly different as we only keep the distinct (ie. unique) rows and if there are duplicates, pick the first row of the duplicate.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sort by date</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sort by date</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec <span class="ot">&lt;-</span> occurrencedf <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(eventDate)</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># filter table to only unique date + hour and pick the first row.</span></span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec <span class="ot">&lt;-</span> <span class="fu">distinct</span>(occurrencedf_dec,eventDateHrs,<span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>eventDateHrs)</span>
 <span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 17 × 25
    eventDate       decimalLatitude decimalLongitude basisOfRecord location_class
@@ -1465,8 +1468,8 @@ The following object is masked from 'package:purrr':
 </table>
 <p>I’m not sure what to do here. My preference would be to include all rows where <code>qartod_rollup_flag</code> == 1 and drop the rest. But I’m open to suggestions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># perform filter but don't save it.</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(occurrencedf_dec, qartod_rollup_flag <span class="sc">==</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># perform filter but don't save it.</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(occurrencedf_dec, qartod_rollup_flag <span class="sc">==</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 16 × 25
    eventDate       decimalLatitude decimalLongitude basisOfRecord location_class
@@ -1498,7 +1501,7 @@ The following object is masked from 'package:purrr':
 </div>
 <p>Drop the quality flag columns to align with DarwinCore standard.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec <span class="ot">&lt;-</span> occurrencedf_dec <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec <span class="ot">&lt;-</span> occurrencedf_dec <span class="sc">%&gt;%</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>        <span class="sc">-</span><span class="fu">c</span>(location_class,</span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>           qartod_time_flag,</span>
@@ -1507,7 +1510,7 @@ The following object is masked from 'package:purrr':
 <span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>           qartod_rollup_flag</span>
 <span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>           ))</span>
 <span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(occurrencedf_dec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(occurrencedf_dec)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "eventDate"                     "decimalLatitude"              
  [3] "decimalLongitude"              "basisOfRecord"                
@@ -1525,11 +1528,11 @@ The following object is masked from 'package:purrr':
 <section id="write-decimated-occurrence-file-as-csv" class="level5" data-number="7.2.2.0.3">
 <h5 data-number="7.2.2.0.3" class="anchored" data-anchor-id="write-decimated-occurrence-file-as-csv"><span class="header-section-number">7.2.2.0.3</span> Write decimated occurrence file as csv</h5>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>tag_id <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"NC_GLOBAL"</span> <span class="sc">&amp;</span> name <span class="sc">==</span> <span class="st">"ptt_id"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>tag_id <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"NC_GLOBAL"</span> <span class="sc">&amp;</span> name <span class="sc">==</span> <span class="st">"ptt_id"</span>)</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>occurrencedf_dec_csv <span class="ot">&lt;-</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"{dir_data}/dwc/atn_{tag_id$value}_occurrence.csv"</span>)</span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(occurrencedf_dec, <span class="at">file=</span>occurrencedf_dec_csv, <span class="at">row.names=</span><span class="cn">FALSE</span>, <span class="at">fileEncoding=</span><span class="st">"UTF-8"</span>, <span class="at">quote=</span><span class="cn">TRUE</span>, <span class="at">na=</span><span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(occurrencedf_dec, <span class="at">file=</span>occurrencedf_dec_csv, <span class="at">row.names=</span><span class="cn">FALSE</span>, <span class="at">fileEncoding=</span><span class="st">"UTF-8"</span>, <span class="at">quote=</span><span class="cn">TRUE</span>, <span class="at">na=</span><span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="measurement-or-fact" class="level4" data-number="7.2.2.1">
@@ -1648,7 +1651,7 @@ c("animal_length",
              measurementMethod = ncatt_get( nc, x)[[paste0(x,'_type')]])
         })</code></pre>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Measurement or Fact extension</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Measurement or Fact extension</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># # Need to find the occurrence where basisOfRecord == HumanObservation, then pull the organism.</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>emof_data <span class="ot">&lt;-</span> <span class="co">#var_names %&gt;%</span></span>
@@ -1674,7 +1677,7 @@ c("animal_length",
 <span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(organismID, eventID, occurrenceID) <span class="sc">%&gt;%</span></span>
 <span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cbind</span>(emof_data)</span>
 <span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(emofdf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(emofdf)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   1 obs. of  7 variables:
  $ organismID       : chr "105838_great_white_shark"
@@ -1690,11 +1693,11 @@ c("animal_length",
 <section id="write-emof-file-as-csv" class="level5" data-number="7.2.2.1.2">
 <h5 data-number="7.2.2.1.2" class="anchored" data-anchor-id="write-emof-file-as-csv"><span class="header-section-number">7.2.2.1.2</span> Write emof file as csv</h5>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>tag_id <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"NC_GLOBAL"</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"ptt_id"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>tag_id <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"NC_GLOBAL"</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"ptt_id"</span>)</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>emof_csv <span class="ot">&lt;-</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"{dir_data}/dwc/atn_{tag_id$value}_emof.csv"</span>)</span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(emofdf, <span class="at">file=</span>emof_csv, <span class="at">row.names=</span><span class="cn">FALSE</span>, <span class="at">fileEncoding=</span><span class="st">"UTF-8"</span>, <span class="at">quote=</span><span class="cn">TRUE</span>, <span class="at">na=</span><span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(emofdf, <span class="at">file=</span>emof_csv, <span class="at">row.names=</span><span class="cn">FALSE</span>, <span class="at">fileEncoding=</span><span class="st">"UTF-8"</span>, <span class="at">quote=</span><span class="cn">TRUE</span>, <span class="at">na=</span><span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
@@ -1703,11 +1706,11 @@ c("animal_length",
 <section id="print-session-info" class="level2" data-number="7.3">
 <h2 data-number="7.3" class="anchored" data-anchor-id="print-session-info"><span class="header-section-number">7.3</span> Print session info</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>R version 4.4.1 (2024-06-14)
 Platform: aarch64-apple-darwin20
-Running under: macOS Sonoma 14.7.6
+Running under: macOS 15.6
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -1723,23 +1726,23 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] here_1.0.1      mapdata_2.3.1   maps_3.4.3      lubridate_1.9.4
- [5] forcats_1.0.0   stringr_1.5.1   dplyr_1.1.4     purrr_1.1.0    
- [9] readr_2.1.5     tidyr_1.3.1     tibble_3.3.0    ggplot2_3.5.2  
+ [1] here_1.0.2      mapdata_2.3.1   maps_3.4.3      lubridate_1.9.4
+ [5] forcats_1.0.0   stringr_1.5.2   dplyr_1.1.4     purrr_1.1.0    
+ [9] readr_2.1.5     tidyr_1.3.1     tibble_3.3.0    ggplot2_4.0.0  
 [13] tidyverse_2.0.0 ncdf4_1.24      obistools_0.1.0 tidync_0.4.0   
 
 loaded via a namespace (and not attached):
- [1] rappdirs_0.3.3     utf8_1.2.6         generics_0.1.4     xml2_1.3.8        
- [5] stringi_1.8.7      hms_1.1.3          digest_0.6.37      magrittr_2.0.3    
- [9] evaluate_1.0.4     grid_4.4.1         timechange_0.3.0   RColorBrewer_1.1-3
-[13] fastmap_1.2.0      rprojroot_2.1.0    jsonlite_2.0.0     ncmeta_0.4.0      
-[17] crosstalk_1.2.1    scales_1.4.0       cli_3.6.5          RNetCDF_2.11-1    
+ [1] rappdirs_0.3.3     utf8_1.2.6         generics_0.1.4     xml2_1.4.0        
+ [5] stringi_1.8.7      hms_1.1.3          digest_0.6.37      magrittr_2.0.4    
+ [9] evaluate_1.0.5     grid_4.4.1         timechange_0.3.0   RColorBrewer_1.1-3
+[13] fastmap_1.2.0      rprojroot_2.1.1    jsonlite_2.0.0     ncmeta_0.4.0      
+[17] crosstalk_1.2.2    scales_1.4.0       cli_3.6.5          RNetCDF_2.11-1    
 [21] rlang_1.1.6        withr_3.0.2        yaml_2.3.10        tools_4.4.1       
 [25] tzdb_0.5.0         vctrs_0.6.5        R6_2.6.1           lifecycle_1.0.4   
-[29] leaflet_2.2.2      htmlwidgets_1.6.4  pkgconfig_2.0.3    pillar_1.11.0     
-[33] gtable_0.3.6       glue_1.8.0         xfun_0.52          tidyselect_1.2.1  
-[37] data.tree_1.1.0    knitr_1.50         farver_2.1.2       htmltools_0.5.8.1 
-[41] rmarkdown_2.29     compiler_4.4.1    </code></pre>
+[29] leaflet_2.2.3      htmlwidgets_1.6.4  pkgconfig_2.0.3    pillar_1.11.0     
+[33] gtable_0.3.6       glue_1.8.0         xfun_0.53          tidyselect_1.2.1  
+[37] data.tree_1.2.0    knitr_1.50         farver_2.1.2       htmltools_0.5.8.1 
+[41] rmarkdown_2.29     compiler_4.4.1     S7_0.2.0          </code></pre>
 </div>
 </div>
 
@@ -1798,13 +1801,14 @@ loaded via a namespace (and not attached):
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

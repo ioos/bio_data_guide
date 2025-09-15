@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Brett Johnson">
-<meta name="dcterms.date" content="2025-08-25">
+<meta name="dcterms.date" content="2025-09-15">
 <meta name="description" content="Scaling multiple dimensions of diversity in biological data">
 
 <title>3&nbsp; Darwin Core Salmon Data Remap – BioDataGuide</title>
@@ -72,14 +72,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../datasets/TPWD_HARC_BagSeine/TPWD_HARC_BagSeine_OBISENV.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -134,7 +135,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../../index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../../">BioDataGuide</a> 
         <div class="sidebar-tools-main tools-wide">
@@ -325,7 +328,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 25, 2025</p>
+      <p class="date">September 15, 2025</p>
     </div>
   </div>
   
@@ -351,7 +354,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The first step is to consider what you will define as an event in your data set. I defined the capture of fish using a purse seine net as the <code>event</code>. Therefore, each row in the <code>event</code> table is one deployment of a seine net and is assigned a unique <code>eventID</code>.</p>
 <p>My process for conversion was to make a new table called <code>event</code> and map the standard Darwin Core column names to pre-existing columns that serve the same purpose in my original <code>seine_data</code> table and populate the other required fields.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>event <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">eventID =</span> survey_seines<span class="sc">$</span>seine_id,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>event <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">eventID =</span> survey_seines<span class="sc">$</span>seine_id,</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">eventDate =</span> <span class="fu">date</span>(survey_seines<span class="sc">$</span>survey_date),</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">decimalLatitude =</span> survey_seines<span class="sc">$</span>lat,</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">decimalLongitude =</span> survey_seines<span class="sc">$</span>long,</span>
@@ -361,14 +364,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">samplingProtocol =</span> <span class="st">"http://dx.doi.org/10.21966/1.566666"</span> <span class="co"># This is the DOI for the Hakai Salmon Data Package that contains the smnpling protocol, as well as the complete data package</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>               ) </span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(event, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"datasets"</span>, <span class="st">"hakai_salmon_data"</span>, <span class="st">"event.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(event, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"datasets"</span>, <span class="st">"hakai_salmon_data"</span>, <span class="st">"event.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="occurrence" class="level3" data-number="3.1.3">
 <h3 data-number="3.1.3" class="anchored" data-anchor-id="occurrence"><span class="header-section-number">3.1.3</span> occurrence</h3>
 <p>Next you’ll want to determine what constitutes an occurrence for your data set. Because each event caputers fish, I consider each fish to be an occurrence. Therefore, the unit of observation (each row) in the occurrence table is a fish. To link each occurence to an event you need to include the <code>eventID</code> column for every occurrence so that you know what seine (event) each fish (occurrence) came from. You must also provide a globally unique identifier for each occurrence. I already have a locally unique identifier for each fish in the original <code>fish_data</code> table called <code>ufn</code>. To make it globally unique I pre-pend the organization and research program metadata to the <code>ufn</code> column.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#TODO: Include bycatch data as well</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#TODO: Include bycatch data as well</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## make table long first</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>seines_total_long <span class="ot">&lt;-</span> survey_seines <span class="sc">%&gt;%</span> </span>
@@ -415,18 +418,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>occurrence <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(all_fish_caught, fish_retained_data) <span class="sc">%&gt;%</span> </span>
 <span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">basisOfRecord =</span> <span class="st">"HumanObservation"</span>,</span>
 <span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>        <span class="at">occurenceStatus =</span> <span class="st">"present"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">eventID =</span> seine_id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">eventID =</span> seine_id)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>For each occuerence of the six different fish species that I caught I need to match the species name that I provide with the official <code>scientificName</code> that is part of the World Register of Marine Species database <a href="http://www.marinespecies.org/" class="uri">http://www.marinespecies.org/</a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># I went directly to the WoRMS webite (http://www.marinespecies.org/) to download the full taxonomic levels for the salmon species I have and put the WoRMS output (species_matched.xls) table in this project directory which is read in below and joined with the occurrence table</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># I went directly to the WoRMS webite (http://www.marinespecies.org/) to download the full taxonomic levels for the salmon species I have and put the WoRMS output (species_matched.xls) table in this project directory which is read in below and joined with the occurrence table</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>species_matched <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"datasets"</span>, <span class="st">"hakai_salmon_data"</span>, <span class="st">"raw_data"</span>, <span class="st">"species_matched.xls"</span>))</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>occurrence <span class="ot">&lt;-</span> <span class="fu">left_join</span>(occurrence, species_matched, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"scientificName"</span> <span class="ot">=</span> <span class="st">"ScientificName"</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(occurrenceID, basisOfRecord, scientificName, eventID, <span class="at">occurrenceStatus =</span> occurenceStatus, Kingdom, Phylum, Class, Order, Family, Genus, Species)</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(occurrence, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"datasets"</span>, <span class="st">"hakai_salmon_data"</span>, <span class="st">"occurrence.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(occurrence, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"datasets"</span>, <span class="st">"hakai_salmon_data"</span>, <span class="st">"occurrence.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="measurementorfact" class="level3" data-number="3.1.4">
@@ -434,7 +437,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>To convert all your measurements or facts from your normal format to Darwin Core you essentially need to put all your measurements into one column called measurementType and a corresponding column called MeasurementValue. This standardizes the column names are in the <code>measurementOrFact</code> table. There are a number of predefined <code>measurementType</code>s listed on the <a href="https://www.bodc.ac.uk/resources/vocabularies/">NERC</a> database that should be used where possible. I found it difficult to navigate this page to find the correct <code>measurementType</code>.</p>
 <p>Here I convert length, and weight measurements that relate to an event and an occurrence and call those <code>measurementTypes</code> as <code>length</code> and <code>weight</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fish_data<span class="sc">$</span>weight <span class="ot">&lt;-</span> <span class="fu">coalesce</span>(fish_data<span class="sc">$</span>weight, fish_data<span class="sc">$</span>weight_field)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fish_data<span class="sc">$</span>weight <span class="ot">&lt;-</span> <span class="fu">coalesce</span>(fish_data<span class="sc">$</span>weight, fish_data<span class="sc">$</span>weight_field)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>fish_data<span class="sc">$</span>fork_length <span class="ot">&lt;-</span> <span class="fu">coalesce</span>(fish_data<span class="sc">$</span>fork_length, fish_data<span class="sc">$</span>fork_length_field)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>fish_length <span class="ot">&lt;-</span> fish_data <span class="sc">%&gt;%</span></span>
@@ -458,7 +461,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(fish_length, fish_weight)</span>
 <span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(measurementOrFact, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"datasets"</span>, <span class="st">"hakai_salmon_data"</span>, <span class="st">"measurementOrFact.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(measurementOrFact, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"datasets"</span>, <span class="st">"hakai_salmon_data"</span>, <span class="st">"measurementOrFact.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 
@@ -517,13 +520,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
