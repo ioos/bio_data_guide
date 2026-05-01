@@ -41,4 +41,4 @@ Name | Description
 -----|------------
 [Darwin Core Archive Validator](https://tools.gbif.org/dwca-validator/) | This validator verifies the structural integrity of a Darwin Core Archive. It does not check the data values, such as coordinates, dates or scientific names.
 [GBIF DATA VALIDATOR](https://www.gbif.org/tools/data-validator) | The GBIF data validator is a service that allows anyone with a GBIF-relevant dataset to receive a report on the syntactical correctness and the validity of the content contained within the dataset.
-[LifeWatch Belgium](https://www.lifewatch.be/data-services/) | Through this interactive section of the LifeWatch.be portal users can upload their own data using a standard data format, and choose from several web services, models and applications to process the data.
+[LifeWatch Belgium](https://rshiny.lifewatch.be/BioCheck/) | Through this interactive section of the LifeWatch.be portal users can upload their own data using a standard data format, and choose from several web services, models and applications to process the data.
