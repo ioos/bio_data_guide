@@ -1,0 +1,466 @@
+---
+title: Converting ATN netCDF file to Darwin Core
+format:
+  pdf:
+    documentclass: scrreprt # report
+    keep-tex: true
+    include-in-header: lib/preamble.tex
+---
+
+An R Markdown document converted from "atn_satellite_telemetry_netCDF2DwC.ipynb"
+
+Created: 2022-03-23
+Updated: 2025-07-21
+
+Credit: Stephen Formel, Mathew Biddle
+
+This notebook walks through downloading an example netCDF file from the an Archive package at NCEI and translating it to a Darwin Core Archive compliant package for easy loading and publishing via the Integrated Publishing Toolkit (IPT). The example file follows a specific specification for ATN satellite trajectory observations as documented [here](https://github.com/ioos/ioos-atn-data/blob/main/templates/atn_trajectory_template.cdl). More information about the ATN netCDF specification can be found in the repository <https://github.com/ioos/ioos-atn-data.>
+
+This example uses the [tidync](https://ropensci.org/blog/2019/11/05/tidync/) package to work with netCDF data.
+
+Data used in this notebook are available from NCEI at the following link <https://www.ncei.noaa.gov/archive/accession/0282699>.
+
+```{r}
+#Load libraries
+
+library(tidync)
+library(obistools)
+library(ncdf4)
+library(tidyverse) #includes stringr
+library(lubridate)
+library(maps)
+library(mapdata)
+library(here)
+```
+
+## Downloading and preprocessing the source data
+
+See <https://www.ncei.noaa.gov/archive/accession/0282699>
+
+```{r}
+# paths ----
+
+url_base    <- "https://www.ncei.noaa.gov/data/oceans/archive"
+url_package <- "/arc0217/0282699/1.1/data/0-data/"
+url_file    <- "atn_45866_great-white-shark_trajectory_20090923-20091123.nc"
+dir_data    <- here("datasets/atn_satellite_telemetry/data")
+
+url_nc  <- paste0(url_base, url_package, url_file)
+file_nc <- file.path(dir_data, "src", url_file)
+
+# stopifnot(dir.exists(dir_data))
+
+if (!file.exists(file_nc))
+  download.file(url_nc, file_nc, mode = "wb")
+```
+
+### Open the netCDF file
+
+Once the file is opened, we print out the details of what the netCDF file contains.
+
+```{r}
+atn <- nc_open(file_nc)
+atn
+```
+
+### Collect all the metadata from the netCDF file.
+
+This gathers not only the global attributes, but the variable level attributes as well. As you can see in the **variable** column the term `NC_GLOBAL` refers to global attributes.
+
+```{r}
+metadata <- ncmeta::nc_atts(file_nc)
+metadata
+```
+
+### Store the data as a tibble
+Collect the data dimensioned by `time` from the netCDF file as a tibble. Then, print the first ten rows.
+
+```{r}
+atn <- tidync(file_nc)
+
+atn_tbl <- atn %>% hyper_tibble(force=TRUE)
+
+head(atn_tbl, n=4)
+```
+
+### Dealing with time
+
+Notice the data in the **time** column aren't formatted as times. We need to read the metadata associated with the time variable to understand what the units are. Below, we print a tibble of all the attributes from the **time** variable.
+
+Notice the _units_ attribute and it's value of `seconds since 1990-01-01 00:00:00Z`. We need to use that information to convert the time variable to something useful that `ggplot` can handle.
+
+```{r}
+time_attrs <- metadata %>% dplyr::filter(variable == "time")
+time_attrs
+```
+
+So, we grab the value from the `units` attribute, split the string to collect the date information, and apply that to a time conversion function `as.POSIXct`.
+
+```{r}
+#library(stringr) - loaded with tidyverse
+# grab origin date from time variable units attribute
+tunit <- time_attrs %>% dplyr::filter(name == "units")
+lunit <- str_split(tunit$value,' ')[[1]]
+atn_tbl$time <- as.POSIXct(atn_tbl$time, origin=lunit[3], tz="GMT")
+
+str(atn_tbl)
+```
+
+## Converting to Darwin Core
+
+Now let's work through converting this netCDF file to Darwin Core. Following the guidance published at <https://github.com/tdwg/dwc-for-biologging/wiki/Data-guidelines> and <https://github.com/ocean-tracking-network/biologging_standardization/tree/master/examples/braun-blueshark/darwincore-example>
+
+### Occurrence Core
+
+Below is the mapping table from DarwinCore to the netCDF file. 
+
+DarwinCore Term | Status | netCDF source
+----------------|--------|--------------
+occurrenceStatus | Required | hardcoded to `present`.
+basisOfRecord | Required | data contained in the `type` variable where `type` of `User` = `HumanObservation` and `Argos` = `MachineObservation`.
+occurrenceID | Required | `eventDate`, plus data contained in `z` variable, plus `animal_common_name` global attribute.
+organismID | Required | `platform_id` global attribute plus the `animal_common_name` global attribute.
+eventDate | Required | data contained in `time` variable. Converted to ISO8601.
+decimalLatitude & decimalLongitude | Required | data in `lat` and `lon` variable, respectively.
+geodeticDatum | Required | attribute `epsg_code` in the `crs` variable.
+scientificName | Required | data from the variable `taxon_name`.
+scientificNameID |  | data from the variable `taxon_lsid`.
+eventID | Strongly recommended | `animal_common_name` global attribute plus the `eventDate`.
+samplingProtocol | Strongly recommended | hardcoded to `satellite telemetry`
+kingdom | Strongly recommended | `kingdom` attribute in the `animal` variable.
+taxonRank | Strongly recommended | `rank` attribute in the `animal` variable.
+coordinateUncertaintyInMeters | Share if available | maximum value of the data from the variables `error_radius`, `semi_major_axis`, and `offset`.
+lifeStage | Share if available | data from the variable `animal_life_stage`.
+sex | Share if available | data from the variable `animal_sex`.
+associatedReferences | Share if available | NCEI accession url.
+
+Now start working through the crosswalk. A few thoughts about some of the functions we use:
+
+1. `case_when` is a [function from dplyr](https://dplyr.tidyverse.org/reference/case_when.html) that is essentially a 'vectorized' ifelse function.  The take-home is that it plays nice with other `tidyverse` functions, like `mutate` and IMO is a bit more readable than a complex ifelse statement.
+2. `rename` is another nice dplyr function for renaming columns. It workes well following `mutate` because you can see the mutation applied to a column and then the column renamed, rather than a complex creation of a new column and dropping of the old column.
+
+```{r}
+# Defined to grab attributes in subsequent code
+nc <- nc_open(file_nc)
+
+occurrencedf <- atn_tbl %>%  
+    select( # Select desired columns
+        
+        time, 
+        lat,
+        lon,
+        type,
+        location_class,
+        qartod_time_flag,
+        qartod_speed_flag,
+        qartod_location_flag,
+        qartod_rollup_flag
+        
+          ) %>%
+    mutate( # add and mutate columns.
+        
+        type = case_when(type == 'User' ~ 'HumanObservation',
+                         type == 'Argos' ~ 'MachineObservation'),
+        
+        time = format(time, '%Y-%m-%dT%H:%M:%SZ'),
+        
+        kingdom = metadata %>% dplyr::filter(variable == "animal" & name == "kingdom") %>% pull(value) %>% unlist(use.names = FALSE),
+        
+        taxonRank = metadata %>% dplyr::filter(variable == "animal" & name == "rank") %>% pull(value) %>% unlist(use.names = FALSE),
+        
+        occurrenceStatus = "present",
+        
+        sex = ncvar_get( nc, 'animal_sex'),
+        
+        lifeStage = ncvar_get( nc, 'animal_life_stage'),
+        
+        scientificName = ncvar_get( nc, 'taxon_name'),
+        
+        scientificNameID = ncvar_get( nc, "taxon_lsid")
+        
+        ) %>%
+
+    rename(  # rename columns to Darwin Core terms
+        
+        basisOfRecord = type,
+        eventDate = time,
+        decimalLatitude = lat,
+        decimalLongitude = lon) %>% 
+
+    arrange(eventDate) #arrange by increasing date
+
+# minimumDepthInMeters = z,
+occurrencedf$minimumDepthInMeters = atn_tbl$z
+
+# maximumDepthInMeters = z,
+occurrencedf$maximumDepthInMeters = atn_tbl$z
+
+# organismID - {platformID}_{common_name}
+common_name_tbl <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "animal_common_name")
+common_name <- chartr(" ", "_", common_name_tbl$value)
+platform_id_tbl <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "platform_id")
+platform_id <- chartr(" ", "_", platform_id_tbl$value)
+occurrencedf$organismID <- paste(platform_id , common_name, sep = "_") 
+
+# occurrenceID - {eventDate}_{depth}_{common_name}
+occurrencedf$occurrenceID <- sub(" ", "_", paste("ioos_atn", occurrencedf$eventDate, atn_tbl$z, common_name, sep = "_"))
+
+# geodeticDatum
+gd_tbl <- metadata %>% dplyr::filter(variable == "crs") %>% dplyr::filter(name == "epsg_code")
+occurrencedf$geodeticDatum <- paste(gd_tbl$value)
+
+# eventID
+#eventID - {common_name}_{dateTime}
+cname = metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "animal_common_name")
+occurrencedf$eventID <- sub(" ", "_", paste0(cname$value, "_", occurrencedf$eventDate))
+
+# associatedReferences
+occurrencedf$associatedReferences <- paste0("https://www.ncei.noaa.gov/archive/accession/",str_split(url_nc,"/",simplify=TRUE)[[8]])
+```
+
+```{r}
+str(occurrencedf)
+```
+
+#### Add coordinateUncertaintyInMeters AND filter by location_class
+
+When we add `coordinateUncertaintyInMeters` we are also filtering out where `location_class` == `A`,`B`,or `Z`.
+
+In these data we also have additional information about the Location Quality Code from ARGOS satellite system. Below are the codes and those meanings.
+
+code_values | code meanings
+------------|--------------
+G | estimated error less than 100m and 1+ messages received per satellite pass
+3 | estimated error less than 250m and 4+ messages received per satellite pass
+2 | estimated error between 250m and 500m and 4+ messages per satellite pass
+1 | estimated error between 500m and 1500m and 4+ messages per satellite pass
+0 | estimated error greater than 1500m and 4+ messages received per satellite pass
+A | no least squares estimated error or unbounded kalman filter estimated error and 3 messages received per satellite pass
+B | no least squares estimated error or unbounded kalman filter estimated error and 1 or 2 messages received per satellite pass
+Z | invalid location (available for Service Plus or Auxilliary Location Processing)
+
+Since codes `A`, `B`, and `Z` are essentially bad values, I propose that we filter those out.
+
+Also, create a mapping table for `coordinateUncertaintyInMeters` that corresponds to the ARGOS code maximum error as shown in the table below:
+
+code | coordinateUncertaintyInMeters
+-----|------------------------------
+G | 100
+3 | 250
+2 | 500
+1 | 1500
+0 | 10000 ([ref](https://github.com/ioos/bio_data_guide/issues/145#issuecomment-1805739244))
+
+Below we create a lookup table for the `location_class` values we agree are good, which contains the `coordinateUncertaintyInMeters` for the appropriate location class. When we merge that table with our raw data, the observations that don't match the location_classes in our lookup table will not be transfered over (ie. they will be filtered out). 
+
+```{r}
+occurrencedf <- occurrencedf %>%
+    filter(location_class %in% c('nan','G','3','2','1','0')) %>%
+    mutate(  # This returns NA for any other values than those defined below
+        coordinateUncertaintyInMeters = case_when(location_class == 'nan' ~ 0,
+                                                     location_class == 'G' ~ 200,
+                                                     location_class == '3' ~ 250,
+                                                     location_class == '2' ~ 500,
+                                                     location_class == '1' ~ 1500,
+                                                     location_class == '0' ~ 10000) # <https://github.com/ioos/bio_data_guide/issues/145#issuecomment-1805739244>
+          ) %>% 
+    arrange(eventDate) # arrange by increasing date
+
+
+occurrencedf
+```
+
+Notice how we went from 29 rows down to 19 rows by only selecting specific the location_class.
+
+### Create a dataGeneralizations column to describe how many duplicates were found for each deprecation series
+
+Add a `dataGeneralizations` column containing a string like 'first of # records' to indicate there are more records in the raw dataset to be discovered by the super-curious.
+
+The dataGeneralizations string is compiled by counting the number of consecutive duplicates and inserting that into a standard string. That string is "first of [n] records" which will make more sense once we've filtered down to keep the first occurrence of the hour.
+
+The next step below this, we filter out only the first observation of the hour.
+
+```{r}
+# sort by date
+occurrencedf <- occurrencedf %>% arrange(eventDate)
+
+occurrencedf <- occurrencedf %>%
+    mutate(eventDateHrs = format(as.POSIXct(eventDate, format="%Y-%m-%dT%H:%M:%SZ"),"%Y-%m-%dT%H")
+           ) %>%
+    add_count(eventDateHrs) %>%
+    mutate(dataGeneralizations = case_when(n == 1 ~ "",
+                                           TRUE ~ paste("first of ", n ,"records")
+                                           )
+           ) %>%
+    select(-n)
+
+occurrencedf
+```
+
+##### Decimate occurrences down to the first detection/location per hour
+
+Here we've done the decimation in Python: <https://gist.github.com/MathewBiddle/d434ac2b538b2728aa80c6a7945f94be>
+
+Essentially we build a new colum that is the date plus the two digit hour. Then we find where that column has duplicates and keep the first entry.
+
+In R, we do something slightly different as we only keep the distinct (ie. unique) rows and if there are duplicates, pick the first row of the duplicate.
+
+```{r}
+# sort by date
+occurrencedf_dec <- occurrencedf %>% arrange(eventDate)
+
+# filter table to only unique date + hour and pick the first row.
+occurrencedf_dec <- distinct(occurrencedf_dec,eventDateHrs,.keep_all = TRUE) %>%
+    select(-eventDateHrs)
+
+occurrencedf_dec
+```
+
+Notice that we have gone from 19 rows to 17 rows. Removing rows observed on `2009-09-25T11:11:00Z` and `2009-10-27T16:22:00Z` as they were the second points within that specifc hour.
+
+##### Filter on QARTOD flags?
+
+We also have QARTOD flags and they are as follows:
+
+value | meaning
+------|--------
+1 | PASS
+2 | NOT_EVALUATED
+3 | SUSPECT
+4 | FAIL
+9 | MISSING
+
+The QARTOD tests are:
+
+variable | long_name
+---------|----------
+qartod_time_flag | Time QC test - gross range test
+qartod_speed_flag | Speed QC test - gross range test
+qartod_location_flag | Location QC test - Location test
+qartod_rollup_flag | Aggregate QC value
+
+I'm not sure what to do here. My preference would be to include all rows where `qartod_rollup_flag` == 1 and drop the rest. But I'm open to suggestions.
+
+```{r}
+# perform filter but don't save it.
+filter(occurrencedf_dec, qartod_rollup_flag == 1)
+```
+
+Drop the quality flag columns to align with DarwinCore standard.
+
+```{r}
+occurrencedf_dec <- occurrencedf_dec %>%
+    select(
+        -c(location_class,
+           qartod_time_flag,
+           qartod_speed_flag,
+           qartod_location_flag,
+           qartod_rollup_flag
+           ))
+        
+names(occurrencedf_dec)
+```
+
+##### Write decimated occurrence file as csv
+
+```{r}
+tag_id <- metadata %>% dplyr::filter(variable == "NC_GLOBAL" & name == "ptt_id")
+
+occurrencedf_dec_csv <- glue::glue("{dir_data}/dwc/atn_{tag_id$value}_occurrence.csv")
+
+write.csv(occurrencedf_dec, file=occurrencedf_dec_csv, row.names=FALSE, fileEncoding="UTF-8", quote=TRUE, na="")
+```
+
+#### Measurement or Fact
+
+Since we do have any additional observations, we can create a measurement or fact file to include those data. Might be worthwhile to include tag/device metadata, some of the animal measurements, and the detachment information. Each term should have a definition URI.
+
+The measurementOrFact file will only contain information referencing the `basisOfRecord` = `HumanObservation` as these observations were made when the animal was directly tagged, in person (ie. when `basisOfRecord` == `HumanObservation`).
+
+DarwinCore Term | Status | netCDF
+----------------|--------|-------
+organismID | | The `platform_id` global attribute plus the `animal_common_name` global attribute. 
+occurrenceID | Required | `eventDate`, plus data contained in `z` variable, plus `animal_common_name` global attribute.
+measurementType | Required | `long_name` attribute of the `animal_weight`, `animal_length`, `animal_length_2` variables.
+measurementValue | Required | The data from the `animal_weight`, `animal_length`, `animal_length_2` variables.
+eventID	| Strongly Recommended | `animal_common_name` global attribute plus the `eventDate`.
+measurementUnit | Strongly Recommended | `unit` attribute of the `animal_weight`, `animal_length`, `animal_length_2` variables.
+measurementMethod | Strongly Recommended | `animal_weight`, `animal_length`, `animal_length_2` attributes of their respective variables.
+measurementTypeID | Strongly Recommended | mapping table somewhere?
+measurementMethodID | Strongly Recommended | mapping table somewhere?
+measurementUnitID | Strongly Recommended | mapping table somewhere?
+measurementAccuracy | Share if available |
+measurementDeterminedDate | Share if available |
+measurementDeterminedBy | Share if available |
+measurementRemarks | Share if available |
+measurementValueID | Share if available |
+
+##### Extracting variables for Extended Measurement Or Fact (eMOF)
+
+Here there are two approaches to transforming a variable to the eMOF Darwin Core extension.  The goal is to collapse the measurement name, value, unit, related identifiers and remarks into a generalized long format that can be linked to occurrences and events.  For more info see:
+
+1. [The OBIS manual](https://manual.obis.org/format_emof.html)
+2. The [Marine Biological Data Mobilization Workshop 2023](https://ioos.github.io/bio_mobilization_workshop/04-create-schema/index.html) (SF:Not sure if it's cool to reference the workshop like this)
+
+The first several lines of the below code show an example of pulling out the variable attributes and individually mapping them to the eMOF terms.  However, this can be done more efficiently (although less readable) via this chunk of code:
+
+```
+# Supply vector of variable names
+c("animal_length",
+  "animal_length_2",
+  "animal_weight") %>%
+
+      # Create a named list of the variable attributes and convert it into a data frame, for each name in the above vector.
+      purrr::map_df(function(x) {
+        0list(measurementValue = ncvar_get( nc, x),
+             measurementType = ncatt_get( nc, x)$long_name,
+             measurementUnit = ncatt_get( nc, x)$units,
+             measurementMethod = ncatt_get( nc, x)[[paste0(x,'_type')]])
+        })
+```
+
+```{r}
+# # Measurement or Fact extension
+# # Need to find the occurrence where basisOfRecord == HumanObservation, then pull the organism.
+
+emof_data <- #var_names %>%
+    #filter(str_starts(name, pattern = "animal_[lw]e")) %>% #example using regex to parse names
+    #    pull(name) %>%
+
+    # Example using vector of variables
+    c("animal_length",
+      "animal_length_2",
+      "animal_weight") %>%
+    purrr::map_df(function(x) {
+        list(measurementValue = ncvar_get( nc, x),
+             measurementType = ncatt_get( nc, x)$long_name,
+             measurementUnit = ncatt_get( nc, x)$units,
+             measurementMethod = ncatt_get( nc, x)[[paste0(x,'_type')]])
+    }) %>%
+    
+    filter(measurementValue != "NaN")
+
+
+emofdf <- occurrencedf %>%
+    filter(basisOfRecord == 'HumanObservation') %>%
+    select(organismID, eventID, occurrenceID) %>%
+    cbind(emof_data)
+
+str(emofdf)
+```
+
+##### Write emof file as csv
+
+```{r}
+tag_id <- metadata %>% dplyr::filter(variable == "NC_GLOBAL") %>% dplyr::filter(name == "ptt_id")
+
+emof_csv <- glue::glue("{dir_data}/dwc/atn_{tag_id$value}_emof.csv")
+
+write.csv(emofdf, file=emof_csv, row.names=FALSE, fileEncoding="UTF-8", quote=TRUE, na="")
+```
+
+## Print session info
+
+```{r}
+sessionInfo()
+```

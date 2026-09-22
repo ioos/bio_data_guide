@@ -1,3 +1,15 @@
+# BioDataGuide
+
+Hello and welcome to the Darwin Core Marine Example Compendium! (We're calling it the BioDataGuide for short.) Here, we document relevant resources and standards 
+which apply to various marine biological data types. This is a growing guide that is put together by scientists and 
+data managers responsible for transforming their data to meet international standards.
+
+This guide is meant for  data managers, scientists, or technicians new to transforming/publishing/mobilizing data. 
+There is a general introduction to the world of international data integration, followed by some specific examples of 
+data transformations.
+
+To contribute to this guide see [CONTRIBUTING.md](CONTRIBUTING.md)
+
 # Standardizing Marine Biological Data Working Group (SMBD)
 
 ## Purpose
@@ -7,7 +19,7 @@ local, tribal, and private data managers, scientists, computer programmers, and 
 and knowledge to mobilize marine biological data.
 
 ## How do we do it?
-We host monthly meetings, a Slack space, and this GitHub repository to provide various mechanisms for community members
+We host quarterly meetings, a Slack space, and this GitHub repository to provide various mechanisms for community members
 to participate. 
 
 The primary focus of the working group is to help you get past any blockers you might be experiencing during the 
@@ -34,8 +46,8 @@ Anyone!
 We have open monthly meetings every **2nd Wednesday of the month at 16:00 ET** to discuss marine biological data issues. 
 Please feel free to join us!
 
-* 👉[**Join us every month** using connection details here!](https://docs.google.com/document/d/1JfXHFXhP0rB8juAK3-KvOtqtwDofPwewoAB_ZyFwSwY/edit#bookmark=id.1ksv4uv)👈
-* [Join the standardizing-bke7693.slack.com slack](https://join.slack.com/t/standardizing-bke7693/shared_invite/zt-1nzsonomt-wWRrYw6zFCNLRUB~NfCgtQ) and say hi on the `#general` channel.
+* 👉[**Join us every three months** using connection details here!](https://docs.google.com/document/d/1JfXHFXhP0rB8juAK3-KvOtqtwDofPwewoAB_ZyFwSwY/edit#bookmark=id.1ksv4uv)👈
+* [Join the standardizing-bke7693.slack.com slack](https://join.slack.com/t/standardizing-bke7693/shared_invite/zt-3e6ver93k-bWyulwD9JafUw9upCjL2mA) and say hi on the `#general` channel.
 * Submit an [issue](https://github.com/ioos/bio_data_guide/issues) to this repository.
 * [![Join the chat at https://gitter.im/ioos/bio-data](https://badges.gitter.im/ioos/bio-data.svg)](https://gitter.im/ioos/bio-data?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -52,7 +64,7 @@ Made with [contrib.rocks](https://contrib.rocks).
 
 There are multiple resources in this GitHub repository, including:
 
-* :notebook: Living documentation for anyone working with, learning about, or conributing to IOOS's best practices for biological data.
+* :notebook: Living documentation for anyone working with, learning about, or contributing to IOOS's best practices for biological data.
 * 🗄️ Datasets being actively worked on by community members.
 * ♻️ Code and documentation used on other datasets that can be re-used.
 * 🧰 Tools to help you navigate the organizational, technical, and social challenges of publishing data.
@@ -96,7 +108,7 @@ This is a work in progress, a growing guide that is being put together by scient
 The Guide is exported into multiple formats, including a [pdf](https://github.com/ioos/bio_data_guide/raw/gh-pages/darwin-core-guide.pdf) and an [epub](https://github.com/ioos/bio_data_guide/raw/gh-pages/darwin-core-guide.epub) document. 
 Chapters are written in R Markdown files; [contributions are welcome!](https://github.com/ioos/bio_data_guide/blob/main/CONTRIBUTING.md)
 
-Technical details of how to work with the book can be found in [`/building-the-data-guide.md`](https://github.com/ioos/bio_data_guide/blob/main/building-the-guide.md).
+Technical details of how to work with the book can be found in [`/refs/building-the-data-guide.md`](https://github.com/ioos/bio_data_guide/blob/main/refs/building-the-guide.md).
 
 <!--
 

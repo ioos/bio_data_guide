@@ -3,15 +3,17 @@
 
 ## Contribute text to the chapters
 
-Contribute directly to chapters (01-Intro.Rmd). Either through the GitHub website and direct edits to the R markdown files prefixed with chapter numbers (eg. 01-intro.Rmd). You can write both markdown or R, and even python code. The site is built using the R package [bookdown](https://bookdown.org/) through GitHub Actions, so all you need to do is edit the R markdown file and GitHub will take care of the rest.
+Contribute directly to chapters (eg. intro.qmd). Either through the GitHub website and direct edits to the Quarto markdown files prefixed with chapter numbers (eg. intro.qmd). You can write both markdown or R, and even python code. The site is built using the R package [Quarto](https://quarto.org/) through GitHub Actions, so all you need to do is edit the Quarto markdown file, following the [markdown formatting](https://quarto.org/docs/get-started/hello/vscode.html#basic-workflow), and GitHub will take care of the rest.
 
-If you are a member of the IOOS GitHub biodata team you can edit the files directly on GitHub, or through a fork and then pull-request if you're an external  collaborator. Once the pull-request is approved and merged, the documentation site will update to reflect your changes (takes about 10 minutes for the site to update after PR is merged).
+If you are a member of the IOOS GitHub biodata team you can edit the files directly on GitHub, or through a fork and then pull-request if you're an external  collaborator. Once the pull-request is approved and merged, the documentation site will update to reflect your changes (takes about 5 minutes for the site to update after PR is merged).
 
 :bangbang: Don't forget to add your name and orcid to the [citation file](https://github.com/ioos/bio_data_guide/blob/main/CITATION.cff)!
 
+Here's a few high level key points worth pointing out about the migration from Rbookdown to Quarto: https://github.com/MathewBiddle/bio_data_guide/pull/7#issuecomment-2334215815
+
 ## Contribute example applications
 
-Document your example application in an R markdown (`.Rmd`) or markdown (`.md`) file in the appropriate directory under `datasets/`. Submit a [ticket](https://github.com/ioos/bio_data_guide/issues/new/choose) or update [02-applications.Rmd](https://github.com/ioos/bio_data_guide/blob/main/bio-data-guide/02-application.Rmd) with a pointer to your application example file.  
+Document your example application in an R markdown (`.qmd`) or markdown (`.md`) file in the appropriate directory under `datasets/`. Submit a [ticket](https://github.com/ioos/bio_data_guide/issues/new/choose) or update [_quarto.yml](https://github.com/ioos/bio_data_guide/blob/73c03872c85b106a28b8d95cef93b150695e8004/_quarto.yml#L29) with a pointer to your application example file.  
 
 *Note:* The largest header in your markdown file should be a second level header (ie. `##`). This is a requirement for how the book gets built, the largest header (`#`) are the chapter identifiers.
 

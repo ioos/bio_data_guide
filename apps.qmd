@@ -1,0 +1,6 @@
+# Applications
+
+This chapter contains a series of example applications to convert source data to the Darwin Core standard. You can find
+these examples (and more!) in the GitHub repository under the [`datasets/`](https://github.com/ioos/bio_data_guide/tree/main/datasets)
+directory.
+
