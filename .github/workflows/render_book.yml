@@ -6,6 +6,9 @@ on:
        - main
   workflow_dispatch:
 
+# Deny all permissions by default
+permissions: {}
+
 jobs:
   build-deploy:
     name: Render & publish Quarto book
@@ -14,12 +17,13 @@ jobs:
       contents: write
     steps:
       - name: Check out repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
+          persist-credentials: false
           submodules: 'recursive'
 
       - name: Install Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
+        uses: quarto-dev/quarto-actions/setup@8a96df13519ee81fd526f2dfca5962811136661b  # v2.2.0
         # with:
         #   tinytex: true  # for pdf but buggy on finding version
         
@@ -28,19 +32,19 @@ jobs:
       #   run: quarto install chromium
 
       - name: Install TinyTeX
-        uses: r-lib/actions/setup-tinytex@v2          
+        uses: r-lib/actions/setup-tinytex@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05  # v2
       
       - name: Install librsvg
         # convert svg to png for pdf
         run: brew install librsvg
         
       - name: Install R
-        uses: r-lib/actions/setup-r@v2
+        uses: r-lib/actions/setup-r@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05  # v2
         with:
           r-version: '4.4.1'     # 2024-09-04
 
       - name: Install R dependencies
-        uses: r-lib/actions/setup-r-dependencies@v2
+        uses: r-lib/actions/setup-r-dependencies@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05  # v2
         with:
           cache-version: 2
           
@@ -51,7 +55,7 @@ jobs:
 
       - name: Quarto Render and Publish
         # TODO: `quarto publish gh-pages` https://quarto.org/docs/publishing/github-pages.html#publishing
-        uses: quarto-dev/quarto-actions/publish@v2
+        uses: quarto-dev/quarto-actions/publish@8a96df13519ee81fd526f2dfca5962811136661b  # v2.2.0
         with:
           target: gh-pages
         env:
