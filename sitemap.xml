@@ -2,62 +2,62 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://ioos.github.io/bio_data_guide/index.html</loc>
-    <lastmod>2026-10-23T13:41:39.719Z</lastmod>
+    <lastmod>2026-10-29T13:22:49.919Z</lastmod>
   </url>
   <url>
     <loc>https://ioos.github.io/bio_data_guide/intro.html</loc>
-    <lastmod>2026-10-23T13:41:39.719Z</lastmod>
+    <lastmod>2026-10-29T13:22:49.919Z</lastmod>
   </url>
   <url>
     <loc>https://ioos.github.io/bio_data_guide/apps.html</loc>
-    <lastmod>2026-10-23T13:41:39.225Z</lastmod>
+    <lastmod>2026-10-29T13:22:49.734Z</lastmod>
   </url>
   <url>
     <loc>https://ioos.github.io/bio_data_guide/datasets/TPWD_HARC_BagSeine/TPWD_HARC_BagSeine_OBISENV.html</loc>
-    <lastmod>2026-10-23T13:41:39.453Z</lastmod>
+    <lastmod>2026-10-29T13:22:49.821Z</lastmod>
   </url>
   <url>
     <loc>https://ioos.github.io/bio_data_guide/datasets/hakai_salmon_data/salmon-darwin-core-remap.html</loc>
-    <lastmod>2026-10-23T13:41:39.678Z</lastmod>
+    <lastmod>2026-10-29T13:22:49.905Z</lastmod>
   </url>
   <url>
     <loc>https://ioos.github.io/bio_data_guide/datasets/hakai_seagrass_data/hakaiSeagrassToDWC.html</loc>
-    <lastmod>2026-10-23T13:41:39.678Z</lastmod>
+    <lastmod>2026-10-29T13:22:49.905Z</lastmod>
   </url>
   <url>
     <loc>https://ioos.github.io/bio_data_guide/datasets/trawl_catch_data/trawl-catch-data.html</loc>
-    <lastmod>2026-10-23T13:41:39.714Z</lastmod>
+    <lastmod>2026-10-29T13:22:49.916Z</lastmod>
   </url>
   <url>
     <loc>https://ioos.github.io/bio_data_guide/datasets/dataset-edna/README.html</loc>
-    <lastmod>2026-10-23T13:45:32.102Z</lastmod>
+    <lastmod>2026-10-29T13:25:02.345Z</lastmod>
   </url>
   <url>
     <loc>https://ioos.github.io/bio_data_guide/datasets/atn_satellite_telemetry/atn_satellite_telemetry_netCDF2DwC.html</loc>
-    <lastmod>2026-10-23T13:41:39.456Z</lastmod>
+    <lastmod>2026-10-29T13:22:49.823Z</lastmod>
   </url>
   <url>
     <loc>https://ioos.github.io/bio_data_guide/faq.html</loc>
-    <lastmod>2026-10-23T13:41:39.714Z</lastmod>
+    <lastmod>2026-10-29T13:22:49.917Z</lastmod>
   </url>
   <url>
     <loc>https://ioos.github.io/bio_data_guide/tools.html</loc>
-    <lastmod>2026-10-23T13:41:39.722Z</lastmod>
+    <lastmod>2026-10-29T13:22:49.921Z</lastmod>
   </url>
   <url>
     <loc>https://ioos.github.io/bio_data_guide/extras.html</loc>
-    <lastmod>2026-10-23T13:41:39.714Z</lastmod>
+    <lastmod>2026-10-29T13:22:49.916Z</lastmod>
   </url>
   <url>
     <loc>https://ioos.github.io/bio_data_guide/references.html</loc>
-    <lastmod>2026-10-23T13:41:39.719Z</lastmod>
+    <lastmod>2026-10-29T13:22:49.919Z</lastmod>
   </url>
   <url>
     <loc>https://ioos.github.io/bio_data_guide/BioDataGuide.pdf</loc>
-    <lastmod>2026-10-23T13:47:34.431Z</lastmod>
+    <lastmod>2026-10-29T13:26:09.894Z</lastmod>
   </url>
   <url>
     <loc>https://ioos.github.io/bio_data_guide/BioDataGuide.epub</loc>
-    <lastmod>2026-10-23T13:47:38.706Z</lastmod>
+    <lastmod>2026-10-29T13:26:11.665Z</lastmod>
   </url>
 </urlset>
